@@ -4,12 +4,11 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { ItemDetailsPage } from '../item-details/item-details';
 
-
 @Component({
-  selector: 'page-list',
-  templateUrl: 'list.html'
+  selector: 'page-teacher-list',
+  templateUrl: 'teacher-list.html'
 })
-export class ListPage {
+export class TeacherListPage {
   selectedItem: any;
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
@@ -19,7 +18,7 @@ export class ListPage {
     this.selectedItem = navParams.get('item');
 
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
+      'american-football', 'boat', 'bluetooth', 'build'];
 
     this.items = [];
     for(let i = 1; i < 11; i++) {
