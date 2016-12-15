@@ -77,7 +77,14 @@ export class StudentCheckinPage {
   }
   
   checkIn(event){
-    let checkedStudents = this.students.filter((student) => {return student.selected});
+    let checkedStudents = this.students
+      .filter((student) => {return student.selected})
+      .map((student) => {
+        return {
+          id: student.id,
+          name: student.title
+        };
+    });
     //this.navCtrl.push(this.studentCheckinPage, checkedStudents);
 
   }
