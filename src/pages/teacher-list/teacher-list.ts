@@ -21,13 +21,36 @@ export class TeacherListPage {
       'american-football', 'boat', 'bluetooth', 'build'];
 
     this.items = [];
-    for(let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+    this.items.push({
+      title: 'Matthew',
+      note: 'checked in at 8:15am',
+      icon: 'man'
+    });
+    this.items.push({
+      title: 'Mark',
+      note: 'checked in at 8:05am',
+      icon: 'man'
+    });
+    this.items.push({
+      title: 'Sarah',
+      note: 'checked in at 8:05am',
+      icon: 'woman'
+    });
+    this.items.push({
+      title: 'Laurel',
+      note: 'checked in at 7:55am',
+      icon: 'woman'
+    });
+    this.items.push({
+      title: 'Luke',
+      note: 'checked in at 8:10am',
+      icon: 'man'
+    });
+    this.items.push({
+      title: 'Katie',
+      note: 'checked in at 8:00am',
+      icon: 'woman'
+    });
   }
 
   itemTapped(event, item) {
