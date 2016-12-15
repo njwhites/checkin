@@ -11,4 +11,6 @@
 
 <ion-content padding>
   <h3>Enter Your ID Number</h3>
+  <button (click)='directPage(1);'>Go To Teacher List</button>
+  <button [navPush]="studentCheckinPage">Go To Student List</button>
 </ion-content>
