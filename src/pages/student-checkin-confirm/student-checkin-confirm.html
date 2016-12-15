@@ -7,18 +7,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>student-checkin-confirm</ion-title>
+    <ion-title>Confirm</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-list inset>
+    <h3 ion-item *ngFor='let student of selectedStudents'>{{student.name}}</h3>
+  </ion-list>
 
-<div *ngFor='let student of selectedStudents'>
-	<h3>{{student.name}}
-	</h3>
-	<h4>{{student.id}}</h4>
-</div>
 
 </ion-content>
