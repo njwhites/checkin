@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { StudentCheckinConfirmPage } from '../student-checkin-confirm/student-checkin-confirm';
 
 @Component({
   selector: 'page-student-checkin',
@@ -85,7 +86,7 @@ export class StudentCheckinPage {
           name: student.title
         };
     });
-    //this.navCtrl.push(this.studentCheckinPage, checkedStudents);
+    this.navCtrl.push(StudentCheckinConfirmPage, {students: checkedStudents});
 
   }
 }
