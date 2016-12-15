@@ -14,6 +14,7 @@ import { StudentCheckinConfirmPage } from '../pages/student-checkin-confirm/stud
     StudentDetailsPage,
     LoginPage,
     TeacherListPage,
+    StudentCheckinPage,
     StudentCheckinConfirmPage
   ],
   imports: [
@@ -25,6 +26,7 @@ import { StudentCheckinConfirmPage } from '../pages/student-checkin-confirm/stud
     StudentDetailsPage,
     LoginPage,
     TeacherListPage,
+    StudentCheckinPage,
     StudentCheckinConfirmPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
