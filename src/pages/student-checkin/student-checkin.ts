@@ -5,17 +5,6 @@ import { StudentCheckinConfirmPage } from '../student-checkin-confirm/student-ch
 @Component({
   selector: 'page-student-checkin',
   templateUrl: 'student-checkin.html',
-  styles:[
-  `
-    .selected{
-      background-color: pink;
-    }
-    .studentID{
-      color: grey;
-      font-size: 0.75em;
-    }
-  `
-  ]
 })
 export class StudentCheckinPage {
   students: Array<{id: number, title: string, note: string, icon: string, selected:boolean}>;
@@ -76,7 +65,7 @@ export class StudentCheckinPage {
   studentTapped(event, student) {
 	  student.selected = !student.selected;
   }
-  
+
   checkIn(event){
     let checkedStudents = this.students
       .filter((student) => {return student.selected})

@@ -1,3 +1,9 @@
 page-student-checkin {
-
+  .selected{
+    background-color: lightgreen;
+  }
+  .studentID{
+    color: grey;
+    font-size: 0.75em;
+  }
 }
