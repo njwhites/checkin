@@ -12,8 +12,8 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-      <ion-input type="number" placeholder="Enter Your ID Number"></ion-input>
+      <ion-input #userId type="text" placeholder="Enter Your ID Number"></ion-input>
     </ion-item>
   </ion-list>
-  <button ion-button full block (click)='directPage(userId.value)'>Submit</button>
+  <button ion-button full block (click)='directPage(userId)'>Submit</button>
 </ion-content>
