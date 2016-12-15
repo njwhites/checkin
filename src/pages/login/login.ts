@@ -29,4 +29,8 @@ export class LoginPage {
     }
     numid.value = '';
   }
+
+  help(){
+    alert("help is on the way");
+  }
 }
