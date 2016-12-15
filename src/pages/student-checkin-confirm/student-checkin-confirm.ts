@@ -23,4 +23,9 @@ export class StudentCheckinConfirmPage {
     console.log('Hello StudentCheckinConfirmPage Page');
   }
 
+  checkInCompleted() {
+    console.log("check in done");
+    this.navCtrl.popToRoot();
+  }
+
 }
