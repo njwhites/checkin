@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { StudentDetailsPage } from '../student-details/student-details';
 
 @Component({
   selector: 'page-student-checkin',
@@ -21,7 +20,7 @@ export class StudentCheckinPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     // If we navigated to this page, we will have an item available as a nav param
-    
+
 	//this.checkedStudents = [];
     this.students = [];
     this.students.push({
@@ -71,10 +70,10 @@ export class StudentCheckinPage {
   ionViewDidLoad() {
     console.log('Hello StudentCheckinPage Page');
   }
-  
+
   studentTapped(event, student) {
 	  student.selected = !student.selected;
-    
-    
+
+
   }
 }

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Control } from '@angular2/common';
 import { NavController } from 'ionic-angular';
 import { TeacherListPage } from '../teacher-list/teacher-list';
 import { StudentCheckinPage } from '../student-checkin/student-checkin';
@@ -13,10 +12,9 @@ import { StudentCheckinPage } from '../student-checkin/student-checkin';
 export class LoginPage {
   teacherListPage = TeacherListPage;
   studentCheckinPage = StudentCheckinPage;
-  directToPage;
 
   constructor(public navCtrl: NavController) {}
-  
+
   ionViewDidLoad() {
   }
 
