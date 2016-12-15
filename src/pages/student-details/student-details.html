@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle *ngIf="!selectedStudent">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Student Details</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <h3 text-center *ngIf="selectedStudent">
+    {{selectedStudent.title}}
+    <ion-icon [name]="selectedStudent.icon"></ion-icon>
+  </h3>
+  <h4 text-center *ngIf="selectedStudent">
+    You navigated here from <b>{{selectedStudent.title}}</b>
+  </h4>
+</ion-content>
