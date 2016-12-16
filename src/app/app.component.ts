@@ -2,8 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { LoginPage } from '../pages/login/login';
-import { TeacherListPage } from '../pages/teacher-list/teacher-list';
-import { StudentCheckinPage } from '../pages/student-checkin/student-checkin';
 
 
 @Component({
@@ -24,9 +22,11 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Login', component: LoginPage },
-      { title: 'Teacher List', component: TeacherListPage },
-      { title: 'Student Check-in', component: StudentCheckinPage }
+      { title: 'Lobby', component: LoginPage },
+      { title: 'Classroom', component: LoginPage },
+      { title: 'Cafeteria', component: LoginPage },
+      { title: 'Therapy', component: LoginPage },
+      { title: 'Admin', component: LoginPage }
     ];
   }
 
@@ -43,6 +43,6 @@ export class MyApp {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
+    this.nav.setRoot(page.component, {room: page.title});
   }
 }

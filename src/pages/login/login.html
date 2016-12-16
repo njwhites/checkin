@@ -8,11 +8,13 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content text-center class="vertical-align-content">
+<ion-content text-center class="vertical-align-content" *ngIf="room">
   <ion-grid>
     <ion-row class="row">
       <ion-col>
-        <img src="../../assets/logo/sunshine_logo.png">
+        <h3 text-center>
+          {{room}}
+        </h3>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -35,4 +37,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+</ion-content>
+<ion-content class="vertical-align-content" *ngIf="!room">
+  <h3 text-center>
+    Please Select Room
+  </h3>
 </ion-content>

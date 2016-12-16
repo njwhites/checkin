@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {NavController, NavParams, ToastController} from 'ionic-angular';
 import { TeacherListPage } from '../teacher-list/teacher-list';
 import { StudentCheckinPage } from '../student-checkin/student-checkin';
-import { ToastController } from 'ionic-angular';
 
 
 @Component({
@@ -13,8 +12,11 @@ import { ToastController } from 'ionic-angular';
 export class LoginPage {
   teacherListPage = TeacherListPage;
   studentCheckinPage = StudentCheckinPage;
+  room: any;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {}
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams) {
+    this.room = navParams.get('room');
+  }
 
   ionViewDidLoad() {
   }
