@@ -1,11 +1,14 @@
 page-login {
   .vertical-align-content > *
   {
-    display: flex!important;
+    //display: flex!important;
     align-content: center!important;
   }
   .row {
     margin-top: 10%;
     margin-bottom: 20%;
+  }
+  .pad1 {
+    margin-bottom: 15%;
   }
 }
