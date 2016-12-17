@@ -23,14 +23,32 @@ export class LoginPage {
 
   directPage(numid){
     var id = Number(numid.value);
-    if(id >= 1000 && id <= 1999){
-      this.navCtrl.push(this.teacherListPage);
-    } else if(id >= 2000 && id <= 2999) {
-      this.navCtrl.push(this.studentCheckinPage);
-    } else {
-      console.log("invalid");
+    // checks that classroom login is valid
+    if(this.room.toLowerCase() === 'classroom'){
+      //check for validity of the teacher
+      if(id >= 1000 && id <= 1999){
+        this.navCtrl.push(this.teacherListPage);
+      }else{
+        //not a teacher
+        console.log(`invalid login for room: ${this.room}`);
+      }
+    }else{
+      //is valid
+      if(this._isValidLogin(id)){
+        this.navCtrl.push(this.studentCheckinPage, {room: this.room});
+      }else{
+        console.log('invalid login');
+      }
     }
     numid.value = '';
+  }
+
+  _isTeacherLogin(num){
+    return num >= 1000 && num <= 1999
+  }
+
+  _isValidLogin(num){
+    return num > 0 && num < 5000;
   }
 
   help(){

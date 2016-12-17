@@ -8,9 +8,11 @@ import { StudentCheckinConfirmPage } from '../student-checkin-confirm/student-ch
 })
 export class StudentCheckinPage {
   students: Array<{id: number, title: string, note: string, icon: string, selected:boolean}>;
+  room: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
+  this.room = navParams.get('room');
+  // If we navigated to this page, we will have an item available as a nav param
 
 	//this.checkedStudents = [];
     this.students = [];
@@ -75,7 +77,7 @@ export class StudentCheckinPage {
           name: student.title
         };
     });
-    this.navCtrl.push(StudentCheckinConfirmPage, {students: checkedStudents});
+    this.navCtrl.push(StudentCheckinConfirmPage, {students: checkedStudents, room: this.room});
 
   }
 }

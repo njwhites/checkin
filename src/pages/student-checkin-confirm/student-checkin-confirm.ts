@@ -13,10 +13,11 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class StudentCheckinConfirmPage {
   selectedStudents: any;
+  room: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    console.log(`Meow ${navParams.get('students')}`);
     this.selectedStudents = navParams.get('students');
+    this.room = navParams.get('room');
   }
 
   ionViewDidLoad() {
@@ -25,7 +26,17 @@ export class StudentCheckinConfirmPage {
 
   checkInCompleted() {
     console.log("check in done");
+    this._persistCheckin();
+    //can pop twice, would probably need custom animation to make it not look bad
+    // this.navCtrl.pop();
+    // this.navCtrl.pop();
     this.navCtrl.popToRoot();
+  }
+
+  //DB code goes here
+  _persistCheckin(){
+    console.log(`Checked into ${this.room}`);
+    console.log(this.selectedStudents);
   }
 
 }
