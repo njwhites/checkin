@@ -6,6 +6,7 @@ import { LoginPage } from '../pages/login/login';
 import { TeacherListPage } from '../pages/teacher-list/teacher-list';
 import { StudentCheckinPage } from '../pages/student-checkin/student-checkin';
 import { StudentCheckinConfirmPage } from '../pages/student-checkin-confirm/student-checkin-confirm';
+import { ClassroomPage } from '../pages/classroom/classroom';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { StudentCheckinConfirmPage } from '../pages/student-checkin-confirm/stud
     LoginPage,
     TeacherListPage,
     StudentCheckinPage,
-    StudentCheckinConfirmPage
+    StudentCheckinConfirmPage,
+    ClassroomPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -27,7 +29,8 @@ import { StudentCheckinConfirmPage } from '../pages/student-checkin-confirm/stud
     LoginPage,
     TeacherListPage,
     StudentCheckinPage,
-    StudentCheckinConfirmPage
+    StudentCheckinConfirmPage,
+    ClassroomPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {NavController, NavParams, ToastController} from 'ionic-angular';
-import { TeacherListPage } from '../teacher-list/teacher-list';
+import { ClassroomPage } from '../classroom/classroom';
 import { StudentCheckinPage } from '../student-checkin/student-checkin';
 
 
@@ -10,7 +10,7 @@ import { StudentCheckinPage } from '../student-checkin/student-checkin';
 })
 
 export class LoginPage {
-  teacherListPage = TeacherListPage;
+  classroomPage = ClassroomPage;
   studentCheckinPage = StudentCheckinPage;
   room: any;
 
@@ -27,7 +27,7 @@ export class LoginPage {
     if(this.room.toLowerCase() === 'classroom'){
       //check for validity of the teacher
       if(id >= 1000 && id <= 1999){
-        this.navCtrl.push(this.teacherListPage);
+        this.navCtrl.push(this.classroomPage);
       }else{
         //not a teacher
         console.log(`invalid login for room: ${this.room}`);
