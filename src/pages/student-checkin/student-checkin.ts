@@ -58,6 +58,9 @@ export class StudentCheckinPage {
       icon: 'woman',
       selected: false
     });
+    this.students.sort((a, b) => {
+      return a.title.toUpperCase() > b.title.toUpperCase() ? 1 : -1;
+    })
   }
 
   ionViewDidLoad() {
