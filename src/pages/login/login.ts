@@ -26,21 +26,26 @@ export class LoginPage {
     // checks that classroom login is valid
     if(this.room.toLowerCase() === 'classroom'){
       //check for validity of the teacher
-      if(id >= 1000 && id <= 1999){
+      if(this._isTeacherLogin(id)){
         this.navCtrl.push(this.classroomPage);
       }else{
         //not a teacher
-        console.log(`invalid login for room: ${this.room}`);
+        this._toastFailedLogin(id);
       }
     }else{
       //is valid
       if(this._isValidLogin(id)){
         this.navCtrl.push(this.studentCheckinPage, {room: this.room});
       }else{
-        console.log('invalid login');
+        this._toastFailedLogin(id);
       }
     }
+    //reset textbox value
     numid.value = '';
+  }
+
+  _toastFailedLogin(id){
+    console.log(`invalid login for room: ${this.room} with ID: ${id}`);
   }
 
   _isTeacherLogin(num){
