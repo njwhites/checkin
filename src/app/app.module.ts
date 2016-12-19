@@ -7,6 +7,7 @@ import { TeacherListPage } from '../pages/teacher-list/teacher-list';
 import { StudentCheckinPage } from '../pages/student-checkin/student-checkin';
 import { StudentCheckinConfirmPage } from '../pages/student-checkin-confirm/student-checkin-confirm';
 import { ClassroomPage } from '../pages/classroom/classroom';
+import { NapPage } from '../pages/nap/nap'
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ClassroomPage } from '../pages/classroom/classroom';
     TeacherListPage,
     StudentCheckinPage,
     StudentCheckinConfirmPage,
-    ClassroomPage
+    ClassroomPage,
+    NapPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -30,7 +32,8 @@ import { ClassroomPage } from '../pages/classroom/classroom';
     TeacherListPage,
     StudentCheckinPage,
     StudentCheckinConfirmPage,
-    ClassroomPage
+    ClassroomPage,
+    NapPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { TeacherListPage } from '../teacher-list/teacher-list';
-import { StudentCheckinPage } from '../student-checkin/student-checkin';
+import { NapPage } from '../nap/nap';
 
 /*
   Generated class for the Classroom page.
@@ -16,7 +16,7 @@ import { StudentCheckinPage } from '../student-checkin/student-checkin';
 export class ClassroomPage {
     
     tab1 = TeacherListPage;
-    tab2 = StudentCheckinPage;
+    tab2 = NapPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
