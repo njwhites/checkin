@@ -11,8 +11,8 @@
 
 <ion-content padding>
   <h3>Welcome </h3>
-  <ion-list>
-    <button ion-item *ngFor="let student of students" (click)="studentTapped($event, student)" [class.selected]="student.selected">
+  <ion-list inset>
+    <h3 ion-item *ngFor="let student of students" (click)="studentTapped($event, student)" [class.selected]="student.selected">
 
         <ion-icon name="{{student.icon}}" item-left></ion-icon>
 
@@ -20,7 +20,7 @@
         <div class="studentID" item-right>
           {{student.id}}
         </div>
-    </button>
+    </h3>
   </ion-list>
   <button ion-button full block (click)="checkIn($event)">
   Check In
