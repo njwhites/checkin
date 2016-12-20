@@ -7,19 +7,26 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Confirm {{room}}</ion-title>
+    <ion-title>Confirm {{room}} Check-In</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
-  <ion-list inset>
-    <h3 ion-item *ngFor='let student of selectedStudents'>{{student.name}}</h3>
-  </ion-list>
-
-
-	<button ion-button full block (click)="checkInCompleted()">
-	Confirm
-	</button>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list inset>
+          <h3 ion-item *ngFor='let student of selectedStudents'>{{student.name}}</h3>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row class="buttonRow">
+      <ion-col>
+        <button ion-button block (click)="checkInCompleted()">
+      	Confirm
+      	</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
