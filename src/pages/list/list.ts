@@ -1,7 +1,5 @@
 import {Component, Input} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
-import {StudentInfoButtonPage} from "../student-info-button/student-info-button";
-// import {StudentDetailsPage} from "../student-details/student-details";
 
 @Component({
   selector: 'page-list',
@@ -47,14 +45,4 @@ export class ListPage {
       icon: 'woman'
     });
   }
-
-  ngOnInit() {
-    console.log('This if the value for parentPage: ' + this.parentPage);
-  }
-
-  // studentTapped(event, student) {
-  //   this.navCtrl.push(StudentDetailsPage, {
-  //     student: student
-  //   });
-  // }
 }

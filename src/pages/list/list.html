@@ -1,5 +1,4 @@
- <ion-list inset>
-    <!--<h3 ion-item *ngFor="let student of students" (click)="studentTapped($event, student)">-->
+<ion-list inset>
    <h3 ion-item *ngFor="let student of students">
       <ion-icon name="{{student.icon}}" item-left></ion-icon>
       {{student.title}}
@@ -7,12 +6,9 @@
       <div item-right *ngIf="parentPage === 'presentStudents'">
         <page-student-info-button [thisStudent]="student"></page-student-info-button>
       </div>
-      <div item-right *ngIf="parentPage !== 'presentStudents'">
-
+      <div item-right *ngIf="parentPage === 'napStudents'">
+        <page-nap-buttons [thisStudent]="student"></page-nap-buttons>
       </div>
     </h3>
   </ion-list>
-  <!--<div *ngIf="selectedStudent" padding>-->
-    <!--You navigated here from <b>{{selectedStudent.title}}</b>-->
-  <!--</div>-->
 
