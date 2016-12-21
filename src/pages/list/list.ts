@@ -1,17 +1,17 @@
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
-import {StudentDetailsPage} from "../student-details/student-details";
+// import {StudentDetailsPage} from "../student-details/student-details";
 
 @Component({
-  selector: 'page-teacher-list',
-  templateUrl: 'teacher-list.html'
+  selector: 'page-list',
+  templateUrl: 'list.html'
 })
-export class TeacherListPage {
+export class ListPage {
   selectedStudent: any;
   students: Array<{title: string, note: string, icon: string}>;
+  @Input() parentPage: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
     this.selectedStudent = navParams.get('student');
 
     this.students = [];
@@ -47,9 +47,13 @@ export class TeacherListPage {
     });
   }
 
-  studentTapped(event, student) {
-    this.navCtrl.push(StudentDetailsPage, {
-      student: student
-    });
+  ngOnInit() {
+    console.log('This if the value for parentPage: ' + this.parentPage);
   }
+
+  // studentTapped(event, student) {
+  //   this.navCtrl.push(StudentDetailsPage, {
+  //     student: student
+  //   });
+  // }
 }

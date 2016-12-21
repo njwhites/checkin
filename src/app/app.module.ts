@@ -3,11 +3,12 @@ import {IonicApp, IonicModule, IonicErrorHandler} from "ionic-angular";
 import {MyApp} from "./app.component";
 import {StudentDetailsPage} from "../pages/student-details/student-details";
 import {LoginPage} from "../pages/login/login";
-import {TeacherListPage} from "../pages/teacher-list/teacher-list";
+import {ListPage} from "../pages/list/list";
 import {StudentCheckinPage} from "../pages/student-checkin/student-checkin";
 import {StudentCheckinConfirmPage} from "../pages/student-checkin-confirm/student-checkin-confirm";
 import {ClassroomPage} from "../pages/classroom/classroom";
 import {NapPage} from "../pages/nap/nap";
+import {PresentStudentsPage} from "../pages/present-students/present-students";
 
 
 @NgModule({
@@ -15,11 +16,12 @@ import {NapPage} from "../pages/nap/nap";
     MyApp,
     StudentDetailsPage,
     LoginPage,
-    TeacherListPage,
+    ListPage,
     StudentCheckinPage,
     StudentCheckinConfirmPage,
     ClassroomPage,
-    NapPage
+    NapPage,
+    PresentStudentsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -29,11 +31,12 @@ import {NapPage} from "../pages/nap/nap";
     MyApp,
     StudentDetailsPage,
     LoginPage,
-    TeacherListPage,
+    ListPage,
     StudentCheckinPage,
     StudentCheckinConfirmPage,
     ClassroomPage,
-    NapPage
+    NapPage,
+    PresentStudentsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
