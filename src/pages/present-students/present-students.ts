@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
-import {ListPage} from "../list/list";
 
 @Component({
   selector: 'page-present-students',
@@ -9,9 +8,5 @@ import {ListPage} from "../list/list";
 export class PresentStudentsPage {
 
   constructor(public navCtrl: NavController) {}
-
-  ionViewDidLoad() {
-    console.log('Hello PresentStudentsPage Page');
-  }
 
 }

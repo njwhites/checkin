@@ -9,6 +9,7 @@ import {StudentCheckinConfirmPage} from "../pages/student-checkin-confirm/studen
 import {ClassroomPage} from "../pages/classroom/classroom";
 import {NapPage} from "../pages/nap/nap";
 import {PresentStudentsPage} from "../pages/present-students/present-students";
+import {StudentInfoButtonPage} from "../pages/student-info-button/student-info-button"
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {PresentStudentsPage} from "../pages/present-students/present-students";
     StudentCheckinConfirmPage,
     ClassroomPage,
     NapPage,
-    PresentStudentsPage
+    PresentStudentsPage,
+    StudentInfoButtonPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -36,7 +38,8 @@ import {PresentStudentsPage} from "../pages/present-students/present-students";
     StudentCheckinConfirmPage,
     ClassroomPage,
     NapPage,
-    PresentStudentsPage
+    PresentStudentsPage,
+    StudentInfoButtonPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

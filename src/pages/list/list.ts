@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
+import {StudentInfoButtonPage} from "../student-info-button/student-info-button";
 // import {StudentDetailsPage} from "../student-details/student-details";
 
 @Component({
