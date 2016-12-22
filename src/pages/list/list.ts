@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController, NavParams} from "ionic-angular";
 
 @Component({
@@ -9,6 +9,7 @@ export class ListPage {
   selectedStudent: any;
   students: Array<{title: string, note: string, icon: string}>;
   @Input() parentPage: string;
+  @Output() listCheckedOut: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.selectedStudent = navParams.get('student');
@@ -44,5 +45,9 @@ export class ListPage {
       note: 'checked in at 8:00am',
       icon: 'woman'
     });
+  }
+
+  revert(studentName:string):void {
+    this.listCheckedOut.emit(studentName);
   }
 }

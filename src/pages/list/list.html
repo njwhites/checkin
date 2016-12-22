@@ -9,6 +9,9 @@
       <div item-right *ngIf="parentPage === 'napStudents'">
         <page-nap-buttons [thisStudent]="student"></page-nap-buttons>
       </div>
+     <div item-right *ngIf="parentPage === 'therapy'">
+       <page-checkout-therapy-button [thisStudent]="student"(checkedOut)='revert($event)'></page-checkout-therapy-button>
+     </div>
     </h3>
   </ion-list>
 

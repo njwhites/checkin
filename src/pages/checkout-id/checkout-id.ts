@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController} from 'ionic-angular';
 
 @Component({
@@ -7,18 +7,17 @@ import {NavController} from 'ionic-angular';
 })
 export class CheckoutIdPage {
   @Input() parentPage: string;
+  @Output() notify: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
   constructor(public navCtrl: NavController) {}
-
-  ionViewDidLoad() {
-    console.log('Hello CheckoutIdPage Page');
-  }
 
   checkUser(userID) {
     var id = Number(userID.value);
     //for testing purposes I will use 123 as the therapist ID
     if(id == 123 && this.parentPage == 'therapy') {
-
+      this.notify.emit(true);
+    } else {
+      this.notify.emit(false);
     }
   }
 
