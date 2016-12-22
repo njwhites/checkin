@@ -2,10 +2,10 @@ import {Component} from '@angular/core';
 import {NavController, ToastController} from 'ionic-angular';
 
 @Component({
-  selector: 'page-therapy',
-  templateUrl: 'therapy.html'
+  selector: 'page-nurse',
+  templateUrl: 'nurse.html'
 })
-export class TherapyPage {
+export class NursePage {
   userID: number;
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController) {}
@@ -33,7 +33,7 @@ export class TherapyPage {
     var login = document.getElementById('enterID');
     login.style.display = 'block';
     let toast = this.toastCtrl.create({
-      message: studentName + ' is off to therapy',
+      message: studentName + ' is off to the nurse',
       duration: 2000,
       position: 'bottom'
     });

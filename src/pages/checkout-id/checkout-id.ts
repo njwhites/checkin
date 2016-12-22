@@ -7,17 +7,18 @@ import {NavController} from 'ionic-angular';
 })
 export class CheckoutIdPage {
   @Input() parentPage: string;
-  @Output() notify: EventEmitter<Boolean> = new EventEmitter<Boolean>();
+  @Output() notify: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(public navCtrl: NavController) {}
 
   checkUser(userID) {
     var id = Number(userID.value);
     //for testing purposes I will use 123 as the therapist ID
-    if(id == 123 && this.parentPage == 'therapy') {
-      this.notify.emit(true);
+    //for testing purposes I will use 456 as the nurse ID
+    if((id == 123 && this.parentPage == 'therapy') || (id == 456 && this.parentPage == 'nurse')) {
+      this.notify.emit(id);
     } else {
-      this.notify.emit(false);
+      this.notify.emit(-1);
     }
   }
 

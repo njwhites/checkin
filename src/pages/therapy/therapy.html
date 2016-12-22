@@ -9,5 +9,5 @@
 
 <ion-content padding>
   <page-checkout-id id="enterID" text-center class="vertical-align-content" [parentPage]="'therapy'" (notify)='onNotify($event)'></page-checkout-id>
-  <page-list id="studentList" style="display: none;" [parentPage]="'therapy'" (listCheckedOut)='revert($event)'></page-list>
+  <page-list id="studentList" style="display: none;" [parentPage]="'therapy'" [userID]="userID" (listCheckedOut)='revert($event)'></page-list>
 </ion-content>

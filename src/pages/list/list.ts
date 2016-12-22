@@ -9,6 +9,7 @@ export class ListPage {
   selectedStudent: any;
   students: Array<{title: string, note: string, icon: string}>;
   @Input() parentPage: string;
+  @Input() userID: number;
   @Output() listCheckedOut: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
