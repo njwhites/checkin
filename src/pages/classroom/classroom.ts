@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
 import {PresentStudentsPage} from "../present-students/present-students";
-// import {ListPage} from "../list/list";
 import {NapPage} from "../nap/nap";
+import {TherapyPage} from "../therapy/therapy";
 
 @Component({
   selector: 'page-classroom',
@@ -12,6 +12,7 @@ export class ClassroomPage {
 
   tab1 = PresentStudentsPage;
   tab2 = NapPage;
+  tab3 = TherapyPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
