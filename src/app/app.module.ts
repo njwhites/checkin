@@ -12,8 +12,8 @@ import {PresentStudentsPage} from "../pages/present-students/present-students";
 import {StudentInfoButtonPage} from "../pages/student-info-button/student-info-button";
 import {NapButtonsPage} from "../pages/nap-buttons/nap-buttons";
 import {TherapyPage} from "../pages/therapy/therapy";
-import {CheckoutIdPage} from "../pages/checkout-id/checkout-id";
-import {CheckoutButtonPage} from "../pages/checkout-button/checkout-button";
+import {ClassroomIdPage} from "../pages/classroom-id/classroom-id";
+import {ActionButtonPage} from "../pages/action-button/action-button";
 import {NursePage} from "../pages/nurse/nurse";
 import {SignoutPage} from "../pages/signout/signout";
 import {SigninPage} from "../pages/signin/signin";
@@ -33,8 +33,8 @@ import {SigninPage} from "../pages/signin/signin";
     StudentInfoButtonPage,
     NapButtonsPage,
     TherapyPage,
-    CheckoutIdPage,
-    CheckoutButtonPage,
+    ClassroomIdPage,
+    ActionButtonPage,
     NursePage,
     SignoutPage,
     SigninPage
@@ -56,8 +56,8 @@ import {SigninPage} from "../pages/signin/signin";
     StudentInfoButtonPage,
     NapButtonsPage,
     TherapyPage,
-    CheckoutIdPage,
-    CheckoutButtonPage,
+    ClassroomIdPage,
+    ActionButtonPage,
     NursePage,
     SignoutPage,
     SigninPage

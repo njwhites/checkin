@@ -10,7 +10,7 @@
       <page-nap-buttons [thisStudent]="student"></page-nap-buttons>
     </div>
     <div item-right *ngIf="parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'signout' || parentPage === 'checkin'">
-      <page-checkout-button [thisStudent]="student" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-checkout-button>
+      <page-action-button [thisStudent]="student" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
     </div>
   </h3>
   <div *ngIf="parentPage === 'signout'">

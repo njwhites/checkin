@@ -2,10 +2,10 @@ import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {NavController} from 'ionic-angular';
 
 @Component({
-  selector: 'page-checkout-button',
-  templateUrl: 'checkout-button.html'
+  selector: 'page-action-button',
+  templateUrl: 'action-button.html'
 })
-export class CheckoutButtonPage {
+export class ActionButtonPage {
   @Input() thisStudent: any;
   @Input() userID: number;
   @Input() grandParentPage: string;

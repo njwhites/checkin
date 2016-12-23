@@ -8,6 +8,6 @@
 
 
 <ion-content padding>
-  <page-checkout-id id="enterIDSignout" text-center class="vertical-align-content" [parentPage]="'signout'" (notify)='onNotify($event)'></page-checkout-id>
+  <page-classroom-id id="enterIDSignout" text-center class="vertical-align-content" [parentPage]="'signout'" (notify)='onNotify($event)'></page-classroom-id>
   <page-list id="studentListSignout" style="display: none;" [parentPage]="'signout'" [userID]="userID" (removedStudents)='revert($event)'></page-list>
 </ion-content>

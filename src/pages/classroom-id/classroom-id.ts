@@ -2,10 +2,10 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController} from 'ionic-angular';
 
 @Component({
-  selector: 'page-checkout-id',
-  templateUrl: 'checkout-id.html'
+  selector: 'page-classroom-id',
+  templateUrl: 'classroom-id.html'
 })
-export class CheckoutIdPage {
+export class ClassroomIdPage {
   @Input() parentPage: string;
   @Output() notify: EventEmitter<number> = new EventEmitter<number>();
 
@@ -16,7 +16,6 @@ export class CheckoutIdPage {
   //for testing purposes I will use 789 as the signout ID and signin ID
   checkUser(userID) {
     var id = Number(userID.value);
-    console.log(id + " " + this.parentPage);
     //I split up inputs so we can eventually look to see if each userId is authorized for the transaction
     if(id === 123 && this.parentPage === 'therapy') {
       this.notify.emit(id);
