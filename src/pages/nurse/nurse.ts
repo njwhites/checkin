@@ -13,9 +13,9 @@ export class NursePage {
   onNotify(idCheck:number):void {
     if(idCheck >= 0) {
       this.userID = idCheck;
-      var login = document.getElementById('enterID');
+      var login = document.getElementById('enterIDNurse');
       login.style.display = 'none';
-      var list = document.getElementById('studentList');
+      var list = document.getElementById('studentListNurse');
       list.style.display = 'block';
     } else {
       let toast = this.toastCtrl.create({
@@ -28,9 +28,9 @@ export class NursePage {
   }
 
   revert(studentName:string):void {
-    var list = document.getElementById('studentList');
+    var list = document.getElementById('studentListNurse');
     list.style.display = 'none';
-    var login = document.getElementById('enterID');
+    var login = document.getElementById('enterIDNurse');
     login.style.display = 'block';
     let toast = this.toastCtrl.create({
       message: studentName + ' is off to the nurse',

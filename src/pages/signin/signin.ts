@@ -13,9 +13,9 @@ export class SigninPage {
   onNotify(idCheck:number):void {
     if(idCheck >= 0) {
       this.userID = idCheck;
-      var login = document.getElementById('enterID');
+      var login = document.getElementById('enterIDSignin');
       login.style.display = 'none';
-      var list = document.getElementById('studentList');
+      var list = document.getElementById('studentListSignin');
       list.style.display = 'block';
     } else {
       let toast = this.toastCtrl.create({
@@ -28,9 +28,9 @@ export class SigninPage {
   }
 
   revert(students:Array<string>):void {
-    var list = document.getElementById('studentList');
+    var list = document.getElementById('studentListSignin');
     list.style.display = 'none';
-    var login = document.getElementById('enterID');
+    var login = document.getElementById('enterIDSignin');
     login.style.display = 'block';
     let toast = this.toastCtrl.create({
       message: students.length + ' student(s) checked in!',
