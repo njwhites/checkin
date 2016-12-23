@@ -25,4 +25,13 @@ export class CheckoutButtonPage {
     //this is where the userID will be linked with thisStudent to to associate who is out with whom
   }
 
+  checkinStudent() {
+    this.checkedOut.emit(this.thisStudent.title);
+    var checkinBtn = document.getElementById('checkinButton');
+    checkinBtn.style.display = 'none';
+    var selectedBtn = document.getElementById('selectedButton');
+    selectedBtn.style.display = 'block';
+    //this is where the userID will be linked with thisStudent to to associate who is out with whom
+  }
+
 }

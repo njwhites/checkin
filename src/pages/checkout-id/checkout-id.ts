@@ -13,10 +13,15 @@ export class CheckoutIdPage {
 
   checkUser(userID) {
     var id = Number(userID.value);
+    console.log(id + " " + this.parentPage);
     //for testing purposes I will use 123 as the therapist ID
     //for testing purposes I will use 456 as the nurse ID
-    //for testing purposes I will use 789 as the signout ID
-    if((id == 123 && this.parentPage == 'therapy') || (id == 456 && this.parentPage == 'nurse') || (id == 789 && this.parentPage == 'signout')) {
+    //for testing purposes I will use 789 as the signout ID and signin ID
+    if((id === 123 && this.parentPage === 'therapy') ||
+      (id === 456 && this.parentPage === 'nurse') ||
+      (id === 789 && this.parentPage === 'signout') ||
+      (id === 789 && this.parentPage === 'checkin')) {
+      console.log("gets inside");
       this.notify.emit(id);
     } else {
       this.notify.emit(-1);

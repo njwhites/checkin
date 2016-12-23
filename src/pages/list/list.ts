@@ -51,7 +51,7 @@ export class ListPage {
   }
 
   revert(studentName:string):void {
-    if(this.parentPage !== 'signout') {
+    if((this.parentPage !== 'signout') && (this.parentPage !== 'checkin')) {
       this.listCheckedOut.emit(studentName);
     } else {
       this.signoutStudents.push(studentName);
@@ -60,6 +60,10 @@ export class ListPage {
   }
 
   removeStudents() {
+    this.removedStudents.emit(this.signoutStudents);
+  }
+
+  addStudents() {
     this.removedStudents.emit(this.signoutStudents);
   }
 }

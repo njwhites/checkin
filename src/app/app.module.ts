@@ -15,7 +15,8 @@ import {TherapyPage} from "../pages/therapy/therapy";
 import {CheckoutIdPage} from "../pages/checkout-id/checkout-id";
 import {CheckoutButtonPage} from "../pages/checkout-button/checkout-button";
 import {NursePage} from "../pages/nurse/nurse";
-import {SignoutPage} from "../pages/signout/signout"
+import {SignoutPage} from "../pages/signout/signout";
+import {SigninPage} from "../pages/signin/signin";
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {SignoutPage} from "../pages/signout/signout"
     CheckoutIdPage,
     CheckoutButtonPage,
     NursePage,
-    SignoutPage
+    SignoutPage,
+    SigninPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -57,7 +59,8 @@ import {SignoutPage} from "../pages/signout/signout"
     CheckoutIdPage,
     CheckoutButtonPage,
     NursePage,
-    SignoutPage
+    SignoutPage,
+    SigninPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

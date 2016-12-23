@@ -9,12 +9,15 @@
     <div item-right *ngIf="parentPage === 'napStudents'">
       <page-nap-buttons [thisStudent]="student"></page-nap-buttons>
     </div>
-    <div item-right *ngIf="parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'signout'" >
+    <div item-right *ngIf="parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'signout' || parentPage === 'checkin'">
       <page-checkout-button [thisStudent]="student" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-checkout-button>
     </div>
   </h3>
   <div *ngIf="parentPage === 'signout'">
     <button ion-button full (click)="removeStudents()">Checkout</button>
+  </div>
+  <div *ngIf="parentPage === 'checkin'">
+    <button ion-button full (click)="addStudents()">Check In</button>
   </div>
 </ion-list>
 
