@@ -8,9 +8,11 @@ import {NavController, NavParams} from "ionic-angular";
 export class ListPage {
   selectedStudent: any;
   students: Array<{title: string, note: string, icon: string}>;
+  signoutStudents: Array<string> = new Array<string>();
   @Input() parentPage: string;
   @Input() userID: number;
   @Output() listCheckedOut: EventEmitter<string> = new EventEmitter<string>();
+  @Output() removedStudents: EventEmitter<Array<string>> = new EventEmitter<Array<string>>()
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.selectedStudent = navParams.get('student');
@@ -49,6 +51,15 @@ export class ListPage {
   }
 
   revert(studentName:string):void {
-    this.listCheckedOut.emit(studentName);
+    if(this.parentPage !== 'signout') {
+      this.listCheckedOut.emit(studentName);
+    } else {
+      this.signoutStudents.push(studentName);
+      console.log("adding to List: " + this.signoutStudents.length);
+    }
+  }
+
+  removeStudents() {
+    this.removedStudents.emit(this.signoutStudents);
   }
 }

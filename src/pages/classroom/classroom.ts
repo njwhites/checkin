@@ -4,6 +4,7 @@ import {PresentStudentsPage} from "../present-students/present-students";
 import {NapPage} from "../nap/nap";
 import {TherapyPage} from "../therapy/therapy";
 import {NursePage} from "../nurse/nurse";
+import {SignoutPage} from "../signout/signout"
 
 @Component({
   selector: 'page-classroom',
@@ -15,6 +16,7 @@ export class ClassroomPage {
   tab2 = NapPage;
   tab3 = TherapyPage;
   tab4 = NursePage;
+  tab5 = SignoutPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
