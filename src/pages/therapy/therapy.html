@@ -1,0 +1,13 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Therapy</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <page-classroom-id id="enterIDTherapy" text-center class="vertical-align-content" [parentPage]="'therapy'" (notify)='onNotify($event)'></page-classroom-id>
+  <page-list id="studentListTherapy" style="display: none;" [parentPage]="'therapy'" [userID]="userID" (listCheckedOut)='revert($event)'></page-list>
+</ion-content>

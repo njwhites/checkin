@@ -1,0 +1,7 @@
+<div *ngIf="grandParentPage !== 'checkin'">
+  <button ion-button color="default" small (click)="checkoutStudent()" id="checkoutButton">Checkout</button>
+</div>
+<div *ngIf="grandParentPage === 'checkin'">
+  <button ion-button color="default" small (click)="checkinStudent()" id="checkinButton">Check In</button>
+</div>
+<button ion-button color="danger" small id="selectedButton" style="display: none;">Selected</button>

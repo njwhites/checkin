@@ -1,0 +1,16 @@
+<ion-grid>
+  <ion-row class="inputRow">
+    <ion-col>
+      <ion-list>
+        <ion-item>
+          <ion-input #userId type="text" placeholder="Enter Your ID Number"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+  <ion-row class="buttonRow">
+    <ion-col>
+      <button ion-button block (click)='checkUser(userId)'>Submit</button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

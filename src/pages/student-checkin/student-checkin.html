@@ -20,11 +20,11 @@
       <ion-col>
         <ion-list inset>
           <h3 ion-item *ngFor="let student of students" (click)="studentTapped($event, student)" [class.selected]="student.selected">
-              <ion-icon name="{{student.icon}}" item-left></ion-icon>
-              {{student.title}}
-              <div class="studentID" item-right>
-                {{student.id}}
-              </div>
+            <ion-icon name="{{student.icon}}" item-left></ion-icon>
+            {{student.title}}
+            <div class="studentID" item-right>
+              {{student.id}}
+            </div>
           </h3>
         </ion-list>
       </ion-col>
@@ -32,7 +32,7 @@
     <ion-row class="buttonRow">
       <ion-col>
         <button ion-button block (click)="checkIn($event)">
-        Check In
+          Check In
         </button>
       </ion-col>
     </ion-row>

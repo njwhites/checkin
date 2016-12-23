@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import {NavController, NavParams, ToastController} from 'ionic-angular';
-import { ClassroomPage } from '../classroom/classroom';
-import { StudentCheckinPage } from '../student-checkin/student-checkin';
+import {Component} from "@angular/core";
+import {NavController, NavParams, ToastController} from "ionic-angular";
+import {ClassroomPage} from "../classroom/classroom";
+import {StudentCheckinPage} from "../student-checkin/student-checkin";
 
 
 @Component({

@@ -1,0 +1,13 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Check In Students</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <page-classroom-id id="enterIDSignin" text-center class="vertical-align-content" [parentPage]="'checkin'" (notify)='onNotify($event)'></page-classroom-id>
+  <page-list id="studentListSignin" style="display: none;" [parentPage]="'checkin'" [userID]="userID" (removedStudents)='revert($event)'></page-list>
+</ion-content>
