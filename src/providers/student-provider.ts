@@ -16,7 +16,7 @@ export class StudentProvider {
     this.db = new PouchDB('students');
     
     this.remote = 'http://localhost:5984/students';
-    
+    //this.remote = '';
     let options = {
       live: true,
       retry: true,
@@ -35,7 +35,7 @@ export class StudentProvider {
     
     //otherwise we should do an initial gathering of docs
     return new Promise(resolve =>{
-      this.db.allDocs({include_docs: true}).then(result => {
+      this.db.allDocs({include_docs: true, inclusive_end: false, endkey: '_'}).then(result => {
         
         this.data = [];
         
@@ -57,23 +57,40 @@ export class StudentProvider {
   }
   
   createStudent(student){
-    
+    this.db.post(student);
   }
   
   updateStudent(student){
+    this.db.put(student).catch(err => {
+      console.log(err);
+    });
+  }
+  
+  updateStudents(students){
+    for(let student in students){
+      this.updateStudent(student);
+    }
     
+    /* or maybe
+    this.db.bulkDocs(students).catch(err => {
+      console.log(err);
+    });
+    */
   }
   
   deleteStudent(student){
-    
+    this.db.remove(student).catch(err => {
+      console.log(err);
+    });
   }
+  
   handleChange(change){
     let changedDoc = null;
     let changedIndex = null;
     
     //scan the docs for the one that has been changed
     this.data.forEach((doc, index) =>{
-      if(doc._id === change.id)){
+      if(doc._id === change.id){
         changedDoc = doc;
         changedIndex = index;
       }

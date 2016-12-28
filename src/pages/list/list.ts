@@ -1,5 +1,7 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController, NavParams} from "ionic-angular";
+import {StudentProvider} from '../../providers/student-provider';
+
 
 @Component({
   selector: 'page-list',
@@ -7,18 +9,19 @@ import {NavController, NavParams} from "ionic-angular";
 })
 export class ListPage {
   selectedStudent: any;
-  students: Array<{title: string, note: string, icon: string}>;
+  students: any;
   signoutStudents: Array<string> = new Array<string>();
   @Input() parentPage: string;
   @Input() userID: number;
   @Output() listCheckedOut: EventEmitter<string> = new EventEmitter<string>();
   @Output() removedStudents: EventEmitter<Array<string>> = new EventEmitter<Array<string>>()
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.selectedStudent = navParams.get('student');
-
-    this.students = [];
-    this.students.push({
+    this.studentService.getStudents().then((data) => {
+      this.students = data;
+    });
+    /*this.students.push({
       title: 'Matthew',
       note: 'checked in at 8:15am',
       icon: 'man'
@@ -48,6 +51,11 @@ export class ListPage {
       note: 'checked in at 8:00am',
       icon: 'woman'
     });
+    this.students.push({
+      title: 'Do you see me',
+      note: 'checked in at 8:00am',
+      icon: 'woman'
+    });*/
   }
 
   revert(studentName:string):void {

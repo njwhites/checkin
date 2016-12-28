@@ -1,22 +1,31 @@
+//-----------------------------------------
+// This is no longer used I think -Chris 12/28/2016
+//
+//-----------------------------------------
+
+
+
 import {Component} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
 import {StudentCheckinConfirmPage} from "../student-checkin-confirm/student-checkin-confirm";
+import {StudentProvider} from '../../providers/student-provider';
 
 @Component({
   selector: 'page-student-checkin',
   templateUrl: 'student-checkin.html',
 })
 export class StudentCheckinPage {
-  students: Array<{id: number, title: string, note: string, icon: string, selected:boolean}>;
+  students: any;
   room: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.room = navParams.get('room');
     // If we navigated to this page, we will have an item available as a nav param
 
     //this.checkedStudents = [];
     this.students = [];
-    this.students.push({
+    
+    /*this.students.push({
       id: 111,
       title: 'Matthew',
       note: 'checked in at 8:15am',
@@ -60,11 +69,16 @@ export class StudentCheckinPage {
     });
     this.students.sort((a, b) => {
       return a.title.toUpperCase() > b.title.toUpperCase() ? 1 : -1;
-    })
+    })*/
   }
 
   ionViewDidLoad() {
     console.log('Hello StudentCheckinPage Page');
+    
+    this.studentService.getStudents().then(data => {
+      this.students = data;
+    });
+    console.log(this.students);
   }
 
   studentTapped(event, student) {

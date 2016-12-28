@@ -1,7 +1,7 @@
 <ion-list inset>
   <h3 ion-item *ngFor="let student of students">
     <ion-icon name="{{student.icon}}" item-left></ion-icon>
-    {{student.title}}
+    {{student.fName}} {{student.lName}}
 
     <div item-right *ngIf="parentPage === 'presentStudents'">
       <page-student-info-button [thisStudent]="student"></page-student-info-button>
