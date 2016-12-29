@@ -1,45 +1,43 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button icon-only menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
     <ion-title>
       Login
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content text-center class="vertical-align-content" *ngIf="room">
+<ion-content text-center class="vertical-align-content">
   <ion-grid>
-    <ion-row class="row">
-      <ion-col>
-        <h3 text-center>
-          {{room}}
-        </h3>
-      </ion-col>
-    </ion-row>
-    <ion-row class="inputRow">
+    <ion-row class="buttonRow">
       <ion-col>
         <ion-list>
           <ion-item>
-            <ion-input #userId type="text" placeholder="Enter Your ID Number"></ion-input>
+            <ion-label>Classroom</ion-label>
+            <ion-select [(ngModel)]="classroom" (ngModelChange)="onSelectClassroom($event)">
+              <ion-option value="101">Room 101</ion-option>
+              <ion-option value="102">Room 102</ion-option>
+              <ion-option value="201">Room 201</ion-option>
+              <ion-option value="202">Room 202</ion-option>
+              <ion-option value="301">Room 301</ion-option>
+              <ion-option value="302">Room 302</ion-option>
+            </ion-select>
           </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>
     <ion-row class="buttonRow">
       <ion-col>
-        <button ion-button block (click)='directPage(userId)'>Submit</button>
+        <button ion-button block>Kitchen</button>
       </ion-col>
     </ion-row>
     <ion-row class="buttonRow">
       <ion-col>
-        <button ion-button block (click)='help()'>Ask For Help</button>
+        <button ion-button block>Therapy</button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="buttonRow">
+      <ion-col>
+        <button ion-button block>Admin</button>
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-content>
-<ion-content class="vertical-align-content" *ngIf="!room">
-  <h3 text-center>
-    Please Select Room
-  </h3>
 </ion-content>
