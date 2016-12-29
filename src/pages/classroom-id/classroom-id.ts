@@ -12,30 +12,37 @@ export class ClassroomIdPage {
 
   constructor(public navCtrl: NavController, public userService: UserProvider) {}
 
-  //for testing purposes I will use 123 as the therapist ID
-  //for testing purposes I will use 456 as the nurse ID
-  //for testing purposes I will use 789 as the signout ID and signin ID
+  
   checkUser(userID) {
     var id = Number(userID.value);
     
     //for async all the code needs to be in the .then() of this function
     //getUserByID takes a string and the input to .then() is a single java object that matches that id
     this.userService.getUserByID(userID.value).then((user: any) => {
-     
-      //I split up inputs so we can eventually look to see if each userId is authorized for the transaction
-      //user.role can be used to identify permissions
-      if(user.role === "therapist" && this.parentPage === 'therapy') {
-        this.notify.emit(id);
-      } else if(user.role === "nurse" && this.parentPage === 'nurse') {
-        this.notify.emit(id);
-      } else if(user.role === "driver" && this.parentPage === 'signout') {
-        this.notify.emit(id);
-      } else if(user.role === "driver" && this.parentPage === 'checkin') {
-        this.notify.emit(id);
+      
+      if(user.message === "missing"){
+        
+        //**************** TODO **********
+        //put something in here to alert the user that that id doesn't exist
+        //**************** TODO **********
+        alert("invalid user id");
+        console.log("invalid user id");
       } else {
-        this.notify.emit(-1);
+        //I split up inputs so we can eventually look to see if each userId is authorized for the transaction
+        //user.role can be used to identify permissions
+        if(user.role === "therapist" && this.parentPage === 'therapy') {
+          this.notify.emit(id);
+        } else if(user.role === "nurse" && this.parentPage === 'nurse') {
+          this.notify.emit(id);
+        } else if(user.role === "driver" && this.parentPage === 'signout') {
+          this.notify.emit(id);
+        } else if(user.role === "driver" && this.parentPage === 'checkin') {
+          this.notify.emit(id);
+        } else {
+          this.notify.emit(-1);
+        }
+        userID.value = '';
       }
-      userID.value = '';
     });
     
     

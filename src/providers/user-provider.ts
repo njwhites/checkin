@@ -32,23 +32,64 @@ export class UserProvider {
     return new Promise(resolve => {
       
       this.db.get(id).then(doc => {
-        console.log(doc);
         resolve(doc);
-      }).catch(function (err) {
+      }).catch(err => {
         console.log(err);
+        resolve(err);
       });
     });
   }
   
-  createUser(){
+  //this will probably not be used, and if it does will need to add id collision checking
+  createUserByDoc(user){
+    this.db.put(user).cactch(err =>{
+      console.log(err);
+    })
+  }
+  
+  //need to test if return id works, may need to be wrapped as a promise and use resolve
+  //need to test if result gets the ids and
+  createUserByInfo(fName: string, lName: string, phone: string, role: string){
+    let newID: string = "-1";
     
+    //find the next available id number
+    this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
+    
+      result.rows.map(row => {
+        if(Number(newID) <= Number(row._id)) newID = String((Number(row._id) + 1));
+      });
+    
+      //create an object and send it to the db
+      this.db.put({
+        _id: newID,
+        fName: fName,
+        lName: lName,
+        phone: phone,
+        role: role
+      }).catch(err=>{
+        console.log(err)
+      })
+    
+      //return the generated id so that we can let the user know their id
+      return newID;
+    });
   }
   
   updateUser(){
     
   }
   
+  deleteUserByDoc(user){
+    this.db.remove(user).catch(err => {
+      console.log(err)
+    });
+  }
+  
   deleteUserByID(ID){
-    
+    this.db.get(ID).then(doc => {
+      this.db.remove(doc);
+    }).catch(err => {
+      console.log(err)
+    });
   }
 }

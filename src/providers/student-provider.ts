@@ -35,7 +35,7 @@ export class StudentProvider {
     
     //otherwise we should do an initial gathering of docs
     return new Promise(resolve =>{
-      this.db.allDocs({include_docs: true, inclusive_end: false, startkey:'0', endkey: '9\uffff'}).then(result => {
+      this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
         
         this.data = [];
         
