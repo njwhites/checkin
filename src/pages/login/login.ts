@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {NavController, NavParams, ToastController} from "ionic-angular";
 import {ClassroomPage} from "../classroom/classroom";
-import {StudentCheckinPage} from "../student-checkin/student-checkin";
 
 
 @Component({
@@ -11,7 +10,6 @@ import {StudentCheckinPage} from "../student-checkin/student-checkin";
 
 export class LoginPage {
   classroomPage = ClassroomPage;
-  studentCheckinPage = StudentCheckinPage;
   room: any;
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams) {
