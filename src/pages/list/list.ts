@@ -21,6 +21,7 @@ export class ListPage {
     this.studentService.getStudents().then((data) => {
       this.students = data;
     });
+    
     /*this.students.push({
       title: 'Matthew',
       note: 'checked in at 8:15am',

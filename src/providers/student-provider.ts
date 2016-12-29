@@ -35,7 +35,7 @@ export class StudentProvider {
     
     //otherwise we should do an initial gathering of docs
     return new Promise(resolve =>{
-      this.db.allDocs({include_docs: true, inclusive_end: false, endkey: '_'}).then(result => {
+      this.db.allDocs({include_docs: true, inclusive_end: false, startkey:'0', endkey: '9\uffff'}).then(result => {
         
         this.data = [];
         
@@ -54,6 +54,20 @@ export class StudentProvider {
         console.log(error);
       });
     });
+  }
+  
+  //work in progress, development tabled until use case arises
+  getStudentByFullName(name){
+    let found = false;
+    
+    for(let row of this.data){
+      if(row.fName+" "+row.lName === name){
+        found = true;
+        return Promise.resolve(row);
+      }
+    }
+    
+    if(!found){}
   }
   
   createStudent(student){
