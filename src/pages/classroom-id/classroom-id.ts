@@ -14,6 +14,7 @@ export class ClassroomIdPage {
   //for testing purposes I will use 123 as the therapist ID
   //for testing purposes I will use 456 as the nurse ID
   //for testing purposes I will use 789 as the signout ID and signin ID
+  //for testing purposes I will use ids between 1000 and 5000 for therapy or admin
   checkUser(userID) {
     var id = Number(userID.value);
     //I split up inputs so we can eventually look to see if each userId is authorized for the transaction
@@ -24,6 +25,12 @@ export class ClassroomIdPage {
     } else if(id === 789 && this.parentPage === 'signout') {
       this.notify.emit(id);
     } else if(id === 789 && this.parentPage === 'checkin') {
+      this.notify.emit(id);
+    } else if(id >= 1000 && id <= 5000 && this.parentPage === 'kitchen') {
+      this.notify.emit(id);
+    } else if(id >= 1000 && id <= 5000 && this.parentPage === 'therapist') {
+      this.notify.emit(id);
+    } else if(id >= 1000 && id <= 5000 && this.parentPage === 'admin') {
       this.notify.emit(id);
     } else {
       this.notify.emit(-1);

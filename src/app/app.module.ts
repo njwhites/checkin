@@ -15,6 +15,9 @@ import {ActionButtonPage} from "../pages/action-button/action-button";
 import {NursePage} from "../pages/nurse/nurse";
 import {SignoutPage} from "../pages/signout/signout";
 import {SigninPage} from "../pages/signin/signin";
+import {KitchenPage} from "../pages/kitchen/kitchen";
+import {TherapistPage} from "../pages/therapist/therapist";
+import {AdminPage} from "../pages/admin/admin";
 
 
 @NgModule({
@@ -33,7 +36,10 @@ import {SigninPage} from "../pages/signin/signin";
     ActionButtonPage,
     NursePage,
     SignoutPage,
-    SigninPage
+    SigninPage,
+    KitchenPage,
+    TherapistPage,
+    AdminPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -54,7 +60,10 @@ import {SigninPage} from "../pages/signin/signin";
     ActionButtonPage,
     NursePage,
     SignoutPage,
-    SigninPage
+    SigninPage,
+    KitchenPage,
+    TherapistPage,
+    AdminPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
