@@ -17,6 +17,7 @@ import {SignoutPage} from "../pages/signout/signout";
 import {SigninPage} from "../pages/signin/signin";
 import {StudentProvider} from "../providers/student-provider";
 import {UserProvider} from "../providers/user-provider";
+import {ClassRoomProvider} from "../providers/class-room-provider";
 
 @NgModule({
   declarations: [
@@ -57,6 +58,6 @@ import {UserProvider} from "../providers/user-provider";
     SignoutPage,
     SigninPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider]
 })
 export class AppModule {}
