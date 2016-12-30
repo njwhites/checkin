@@ -8,8 +8,9 @@ import {NavController, ToastController} from 'ionic-angular';
 export class SigninPage {
   userID: number;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {}
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {  }
 
+  
   onNotify(idCheck:number):void {
     if(idCheck >= 0) {
       this.userID = idCheck;

@@ -40,11 +40,8 @@ export class StudentProvider {
         //this.data: any[] = new Array(result.;
         this.data = [];
         let docs = result.rows.map(row => {
-          console.log(row.doc._id);
           this.data[row.doc._id] = (row.doc);
         });
-        console.log(this.data);
-        console.log(this.data[0]);
         resolve(this.data);
         
         
@@ -79,6 +76,33 @@ export class StudentProvider {
   
   createStudent(student){
     this.db.post(student);
+  }
+  
+  createStudentByInfo(fName: string, lName: string, loc: string, note: string, icon: string){
+    let newID: string = "-1";
+    
+    //find the next available id number
+    this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
+    
+      result.rows.map(row => {
+        if(Number(newID) <= Number(row._id)) newID = String((Number(row._id) + 1));
+      });
+    
+      //create an object and send it to the db
+      this.db.put({
+        _id: newID,
+        fName: fName,
+        lName: lName,
+        "location": loc,
+        note: note,
+        icon: icon
+      }).catch(err=>{
+        console.log(err)
+      })
+    
+      //return the generated id so that we can let the student know their id, may not be needed
+      return newID;
+    });
   }
   
   updateStudent(student){

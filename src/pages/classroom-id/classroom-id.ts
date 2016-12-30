@@ -12,6 +12,8 @@ export class ClassroomIdPage {
 
   constructor(public navCtrl: NavController, public userService: UserProvider) {}
 
+  ionViewDidLoad(){
+  }
   
   checkUser(userID) {
     var id = Number(userID.value);

@@ -21,42 +21,11 @@ export class ListPage {
     this.studentService.getStudents().then((data) => {
       this.students = data;
     });
-    
-    /*this.students.push({
-      title: 'Matthew',
-      note: 'checked in at 8:15am',
-      icon: 'man'
-    });
-    this.students.push({
-      title: 'Mark',
-      note: 'checked in at 8:05am',
-      icon: 'man'
-    });
-    this.students.push({
-      title: 'Sarah',
-      note: 'checked in at 8:05am',
-      icon: 'woman'
-    });
-    this.students.push({
-      title: 'Laurel',
-      note: 'checked in at 7:55am',
-      icon: 'woman'
-    });
-    this.students.push({
-      title: 'Luke',
-      note: 'checked in at 8:10am',
-      icon: 'man'
-    });
-    this.students.push({
-      title: 'Katie',
-      note: 'checked in at 8:00am',
-      icon: 'woman'
-    });
-    this.students.push({
-      title: 'Do you see me',
-      note: 'checked in at 8:00am',
-      icon: 'woman'
-    });*/
+    console.log("userID in list: " + this.userID);
+  }
+  
+  ionViewDidLoad(){
+    console.log("userID in list after ionViewDidLoad: " + this.userID);
   }
 
   revert(studentName:string):void {

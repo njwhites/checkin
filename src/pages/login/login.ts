@@ -33,9 +33,7 @@ export class LoginPage {
     });
   }
 
-  onSelectClassroom(roomNumber) {
-    console.log(roomNumber);
-    
+  onSelectClassroom(roomNumber) {    
     
     //******************************************************************
     //testing to see if class room selection works
@@ -43,10 +41,9 @@ export class LoginPage {
     
     let classroom: any;
     this.classRoomService.getClassRoomByRoomNumber(String(roomNumber)).then((result: any) =>{
-      console.log(result);
       if(result){
-        console.log(result.students);
-        
+        this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber, students: result.students});
+
       } else {
         //**************** TODO **********
         //put something in here to alert the user that that classroom doesn't exist
@@ -60,11 +57,6 @@ export class LoginPage {
     //******************************************************************
     //end classroom selection testing
     //******************************************************************
-    
-
-    //console.log(roomNumber);
-    //TODO: here is where we will pass the params of the room number in.
-    this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
   }
 
   toLogin(userRole) {
