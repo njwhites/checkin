@@ -25,7 +25,21 @@ export class UserProvider {
   }
   
   getUsers(){
-    
+    return new Promise(resolve =>{
+      this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
+        
+        let data = [];
+        
+        
+        let docs = result.rows.map(row => {
+          data[row.doc._id] = row.doc;
+        });
+
+        resolve(data);
+      }).catch(error =>{
+        console.log(error);
+      });
+    });
   }
   
   getUserByID(id: string){

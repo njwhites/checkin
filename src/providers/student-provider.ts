@@ -58,6 +58,11 @@ export class StudentProvider {
     });
   }
   
+  //do this if students gets large enough that we don't want every classroom to pull all student information
+  getStudentsByGroup(students: string[]){
+    
+  }
+  
   //work in progress, development tabled until use case arises
   getStudentByFullName(name){
     let found = false;

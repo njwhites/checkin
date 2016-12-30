@@ -24,8 +24,6 @@ export class ClassRoomProvider {
   }
   
   getAllClassRooms(){
-    
-    //otherwise we should do an initial gathering of docs
     return new Promise(resolve =>{
       this.db.allDocs({include_docs: true}).then(result => {
         
