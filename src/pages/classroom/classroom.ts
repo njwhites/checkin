@@ -12,6 +12,7 @@ import {SigninPage} from "../signin/signin"
   templateUrl: 'classroom.html'
 })
 export class ClassroomPage {
+  roomNumber: string;
 
   tab0 = SigninPage;
   tab1 = PresentStudentsPage;
@@ -20,6 +21,12 @@ export class ClassroomPage {
   tab4 = NursePage;
   tab5 = SignoutPage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.roomNumber = this.navParams.get('roomNumber');
+  }
+
+  ionViewDidLoad() {
+    console.log(this.roomNumber);
+  }
 
 }

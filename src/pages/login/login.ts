@@ -24,9 +24,9 @@ export class LoginPage {
   }
 
   onSelectClassroom(roomNumber) {
-    console.log(roomNumber);
+    //console.log(roomNumber);
     //TODO: here is where we will pass the params of the room number in.
-    this.navCtrl.push(this.classroomPage);
+    this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
   }
 
   toLogin(userRole) {
