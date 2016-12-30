@@ -13,14 +13,10 @@
           <ion-item>
             <ion-label>Classroom</ion-label>
             <ion-select [(ngModel)]="classroom" (ngModelChange)="onSelectClassroom($event)">
-              <ion-option value="1">Room 001</ion-option>
-              <ion-option value="2">Room 002</ion-option>
-              <ion-option value="101">Room 101</ion-option>
-              <ion-option value="102">Room 102</ion-option>
-              <ion-option value="201">Room 201</ion-option>
-              <ion-option value="202">Room 202</ion-option>
-              <ion-option value="301">Room 301</ion-option>
-              <ion-option value="302">Room 302</ion-option>
+              <div *ngFor="let classroom of classrooms">
+                <ion-option value={{classroom.roomNumber}}>Room {{classroom.roomNumber}}</ion-option>
+              </div>
+
             </ion-select>
           </ion-item>
         </ion-list>

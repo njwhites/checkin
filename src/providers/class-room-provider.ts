@@ -23,6 +23,26 @@ export class ClassRoomProvider {
     this.db.sync(this.remote, options);
   }
   
+  getAllClassRooms(){
+    
+    //otherwise we should do an initial gathering of docs
+    return new Promise(resolve =>{
+      this.db.allDocs({include_docs: true}).then(result => {
+        
+        let data = [];
+        
+        
+        let docs = result.rows.map(row => {
+          data.push(row.doc);
+        });
+
+        resolve(data);
+      }).catch(error =>{
+        console.log(error);
+      });
+    });
+  }
+  
   getClassRoomByID(id: string){
     return new Promise(resolve => {
 

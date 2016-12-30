@@ -11,14 +11,23 @@ import {ClassRoomProvider} from "../../providers/class-room-provider";
 export class LoginPage {
   classroomPage = ClassroomPage;
   room: any;
+  classrooms: any;
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, 
               public classRoomService: ClassRoomProvider) {
     this.room = navParams.get('room');
+    
+  }
+  
+  ionViewDidLoad(){
+    this.classRoomService.getAllClassRooms().then((data) => {
+      this.classrooms = data;
+    });
   }
 
   onSelectClassroom(roomNumber) {
     console.log(roomNumber);
+    
     
     //******************************************************************
     //testing to see if class room selection works
@@ -26,6 +35,7 @@ export class LoginPage {
     
     let classroom: any;
     this.classRoomService.getClassRoomByRoomNumber(String(roomNumber)).then((result: any) =>{
+      console.log(result);
       if(result){
         console.log(result.students);
         
