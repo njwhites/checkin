@@ -37,14 +37,16 @@ export class StudentProvider {
     return new Promise(resolve =>{
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
         
+        //this.data: any[] = new Array(result.;
         this.data = [];
-        
-        
         let docs = result.rows.map(row => {
-          this.data.push(row.doc);
+          console.log(row.doc._id);
+          this.data[row.doc._id] = (row.doc);
         });
-        
+        console.log(this.data);
+        console.log(this.data[0]);
         resolve(this.data);
+        
         
         //tell the db what to do when it detects a change
         this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change => {
