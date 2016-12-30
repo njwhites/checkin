@@ -2,6 +2,10 @@ import {Component} from "@angular/core";
 import {NavController, NavParams, ToastController} from "ionic-angular";
 import {ClassroomPage} from "../classroom/classroom";
 import {ClassRoomProvider} from "../../providers/class-room-provider";
+import {KitchenPage} from "../kitchen/kitchen";
+import {TherapistPage} from "../therapist/therapist";
+import {AdminPage} from "../admin/admin";
+
 
 @Component({
   selector: 'page-login',
@@ -10,6 +14,10 @@ import {ClassRoomProvider} from "../../providers/class-room-provider";
 
 export class LoginPage {
   classroomPage = ClassroomPage;
+  kitchenPage = KitchenPage;
+  therapistPage = TherapistPage;
+  adminPage = AdminPage;
+  btnPage: string;
   room: any;
   classrooms: any;
 
@@ -53,8 +61,38 @@ export class LoginPage {
     //end classroom selection testing
     //******************************************************************
     
+
+    //console.log(roomNumber);
     //TODO: here is where we will pass the params of the room number in.
-    this.navCtrl.push(this.classroomPage);
+    this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
+  }
+
+  toLogin(userRole) {
+    this.btnPage = userRole;
+    document.getElementById('buttonGrid').style.display = 'none';
+    document.getElementById('enterID').style.display = 'block';
+  }
+
+  onNotify(idCheck:number):void {
+    if(idCheck >= 0) {
+      if(this.btnPage == 'kitchen') {
+        this.navCtrl.push(this.kitchenPage);
+      } else if(this.btnPage == 'therapist') {
+        this.navCtrl.push(this.therapistPage);
+      } else if(this.btnPage == 'admin') {
+        this.navCtrl.push(this.adminPage);
+      }
+        } else {
+      document.getElementById('enterID').style.display = 'none';
+      document.getElementById('buttonGrid').style.display = 'block';
+      let toast = this.toastCtrl.create({
+        message: 'Invalid ID',
+        duration: 1500,
+        position: 'bottom'
+      });
+      toast.present(toast);
+      this.btnPage = '';
+    }
   }
 
   help(){
@@ -67,3 +105,4 @@ export class LoginPage {
     toast.present(toast);
   }
 }
+

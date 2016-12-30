@@ -6,7 +6,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content text-center class="vertical-align-content">
-  <ion-grid>
+  <ion-grid id="buttonGrid">
     <ion-row class="buttonRow">
       <ion-col>
         <ion-list>
@@ -24,18 +24,19 @@
     </ion-row>
     <ion-row class="buttonRow">
       <ion-col>
-        <button ion-button block>Kitchen</button>
+        <button ion-button block (click)="toLogin('kitchen')">Kitchen</button>
       </ion-col>
     </ion-row>
     <ion-row class="buttonRow">
       <ion-col>
-        <button ion-button block>Therapy</button>
+        <button ion-button block (click)="toLogin('therapist')">Therapy</button>
       </ion-col>
     </ion-row>
     <ion-row class="buttonRow">
       <ion-col>
-        <button ion-button block>Admin</button>
+        <button ion-button block (click)="toLogin('admin')">Admin</button>
       </ion-col>
     </ion-row>
   </ion-grid>
+  <page-classroom-id id="enterID" text-center class="vertical-align-content" [parentPage]="btnPage" (notify)='onNotify($event)' style="display: none;"></page-classroom-id>
 </ion-content>
