@@ -13,6 +13,7 @@ export class ListPage {
   signoutStudents: Array<string> = new Array<string>();
   @Input() parentPage: string;
   @Input() userID: number;
+  @Input() roomNumber: string;
   @Output() listCheckedOut: EventEmitter<string> = new EventEmitter<string>();
   @Output() removedStudents: EventEmitter<Array<string>> = new EventEmitter<Array<string>>()
 
@@ -21,11 +22,15 @@ export class ListPage {
     this.studentService.getStudents().then((data) => {
       this.students = data;
     });
+<<<<<<< HEAD
     console.log("userID in list: " + this.userID);
   }
   
   ionViewDidLoad(){
     console.log("userID in list after ionViewDidLoad: " + this.userID);
+=======
+
+>>>>>>> refs/remotes/origin/master
   }
 
   revert(studentName:string):void {
@@ -39,9 +44,14 @@ export class ListPage {
 
   removeStudents() {
     this.removedStudents.emit(this.signoutStudents);
+    // console.log(this.userID);       this proves that the ID passes
+    // console.log(this.roomNumber);   this proves that the ID passes
   }
 
   addStudents() {
     this.removedStudents.emit(this.signoutStudents);
+    // console.log(this.userID);       this proves that the ID passes
+    // console.log(this.roomNumber);   this proves that the ID passes
   }
+
 }
