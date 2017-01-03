@@ -15,7 +15,7 @@ export class StudentProvider {
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('students');
     
-    this.remote = 'http://localhost:5984/students';
+    this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/students';
     //this.remote = '';
     let options = {
       live: true,

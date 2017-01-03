@@ -29,6 +29,7 @@ export class ClassroomPage {
 
   ionViewDidLoad() {
     console.log("roomNumber: " + this.roomNumber);
+    console.log("students: " + this.students);
   }
 
 }

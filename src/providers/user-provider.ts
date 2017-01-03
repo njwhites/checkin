@@ -13,7 +13,7 @@ export class UserProvider {
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('users');
     
-    this.remote = 'http://localhost:5984/users';
+    this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/users';
     //this.remote = '';
     let options = {
       live: true,

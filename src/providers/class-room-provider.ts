@@ -12,7 +12,7 @@ export class ClassRoomProvider {
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('classrooms');
     
-    this.remote = 'http://localhost:5984/classrooms';
+    this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/classrooms';
     //this.remote = '';
     let options = {
       live: true,
@@ -58,9 +58,9 @@ export class ClassRoomProvider {
       this.db.allDocs({include_docs: true}).then(result => {
         
         let classroom: any;
-        result.rows.map(row => {
+        result.rows.forEach((row) => {
           if(row.doc.roomNumber === room) classroom = row.doc;
-        });
+        })
         resolve(classroom);
       }).catch(err =>{
         console.log(err)
