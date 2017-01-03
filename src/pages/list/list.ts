@@ -11,6 +11,7 @@ export class ListPage {
   signoutStudents: Array<string> = new Array<string>();
   @Input() parentPage: string;
   @Input() userID: number;
+  @Input() roomNumber: string;
   @Output() listCheckedOut: EventEmitter<string> = new EventEmitter<string>();
   @Output() removedStudents: EventEmitter<Array<string>> = new EventEmitter<Array<string>>()
 
@@ -48,6 +49,7 @@ export class ListPage {
       note: 'checked in at 8:00am',
       icon: 'woman'
     });
+
   }
 
   revert(studentName:string):void {
@@ -61,9 +63,14 @@ export class ListPage {
 
   removeStudents() {
     this.removedStudents.emit(this.signoutStudents);
+    // console.log(this.userID);       this proves that the ID passes
+    // console.log(this.roomNumber);   this proves that the ID passes
   }
 
   addStudents() {
     this.removedStudents.emit(this.signoutStudents);
+    // console.log(this.userID);       this proves that the ID passes
+    // console.log(this.roomNumber);   this proves that the ID passes
   }
+
 }
