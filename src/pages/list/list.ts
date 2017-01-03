@@ -22,15 +22,11 @@ export class ListPage {
     this.studentService.getStudents().then((data) => {
       this.students = data;
     });
-<<<<<<< HEAD
     console.log("userID in list: " + this.userID);
   }
   
   ionViewDidLoad(){
     console.log("userID in list after ionViewDidLoad: " + this.userID);
-=======
-
->>>>>>> refs/remotes/origin/master
   }
 
   revert(studentName:string):void {

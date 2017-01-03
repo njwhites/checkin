@@ -16,7 +16,7 @@ export class StudentProvider {
     this.db = new PouchDB('students');
     
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/students';
-    //this.remote = '';
+    //this.remote = 'http://localhost:5984/students';
     let options = {
       live: true,
       retry: true,

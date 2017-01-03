@@ -9,13 +9,9 @@ export class SigninPage {
   userID: number;
   roomNumber: string;
 
-<<<<<<< HEAD
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {  }
-=======
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams) {
     this.roomNumber = navParams.data;
   }
->>>>>>> refs/remotes/origin/master
 
   
   onNotify(idCheck:number):void {

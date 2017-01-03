@@ -13,7 +13,7 @@ export class ClassRoomProvider {
     this.db = new PouchDB('classrooms');
     
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/classrooms';
-    //this.remote = '';
+    //this.remote = 'http://localhost:5984/classrooms';
     let options = {
       live: true,
       retry: true,

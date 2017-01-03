@@ -27,15 +27,9 @@ export class ClassroomPage {
     this.students = this.navParams.get('students');
   }
 
-<<<<<<< HEAD
   ionViewDidLoad() {
     console.log("roomNumber: " + this.roomNumber);
     console.log("students: " + this.students);
   }
-=======
-  // ionViewDidLoad() {
-  //   console.log(this.roomNumber);
-  // }
->>>>>>> refs/remotes/origin/master
 
 }

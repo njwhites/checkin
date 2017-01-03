@@ -39,7 +39,6 @@ export class LoginPage {
     //testing to see if class room selection works
     //******************************************************************
     
-    let classroom: any;
     this.classRoomService.getClassRoomByRoomNumber(String(roomNumber)).then((result: any) =>{
       if(result){
         this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber, students: result.students});
