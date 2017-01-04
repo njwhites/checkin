@@ -15,7 +15,7 @@
   </ion-row>
   <ion-row class="buttonRow">
     <ion-col>
-      <div *ngIf="parentPage !== 'checkin' && parentPage !== 'signout'">
+      <div *ngIf="parentPage !== 'checkin' && parentPage !== 'signout' && parentPage !== 'therapy' && parentPage !== 'nurse'">
         <button ion-button block (click)='back()'>Back</button>
       </div>
     </ion-col>
