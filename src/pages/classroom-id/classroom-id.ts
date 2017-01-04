@@ -9,6 +9,7 @@ import {UserProvider} from '../../providers/user-provider';
 export class ClassroomIdPage {
   @Input() parentPage: string;
   @Output() notify: EventEmitter<number> = new EventEmitter<number>();
+  @Output() goBack: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(public navCtrl: NavController, public userService: UserProvider) {}
 
@@ -48,6 +49,10 @@ export class ClassroomIdPage {
     });
     
     
+  }
+
+  back(){
+    this.goBack.emit("back");
   }
 
 }

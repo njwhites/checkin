@@ -76,16 +76,19 @@ export class LoginPage {
         this.navCtrl.push(this.adminPage);
       }
         } else {
-      document.getElementById('enterID').style.display = 'none';
-      document.getElementById('buttonGrid').style.display = 'block';
       let toast = this.toastCtrl.create({
         message: 'Invalid ID',
         duration: 1500,
         position: 'bottom'
       });
       toast.present(toast);
-      this.btnPage = '';
     }
+  }
+
+  revert(){
+    document.getElementById('enterID').style.display = 'none';
+    document.getElementById('buttonGrid').style.display = 'flex';
+    this.btnPage = '';
   }
 
   help(){
