@@ -13,6 +13,7 @@ export class SigninPage {
     this.roomNumber = navParams.data;
   }
 
+  
   onNotify(idCheck:number):void {
     if(idCheck >= 0) {
       this.userID = idCheck;
@@ -44,7 +45,6 @@ export class SigninPage {
   }
 
   ionViewDidLoad() {
-    console.log(this.roomNumber);
   }
 
 }

@@ -15,10 +15,10 @@ import {ActionButtonPage} from "../pages/action-button/action-button";
 import {NursePage} from "../pages/nurse/nurse";
 import {SignoutPage} from "../pages/signout/signout";
 import {SigninPage} from "../pages/signin/signin";
-import {KitchenPage} from "../pages/kitchen/kitchen";
-import {TherapistPage} from "../pages/therapist/therapist";
-import {AdminPage} from "../pages/admin/admin";
-
+import {StudentProvider} from "../providers/student-provider";
+import {UserProvider} from "../providers/user-provider";
+import {ClassRoomProvider} from "../providers/class-room-provider";
+import {CheckinProvider} from "../providers/checkin-provider";
 
 @NgModule({
   declarations: [
@@ -36,10 +36,7 @@ import {AdminPage} from "../pages/admin/admin";
     ActionButtonPage,
     NursePage,
     SignoutPage,
-    SigninPage,
-    KitchenPage,
-    TherapistPage,
-    AdminPage
+    SigninPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -60,11 +57,8 @@ import {AdminPage} from "../pages/admin/admin";
     ActionButtonPage,
     NursePage,
     SignoutPage,
-    SigninPage,
-    KitchenPage,
-    TherapistPage,
-    AdminPage
+    SigninPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider]
 })
 export class AppModule {}

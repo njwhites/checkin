@@ -1,5 +1,7 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController, NavParams} from "ionic-angular";
+import {StudentProvider} from '../../providers/student-provider';
+
 
 @Component({
   selector: 'page-list',
@@ -7,7 +9,7 @@ import {NavController, NavParams} from "ionic-angular";
 })
 export class ListPage {
   selectedStudent: any;
-  students: Array<{title: string, note: string, icon: string}>;
+  students: Array<Object>;
   signoutStudents: Array<string> = new Array<string>();
   @Input() parentPage: string;
   @Input() userID: number;
@@ -15,41 +17,21 @@ export class ListPage {
   @Output() listCheckedOut: EventEmitter<string> = new EventEmitter<string>();
   @Output() removedStudents: EventEmitter<Array<string>> = new EventEmitter<Array<string>>()
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.selectedStudent = navParams.get('student');
-
-    this.students = [];
-    this.students.push({
-      title: 'Matthew',
-      note: 'checked in at 8:15am',
-      icon: 'man'
+    /*this.studentService.getStudents().then((data) => {
+      this.students = data;
+    });*/
+    this.students = new Array();
+    this.studentService.data.forEach((value, key, map ) =>{
+      this.students.push(value);
     });
-    this.students.push({
-      title: 'Mark',
-      note: 'checked in at 8:05am',
-      icon: 'man'
-    });
-    this.students.push({
-      title: 'Sarah',
-      note: 'checked in at 8:05am',
-      icon: 'woman'
-    });
-    this.students.push({
-      title: 'Laurel',
-      note: 'checked in at 7:55am',
-      icon: 'woman'
-    });
-    this.students.push({
-      title: 'Luke',
-      note: 'checked in at 8:10am',
-      icon: 'man'
-    });
-    this.students.push({
-      title: 'Katie',
-      note: 'checked in at 8:00am',
-      icon: 'woman'
-    });
-
+    
+    console.log(this.students);
+    
+  }
+  
+  ionViewDidLoad(){
   }
 
   revert(studentName:string):void {

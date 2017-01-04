@@ -1,9 +1,11 @@
 import {Component} from "@angular/core";
 import {NavController, NavParams, ToastController} from "ionic-angular";
 import {ClassroomPage} from "../classroom/classroom";
+import {ClassRoomProvider} from "../../providers/class-room-provider";
 import {KitchenPage} from "../kitchen/kitchen";
 import {TherapistPage} from "../therapist/therapist";
 import {AdminPage} from "../admin/admin";
+import {StudentProvider} from "../../providers/student-provider";
 
 
 @Component({
@@ -18,15 +20,44 @@ export class LoginPage {
   adminPage = AdminPage;
   btnPage: string;
   room: any;
+  classrooms: any;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, 
+              public classRoomService: ClassRoomProvider, public studentService: StudentProvider) {
     this.room = navParams.get('room');
+    
+  }
+  
+  ionViewDidLoad(){
+    this.classRoomService.getAllClassRooms().then((data) => {
+      this.classrooms = data;
+    });
   }
 
-  onSelectClassroom(roomNumber) {
-    //console.log(roomNumber);
-    //TODO: here is where we will pass the params of the room number in.
-    this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
+  onSelectClassroom(roomNumber) {    
+    
+    //******************************************************************
+    //testing to see if class room selection works
+    //******************************************************************
+    
+    this.classRoomService.getClassRoomByRoomNumber(String(roomNumber)).then((result: any) =>{
+      if(result){
+        this.studentService.getStudentsByGroup(result.students).then(result =>{
+          this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
+        });
+      } else {
+        //**************** TODO **********
+        //put something in here to alert the user that that classroom doesn't exist
+        //**************** TODO **********
+        
+        alert("invalid room number");
+        console.log("invalid room number");
+      }
+    });
+    
+    //******************************************************************
+    //end classroom selection testing
+    //******************************************************************
   }
 
   toLogin(userRole) {
@@ -70,3 +101,4 @@ export class LoginPage {
     toast.present(toast);
   }
 }
+

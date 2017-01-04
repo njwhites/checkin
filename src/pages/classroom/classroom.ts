@@ -13,6 +13,7 @@ import {SigninPage} from "../signin/signin"
 })
 export class ClassroomPage {
   roomNumber: string;
+  students: string[];
 
   tab0 = SigninPage;
   tab1 = PresentStudentsPage;
@@ -23,6 +24,12 @@ export class ClassroomPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.roomNumber = this.navParams.get('roomNumber');
+    this.students = this.navParams.get('students');
+  }
+
+  ionViewDidLoad() {
+    //console.log("roomNumber: " + this.roomNumber);
+    //console.log("students: " + this.students);
   }
 
 }

@@ -1,0 +1,175 @@
+import { Injectable } from '@angular/core';
+import PouchDB from 'pouchdb';
+
+
+@Injectable()
+export class StudentProvider {
+  data: any;
+  students: Map<String, Object> = new Map<String, Object>();
+  db: any;
+  remote: any;
+
+  constructor() {
+    console.log('Hello StudentProvider Provider');
+    
+    
+    //setup a local db and then sync it to a backend db
+    this.db = new PouchDB('students');
+    
+    this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/students';
+    //this.remote = 'http://localhost:5984/students';
+    let options = {
+      live: true,
+      retry: true,
+      continuous: true
+    };
+    
+    this.db.sync(this.remote, options);
+  }
+  
+  getStudents(){
+    //if this provider already has the data, just return it
+    //future changes to db will be auto synchronized
+    if(this.data){
+      return Promise.resolve(this.data);
+    }
+    
+    //otherwise we should do an initial gathering of docs
+    return new Promise(resolve =>{
+      //start with key 0 and end with any key starting with a 9, this is to dodge other database docs like _view type metadata
+      this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
+        
+        //this.data: any[] = new Array(result.;
+        this.data = [];
+        result.rows.map(row => {
+          this.data[row.doc._id] = (row.doc);
+        });
+        resolve(this.data);
+        
+        
+        //tell the db what to do when it detects a change
+        this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change => {
+          this.handleChange(change);
+        });
+      }).catch(error =>{
+        console.log(error);
+      });
+    });
+  }
+  
+  //do this if students gets large enough that we don't want every classroom to pull all student information
+  getStudentsByGroup(s_ids: String[]){
+    //currently using get all with include docs then filter
+    //could possibly see speed up if we do get all with out docs then filter then bulkget with that set of ids and revs
+    //but probably only see speed up with huge docs
+    let student_ids: Set<String> = new Set<String>(s_ids);
+    
+
+    
+    return new Promise(resolve => {
+      //start with key 0 and end with any key starting with a 9, this is to dodge other database docs like _view type metadata
+      this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
+        this.data = new Map<String, Object>();
+        result.rows.map(row => {
+          if(student_ids.has(row.doc._id)){
+            let tO = Object(row.doc);
+            let tID = String(row.doc._id);
+            this.data.set(tID, tO);
+          }
+        });
+                
+        resolve(this.data);
+      }).catch(error => {
+        console.log(error)
+      });
+    });
+  }
+  
+  //work in progress, development tabled until use case arises
+  /*getStudentByFullName(name){
+    let found = false;
+    
+    for(let row of this.data){
+      if(row.fName+" "+row.lName === name){
+        found = true;
+        return Promise.resolve(row);
+      }
+    }
+    
+    if(!found){}
+  }*/
+  
+  createStudent(student){
+    this.db.post(student);
+  }
+  
+  createStudentByInfo(fName: string, lName: string, loc: string, note: string, icon: string){
+    let newID: string = "-1";
+    
+    //find the next available id number
+    this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
+    
+      result.rows.map(row => {
+        if(Number(newID) <= Number(row._id)) newID = String((Number(row._id) + 1));
+      });
+    
+      //create an object and send it to the db
+      this.db.put({
+        _id: newID,
+        fName: fName,
+        lName: lName,
+        "location": loc,
+        note: note,
+        icon: icon
+      }).catch(err=>{
+        console.log(err)
+      })
+    
+      //return the generated id so that we can let the student know their id, may not be needed
+      return newID;
+    });
+  }
+  
+  updateStudent(student){
+    this.db.put(student).catch(err => {
+      console.log(err);
+    });
+  }
+  
+  updateStudents(students){
+    for(let student in students){
+      this.updateStudent(student);
+    }
+    
+    /* or maybe
+    this.db.bulkDocs(students).catch(err => {
+      console.log(err);
+    });
+    */
+  }
+  
+  deleteStudent(student){
+    this.db.remove(student).catch(err => {
+      console.log(err);
+    });
+  }
+  
+  handleChange(change){
+    let changedDoc = null;
+    let changedIndex = null;
+    
+    //scan the docs for the one that has been changed
+    this.data.forEach((doc, index) =>{
+      if(doc._id === change.id){
+        changedDoc = doc;
+        changedIndex = index;
+      }
+    });
+    
+    if(change.deleted){
+      this.data.delete(changedIndex);
+    } else {
+      this.data.set(changedIndex, change.doc);
+    }
+  }
+}
