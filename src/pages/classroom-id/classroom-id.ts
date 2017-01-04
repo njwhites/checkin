@@ -8,6 +8,7 @@ import {NavController} from 'ionic-angular';
 export class ClassroomIdPage {
   @Input() parentPage: string;
   @Output() notify: EventEmitter<number> = new EventEmitter<number>();
+  @Output() goBack: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(public navCtrl: NavController) {}
 
@@ -36,6 +37,10 @@ export class ClassroomIdPage {
       this.notify.emit(-1);
     }
     userID.value = '';
+  }
+
+  back(){
+    this.goBack.emit("back");
   }
 
 }
