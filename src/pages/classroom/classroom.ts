@@ -25,8 +25,4 @@ export class ClassroomPage {
     this.roomNumber = this.navParams.get('roomNumber');
   }
 
-  // ionViewDidLoad() {
-  //   console.log(this.roomNumber);
-  // }
-
 }

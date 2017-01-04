@@ -63,14 +63,14 @@ export class ListPage {
 
   removeStudents() {
     this.removedStudents.emit(this.signoutStudents);
-    // console.log(this.userID);       this proves that the ID passes
-    // console.log(this.roomNumber);   this proves that the ID passes
+    //console.log(this.userID);       //this proves that the ID passes
+    //console.log(this.roomNumber);   //this proves that the ID passes
   }
 
   addStudents() {
     this.removedStudents.emit(this.signoutStudents);
-    // console.log(this.userID);       this proves that the ID passes
-    // console.log(this.roomNumber);   this proves that the ID passes
+    //console.log(this.userID);       //this proves that the ID passes
+    //console.log(this.roomNumber);   //this proves that the ID passes
   }
 
 }
