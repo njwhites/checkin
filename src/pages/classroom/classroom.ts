@@ -6,7 +6,6 @@ import {TherapyPage} from "../therapy/therapy";
 import {NursePage} from "../nurse/nurse";
 import {SignoutPage} from "../signout/signout"
 import {SigninPage} from "../signin/signin"
-import {CheckinProvider} from "../../providers/checkin-provider"
 
 @Component({
   selector: 'page-classroom',
@@ -23,14 +22,14 @@ export class ClassroomPage {
   tab4 = NursePage;
   tab5 = SignoutPage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public checkinService: CheckinProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.roomNumber = this.navParams.get('roomNumber');
     this.students = this.navParams.get('students');
   }
 
   ionViewDidLoad() {
-    console.log("roomNumber: " + this.roomNumber);
-    console.log("students: " + this.students);
+    //console.log("roomNumber: " + this.roomNumber);
+    //console.log("students: " + this.students);
   }
 
 }

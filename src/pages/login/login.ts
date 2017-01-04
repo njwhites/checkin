@@ -5,6 +5,7 @@ import {ClassRoomProvider} from "../../providers/class-room-provider";
 import {KitchenPage} from "../kitchen/kitchen";
 import {TherapistPage} from "../therapist/therapist";
 import {AdminPage} from "../admin/admin";
+import {StudentProvider} from "../../providers/student-provider";
 
 
 @Component({
@@ -22,7 +23,7 @@ export class LoginPage {
   classrooms: any;
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, 
-              public classRoomService: ClassRoomProvider) {
+              public classRoomService: ClassRoomProvider, public studentService: StudentProvider) {
     this.room = navParams.get('room');
     
   }
@@ -41,8 +42,9 @@ export class LoginPage {
     
     this.classRoomService.getClassRoomByRoomNumber(String(roomNumber)).then((result: any) =>{
       if(result){
-        this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber, students: result.students});
-
+        this.studentService.getStudentsByGroup(result.students).then(result =>{
+          this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
+        });
       } else {
         //**************** TODO **********
         //put something in here to alert the user that that classroom doesn't exist

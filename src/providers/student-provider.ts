@@ -5,6 +5,7 @@ import PouchDB from 'pouchdb';
 @Injectable()
 export class StudentProvider {
   data: any;
+  students: Map<String, Object> = new Map<String, Object>();
   db: any;
   remote: any;
 
@@ -35,11 +36,12 @@ export class StudentProvider {
     
     //otherwise we should do an initial gathering of docs
     return new Promise(resolve =>{
+      //start with key 0 and end with any key starting with a 9, this is to dodge other database docs like _view type metadata
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
         
         //this.data: any[] = new Array(result.;
         this.data = [];
-        let docs = result.rows.map(row => {
+        result.rows.map(row => {
           this.data[row.doc._id] = (row.doc);
         });
         resolve(this.data);
@@ -56,12 +58,35 @@ export class StudentProvider {
   }
   
   //do this if students gets large enough that we don't want every classroom to pull all student information
-  getStudentsByGroup(students: string[]){
+  getStudentsByGroup(s_ids: String[]){
+    //currently using get all with include docs then filter
+    //could possibly see speed up if we do get all with out docs then filter then bulkget with that set of ids and revs
+    //but probably only see speed up with huge docs
+    let student_ids: Set<String> = new Set<String>(s_ids);
     
+
+    
+    return new Promise(resolve => {
+      //start with key 0 and end with any key starting with a 9, this is to dodge other database docs like _view type metadata
+      this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
+        this.data = new Map<String, Object>();
+        result.rows.map(row => {
+          if(student_ids.has(row.doc._id)){
+            let tO = Object(row.doc);
+            let tID = String(row.doc._id);
+            this.data.set(tID, tO);
+          }
+        });
+                
+        resolve(this.data);
+      }).catch(error => {
+        console.log(error)
+      });
+    });
   }
   
   //work in progress, development tabled until use case arises
-  getStudentByFullName(name){
+  /*getStudentByFullName(name){
     let found = false;
     
     for(let row of this.data){
@@ -72,7 +97,7 @@ export class StudentProvider {
     }
     
     if(!found){}
-  }
+  }*/
   
   createStudent(student){
     this.db.post(student);
@@ -142,15 +167,9 @@ export class StudentProvider {
     });
     
     if(change.deleted){
-      this.data.splice(changedIndex, 1);
+      this.data.delete(changedIndex);
     } else {
-      
-      //if changedDoc is set then it must be an update
-      if(changedDoc){
-        this.data[changedIndex] = change.doc;
-      } else {
-        this.data.push(change.doc);
-      }
+      this.data.set(changedIndex, change.doc);
     }
   }
 }

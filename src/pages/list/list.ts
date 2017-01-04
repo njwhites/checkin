@@ -9,7 +9,7 @@ import {StudentProvider} from '../../providers/student-provider';
 })
 export class ListPage {
   selectedStudent: any;
-  students: any;
+  students: Array<Object>;
   signoutStudents: Array<string> = new Array<string>();
   @Input() parentPage: string;
   @Input() userID: number;
@@ -19,14 +19,19 @@ export class ListPage {
 
   constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.selectedStudent = navParams.get('student');
-    this.studentService.getStudents().then((data) => {
+    /*this.studentService.getStudents().then((data) => {
       this.students = data;
+    });*/
+    this.students = new Array();
+    this.studentService.data.forEach((value, key, map ) =>{
+      this.students.push(value);
     });
-    console.log("userID in list: " + this.userID);
+    
+    console.log(this.students);
+    
   }
   
   ionViewDidLoad(){
-    console.log("userID in list after ionViewDidLoad: " + this.userID);
   }
 
   revert(studentName:string):void {

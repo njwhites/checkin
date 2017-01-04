@@ -45,7 +45,6 @@ export class SigninPage {
   }
 
   ionViewDidLoad() {
-    console.log(this.roomNumber);
   }
 
 }
