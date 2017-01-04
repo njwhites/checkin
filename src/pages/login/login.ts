@@ -46,7 +46,7 @@ export class LoginPage {
       }
         } else {
       document.getElementById('enterID').style.display = 'none';
-      document.getElementById('buttonGrid').style.display = 'block';
+      document.getElementById('buttonGrid').style.display = 'flex';
       let toast = this.toastCtrl.create({
         message: 'Invalid ID',
         duration: 1500,
