@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ToastController} from 'ionic-angular';
+import {NavController, ToastController, NavParams} from 'ionic-angular';
 
 @Component({
   selector: 'page-signout',
@@ -7,8 +7,11 @@ import {NavController, ToastController} from 'ionic-angular';
 })
 export class SignoutPage {
   userID: number;
+  roomNumber: string;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {}
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams) {
+    this.roomNumber = this.navParams.data;
+  }
 
   onNotify(idCheck:number):void {
     if(idCheck >= 0) {
