@@ -30,7 +30,7 @@ export class ClassRoomProvider {
         let data = [];
         
         
-        let docs = result.rows.map(row => {
+        result.rows.map(row => {
           data.push(row.doc);
         });
 
