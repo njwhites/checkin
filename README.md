@@ -4,7 +4,7 @@ A Check-In Application for the Sunshine School
 # valid users for testing
 - Driver: 4
 - Nurse: 5
-- Therapis: 6
+- Therapist: 6
 
 # Classroom data flow:
 ## list
