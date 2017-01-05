@@ -21,6 +21,7 @@ export class LoginPage {
   btnPage: string;
   room: any;
   classrooms: any;
+  classroom: any;
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, 
               public classRoomService: ClassRoomProvider, public studentService: StudentProvider) {
