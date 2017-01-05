@@ -36,15 +36,28 @@ export class CheckinProvider {
   getTodaysTransaction(dateString: string){
   	return new Promise((resolve) => {
   		this.db.allDocs({include_docs: true}).then(result => {
+
+      //get today's object, if it does not exist, create it
 	    let trans = result.rows.filter((row) => {
-	    	console.log(row.doc.date);
 	    	return row.doc.date === dateString;
 	    });
-	    if(trans.length > 0){
 
+      //Day already exists in the db
+	    if(trans.length > 0){
 	    	resolve(trans[0].doc);
 	    }else{
-	    	console.log("Creating today's for " + dateString);
+        //Day did not exist, creates and puts it
+        this.db.put({
+          _id: dateString,
+          date: dateString,
+          students: []
+        }).then(response => {
+          //unsure how to do this without recursion. basically since it has been added to the db, 
+          //it will on recursion go into the other part of the if/else
+          return this.getTodaysTransaction(dateString);
+        }).catch(function (err) {
+          console.log(err);
+        });
 	    }
      	}).catch(err =>{
         	console.log(err)
@@ -52,22 +65,23 @@ export class CheckinProvider {
   	})
   }
 
-  getStudent(id: string, doc: any){
+  checkInStudent(id: string, doc: any, by_id: string){
   	let me = doc.students.filter(student => {
   		return student.id + "" === id + "";
   	});
+    //If the student has not interacted yet with checkin today
   	if(me.length < 1){	
 	  	this.db.put({
 	  		_id: doc._id,
 	  		_rev: doc._rev,
 	  		date: doc.date,
-	  		students: [...doc.students, {id:id, events: [{checkin: Date.now()}]}]
+	  		students: [...doc.students, {id:id, events: [{checkin: Date.now(), by_id: by_id}]}]
 	  	})
   	}else{
   		let others = doc.students.filter(student => {
   			return student.id + "" !== id + "";
   		})
-  		me[0].events.push({checkin: Date.now()});
+  		me[0].events.push({checkin: Date.now(), by_id: by_id});
   		this.db.put({
 	  		_id: doc._id,
 	  		_rev: doc._rev,
@@ -78,12 +92,12 @@ export class CheckinProvider {
   	console.log(doc);
   }
 
-  checkinStudent(id: string){
-  	//get today's object, if it does not exist, create it
+  checkinStudent(id: string, by_id: string){
   	let today = new Date();
   	let dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+
   	this.getTodaysTransaction(dateString).then(result => {
-  		this.getStudent(id, result);
+  		this.checkInStudent(id, result, by_id);
   	});
 
   }
