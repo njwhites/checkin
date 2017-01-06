@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
-
+import {StudentModel} from '../models/db-models';
 
 @Injectable()
 export class StudentProvider {
-  data: any;
-  students: Map<String, Object> = new Map<String, Object>();
+  data = new Map<String, StudentModel>();
   db: any;
-  remote: any;
+  remote: String;
 
-  constructor() {
-    console.log('Hello StudentProvider Provider');
-    
+  constructor() {    
     
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('students');
@@ -39,10 +36,8 @@ export class StudentProvider {
       //start with key 0 and end with any key starting with a 9, this is to dodge other database docs like _view type metadata
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
         
-        //this.data: any[] = new Array(result.;
-        this.data = [];
         result.rows.map(row => {
-          this.data[row.doc._id] = (row.doc);
+          this.data.set(row.doc._id, (row.doc));
         });
         resolve(this.data);
         
@@ -58,27 +53,28 @@ export class StudentProvider {
   }
   
   //do this if students gets large enough that we don't want every classroom to pull all student information
-  getStudentsByGroup(s_ids: String[]){
+  getStudentsByGroup(IDs: Array<String>){
     //currently using get all with include docs then filter
     //could possibly see speed up if we do get all with out docs then filter then bulkget with that set of ids and revs
-    //but probably only see speed up with huge docs
-    let student_ids: Set<String> = new Set<String>(s_ids);
-    
+    //but probably only see speed up with huge docs    
 
     
     return new Promise(resolve => {
       //start with key 0 and end with any key starting with a 9, this is to dodge other database docs like _view type metadata
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
-        this.data = new Map<String, Object>();
         result.rows.map(row => {
-          if(student_ids.has(row.doc._id)){
-            let tO = Object(row.doc);
-            let tID = String(row.doc._id);
-            this.data.set(tID, tO);
+          //if the row.doc._id is not in the array of input IDs then it shouldn't be included
+          if(~IDs.indexOf(row.doc._id)){
+            this.data.set(row.doc._id, row.doc);
           }
         });
                 
         resolve(this.data);
+        
+        //tell the db what to do when it detects a change
+        this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change => {
+          this.handleChange(change);
+        });
       }).catch(error => {
         console.log(error)
       });
@@ -99,12 +95,12 @@ export class StudentProvider {
     if(!found){}
   }*/
   
-  createStudent(student){
+  createStudent(student: StudentModel){
     this.db.post(student);
   }
   
-  createStudentByInfo(fName: string, lName: string, loc: string, note: string, icon: string){
-    let newID: string = "-1";
+  createStudentByInfo(fName: String, lName: String, loc: String, note: String, icon: String){
+    let newID: String = "-1";
     
     //find the next available id number
     this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
@@ -114,14 +110,15 @@ export class StudentProvider {
       });
     
       //create an object and send it to the db
-      this.db.put({
-        _id: newID,
-        fName: fName,
-        lName: lName,
-        "location": loc,
-        note: note,
-        icon: icon
-      }).catch(err=>{
+      let student = new StudentModel();
+      student._id = newID;
+      student.fName = fName;
+      student.lName = lName;
+      student.location = loc;
+      student.note = note;
+      student. icon;
+      
+      this.db.put(student).catch(err=>{
         console.log(err)
       })
     
@@ -136,7 +133,7 @@ export class StudentProvider {
     });
   }
   
-  updateStudents(students){
+  updateStudents(students: Array<StudentModel>){
     for(let student in students){
       this.updateStudent(student);
     }
@@ -148,7 +145,7 @@ export class StudentProvider {
     */
   }
   
-  deleteStudent(student){
+  deleteStudent(student: StudentModel){
     this.db.remove(student).catch(err => {
       console.log(err);
     });
