@@ -6,7 +6,7 @@ import {KitchenPage} from "../kitchen/kitchen";
 import {TherapistPage} from "../therapist/therapist";
 import {AdminPage} from "../admin/admin";
 import {StudentProvider} from "../../providers/student-provider";
-
+import {ClassRoomModel} from "../../models/db-models";
 
 @Component({
   selector: 'page-login',
@@ -20,8 +20,7 @@ export class LoginPage {
   adminPage = AdminPage;
   btnPage: string;
   room: any;
-  classrooms: any;
-  classroom: any;
+  classrooms: Array<ClassRoomModel>;
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, 
               public classRoomService: ClassRoomProvider, public studentService: StudentProvider) {
@@ -31,7 +30,7 @@ export class LoginPage {
   
   ionViewDidLoad(){
     this.classRoomService.getAllClassRooms().then((data) => {
-      this.classrooms = data;
+      this.classrooms = <Array<ClassRoomModel>>data;
     });
   }
 
@@ -41,19 +40,13 @@ export class LoginPage {
     //testing to see if class room selection works
     //******************************************************************
     
-    this.classRoomService.getClassRoomByRoomNumber(String(roomNumber)).then((result: any) =>{
-      if(result){
-        this.studentService.getStudentsByGroup(result.students).then(result =>{
-          this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
-        });
-      } else {
-        //**************** TODO **********
-        //put something in here to alert the user that that classroom doesn't exist
-        //**************** TODO **********
-        
-        alert("invalid room number");
-        console.log("invalid room number");
-      }
+    let roomNumberIndex = 0;
+    for (let classroom of this.classrooms){
+      if (classroom.roomNumber === roomNumber) break;
+      roomNumberIndex++;
+    }
+    this.studentService.getStudentsByGroup(this.classrooms[roomNumberIndex].students).then(result =>{
+      this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
     });
     
     //******************************************************************

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
+import {ClassRoomModel} from '../models/db-models';
 
 @Injectable()
 export class ClassRoomProvider {
 
   db: any;
-  remote: any;
+  remote: String;
   
   constructor() {
     console.log('Hello ClassRoomProvider Provider');
@@ -27,21 +28,25 @@ export class ClassRoomProvider {
     return new Promise(resolve =>{
       this.db.allDocs({include_docs: true}).then(result => {
         
-        let data = [];
-        
+        let data = Array<ClassRoomModel>();
         
         result.rows.map(row => {
+          let classroom = new ClassRoomModel();
+          classroom._id = row.doc._id;
+          classroom._rev = row.doc._rev;
+          classroom.roomNumber = row.doc.roomNumber;
+          classroom.students = row.doc.students;
           data.push(row.doc);
         });
 
-        resolve(data);
+        resolve(<Array<ClassRoomModel>>(data));
       }).catch(error =>{
         console.log(error);
       });
     });
   }
   
-  getClassRoomByID(id: string){
+  getClassRoomByID(id: String){
     return new Promise(resolve => {
 
       this.db.get(id).then(doc => {
@@ -53,11 +58,11 @@ export class ClassRoomProvider {
     });
   }
   
-  getClassRoomByRoomNumber(room: string){
+  getClassRoomByRoomNumber(room: String){
     return new Promise(resolve => {
       this.db.allDocs({include_docs: true}).then(result => {
         
-        let classroom: any;
+        let classroom: ClassRoomModel;
         result.rows.forEach((row) => {
           if(row.doc.roomNumber === room) classroom = row.doc;
         })
@@ -68,18 +73,18 @@ export class ClassRoomProvider {
     });
   }
   
-  updateClassRoom(classroom){
+  updateClassRoom(classroom: ClassRoomModel){
     this.db.update(classroom).catch(err => {
       console.log(err)
     });
   }
   
-  addStudentToClass(classroom, student: string){
+  addStudentToClass(classroom: ClassRoomModel, student: String){
     classroom.students.push(student);
     this.updateClassRoom(classroom);
   }
   
-  removeStudentFromClass(classroom, student: string){
+  removeStudentFromClass(classroom: ClassRoomModel, student: String){
     let studentIndex = -1;
     for(let i = 0; i < classroom.students.length; i++ ){
       if(student === classroom.students[i]) studentIndex = i;
@@ -92,7 +97,7 @@ export class ClassRoomProvider {
     }
   }
   
-  deleteClassRoom(classroom){
+  deleteClassRoom(classroom: ClassRoomModel){
     this.db.remove(classroom).catch(err => {
       console.log(err)
     });

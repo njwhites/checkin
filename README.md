@@ -1,6 +1,11 @@
 # checkin
 A Check-In Application for the Sunshine School
 
+# valid users for testing
+- Driver: 4
+- Nurse: 5
+- Therapist: 6
+
 # Classroom data flow:
 ## list
 - This is the only place where the student table needs to be plugged in.

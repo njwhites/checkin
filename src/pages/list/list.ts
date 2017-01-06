@@ -1,7 +1,7 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController, NavParams} from "ionic-angular";
 import {StudentProvider} from '../../providers/student-provider';
-
+import {StudentModel} from '../../models/db-models';
 
 @Component({
   selector: 'page-list',
@@ -9,7 +9,6 @@ import {StudentProvider} from '../../providers/student-provider';
 })
 export class ListPage {
   selectedStudent: any;
-  students: Array<Object>;
   signoutStudents: Array<string> = new Array<string>();
   @Input() parentPage: string;
   @Input() userID: number;
@@ -19,44 +18,43 @@ export class ListPage {
 
   constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.selectedStudent = navParams.get('student');
-    /*this.studentService.getStudents().then((data) => {
-      this.students = data;
-    });*/
-    this.students = new Array();
-    this.studentService.data.forEach((value, key, map ) =>{
-      this.students.push(value);
-    });
-
-    console.log(this.students);
-
   }
 
   ionViewDidLoad(){
   }
 
-  revert(studentName:string):void {
+  revert(studentID:string):void {
     if((this.parentPage !== 'signout') && (this.parentPage !== 'checkin')) {
-      this.listCheckedOut.emit(studentName);
+      //////////////////////////////////////////////////////////////////////////
+      //TODO: put transactions for taking student to nurse or therapist here using the studentID
+      //////////////////////////////////////////////////////////////////////////
+      this.listCheckedOut.emit(studentID);
     } else {
-      this.signoutStudents.push(studentName);
-      console.log("adding to List: " + this.signoutStudents.length);
+      var search = studentID.search(' was removed');
+      if(search === -1) {
+        this.signoutStudents.push(studentID);
+        console.log("adding to List: " + this.signoutStudents.length);
+      } else {
+        var deselectedStudentID = studentID.slice(0, search);
+        console.log(deselectedStudentID + ' is the id');
+        var index = this.signoutStudents.indexOf(deselectedStudentID);
+        if(index !== -1) {
+          this.signoutStudents.splice(index, 1);
+          console.log("removing from List: " + this.signoutStudents.length);
+        }
+      }
+
     }
   }
 
+  //TODO: use the array of studentIDs, this.signoutStudents to checkout students inside this function
   removeStudents() {
     this.removedStudents.emit(this.signoutStudents);
-    //console.log(this.userID);       //this proves that the ID passes
-    //console.log(this.roomNumber);   //this proves that the ID passes
   }
 
+  //TODO: use the array of studentIDs, this.signoutStudents to checkin students inside this function
   addStudents() {
     this.removedStudents.emit(this.signoutStudents);
-    //console.log(this.userID);       //this proves that the ID passes
-    //console.log(this.roomNumber);   //this proves that the ID passes
-  }
-
-  updateNap() {
-    console.log(this.students[0]);
   }
 
 }

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+import { StudentProvider } from './student-provider'
+
 import PouchDB from 'pouchdb';
 
 /*
@@ -13,11 +15,16 @@ import PouchDB from 'pouchdb';
 @Injectable()
 export class CheckinProvider {
 
-
+  CHECK_IN = 'checkin';
+  CHECK_OUT = 'checkout';
+  NURSE_IN = 'checkinByNurse';
+  NURSE_OUT = 'checkoutByNurse';
+  THERAPY_IN = 'checkinByTherapist';
+  THERAPY_OUT = 'checkoutByTherapist';
   db: any;
   remote: any;
 
-  constructor(public http: Http) {
+  constructor(public http: Http, public studentService: StudentProvider) {
     console.log('Hello CheckinProvider Provider');
 
     this.db = new PouchDB('transactions');
@@ -34,6 +41,12 @@ export class CheckinProvider {
   }
 
   getTodaysTransaction(dateString: string){
+    //if not supplied, set to today. format is d.m.y
+    if(dateString === null){
+      let today = new Date();
+      dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;      
+    }
+
   	return new Promise((resolve) => {
   		this.db.allDocs({include_docs: true}).then(result => {
 
@@ -64,42 +77,101 @@ export class CheckinProvider {
     	});
   	})
   }
+  getStudent(id: string, doc: any){
+    let me = doc.students.filter(student => {
+      return student.id + "" === id + "";
+    });
+    //if the student searched for doesnt already exist
+    if(me.length < 1){  
+      this.db.put({
+        _id: doc._id,
+        _rev: doc._rev,
+        date: doc.date,
+        students: [...doc.students, {id:id, events: []}]
+      }).then(response => {
+        //similar recursion to in getTodaysTransaction
+        return this.getStudent(id, doc);
+      }).catch(err => {
+        console.log(err);
+      })
+    }else{
+      return me[0];
+    }
+  }
 
-  checkInStudent(id: string, doc: any, by_id: string){
-  	let me = doc.students.filter(student => {
-  		return student.id + "" === id + "";
-  	});
+  updateStudent(me, doc){
+    //pushes student back to db, changed theoretically
+    let others = doc.students.filter(student => {
+      return student.id + "" !== me.id + "";
+    })
+
+    this.db.put({
+      _id: doc._id,
+      _rev: doc._rev,
+      date: doc.date,
+      students: [...others, me]
+    })
+  
+  }
+  performEvent(id: string, doc: any, by_id: string, event: string){
+
     //If the student has not interacted yet with checkin today
-  	if(me.length < 1){	
-	  	this.db.put({
-	  		_id: doc._id,
-	  		_rev: doc._rev,
-	  		date: doc.date,
-	  		students: [...doc.students, {id:id, events: [{checkin: Date.now(), by_id: by_id}]}]
-	  	})
-  	}else{
-  		let others = doc.students.filter(student => {
-  			return student.id + "" !== id + "";
-  		})
-  		me[0].events.push({checkin: Date.now(), by_id: by_id});
-  		this.db.put({
-	  		_id: doc._id,
-	  		_rev: doc._rev,
-	  		date: doc.date,
-	  		students: [...others, me[0]]
-	  	})
-  	}
-  	console.log(doc);
+    let time = new Date();
+    let dateReadable = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
+    let me = this.getStudent(id, doc);
+    console.log("me");
+    console.log(me);
+		me.events.push({type: event, time: time.getTime(), time_readable: dateReadable, by_id: by_id});
+
+    this.updateStudent(me, doc);
+
   }
 
   checkinStudent(id: string, by_id: string){
-  	let today = new Date();
-  	let dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
-
-  	this.getTodaysTransaction(dateString).then(result => {
-  		this.checkInStudent(id, result, by_id);
+  	this.getTodaysTransaction(null).then(result => {
+  		this.performEvent(id, result, by_id, this.CHECK_IN);      
+      this.studentService.updateStudentLocation(id, "Checked in");
   	});
-
   }
+
+  //naps
+
+  //checkout of school
+  checkoutStudent(id: string, by_id: string){
+    this.getTodaysTransaction(null).then(result => {
+      this.performEvent(id, result, by_id, this.CHECK_OUT);
+      this.studentService.updateStudentLocation(id, "Checked out");
+    });
+  }
+
+  //i/o nurse
+  nurseCheckout(id: string, by_id: string){
+    this.getTodaysTransaction(null).then(result => {
+      this.performEvent(id, result, by_id, this.NURSE_OUT);
+      this.studentService.updateStudentLocation(id, "Nurse checked student out");
+    });
+  }
+
+  nurseCheckin(id: string, by_id: string){
+    this.getTodaysTransaction(null).then(result => {
+      this.performEvent(id, result, by_id, this.NURSE_IN);
+      this.studentService.updateStudentLocation(id, "Checked in");
+    });
+  }
+  //i/o therapist
+  therapistCheckout(id: string, by_id: string){
+    this.getTodaysTransaction(null).then(result => {
+      this.performEvent(id, result, by_id, this.THERAPY_OUT);
+      this.studentService.updateStudentLocation(id, "Therapist checked student out");
+    });
+  }
+
+  therapistCheckin(id: string, by_id: string){
+    this.getTodaysTransaction(null).then(result => {
+      this.performEvent(id, result, by_id, this.THERAPY_IN);      
+      this.studentService.updateStudentLocation(id, "Checked in");
+    });
+  }
+
 
 }
