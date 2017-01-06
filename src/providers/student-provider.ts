@@ -133,6 +133,26 @@ export class StudentProvider {
     });
   }
   
+  updateStudentLocation(ID: String, Location: String){
+    return new Promise(resolve => {
+      //retrieve the student document, we need this because we need revision history
+      this.db.get(ID).then(doc => {
+        doc.location = Location;
+        //update the db with the modified student document
+        this.db.put(doc).catch(err =>{
+          console.log(err);
+        });
+        //return the document incase we need any kind of error checking or resolution
+        resolve(doc);
+      }).catch(err => {
+        console.log(err);
+        let errMessage = new StudentModel();
+        errMessage._id = "missing";
+        resolve(errMessage);
+      });
+    });
+  }
+  
   updateStudents(students: Array<StudentModel>){
     for(let student in students){
       this.updateStudent(student);
