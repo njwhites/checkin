@@ -3,13 +3,13 @@
     <ion-icon name="{{student.icon}}" item-left></ion-icon>
     {{student.fName}} {{student.lName}} {{student._id}}
     <div item-right *ngIf="parentPage === 'presentStudents'">
-      <page-student-info-button [thisStudent]="student"></page-student-info-button>
+      <page-student-info-button [thisStudent]="student._id"></page-student-info-button>
     </div>
     <div item-right *ngIf="parentPage === 'napStudents'">
-      <page-nap-buttons [thisStudent]="student"></page-nap-buttons>
+      <page-nap-buttons [thisStudent]="student._id"></page-nap-buttons>
     </div>
     <div item-right *ngIf="parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'signout' || parentPage === 'checkin'">
-      <page-action-button [thisStudent]="student" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
+      <page-action-button [thisStudent]="student._id" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
     </div>
   </h3>
   <div *ngIf="parentPage === 'signout'">
