@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+import { StudentProvider } from './student-provider'
+
 import PouchDB from 'pouchdb';
 
 /*
@@ -22,7 +24,7 @@ export class CheckinProvider {
   db: any;
   remote: any;
 
-  constructor(public http: Http) {
+  constructor(public http: Http, public studentService: StudentProvider) {
     console.log('Hello CheckinProvider Provider');
 
     this.db = new PouchDB('transactions');
@@ -117,7 +119,8 @@ export class CheckinProvider {
     let time = new Date();
     let dateReadable = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     let me = this.getStudent(id, doc);
-
+    console.log("me");
+    console.log(me);
 		me.events.push({type: event, time: time.getTime(), time_readable: dateReadable, by_id: by_id});
 
     this.updateStudent(me, doc);
@@ -126,7 +129,8 @@ export class CheckinProvider {
 
   checkinStudent(id: string, by_id: string){
   	this.getTodaysTransaction(null).then(result => {
-  		this.performEvent(id, result, by_id, this.CHECK_IN);
+  		this.performEvent(id, result, by_id, this.CHECK_IN);      
+      this.studentService.updateStudentLocation(id, "Checked in");
   	});
   }
 
@@ -136,6 +140,7 @@ export class CheckinProvider {
   checkoutStudent(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.CHECK_OUT);
+      this.studentService.updateStudentLocation(id, "Checked out");
     });
   }
 
@@ -143,24 +148,28 @@ export class CheckinProvider {
   nurseCheckout(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.NURSE_OUT);
+      this.studentService.updateStudentLocation(id, "Nurse checked student out");
     });
   }
 
   nurseCheckin(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.NURSE_IN);
+      this.studentService.updateStudentLocation(id, "Checked in");
     });
   }
   //i/o therapist
   therapistCheckout(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.THERAPY_OUT);
+      this.studentService.updateStudentLocation(id, "Therapist checked student out");
     });
   }
 
   therapistCheckin(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
-      this.performEvent(id, result, by_id, this.THERAPY_IN);
+      this.performEvent(id, result, by_id, this.THERAPY_IN);      
+      this.studentService.updateStudentLocation(id, "Checked in");
     });
   }
 
