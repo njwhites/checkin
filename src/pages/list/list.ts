@@ -9,7 +9,6 @@ import {StudentModel} from '../../models/db-models';
 })
 export class ListPage {
   selectedStudent: any;
-  students: Array<StudentModel>;
   signoutStudents: Array<string> = new Array<string>();
   @Input() parentPage: string;
   @Input() userID: number;
@@ -19,10 +18,6 @@ export class ListPage {
 
   constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.selectedStudent = navParams.get('student');
-    this.students = new Array<StudentModel>();
-    this.studentService.data.forEach((value, key, map ) =>{
-      this.students.push(value);
-    });    
   }
   
   ionViewDidLoad(){

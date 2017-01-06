@@ -1,7 +1,7 @@
 <ion-list inset>
-  <h3 ion-item *ngFor="let student of students">
-    <ion-icon name="{{student.icon}}" item-left></ion-icon>
-    {{student.fName}} {{student.lName}} {{student._id}}
+  <h3 ion-item *ngFor="let student of this.studentService.data | mapValues">
+    <ion-icon name="walk" item-left></ion-icon>
+    {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
     <div item-right *ngIf="parentPage === 'presentStudents'">
       <page-student-info-button [thisStudent]="student"></page-student-info-button>
     </div>
@@ -19,3 +19,4 @@
     <button ion-button full (click)="addStudents()">Check In</button>
   </div>
 </ion-list>
+
