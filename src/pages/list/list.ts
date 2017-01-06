@@ -26,11 +26,11 @@ export class ListPage {
     this.studentService.data.forEach((value, key, map ) =>{
       this.students.push(value);
     });
-    
+
     console.log(this.students);
-    
+
   }
-  
+
   ionViewDidLoad(){
   }
 
@@ -53,6 +53,10 @@ export class ListPage {
     this.removedStudents.emit(this.signoutStudents);
     //console.log(this.userID);       //this proves that the ID passes
     //console.log(this.roomNumber);   //this proves that the ID passes
+  }
+
+  updateNap() {
+    console.log(this.students[0]);
   }
 
 }

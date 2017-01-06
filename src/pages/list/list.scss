@@ -1,3 +1,11 @@
-page-teacher-list {
+page-list {
+  .buttonRow {
+    align-self: center;
+    width: 50%;
+  }
 
+  .listRow {
+    align-self: stretch;
+    width: auto;
+  }
 }

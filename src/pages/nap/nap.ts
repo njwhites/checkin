@@ -13,7 +13,6 @@ export class NapPage {
   }
 
   ionViewDidLoad() {
-    console.log('this.roomNumber');
   }
 
 }
