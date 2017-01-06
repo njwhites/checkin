@@ -1,11 +1,17 @@
 page-list {
-  .buttonRow {
-    align-self: center;
-    width: 50%;
+  .vertical-align-content
+  {
+    //display: flex!important;
+    align-content: center!important;
   }
 
-  .listRow {
-    align-self: stretch;
-    width: auto;
+  .buttonRow {
+    align-self: center;
+    width: 75%;
+  }
+
+  .centerButton {
+    align-self: center;;
+    width: 75%;
   }
 }

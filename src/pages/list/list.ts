@@ -57,4 +57,8 @@ export class ListPage {
     this.removedStudents.emit(this.signoutStudents);
   }
 
+  updateNap(students:StudentProvider) {
+    console.log(students.data);
+  }
+
 }
