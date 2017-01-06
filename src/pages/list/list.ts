@@ -1,7 +1,7 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController, NavParams} from "ionic-angular";
 import {StudentProvider} from '../../providers/student-provider';
-
+import {StudentModel} from '../../models/db-models';
 
 @Component({
   selector: 'page-list',
@@ -9,7 +9,6 @@ import {StudentProvider} from '../../providers/student-provider';
 })
 export class ListPage {
   selectedStudent: any;
-  students: Array<Object>;
   signoutStudents: Array<string> = new Array<string>();
   @Input() parentPage: string;
   @Input() userID: number;
@@ -19,16 +18,6 @@ export class ListPage {
 
   constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.selectedStudent = navParams.get('student');
-    /*this.studentService.getStudents().then((data) => {
-      this.students = data;
-    });*/
-    this.students = new Array();
-    this.studentService.data.forEach((value, key, map ) =>{
-      this.students.push(value);
-    });
-
-    console.log(this.students);
-
   }
 
   ionViewDidLoad(){

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
+import {UserModel} from '../models/db-models';
 
 @Injectable()
 export class UserProvider {
-  
+  data: Array<UserModel>;
   db: any;
-  remote: any;
+  remote: String;
   
   constructor() {
     console.log('Hello UserProvider Provider');
@@ -28,7 +29,7 @@ export class UserProvider {
     return new Promise(resolve =>{
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
         
-        let data = [];
+        let data = Array<UserModel>();
         
         
         result.rows.map(row => {
@@ -42,29 +43,31 @@ export class UserProvider {
     });
   }
   
-  getUserByID(id: string){
+  getUserByID(id: String){
     return new Promise(resolve => {
       
       this.db.get(id).then(doc => {
         resolve(doc);
       }).catch(err => {
         console.log(err);
-        resolve(err);
+        let errMessage = new UserModel();
+        errMessage._id = "missing";
+        resolve(errMessage);
       });
     });
   }
   
   //this will probably not be used, and if it does will need to add id collision checking
-  createUserByDoc(user){
-    this.db.put(user).cactch(err =>{
+  createUserByDoc(user: UserModel){
+    this.db.put(user).catch(err =>{
       console.log(err);
     })
   }
   
   //need to test if return id works, may need to be wrapped as a promise and use resolve
   //need to test if result gets the ids and
-  createUserByInfo(fName: string, lName: string, phone: string, role: string){
-    let newID: string = "-1";
+  createUserByInfo(fName: String, lName: String, phone: String, role: String){
+    let newID: String = "-1";
     
     //find the next available id number
     this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
@@ -74,13 +77,14 @@ export class UserProvider {
       });
     
       //create an object and send it to the db
-      this.db.put({
-        _id: newID,
-        fName: fName,
-        lName: lName,
-        phone: phone,
-        role: role
-      }).catch(err=>{
+      let user = new UserModel();
+      user._id = newID;
+      user.fName = fName;
+      user.lName = lName;
+      user.phone = phone;
+      user.role = role;
+      
+      this.db.put(user).catch(err=>{
         console.log(err)
       })
     
@@ -93,13 +97,13 @@ export class UserProvider {
     
   }
   
-  deleteUserByDoc(user){
+  deleteUserByDoc(user: UserModel){
     this.db.remove(user).catch(err => {
       console.log(err)
     });
   }
   
-  deleteUserByID(ID){
+  deleteUserByID(ID: String){
     this.db.get(ID).then(doc => {
       this.db.remove(doc);
     }).catch(err => {
