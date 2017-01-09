@@ -46,3 +46,26 @@ export class ClassRoomModel{
     
   }
 }
+
+export class TransactionModel{
+  public _id: String;
+  public _rev: String;
+  public date: String;
+  public students: Array<TransactionStudentModel>;
+  
+  constructor(){
+    
+  }
+}
+
+export class TransactionStudentModel{
+  public id: String;
+  public events: Array<TransactionEvent>;
+}
+
+export class TransactionEvent {
+  public time: String;
+  public time_readable: String;
+  public by_id: String;
+  public type: String;
+}

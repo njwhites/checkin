@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 
 import { StudentProvider } from './student-provider'
 
+import { TransactionModel, TransactionStudentModel, TransactionEvent} from '../models/db-models';
+
 import PouchDB from 'pouchdb';
 
 /*
@@ -34,6 +36,8 @@ export class CheckinProvider {
     console.log('Hello CheckinProvider Provider');
 
     this.db = new PouchDB('transactions');
+
+    PouchDB.plugin(require('pouchdb-upsert'));
     
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/transactions';
     //this.remote = 'http://localhost:5984/classrooms';
@@ -56,81 +60,128 @@ export class CheckinProvider {
   	return new Promise((resolve) => {
   		this.db.allDocs({include_docs: true}).then(result => {
 
-      //get today's object, if it does not exist, create it
-	    let trans = result.rows.filter((row) => {
-	    	return row.doc.date === dateString;
-	    });
+        //get today's object, if it does not exist, create it
+  	    let trans = result.rows.filter((row) => {
+  	    	return row.doc.date === dateString;
+  	    });
 
-      //Day already exists in the db
-	    if(trans.length > 0){
-	    	resolve(trans[0].doc);
-	    }else{
-        //Day did not exist, creates and puts it
-        this.db.put({
-          _id: dateString,
-          date: dateString,
-          students: []
-        }).then(response => {
-          //unsure how to do this without recursion. basically since it has been added to the db, 
-          //it will on recursion go into the other part of the if/else
-          return this.getTodaysTransaction(dateString);
-        }).catch(function (err) {
-          console.log(err);
-        });
-	    }
+        //Day already exists in the db
+  	    if(trans.length > 0){
+          let transaction = new TransactionModel();
+          transaction._id = trans[0].doc._id;
+          transaction._rev = trans[0].doc._rev;
+          transaction.date = trans[0].doc.date;
+          transaction.students = trans[0].doc.students;
+  	    	resolve(transaction);
+  	    }else{
+          //Day did not exist, creates and puts it
+          this.db.put({
+            _id: dateString,
+            date: dateString,
+            students: []
+          }).then(response => {
+            //unsure how to do this without recursion. basically since it has been added to the db, 
+            //it will on recursion go into the other part of the if/else
+            resolve(this.getTodaysTransaction(dateString));
+          }).catch(function (err) {
+            console.log(err);
+          });
+  	    }
      	}).catch(err =>{
         	console.log(err)
     	});
   	})
   }
   getStudent(id: string, doc: any){
-    let me = doc.students.filter(student => {
-      return student.id + "" === id + "";
-    });
-    //if the student searched for doesnt already exist
-    if(me.length < 1){  
-      this.db.put({
-        _id: doc._id,
-        _rev: doc._rev,
-        date: doc.date,
-        students: [...doc.students, {id:id, events: []}]
-      }).then(response => {
-        //similar recursion to in getTodaysTransaction
-        return this.getStudent(id, doc);
-      }).catch(err => {
-        console.log(err);
-      })
-    }else{
-      return me[0];
+    function addStudent(doc){
+      doc.students = [...doc.students, {id:id, events: []}];
+      return doc;
     }
+    //if the student searched for doesnt already exist
+    return new Promise(resolve => {
+      let me = doc.students.filter(student => {
+        return student.id + "" === id + "";
+      });
+      if(me.length < 1){  
+        this.db.upsert(doc._id, addStudent).then(response => {
+          //similar recursion to in getTodaysTransaction
+          console.log(response);
+          return this.getTodaysTransaction(doc._id);
+          //return this.getStudent(id, doc);
+        }).then(result => {
+          console.log(result);
+          resolve(this.getStudent(id, result));
+        }).catch(err => {
+          console.log(err);
+        });
+      }else{
+        let student = new TransactionStudentModel();
+        student.id = me[0].id;
+        student.events = me[0].events;
+        console.log("Resolving with student " + student.id)
+        resolve(student);
+      }
+    })
   }
 
-  updateStudent(me, doc){
+  updateStudent(me: TransactionStudentModel, doc){
     //pushes student back to db, changed theoretically
     let others = doc.students.filter(student => {
       return student.id + "" !== me.id + "";
     })
-
-    this.db.put({
-      _id: doc._id,
-      _rev: doc._rev,
-      date: doc.date,
-      students: [...others, me]
+    let i = {
+        id: me.id,
+        events: me.events.map(event => {
+          return {
+            type: event.type,
+            time: event.time,
+            time_readable: event.time_readable,
+            by_id: event.by_id
+          }
+        })
+    }
+    function delta(doc) {
+      doc.students = [...others, i];
+      console.log(doc.students)
+      return doc;
+    }
+    this.db.upsert(doc._id, delta).then(() => {
+      //Success!
+      console.log(`Successfully updated ${me.id}`);
+    }).catch(err => {
+      console.log(err);
     })
+    // this.db.put({
+    //   _id: doc._id,
+    //   _rev: doc._rev,
+    //   date: doc.date,
+    //   students: [...others, i]
+    // })
   
   }
   performEvent(id: string, doc: any, by_id: string, event: string){
 
     //If the student has not interacted yet with checkin today
     let time = new Date();
+
+    console.log(doc._id)
     let dateReadable = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
-    let me = this.getStudent(id, doc);
-    console.log("me");
-    console.log(me);
-		me.events.push({type: event, time: time.getTime(), time_readable: dateReadable, by_id: by_id});
+    this.getStudent(id, doc).then((student: TransactionStudentModel) => {
+      //take the student and do something?
 
-    this.updateStudent(me, doc);
-
+      console.log("me");
+      let tEvent = new TransactionEvent();
+      tEvent.type = event;
+      tEvent.time = time.getTime() +"";
+      tEvent.time_readable = dateReadable;
+      tEvent.by_id = by_id;
+      student.events.push(tEvent);
+      this.getTodaysTransaction(doc._id).then(result => { 
+        this.updateStudent(student, result);
+      })
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   checkinStudent(id: string, by_id: string){
@@ -142,7 +193,7 @@ export class CheckinProvider {
 
   //naps
 
-  //checkout of school
+  //checskout of school
   checkoutStudent(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.CHECK_OUT);
