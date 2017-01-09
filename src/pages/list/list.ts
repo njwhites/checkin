@@ -56,11 +56,19 @@ export class ListPage {
 
   //TODO: use the array of studentIDs, this.signoutStudents to checkout students inside this function
   removeStudents() {
+    var studentID;
+    for(studentID in this.signoutStudents) {
+      this.checkinService.checkoutStudent(studentID, String(this.userID));
+    }
     this.removedStudents.emit(this.signoutStudents);
   }
 
   //TODO: use the array of studentIDs, this.signoutStudents to checkin students inside this function
   addStudents() {
+    var studentID;
+    for(studentID in this.signoutStudents) {
+      this.checkinService.checkinStudent(studentID, String(this.userID));
+    }
     this.removedStudents.emit(this.signoutStudents);
   }
 
