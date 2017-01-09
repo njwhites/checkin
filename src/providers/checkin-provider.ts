@@ -21,6 +21,12 @@ export class CheckinProvider {
   NURSE_OUT = 'checkoutByNurse';
   THERAPY_IN = 'checkinByTherapist';
   THERAPY_OUT = 'checkoutByTherapist';
+
+  CHECKED_OUT = 'Checked out';
+  CHECKED_IN = 'Checked in/In classroom';
+  CHECKED_OUT_THERAPY = 'Therapist checked student out';
+  CHECKED_OUT_NURSE = 'Nurse checked student out';
+
   db: any;
   remote: any;
 
@@ -130,7 +136,7 @@ export class CheckinProvider {
   checkinStudent(id: string, by_id: string){
   	this.getTodaysTransaction(null).then(result => {
   		this.performEvent(id, result, by_id, this.CHECK_IN);      
-      this.studentService.updateStudentLocation(id, "Checked in");
+      this.studentService.updateStudentLocation(id, this.CHECKED_IN);
   	});
   }
 
@@ -140,7 +146,7 @@ export class CheckinProvider {
   checkoutStudent(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.CHECK_OUT);
-      this.studentService.updateStudentLocation(id, "Checked out");
+      this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
     });
   }
 
@@ -148,28 +154,28 @@ export class CheckinProvider {
   nurseCheckout(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.NURSE_OUT);
-      this.studentService.updateStudentLocation(id, "Nurse checked student out");
+      this.studentService.updateStudentLocation(id, this.CHECKED_OUT_NURSE);
     });
   }
 
   nurseCheckin(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.NURSE_IN);
-      this.studentService.updateStudentLocation(id, "Checked in");
+      this.studentService.updateStudentLocation(id, this.CHECKED_IN);
     });
   }
   //i/o therapist
   therapistCheckout(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.THERAPY_OUT);
-      this.studentService.updateStudentLocation(id, "Therapist checked student out");
+      this.studentService.updateStudentLocation(id, this.CHECKED_OUT_THERAPY);
     });
   }
 
   therapistCheckin(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.THERAPY_IN);      
-      this.studentService.updateStudentLocation(id, "Checked in");
+      this.studentService.updateStudentLocation(id, this.CHECKED_IN);
     });
   }
 
