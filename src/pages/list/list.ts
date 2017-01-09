@@ -36,6 +36,8 @@ export class ListPage {
         this.checkinService.nurseCheckout(studentID, String(this.userID));
       }
       this.listCheckedOut.emit(studentID);
+
+
     } else {
       var search = studentID.search(' was removed');
       if(search === -1) {
@@ -43,7 +45,6 @@ export class ListPage {
         console.log("adding to List: " + this.signoutStudents.length);
       } else {
         var deselectedStudentID = studentID.slice(0, search);
-        console.log(deselectedStudentID + ' is the id');
         var index = this.signoutStudents.indexOf(deselectedStudentID);
         if(index !== -1) {
           this.signoutStudents.splice(index, 1);
@@ -55,17 +56,15 @@ export class ListPage {
   }
 
   removeStudents() {
-    var studentID;
-    for(studentID in this.signoutStudents) {
-      this.checkinService.checkoutStudent(studentID, String(this.userID));
+    for(var i = 0; i < this.signoutStudents.length; i++) {
+      this.checkinService.checkoutStudent(this.signoutStudents[i], String(this.userID));
     }
     this.removedStudents.emit(this.signoutStudents);
   }
 
   addStudents() {
-    var studentID;
-    for(studentID in this.signoutStudents) {
-      this.checkinService.checkinStudent(studentID, String(this.userID));
+    for(var i = 0; i < this.signoutStudents.length; i++) {;
+      this.checkinService.checkinStudent(this.signoutStudents[i], String(this.userID));
     }
     this.removedStudents.emit(this.signoutStudents);
   }
