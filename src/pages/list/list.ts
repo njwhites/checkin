@@ -70,8 +70,8 @@ export class ListPage {
     this.removedStudents.emit(this.signoutStudents);
   }
 
-  updateNap(students:StudentProvider) {
-    console.log(students.data);
+  updateNap(napTime, studentId) {
+    console.log(napTime + " " + studentId);
   }
 
 }

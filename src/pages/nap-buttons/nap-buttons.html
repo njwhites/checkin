@@ -1,10 +1,7 @@
 <div class="item item-select">
-  <select>
-    <option value="0">0 Min</option>
-    <option value="15">15 Min</option>
-    <option value="30">30 Min</option>
-    <option value="45">45 Min</option>
-    <option value="60" selected>60 Min</option>
+  <select #selected (change)="updateNap(selected.value)">
+    <option *ngFor="let time of napTimes" [value]="time.value">
+      {{time.text}}
+    </option>
   </select>
 </div>
-

@@ -6,7 +6,7 @@
       <page-student-info-button [thisStudent]="this.studentService.data.get(student.key)._id"></page-student-info-button>
     </div>
     <div item-right *ngIf="parentPage === 'napStudents'">
-      <page-nap-buttons [thisStudent]="this.studentService.data.get(student.key)._id"></page-nap-buttons>
+      <page-nap-buttons [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-buttons>
     </div>
     <div item-right *ngIf="parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'signout' || parentPage === 'checkin'">
       <page-action-button [thisStudent]="this.studentService.data.get(student.key)._id" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
