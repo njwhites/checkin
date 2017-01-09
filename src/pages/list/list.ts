@@ -1,6 +1,7 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController, NavParams} from "ionic-angular";
 import {StudentProvider} from '../../providers/student-provider';
+import {CheckinProvider} from '../../providers/checkin-provider';
 import {StudentModel} from '../../models/db-models';
 
 @Component({
@@ -16,7 +17,7 @@ export class ListPage {
   @Output() listCheckedOut: EventEmitter<string> = new EventEmitter<string>();
   @Output() removedStudents: EventEmitter<Array<string>> = new EventEmitter<Array<string>>()
 
-  constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams, public checkinService: CheckinProvider) {
     this.selectedStudent = navParams.get('student');
   }
 
@@ -25,9 +26,15 @@ export class ListPage {
 
   revert(studentID:string):void {
     if((this.parentPage !== 'signout') && (this.parentPage !== 'checkin')) {
+
       //////////////////////////////////////////////////////////////////////////
-      //TODO: put transactions for taking student to nurse or therapist here using the studentID
+      //Checkout student to therapist
       //////////////////////////////////////////////////////////////////////////
+      if(this.parentPage === 'therapy') {
+        this.checkinService.therapistCheckout(studentID, String(this.userID));
+      } else if(this.parentPage === 'nurse') {
+        this.checkinService.nurseCheckout(studentID, String(this.userID));
+      }
       this.listCheckedOut.emit(studentID);
     } else {
       var search = studentID.search(' was removed');
