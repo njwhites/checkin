@@ -11,6 +11,7 @@ import {StudentModel} from '../../models/db-models';
 export class ListPage {
   selectedStudent: any;
   signoutStudents: Array<string> = new Array<string>();
+  napStudents: Map<string, string> = new Map<string, string>();
   @Input() parentPage: string;
   @Input() userID: number;
   @Input() roomNumber: string;
@@ -36,8 +37,6 @@ export class ListPage {
         this.checkinService.nurseCheckout(studentID, String(this.userID));
       }
       this.listCheckedOut.emit(studentID);
-
-
     } else {
       var search = studentID.search(' was removed');
       if(search === -1) {
@@ -45,6 +44,7 @@ export class ListPage {
         console.log("adding to List: " + this.signoutStudents.length);
       } else {
         var deselectedStudentID = studentID.slice(0, search);
+        console.log(deselectedStudentID + ' is the id');
         var index = this.signoutStudents.indexOf(deselectedStudentID);
         if(index !== -1) {
           this.signoutStudents.splice(index, 1);
@@ -56,21 +56,37 @@ export class ListPage {
   }
 
   removeStudents() {
-    for(var i = 0; i < this.signoutStudents.length; i++) {
-      this.checkinService.checkoutStudent(this.signoutStudents[i], String(this.userID));
+    var studentID;
+    for(studentID in this.signoutStudents) {
+      this.checkinService.checkoutStudent(studentID, String(this.userID));
     }
     this.removedStudents.emit(this.signoutStudents);
   }
 
   addStudents() {
-    for(var i = 0; i < this.signoutStudents.length; i++) {;
-      this.checkinService.checkinStudent(this.signoutStudents[i], String(this.userID));
+    var studentID;
+    for(studentID in this.signoutStudents) {
+      this.checkinService.checkinStudent(studentID, String(this.userID));
     }
     this.removedStudents.emit(this.signoutStudents);
   }
 
   updateNap(napTime, studentId) {
+    this.studentService.data.forEach(student => {
+      console.log(student);
+    })
+    console.log(this.studentService.data.get(studentId)._id);
     console.log(napTime + " " + studentId);
+    this.napStudents.set(String(studentId), napTime);
+  }
+
+  updateAll(){
+    this.studentService.data.forEach(student => {
+      if(!this.napStudents.has(String(student._id))){
+        this.napStudents.set(String(student._id), "60");
+      }
+    })
+    console.log(this.napStudents);
   }
 
 }

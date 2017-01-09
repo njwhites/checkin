@@ -10,11 +10,11 @@ export class NapButtonsPage {
   @Input() thisStudent: any;
   @Output() napTime: EventEmitter<string> = new EventEmitter<string>();
   private napTimes = [
-    {text: "0min", value: 0 },
-    {text: "15mins", value: 15 },
-    {text: "30mins", value: 30 },
-    {text: "45mins", value: 45 },
-    {text: "60mins", value: 60 },
+    {text: "60", value: 60 },
+    {text: "45", value: 45 },
+    {text: "30", value: 30 },
+    {text: "15", value: 15 },
+    {text: "0", value: 0 }
   ]
 
   constructor(public navCtrl: NavController) {}
