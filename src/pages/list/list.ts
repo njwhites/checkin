@@ -74,6 +74,8 @@ export class ListPage {
         this.napStudents.set(String(student._id), "60");
       }
     })
+
+    this.checkinService.setNaps(this.napStudents);
     console.log(this.napStudents);
   }
 

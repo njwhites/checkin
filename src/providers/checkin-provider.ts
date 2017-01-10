@@ -228,14 +228,78 @@ export class CheckinProvider {
         return this.checkinStudents(ids, by_id);
       }else{
         return Promise.resolve(false).then(result => {
-          console.log("Resolved false for some reason");
+          console.log("Check in resolved false for some reason");
         });
       }
     })
 
   }
 
+  setNap(student_id: string, minutes:string){
+
+    return new Promise(resolve => {
+      this.getTodaysTransaction(null).then((doc: TransactionModel) => {       
+        this.getStudent(student_id, doc).then((me: TransactionStudentModel) => {
+          let others = doc.students.filter(student => {
+            return student.id + "" !== me.id + "";
+          })
+          let i = {
+              id: me.id,
+              events: me.events.map(event => {
+                return {
+                  type: event.type,
+                  time: event.time,
+                  time_readable: event.time_readable,
+                  by_id: event.by_id
+                }
+              }),
+              nap: minutes
+          }
+          function delta(doc) {
+            doc.students = [...others, i];
+            //console.log(doc.students);
+            return doc;
+          }
+            this.db.upsert(doc._id, delta).then(() => {
+              //Success!
+              //console.log(`Successfully updated student with id:${me.id}`);
+              resolve(true);
+
+            }).catch(err => {
+              console.log(err);
+            })
+        })
+      })
+    });
+  }
+
   //naps
+  //recieves key value pairs student_id: minutes napped
+  setNaps(map: Map<string, string>){
+    let array = Array.from(map);
+    console.log(array);
+    return this.setNapsHelper(array);
+    // map.forEach((value, key, map) => {
+    //   this.setNap()
+    // })
+  }
+
+  setNapsHelper(array: Array<Array<string>>){
+    if(array.length <= 0){
+      return Promise.resolve(true);
+    }
+
+    var s = array.splice(0,1)[0];
+    this.setNap(s[0], s[1]).then(result => {
+      if(result){
+        return this.setNapsHelper(array);
+      }else{
+        return Promise.resolve(false).then(result => {
+          console.log("Naps resolved false for some reason");
+        });
+      }
+    })
+  }
 
   //checskout of school
   checkoutStudent(id: string, by_id: string){
@@ -262,7 +326,7 @@ export class CheckinProvider {
         return this.checkoutStudents(ids, by_id);
       }else{
         return Promise.resolve(false).then(result => {
-          console.log("Resolved false for some reason");
+          console.log("Checkout resolved false for some reason");
         });
       }
     })
