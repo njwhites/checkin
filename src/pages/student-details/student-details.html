@@ -9,10 +9,12 @@
 
 <ion-content>
   <h3 text-center *ngIf="selectedStudent">
-    {{selectedStudent.title}}
+    {{selectedStudent}}
     <ion-icon [name]="selectedStudent.icon"></ion-icon>
   </h3>
   <h4 text-center *ngIf="selectedStudent">
-    You navigated here from <b>{{selectedStudent.title}}</b>
+    You navigated here from <b>{{selectedStudent}}</b>
   </h4>
+  <!--<h5 text-center *ngFor="let transaction of this.checkinService.data | mapValues">
+  </h5>-->
 </ion-content>
