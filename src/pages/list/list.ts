@@ -55,14 +55,12 @@ export class ListPage {
   }
 
   removeStudents() {
-    for(var i = 0; i < this.signoutStudents.length; i++) {
-      this.checkinService.checkoutStudent(this.signoutStudents[i], String(this.userID));
-    }
+    this.checkinService.checkoutStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
   }
 
   addStudents() {
-    this.checkinService.checkinStudents(this.signoutStudents,String(this.userID));
+    this.checkinService.checkinStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
   }
 

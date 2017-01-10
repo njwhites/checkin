@@ -239,10 +239,34 @@ export class CheckinProvider {
 
   //checskout of school
   checkoutStudent(id: string, by_id: string){
-    this.getTodaysTransaction(null).then(result => {
-      this.performEvent(id, result, by_id, this.CHECK_OUT);
-      this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
+    return new Promise(resolve => {
+      this.getTodaysTransaction(null).then(result => {
+        this.performEvent(id, result, by_id, this.CHECK_OUT).then(result => {
+          this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
+          resolve(true);
+        });      
+      });
     });
+  }
+
+  checkoutStudents(ids: Array<string>, by_id: string){
+    if(ids.length <= 0){
+      return Promise.resolve(true).then(result => {
+
+      });
+    }
+    //pull off the first and recurse on the rest
+    var student = ids.splice(0,1);
+    this.checkoutStudent(student[0], by_id).then(result => {
+      if(result){
+        return this.checkoutStudents(ids, by_id);
+      }else{
+        return Promise.resolve(false).then(result => {
+          console.log("Resolved false for some reason");
+        });
+      }
+    })
+
   }
 
   //i/o nurse
