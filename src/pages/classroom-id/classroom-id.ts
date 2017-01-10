@@ -9,6 +9,7 @@ import {UserModel} from '../../models/db-models';
 })
 export class ClassroomIdPage {
   @Input() parentPage: string;
+  @Input() roomNumber: string;
   @Output() notify: EventEmitter<number> = new EventEmitter<number>();
   @Output() goBack: EventEmitter<string> = new EventEmitter<string>();
 
@@ -16,16 +17,16 @@ export class ClassroomIdPage {
 
   ionViewDidLoad(){
   }
-  
+
   checkUser(userID) {
     let id = Number(userID.value);
-    
+
     //for async all the code needs to be in the .then() of this function
     //getUserByID takes a string and the input to .then() is a single java object that matches that id
     this.userService.getUserByID(userID.value).then((user: UserModel) => {
-      
+
       if(user._id === "missing"){
-        
+
         //**************** TODO **********
         //put something in here to alert the user that that id doesn't exist
         //**************** TODO **********
@@ -48,8 +49,8 @@ export class ClassroomIdPage {
         userID.value = '';
       }
     });
-    
-    
+
+
   }
 
   back(){
