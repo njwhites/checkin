@@ -121,7 +121,7 @@ export class CheckinProvider {
         let student = new TransactionStudentModel();
         student.id = me[0].id;
         student.events = me[0].events;
-        esolve(student);
+        resolve(student);
       }
     })
   }
