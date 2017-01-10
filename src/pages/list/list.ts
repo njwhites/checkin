@@ -56,17 +56,15 @@ export class ListPage {
   }
 
   removeStudents() {
-    var studentID;
-    for(studentID in this.signoutStudents) {
-      this.checkinService.checkoutStudent(studentID, String(this.userID));
+    for(var i = 0; i < this.signoutStudents.length; i++) {
+      this.checkinService.checkoutStudent(this.signoutStudents[i], String(this.userID));
     }
     this.removedStudents.emit(this.signoutStudents);
   }
 
   addStudents() {
-    var studentID;
-    for(studentID in this.signoutStudents) {
-      this.checkinService.checkinStudent(studentID, String(this.userID));
+    for(var i = 0; i < this.signoutStudents.length; i++) {
+      this.checkinService.checkinStudent(this.signoutStudents[i], String(this.userID));
     }
     this.removedStudents.emit(this.signoutStudents);
   }
