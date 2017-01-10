@@ -75,13 +75,16 @@ export class CheckinProvider {
   	    	resolve(transaction);
   	    }else{
           //Day did not exist, creates and puts it
-          this.db.put({
-            _id: dateString,
-            date: dateString,
-            students: []
+          this.db.upsert(dateString, (doc) => {
+            return {
+              _id: dateString,
+              date: dateString,
+              students: []
+            }
           }).then(response => {
             //unsure how to do this without recursion. basically since it has been added to the db, 
             //it will on recursion go into the other part of the if/else
+            console.log("Successfully added transaction for day: " + dateString)
             resolve(this.getTodaysTransaction(dateString));
           }).catch(function (err) {
             console.log(err);
@@ -118,8 +121,7 @@ export class CheckinProvider {
         let student = new TransactionStudentModel();
         student.id = me[0].id;
         student.events = me[0].events;
-        //console.log("Resolving with student " + student.id)
-        resolve(student);
+        esolve(student);
       }
     })
   }
@@ -140,17 +142,23 @@ export class CheckinProvider {
           }
         })
     }
+    //console.log(i);
     function delta(doc) {
       doc.students = [...others, i];
-      //console.log(doc.students)
+      //console.log(doc.students);
       return doc;
     }
-    this.db.upsert(doc._id, delta).then(() => {
-      //Success!
-      //console.log(`Successfully updated ${me.id}`);
-    }).catch(err => {
-      console.log(err);
-    })
+    return new Promise(resolve => {
+      this.db.upsert(doc._id, delta).then(() => {
+        //Success!
+        //console.log(`Successfully updated student with id:${me.id}`);
+        resolve(true);
+
+      }).catch(err => {
+        console.log(err);
+      })
+    });
+
     // this.db.put({
     //   _id: doc._id,
     //   _rev: doc._rev,
@@ -162,33 +170,69 @@ export class CheckinProvider {
   performEvent(id: string, doc: any, by_id: string, event: string){
 
     //If the student has not interacted yet with checkin today
-    let time = new Date();
+    return new Promise(resolve => {
+      let time = new Date();
 
-    //console.log(doc._id)
-    let dateReadable = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
-    this.getStudent(id, doc).then((student: TransactionStudentModel) => {
-      //take the student and do something?
+      //console.log(doc._id)
+      let dateReadable = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
+      this.getStudent(id, doc).then((student: TransactionStudentModel) => {
+        //take the student and do something?
 
-      //console.log("me");
-      let tEvent = new TransactionEvent();
-      tEvent.type = event;
-      tEvent.time = time.getTime() +"";
-      tEvent.time_readable = dateReadable;
-      tEvent.by_id = by_id;
-      student.events.push(tEvent);
-      this.getTodaysTransaction(doc._id).then(result => { 
-        this.updateStudent(student, result);
-      })
-    }).catch(err => {
-      console.log(err);
-    });
+        //console.log("me");
+        let tEvent = new TransactionEvent();
+        tEvent.type = event;
+        tEvent.time = time.getTime() +"";
+        tEvent.time_readable = dateReadable;
+        tEvent.by_id = by_id;
+        student.events.push(tEvent);
+        this.getTodaysTransaction(doc._id).then(result => { 
+          this.updateStudent(student, result).then(updateResult => {
+            resolve(true);
+          }).catch(err => {
+            console.log(err);
+            resolve(false);
+          });
+        }).catch(err => {
+            console.log(err);
+            resolve(false);
+           });
+      }).catch(err => {
+        console.log(err);
+        resolve(false);
+      });
+    })
+
   }
 
   checkinStudent(id: string, by_id: string){
-  	this.getTodaysTransaction(null).then(result => {
-  		this.performEvent(id, result, by_id, this.CHECK_IN);      
-      this.studentService.updateStudentLocation(id, this.CHECKED_IN);
-  	});
+    return new Promise(resolve => {
+      this.getTodaysTransaction(null).then(result => {
+        this.performEvent(id, result, by_id, this.CHECK_IN).then(result => {
+          this.studentService.updateStudentLocation(id, this.CHECKED_IN);
+          resolve(true);
+        });      
+      });
+    })
+  }
+  //Promise that resolves as true or false
+  checkinStudents(ids: Array<string>, by_id: string){
+    if(ids.length <= 0){
+      return Promise.resolve(true).then(result => {
+
+      });
+    }
+    //pull off the first and recurse on the rest
+    var student = ids.splice(0,1);
+    this.checkinStudent(student[0], by_id).then(result => {
+      if(result){
+        return this.checkinStudents(ids, by_id);
+      }else{
+        return Promise.resolve(false).then(result => {
+          console.log("Resolved false for some reason");
+        });
+      }
+    })
+
   }
 
   //naps

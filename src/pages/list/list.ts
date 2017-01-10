@@ -40,14 +40,14 @@ export class ListPage {
       var search = studentID.search(' was removed');
       if(search === -1) {
         this.signoutStudents.push(studentID);
-        console.log("adding to List: " + this.signoutStudents.length);
+        console.log("adding to List: " + studentID);
       } else {
         var deselectedStudentID = studentID.slice(0, search);
         console.log(deselectedStudentID + ' is the id');
         var index = this.signoutStudents.indexOf(deselectedStudentID);
         if(index !== -1) {
           this.signoutStudents.splice(index, 1);
-          console.log("removing from List: " + this.signoutStudents.length);
+          console.log("removing from List: " + studentID);
         }
       }
 
@@ -62,9 +62,7 @@ export class ListPage {
   }
 
   addStudents() {
-    for(var i = 0; i < this.signoutStudents.length; i++) {
-      this.checkinService.checkinStudent(this.signoutStudents[i], String(this.userID));
-    }
+    this.checkinService.checkinStudents(this.signoutStudents,String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
   }
 
