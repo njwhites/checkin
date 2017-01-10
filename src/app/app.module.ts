@@ -22,7 +22,9 @@ import {CheckinProvider} from "../providers/checkin-provider";
 import {KitchenPage} from "../pages/kitchen/kitchen";
 import {TherapistPage} from "../pages/therapist/therapist";
 import {AdminPage} from "../pages/admin/admin";
-import {MapValuesPipe} from "../map-values";
+import {MapValuesPipe} from "../pipes/map-values";
+import {signInPipe} from "../pipes/sign-in-pipe";
+import {signOutPipe} from "../pipes/sign-out-pipe";
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import {MapValuesPipe} from "../map-values";
     KitchenPage,
     TherapistPage,
     AdminPage,
-    MapValuesPipe
+    MapValuesPipe,
+    signInPipe,
+    signOutPipe
   ],
   imports: [
     IonicModule.forRoot(MyApp)

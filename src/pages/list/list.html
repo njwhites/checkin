@@ -1,32 +1,79 @@
 <ion-list inset>
-  <h3 ion-item *ngFor="let student of this.studentService.data | mapValues">
-    <ion-icon name="walk" item-left></ion-icon>
-    {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
-    <div item-right *ngIf="parentPage === 'presentStudents'">
-      <page-student-info-button [thisStudent]="this.studentService.data.get(student.key)._id" [thisStudentLocation]="this.studentService.data.get(student.key).location"></page-student-info-button>
-    </div>
-    <div item-right *ngIf="parentPage === 'napStudents'">
-      <page-nap-buttons [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-buttons>
-    </div>
-    <div item-right *ngIf="parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'signout' || parentPage === 'checkin'">
-      <page-action-button [thisStudent]="this.studentService.data.get(student.key)._id" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
-    </div>
-  </h3>
+  <div *ngIf="parentPage === 'presentStudents'">
+    <h3 ion-item *ngFor="let student of this.studentService.data | mapValues">
+      <ion-icon name="walk" item-left></ion-icon>
+      {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
+      <div item-right>
+        <page-student-info-button [thisStudent]="this.studentService.data.get(student.key)._id" [thisStudentLocation]="this.studentService.data.get(student.key).location"></page-student-info-button>
+      </div>
+    </h3>
+  </div>
+
+  <div *ngIf="parentPage === 'napStudents'">
+    <h3 ion-item *ngFor="let student of this.studentService.data | mapValues">
+      <ion-icon name="walk" item-left></ion-icon>
+      {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
+      <div item-right>
+        <page-nap-buttons [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-buttons>
+      </div>
+    </h3>
+  </div>
+
+  <div *ngIf="parentPage === 'therapy'">
+    <h3 ion-item *ngFor="let student of this.studentService.data | mapValues">
+      <ion-icon name="walk" item-left></ion-icon>
+      {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
+      <div item-right>
+        <page-action-button [thisStudent]="this.studentService.data.get(student.key)._id" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
+      </div>
+    </h3>
+  </div>
+
+  <div *ngIf="parentPage === 'nurse'">
+    <h3 ion-item *ngFor="let student of this.studentService.data | mapValues">
+      <ion-icon name="walk" item-left></ion-icon>
+      {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
+      <div item-right>
+        <page-action-button [thisStudent]="this.studentService.data.get(student.key)._id" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
+      </div>
+    </h3>
+  </div>
+
+  <div *ngIf="parentPage === 'signout'">
+    <h3 ion-item *ngFor="let student of this.studentService.data | mapValues | signOut">
+      <ion-icon name="walk" item-left></ion-icon>
+      {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
+      <div item-right>
+        <page-action-button [thisStudent]="this.studentService.data.get(student.key)._id" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
+      </div>
+    </h3>
+  </div>
+
+  <div *ngIf="parentPage === 'checkin'">
+    <h3 ion-item *ngFor="let student of this.studentService.data | mapValues | signIn">
+      <ion-icon name="walk" item-left></ion-icon>
+      {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
+      <div item-right>
+        <page-action-button [thisStudent]="this.studentService.data.get(student.key)._id" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
+      </div>
+    </h3>
+  </div>
+
 </ion-list>
 <div class="vertical-align-content">
-<ion-grid>
-  <ion-row class="buttonRow">
-    <ion-col>
-      <div *ngIf="parentPage === 'signout'">
-        <button ion-button block (click)="removeStudents()">Checkout</button>
-      </div>
-      <div *ngIf="parentPage === 'checkin'">
-        <button ion-button block (click)="addStudents()">Check In</button>
-      </div>
-      <div *ngIf="parentPage === 'napStudents'">
-        <button ion-button block (click)="updateAll(this.studentService)">Update</button>
-      </div>
-    </ion-col>
-  </ion-row>
-</ion-grid>
-<div>
+  <ion-grid>
+    <ion-row class="buttonRow">
+      <ion-col>
+        <div *ngIf="parentPage === 'signout'">
+          <button ion-button block (click)="removeStudents()">Checkout</button>
+        </div>
+        <div *ngIf="parentPage === 'checkin'">
+          <button ion-button block (click)="addStudents()">Check In</button>
+        </div>
+        <div *ngIf="parentPage === 'napStudents'">
+          <button ion-button block (click)="updateAll(this.studentService)">Update</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div>
