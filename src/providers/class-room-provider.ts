@@ -7,12 +7,11 @@ export class ClassRoomProvider {
 
   db: any;
   remote: String;
-  
+
   constructor() {
-    console.log('Hello ClassRoomProvider Provider');
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('classrooms');
-    
+
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/classrooms';
     //this.remote = 'http://localhost:5984/classrooms';
     let options = {
@@ -20,23 +19,18 @@ export class ClassRoomProvider {
       retry: true,
       continuous: true
     };
-    
+
     this.db.sync(this.remote, options);
   }
-  
+
   getAllClassRooms(){
     return new Promise(resolve =>{
       this.db.allDocs({include_docs: true}).then(result => {
-        
+
         let data = Array<ClassRoomModel>();
-        
+
         result.rows.map(row => {
-          let classroom = new ClassRoomModel();
-          classroom._id = row.doc._id;
-          classroom._rev = row.doc._rev;
-          classroom.roomNumber = row.doc.roomNumber;
-          classroom.students = row.doc.students;
-          data.push(row.doc);
+          data.push(<ClassRoomModel>row.doc);
         });
 
         resolve(<Array<ClassRoomModel>>(data));
@@ -45,7 +39,7 @@ export class ClassRoomProvider {
       });
     });
   }
-  
+
   getClassRoomByID(id: String){
     return new Promise(resolve => {
 
@@ -57,11 +51,11 @@ export class ClassRoomProvider {
       });
     });
   }
-  
+
   getClassRoomByRoomNumber(room: String){
     return new Promise(resolve => {
       this.db.allDocs({include_docs: true}).then(result => {
-        
+
         let classroom: ClassRoomModel;
         result.rows.forEach((row) => {
           if(row.doc.roomNumber === room) classroom = row.doc;
@@ -72,18 +66,19 @@ export class ClassRoomProvider {
       });
     });
   }
-  
+
   updateClassRoom(classroom: ClassRoomModel){
-    this.db.update(classroom).catch(err => {
-      console.log(err)
-    });
+    // this.db.update(classroom).catch(err => {
+    //   console.log(err)
+    // });
+    this.db.upsert(classroom._id, (()=>{return classroom}));
   }
-  
+
   addStudentToClass(classroom: ClassRoomModel, student: String){
     classroom.students.push(student);
     this.updateClassRoom(classroom);
   }
-  
+
   removeStudentFromClass(classroom: ClassRoomModel, student: String){
     let studentIndex = -1;
     for(let i = 0; i < classroom.students.length; i++ ){
@@ -96,7 +91,7 @@ export class ClassRoomProvider {
       this.updateClassRoom(classroom);
     }
   }
-  
+
   deleteClassRoom(classroom: ClassRoomModel){
     this.db.remove(classroom).catch(err => {
       console.log(err)

@@ -32,3 +32,8 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+bower_components/platform.js/.bower.json
+bower_components/platform.js/bower.json
+bower_components/platform.js/yarn.lock
+bower_components/platform.js/LICENSE
+bower_components/platform.js/platform.js
