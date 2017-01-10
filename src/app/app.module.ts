@@ -23,8 +23,6 @@ import {KitchenPage} from "../pages/kitchen/kitchen";
 import {TherapistPage} from "../pages/therapist/therapist";
 import {AdminPage} from "../pages/admin/admin";
 import {MapValuesPipe} from "../pipes/map-values";
-import {signInPipe} from "../pipes/sign-in-pipe";
-import {signOutPipe} from "../pipes/sign-out-pipe";
 
 @NgModule({
   declarations: [
@@ -46,9 +44,7 @@ import {signOutPipe} from "../pipes/sign-out-pipe";
     KitchenPage,
     TherapistPage,
     AdminPage,
-    MapValuesPipe,
-    signInPipe,
-    signOutPipe
+    MapValuesPipe
   ],
   imports: [
     IonicModule.forRoot(MyApp)
