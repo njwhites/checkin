@@ -72,11 +72,6 @@ export class ListPage {
   }
 
   updateNap(napTime, studentId) {
-    this.studentService.data.forEach(student => {
-      console.log(student);
-    })
-    console.log(this.studentService.data.get(studentId)._id);
-    console.log(napTime + " " + studentId);
     this.napStudents.set(String(studentId), napTime);
   }
 

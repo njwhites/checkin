@@ -3,7 +3,7 @@
     <ion-icon name="walk" item-left></ion-icon>
     {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
     <div item-right *ngIf="parentPage === 'presentStudents'">
-      <page-student-info-button [thisStudent]="this.studentService.data.get(student.key)._id"></page-student-info-button>
+      <page-student-info-button [thisStudent]="this.studentService.data.get(student.key)._id" [thisStudentLocation]="this.studentService.data.get(student.key).location"></page-student-info-button>
     </div>
     <div item-right *ngIf="parentPage === 'napStudents'">
       <page-nap-buttons [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-buttons>

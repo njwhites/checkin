@@ -8,6 +8,7 @@ import {StudentDetailsPage} from '../student-details/student-details'
 })
 export class StudentInfoButtonPage {
   @Input() thisStudent: any;
+  @Input() thisStudentLocation: any;
 
   constructor(public navCtrl: NavController) {}
 
