@@ -105,11 +105,11 @@ export class CheckinProvider {
       if(me.length < 1){  
         this.db.upsert(doc._id, addStudent).then(response => {
           //similar recursion to in getTodaysTransaction
-          console.log(response);
+          //console.log(response);
           return this.getTodaysTransaction(doc._id);
           //return this.getStudent(id, doc);
         }).then(result => {
-          console.log(result);
+          //console.log(result);
           resolve(this.getStudent(id, result));
         }).catch(err => {
           console.log(err);
@@ -118,7 +118,7 @@ export class CheckinProvider {
         let student = new TransactionStudentModel();
         student.id = me[0].id;
         student.events = me[0].events;
-        console.log("Resolving with student " + student.id)
+        //console.log("Resolving with student " + student.id)
         resolve(student);
       }
     })
@@ -142,12 +142,12 @@ export class CheckinProvider {
     }
     function delta(doc) {
       doc.students = [...others, i];
-      console.log(doc.students)
+      //console.log(doc.students)
       return doc;
     }
     this.db.upsert(doc._id, delta).then(() => {
       //Success!
-      console.log(`Successfully updated ${me.id}`);
+      //console.log(`Successfully updated ${me.id}`);
     }).catch(err => {
       console.log(err);
     })
@@ -164,12 +164,12 @@ export class CheckinProvider {
     //If the student has not interacted yet with checkin today
     let time = new Date();
 
-    console.log(doc._id)
+    //console.log(doc._id)
     let dateReadable = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     this.getStudent(id, doc).then((student: TransactionStudentModel) => {
       //take the student and do something?
 
-      console.log("me");
+      //console.log("me");
       let tEvent = new TransactionEvent();
       tEvent.type = event;
       tEvent.time = time.getTime() +"";
