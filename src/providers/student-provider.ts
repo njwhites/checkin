@@ -175,6 +175,26 @@ export class StudentProvider {
     });
   }
 
+  checkoutAllStudents(){
+    let studentDocs = new Array<StudentModel>();
+    this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
+
+      result.rows.map(row => {
+        row.doc.location = "Checked out";
+        studentDocs.push(row.doc);
+      });
+
+      console.log(studentDocs);
+
+      this.db.bulkDocs(studentDocs).catch(err=>{
+        console.log(err);
+      });
+
+    }).catch(error =>{
+      console.log(error);
+    });
+  }
+
   //Maybe add some methods for directly accessing the data object?
 
 
