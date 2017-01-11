@@ -40,14 +40,11 @@ export class ListPage {
       var search = studentID.search(' was removed');
       if(search === -1) {
         this.signoutStudents.push(studentID);
-        console.log("adding to List: " + studentID);
       } else {
         var deselectedStudentID = studentID.slice(0, search);
-        console.log(deselectedStudentID + ' is the id');
         var index = this.signoutStudents.indexOf(deselectedStudentID);
         if(index !== -1) {
           this.signoutStudents.splice(index, 1);
-          console.log("removing from List: " + studentID);
         }
       }
 

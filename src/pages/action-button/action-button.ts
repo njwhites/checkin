@@ -34,23 +34,19 @@ export class ActionButtonPage {
     //this is where the userID will be linked with thisStudent to to associate who is out with whom
   }
 
-  deselectStudent() {
-    var checkoutBtn = document.getElementById('checkoutButton_' + this.thisStudent);
+  signinDeselectStudent() {
     var checkinBtn = document.getElementById('checkinButton_' + this.thisStudent);
     var selectedBtn = document.getElementById('selectedButton_' + this.thisStudent);
-    var outSelectedBtn = document.getElementById('outSelectedButton_' + this.thisStudent);
-    if(checkoutBtn.style.display = 'none') {
-      console.log("Checkout Button");
-      checkoutBtn.style.display = 'block';
-      outSelectedBtn.style.display = 'none';
-    }
-    if(checkinBtn.style.display = 'none') {
-      checkinBtn.style.display = 'block';
-      selectedBtn.style.display = 'none';
-    }
-
-
+    checkinBtn.style.display = 'block';
+    selectedBtn.style.display = 'none';
     this.checkedOut.emit(this.thisStudent + ' was removed');
   }
 
+  signoutDeselectStudent() {
+    var checkoutBtn = document.getElementById('checkoutButton_' + this.thisStudent);
+    var outSelectedBtn = document.getElementById('outSelectedButton_' + this.thisStudent);
+    checkoutBtn.style.display = 'block';
+    outSelectedBtn.style.display = 'none';
+    this.checkedOut.emit(this.thisStudent + ' was removed');
+  }
 }
