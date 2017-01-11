@@ -38,7 +38,7 @@ export class CheckinProvider {
     this.db = new PouchDB('transactions');
 
     PouchDB.plugin(require('pouchdb-upsert'));
-    
+
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/transactions';
     //this.remote = 'http://localhost:5984/classrooms';
     let options = {
@@ -46,7 +46,7 @@ export class CheckinProvider {
       retry: true,
       continuous: true
     };
-    
+
     this.db.sync(this.remote, options);
   }
 
@@ -54,7 +54,7 @@ export class CheckinProvider {
     //if not supplied, set to today. format is d.m.y
     if(dateString === null){
       let today = new Date();
-      dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;      
+      dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
     }
 
   	return new Promise((resolve) => {
@@ -82,7 +82,7 @@ export class CheckinProvider {
               students: []
             }
           }).then(response => {
-            //unsure how to do this without recursion. basically since it has been added to the db, 
+            //unsure how to do this without recursion. basically since it has been added to the db,
             //it will on recursion go into the other part of the if/else
             console.log("Successfully added transaction for day: " + dateString)
             resolve(this.getTodaysTransaction(dateString));
@@ -107,7 +107,7 @@ export class CheckinProvider {
       let me = doc.students.filter(student => {
         return student.id + "" === id + "";
       });
-      if(me.length < 1){  
+      if(me.length < 1){
         this.db.upsert(doc._id, addStudent).then(response => {
           //similar recursion to in getTodaysTransaction
           //console.log(response);
@@ -167,7 +167,7 @@ export class CheckinProvider {
     //   date: doc.date,
     //   students: [...others, i]
     // })
-  
+
   }
   performEvent(id: string, doc: any, by_id: string, event: string){
 
@@ -176,7 +176,20 @@ export class CheckinProvider {
       let time = new Date();
 
       //console.log(doc._id)
-      let dateReadable = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
+      let mins: string;
+      let am_pm = "AM";
+      let hours = String(time.getHours());
+      if (time.getHours() > 12){
+        hours = String(time.getHours() - 12);
+        am_pm = "PM";
+      }
+      if (time.getMinutes() < 10){
+        mins = "0" + String(time.getMinutes());
+      }
+      else {
+        mins = String(time.getMinutes());
+      }      
+      let dateReadable = `${hours}:${mins} ${am_pm}`;
       this.getStudent(id, doc).then((student: TransactionStudentModel) => {
         //take the student and do something?
 
@@ -187,7 +200,7 @@ export class CheckinProvider {
         tEvent.time_readable = dateReadable;
         tEvent.by_id = by_id;
         student.events.push(tEvent);
-        this.getTodaysTransaction(doc._id).then(result => { 
+        this.getTodaysTransaction(doc._id).then(result => {
           this.updateStudent(student, result).then(updateResult => {
             resolve(true);
           }).catch(err => {
@@ -211,7 +224,7 @@ export class CheckinProvider {
   setNap(student_id: string, minutes:string){
 
     return new Promise(resolve => {
-      this.getTodaysTransaction(null).then((doc: TransactionModel) => {       
+      this.getTodaysTransaction(null).then((doc: TransactionModel) => {
         this.getStudent(student_id, doc).then((me: TransactionStudentModel) => {
           let others = doc.students.filter(student => {
             return student.id + "" !== me.id + "";
@@ -280,7 +293,7 @@ export class CheckinProvider {
     //else -> result is equal to an array of TransactionEvents
   //})
   getTransactionsById(studentId: string, date: any){
-    return new Promise((resolve, reject) => {     
+    return new Promise((resolve, reject) => {
       this.getTodaysTransaction(date).then(result => {
          this.getStudent(studentId, result).then((student: TransactionStudentModel) => {
             resolve(student.events);
@@ -293,7 +306,7 @@ export class CheckinProvider {
   }
 
   clearTransactionsForDate(date:any){
-    return new Promise((resolve, reject) => {     
+    return new Promise((resolve, reject) => {
       this.getTodaysTransaction(date).then((result: any) => {
         this.db.upsert(result._id, (doc) => {
           doc.students = [];
@@ -314,7 +327,7 @@ export class CheckinProvider {
         this.performEvent(id, result, by_id, this.CHECK_IN).then(result => {
           this.studentService.updateStudentLocation(id, this.CHECKED_IN);
           resolve(true);
-        });      
+        });
       });
     })
   }
@@ -354,7 +367,7 @@ export class CheckinProvider {
         this.performEvent(id, result, by_id, this.CHECK_OUT).then(result => {
           this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
           resolve(true);
-        });      
+        });
       });
     });
   }
@@ -410,7 +423,7 @@ export class CheckinProvider {
 
   therapistCheckin(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
-      this.performEvent(id, result, by_id, this.THERAPY_IN);      
+      this.performEvent(id, result, by_id, this.THERAPY_IN);
       this.studentService.updateStudentLocation(id, this.CHECKED_IN);
     });
   }
