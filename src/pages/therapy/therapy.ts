@@ -35,12 +35,14 @@ export class TherapyPage {
     list.style.display = 'none';
     var login = document.getElementById('enterIDTherapy');
     login.style.display = 'block';
-    let toast = this.toastCtrl.create({
-      message: studentName + ' is off to therapy',
-      duration: 2000,
-      position: 'bottom'
-    });
-    toast.present(toast);
+    if(studentName !== 'back') {
+      let toast = this.toastCtrl.create({
+        message: studentName + ' is off to therapy',
+        duration: 2000,
+        position: 'bottom'
+      });
+      toast.present(toast);
+    }
   }
 
 }

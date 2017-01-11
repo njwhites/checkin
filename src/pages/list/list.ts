@@ -79,4 +79,16 @@ export class ListPage {
     console.log(this.napStudents);
   }
 
+  undo(){
+    this.userID = null;
+    this.signoutStudents.length = 0;
+    if (this.parentPage === ('checkin' || 'signout')) {
+      this.signoutStudents.push("back");
+      this.removedStudents.emit(this.signoutStudents);
+    } else {
+      this.selectedStudent = '';
+      this.listCheckedOut.emit("back");
+    }
+  }
+
 }

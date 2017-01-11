@@ -35,12 +35,14 @@ export class NursePage {
     list.style.display = 'none';
     var login = document.getElementById('enterIDNurse');
     login.style.display = 'block';
-    let toast = this.toastCtrl.create({
-      message: studentName + ' is off to the nurse',
-      duration: 2000,
-      position: 'bottom'
-    });
-    toast.present(toast);
+    if(studentName !== 'back') {
+      let toast = this.toastCtrl.create({
+        message: studentName + ' is off to the nurse',
+        duration: 2000,
+        position: 'bottom'
+      });
+      toast.present(toast);
+    }
   }
 
 }

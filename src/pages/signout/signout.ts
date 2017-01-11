@@ -35,12 +35,14 @@ export class SignoutPage {
     list.style.display = 'none';
     var login = document.getElementById('enterIDSignout');
     login.style.display = 'block';
-    let toast = this.toastCtrl.create({
-      message: students.length + ' student(s) checked out!',
-      duration: 2000,
-      position: 'bottom'
-    });
-    toast.present(toast);
+    if(students[0] !== 'back') {
+      let toast = this.toastCtrl.create({
+        message: students.length + ' student(s) checked out!',
+        duration: 2000,
+        position: 'bottom'
+      });
+      toast.present(toast);
+    }
   }
 
 }

@@ -13,7 +13,7 @@ export class SigninPage {
     this.roomNumber = navParams.data;
   }
 
-  
+
   onNotify(idCheck:number):void {
     if(idCheck >= 0) {
       this.userID = idCheck;
@@ -36,12 +36,14 @@ export class SigninPage {
     list.style.display = 'none';
     var login = document.getElementById('enterIDSignin');
     login.style.display = 'block';
-    let toast = this.toastCtrl.create({
-      message: students.length + ' student(s) checked in!',
-      duration: 2000,
-      position: 'bottom'
-    });
-    toast.present(toast);
+    if(students[0] !== 'back') {
+      let toast = this.toastCtrl.create({
+        message: students.length + ' student(s) checked in!',
+        duration: 2000,
+        position: 'bottom'
+      });
+      toast.present(toast);
+    }
   }
 
   ionViewDidLoad() {

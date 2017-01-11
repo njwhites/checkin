@@ -97,6 +97,9 @@
         <div *ngIf="parentPage === 'napStudents'">
           <button ion-button block (click)="updateAll(this.studentService)">Update</button>
         </div>
+        <div *ngIf="parentPage !== ('presentStudents' || 'napStudents')">
+          <button ion-button block (click)="undo()">Back</button>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
