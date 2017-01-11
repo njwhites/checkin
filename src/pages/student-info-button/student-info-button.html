@@ -1,1 +1,13 @@
-<button ion-button id="infoButton" color="default" small (click)="displayInfo()">{{this.thisStudentLocation}}</button>
+
+<div *ngIf="this.thisStudentLocation == 'Checked in/In classroom'">
+  <button ion-button id="infoButton" color="default" small (click)="displayInfo()" icon-center outline><ion-icon name="home"></ion-icon></button>
+</div>
+<div *ngIf="this.thisStudentLocation == 'Checked out'">
+  <button ion-button id="infoButton" color="default" small (click)="displayInfo()" icon-center outline><ion-icon name="send"></ion-icon></button>
+</div>
+<div *ngIf="this.thisStudentLocation == 'Therapist checked student out'">
+  <button ion-button id="infoButton" color="default" small (click)="displayInfo()" icon-center outline><ion-icon name="briefcase"></ion-icon></button>
+</div>
+<div *ngIf="this.thisStudentLocation == 'Nurse checked student out'">
+  <button ion-button id="infoButton" color="default" small (click)="displayInfo()" icon-center outline><ion-icon name="medical"></ion-icon></button>
+</div>
