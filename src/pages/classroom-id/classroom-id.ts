@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController, ToastController} from 'ionic-angular';
 import {UserProvider} from '../../providers/user-provider';
 import {UserModel} from '../../models/db-models';
 
@@ -13,7 +13,7 @@ export class ClassroomIdPage {
   @Output() notify: EventEmitter<number> = new EventEmitter<number>();
   @Output() goBack: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(public navCtrl: NavController, public userService: UserProvider) {}
+  constructor(public navCtrl: NavController, public userService: UserProvider, public toastCtrl: ToastController) {}
 
   ionViewDidLoad(){
   }
@@ -27,11 +27,12 @@ export class ClassroomIdPage {
 
       if(user._id === "missing"){
 
-        //**************** TODO **********
-        //put something in here to alert the user that that id doesn't exist
-        //**************** TODO **********
-        alert("invalid user id");
-        console.log("invalid user id");
+        let toast = this.toastCtrl.create({
+          message: 'Invalid User ID',
+          duration: 2000,
+          position: 'bottom'
+        });
+        toast.present(toast);
       } else {
         //I split up inputs so we can eventually look to see if each userId is authorized for the transaction
         //user.role can be used to identify permissions
