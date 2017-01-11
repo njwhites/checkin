@@ -315,6 +315,23 @@ export class CheckinProvider {
             resolve(student.events);
          })
       }).catch(err => {
+        console.log(err);
+        resolve(false);
+      })
+    })
+  }
+
+  clearTransactionsForDate(date:any){
+    return new Promise(resolve => {     
+      this.getTodaysTransaction(date).then((result: any) => {
+        this.db.upsert(result._id, (doc) => {
+          doc.students = [];
+          return doc;
+        }).then(result => {
+          resolve(true);
+        })
+      }).catch(err => {
+        console.log(err);
         resolve(false);
       })
     })
