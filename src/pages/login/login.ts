@@ -121,8 +121,5 @@ export class LoginPage {
     toast.present(toast);
   }
 
-  resetTodayHelper(){
-      this.studentService.checkoutAllStudents();
-      this.checkinService.clearTransactionsForDate(null);
-  }
+
 }
