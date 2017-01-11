@@ -54,11 +54,13 @@ export class ListPage {
   removeStudents() {
     this.checkinService.checkoutStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
+    this.signoutStudents.length = 0;
   }
 
   addStudents() {
     this.checkinService.checkinStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
+    this.signoutStudents.length = 0;
   }
 
   updateNap(napTime, studentId) {
