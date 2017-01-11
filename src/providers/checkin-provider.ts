@@ -206,36 +206,7 @@ export class CheckinProvider {
 
   }
 
-  checkinStudent(id: string, by_id: string){
-    return new Promise(resolve => {
-      this.getTodaysTransaction(null).then(result => {
-        this.performEvent(id, result, by_id, this.CHECK_IN).then(result => {
-          this.studentService.updateStudentLocation(id, this.CHECKED_IN);
-          resolve(true);
-        });      
-      });
-    })
-  }
-  //Promise that resolves as true or false
-  checkinStudents(ids: Array<string>, by_id: string){
-    if(ids.length <= 0){
-      return Promise.resolve(true).then(result => {
 
-      });
-    }
-    //pull off the first and recurse on the rest
-    var student = ids.splice(0,1);
-    this.checkinStudent(student[0], by_id).then(result => {
-      if(result){
-        return this.checkinStudents(ids, by_id);
-      }else{
-        return Promise.reject(false).then(result => {
-          console.log("Check in resolved false for some reason");
-        });
-      }
-    })
-
-  }
 
   setNap(student_id: string, minutes:string){
 
@@ -337,6 +308,45 @@ export class CheckinProvider {
     })
   }
 
+  checkinStudent(id: string, by_id: string){
+    return new Promise(resolve => {
+      this.getTodaysTransaction(null).then(result => {
+        this.performEvent(id, result, by_id, this.CHECK_IN).then(result => {
+          this.studentService.updateStudentLocation(id, this.CHECKED_IN);
+          resolve(true);
+        });      
+      });
+    })
+  }
+  //Promise that resolves as true or false
+  checkinStudents(ids: Array<string>, by_id: string){
+
+    //creates local copy
+    let s_ids = ids.map((value)=>{
+      return value;
+    })
+    return this.checkinStudentHelper(s_ids, by_id);
+  }
+
+  checkinStudentHelper(ids, by_id){
+    if(ids.length <= 0){
+      return Promise.resolve(true).then(result => {
+
+      });
+    }
+    //pull off the first and recurse on the rest
+    var student = ids.splice(0,1);
+    this.checkinStudent(student[0], by_id).then(result => {
+      if(result){
+        return this.checkinStudents(ids, by_id);
+      }else{
+        return Promise.reject(false).then(result => {
+          console.log("Check in resolved false for some reason");
+        });
+      }
+    })
+  }
+
   //checskout of school
   checkoutStudent(id: string, by_id: string){
     return new Promise(resolve => {
@@ -350,6 +360,14 @@ export class CheckinProvider {
   }
 
   checkoutStudents(ids: Array<string>, by_id: string){
+    //creates local copy
+    let s_ids = ids.map((value)=>{
+      return value;
+    })
+    return this.checkoutStudentHelper(s_ids, by_id);
+  }
+
+  checkoutStudentHelper(ids, by_id){
     if(ids.length <= 0){
       return Promise.resolve(true).then(result => {
 
@@ -366,7 +384,6 @@ export class CheckinProvider {
         });
       }
     })
-
   }
 
   //i/o nurse
