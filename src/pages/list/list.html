@@ -1,7 +1,7 @@
 <ion-list inset>
   <div *ngIf="parentPage === 'presentStudents'">
     <div *ngFor="let student of this.studentService.data | mapValues">
-      <div> <!--This is where ngIf will go-->
+      <div  *ngIf="this.studentService.data.get(student.key).location !== 'Checked out'">
         <h3 ion-item>
           <ion-icon name="walk" item-left></ion-icon>
           {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
@@ -15,7 +15,7 @@
 
   <div *ngIf="parentPage === 'napStudents'">
     <div *ngFor="let student of this.studentService.data | mapValues">
-      <div>
+      <div *ngIf="this.studentService.data.get(student.key).location !== ('Checked out' || 'Therapist checked student out')">
         <h3 ion-item>
           <ion-icon name="walk" item-left></ion-icon>
           {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
@@ -29,7 +29,7 @@
 
   <div *ngIf="parentPage === 'therapy'">
     <div *ngFor="let student of this.studentService.data | mapValues">
-      <div>
+      <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out'">
         <h3 ion-item>
           <ion-icon name="walk" item-left></ion-icon>
           {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
@@ -43,7 +43,7 @@
 
   <div *ngIf="parentPage === 'nurse'">
     <div *ngFor="let student of this.studentService.data | mapValues">
-      <div>
+      <div *ngIf="this.studentService.data.get(student.key).location !== ('Checked out' || 'Therapist checked student out')">
         <h3 ion-item>
           <ion-icon name="walk" item-left></ion-icon>
           {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
