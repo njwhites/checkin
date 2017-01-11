@@ -8,7 +8,7 @@ import {CheckinProvider} from '../../providers/checkin-provider';
 })
 export class StudentDetailsPage {
   @Input() selectedStudent: any;
-  transactions: Array<string> = new Array<string>();
+  transactions: Array<any> = new Array<any>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public checkinService: CheckinProvider) {
     // If we navigated to this page, we will have a student available as a nav param

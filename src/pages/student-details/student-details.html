@@ -40,7 +40,7 @@
           </div>
           <div *ngIf="transaction.type === 'checkoutByTherapist'">
             <ion-icon name="briefcase" item-left></ion-icon>
-            Checked Out By Therapist at {{getTime(transaction.time_readable)}}
+            Checked Out By Therapist at {{transaction.time_readable}}
           </div>
         </h3>
     </div>
