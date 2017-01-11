@@ -95,6 +95,8 @@ export class CheckinProvider {
     	});
   	})
   }
+
+
   getStudent(id: string, doc: any){
     function addStudent(doc){
       doc.students = [...doc.students, {id:id, events: []}];
@@ -283,7 +285,7 @@ export class CheckinProvider {
     //   this.setNap()
     // })
   }
-
+  //Recursive helper
   setNapsHelper(array: Array<Array<string>>){
     if(array.length <= 0){
       return Promise.resolve(true);
@@ -298,6 +300,23 @@ export class CheckinProvider {
           console.log("Naps resolved false for some reason");
         });
       }
+    })
+  }
+
+  //Pass date as d.m.yyyy or null for today
+  //.getTransactionsById("4", null).then(result => {
+    //if(result === false) -> this means it didnt work
+    //else -> result is equal to an array of TransactionEvents
+  //})
+  getTransactionsById(studentId: string, date: any){
+    return new Promise(resolve => {     
+      this.getTodaysTransaction(date).then(result => {
+         this.getStudent(studentId, result).then((student: TransactionStudentModel) => {
+            resolve(student.events);
+         })
+      }).catch(err => {
+        resolve(false);
+      })
     })
   }
 
