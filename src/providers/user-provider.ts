@@ -23,6 +23,10 @@ export class UserProvider {
     this.db.sync(this.remote, options);
   }
 
+  forceInit(){
+    console.log("user provider force init");
+  }
+
   getAllUsers(){
     if(this.data) return Promise.resolve(this.data);
 

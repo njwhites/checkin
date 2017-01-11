@@ -23,6 +23,10 @@ export class ClassRoomProvider {
     this.db.sync(this.remote, options);
   }
 
+  forceInit(){
+    console.log("classroom provider force init");
+  }
+
   getAllClassRooms(){
     return new Promise(resolve =>{
       this.db.allDocs({include_docs: true}).then(result => {

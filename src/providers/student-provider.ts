@@ -24,6 +24,10 @@ export class StudentProvider {
     this.db.sync(this.remote, options);
   }
 
+  forceInit(){
+    console.log("student provider force init");
+  }
+
 //I don't think this will be used and if it is it needs to be updated as it will make this.data inconsistent with getStudentsByGroup
   getStudents(){
     //if this provider already has the data, just return it
@@ -187,6 +191,8 @@ export class StudentProvider {
       console.log(studentDocs);
 
       this.db.bulkDocs(studentDocs).catch(err=>{
+        console.log(err);
+      }).catch(err=>{
         console.log(err);
       });
 

@@ -1,11 +1,12 @@
 import {Component} from "@angular/core";
-import {NavController, NavParams, ToastController} from "ionic-angular";
+import {NavController, NavParams, ToastController, LoadingController} from "ionic-angular";
 import {ClassroomPage} from "../classroom/classroom";
-import {ClassRoomProvider} from "../../providers/class-room-provider";
 import {KitchenPage} from "../kitchen/kitchen";
 import {TherapistPage} from "../therapist/therapist";
 import {AdminPage} from "../admin/admin";
+import {ClassRoomProvider} from "../../providers/class-room-provider";
 import {StudentProvider} from "../../providers/student-provider";
+import {UserProvider} from "../../providers/user-provider";
 import {ClassRoomModel} from "../../models/db-models";
 
 @Component({
@@ -22,33 +23,56 @@ export class LoginPage {
   room: any;
   classrooms: Array<ClassRoomModel>;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, 
-              public classRoomService: ClassRoomProvider, public studentService: StudentProvider) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public loadingcontroller: LoadingController,
+              public classRoomService: ClassRoomProvider, public studentService: StudentProvider, public userService: UserProvider) {
     this.room = navParams.get('room');
-    
-  }
-  
-  ionViewDidLoad(){
-    this.classRoomService.getAllClassRooms().then((data) => {
-      this.classrooms = <Array<ClassRoomModel>>data;
+    //try to estabilish an initial connection to db's
+    this.classRoomService.forceInit();
+    this.studentService.forceInit();
+    this.userService.forceInit();
+    let loader = loadingcontroller.create({
+      content: "Loading your app now!",
+      duration: 3000
     });
+    loader.onDidDismiss(()=>{
+      this.classRoomService.getAllClassRooms().then((data) =>{
+        this.classrooms = <Array<ClassRoomModel>>data;
+      });
+    })
+    loader.present();
+
   }
 
-  onSelectClassroom(roomNumber) {    
-    
+  ionViewDidLoad(){
+
+    // this.classRoomService.getAllClassRooms().then((data) => {
+    //   this.classrooms = <Array<ClassRoomModel>>data;
+    // });
+  }
+
+  onSelectClassroom(roomNumber) {
+
     //******************************************************************
     //testing to see if class room selection works
     //******************************************************************
-    
-    let roomNumberIndex = 0;
-    for (let classroom of this.classrooms){
-      if (classroom.roomNumber === roomNumber) break;
-      roomNumberIndex++;
+    if(roomNumber){
+      let roomNumberIndex = 0;
+      for (let classroom of this.classrooms){
+        if (classroom.roomNumber === roomNumber) break;
+        roomNumberIndex++;
+      }
+      this.studentService.getStudentsByGroup(this.classrooms[roomNumberIndex].students).then(result =>{
+        this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
+      });
+    } else{
+      let toast = this.toastCtrl.create({
+        message: "Please select a room",
+        position: "bottom",
+        duration: 3000
+      })
+      toast.present();
     }
-    this.studentService.getStudentsByGroup(this.classrooms[roomNumberIndex].students).then(result =>{
-      this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
-    });
-    
+
     //******************************************************************
     //end classroom selection testing
     //******************************************************************
@@ -95,4 +119,3 @@ export class LoginPage {
     toast.present(toast);
   }
 }
-
