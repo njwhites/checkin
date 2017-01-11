@@ -7,6 +7,7 @@ import {AdminPage} from "../admin/admin";
 import {ClassRoomProvider} from "../../providers/class-room-provider";
 import {StudentProvider} from "../../providers/student-provider";
 import {UserProvider} from "../../providers/user-provider";
+import {CheckinProvider} from "../../providers/checkin-provider";
 import {ClassRoomModel} from "../../models/db-models";
 
 @Component({
@@ -24,7 +25,8 @@ export class LoginPage {
   classrooms: Array<ClassRoomModel>;
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public loadingcontroller: LoadingController,
-              public classRoomService: ClassRoomProvider, public studentService: StudentProvider, public userService: UserProvider) {
+              public classRoomService: ClassRoomProvider, public studentService: StudentProvider, public userService: UserProvider,
+              public checkinService: CheckinProvider) {
     this.room = navParams.get('room');
     //try to estabilish an initial connection to db's
     this.classRoomService.forceInit();
@@ -117,5 +119,10 @@ export class LoginPage {
     });
 
     toast.present(toast);
+  }
+
+  resetTodayHelper(){
+      this.studentService.checkoutAllStudents();
+      this.checkinService.clearTransactionsForDate(null);
   }
 }
