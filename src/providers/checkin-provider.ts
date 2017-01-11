@@ -172,7 +172,7 @@ export class CheckinProvider {
   performEvent(id: string, doc: any, by_id: string, event: string){
 
     //If the student has not interacted yet with checkin today
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       let time = new Date();
 
       //console.log(doc._id)
@@ -192,15 +192,15 @@ export class CheckinProvider {
             resolve(true);
           }).catch(err => {
             console.log(err);
-            resolve(false);
+            reject(false);
           });
         }).catch(err => {
             console.log(err);
-            resolve(false);
+            reject(false);
            });
       }).catch(err => {
         console.log(err);
-        resolve(false);
+        reject(false);
       });
     })
 
@@ -229,7 +229,7 @@ export class CheckinProvider {
       if(result){
         return this.checkinStudents(ids, by_id);
       }else{
-        return Promise.resolve(false).then(result => {
+        return Promise.reject(false).then(result => {
           console.log("Check in resolved false for some reason");
         });
       }
@@ -309,20 +309,20 @@ export class CheckinProvider {
     //else -> result is equal to an array of TransactionEvents
   //})
   getTransactionsById(studentId: string, date: any){
-    return new Promise(resolve => {     
+    return new Promise((resolve, reject) => {     
       this.getTodaysTransaction(date).then(result => {
          this.getStudent(studentId, result).then((student: TransactionStudentModel) => {
             resolve(student.events);
          })
       }).catch(err => {
         console.log(err);
-        resolve(false);
+        reject(err);
       })
     })
   }
 
   clearTransactionsForDate(date:any){
-    return new Promise(resolve => {     
+    return new Promise((resolve, reject) => {     
       this.getTodaysTransaction(date).then((result: any) => {
         this.db.upsert(result._id, (doc) => {
           doc.students = [];
@@ -332,7 +332,7 @@ export class CheckinProvider {
         })
       }).catch(err => {
         console.log(err);
-        resolve(false);
+        reject(err);
       })
     })
   }
@@ -361,7 +361,7 @@ export class CheckinProvider {
       if(result){
         return this.checkoutStudents(ids, by_id);
       }else{
-        return Promise.resolve(false).then(result => {
+        return Promise.reject(false).then(result => {
           console.log("Checkout resolved false for some reason");
         });
       }
