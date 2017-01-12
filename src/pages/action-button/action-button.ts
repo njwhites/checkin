@@ -9,9 +9,12 @@ export class ActionButtonPage {
   @Input() thisStudent: string;
   @Input() userID: number;
   @Input() grandParentPage: string;
+  @Input() studentLocation: string;
   @Output() checkedOut: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController) {
+    this.studentLocation = '';
+  }
 
   //TODO: the click toggle only works for the first element in the list. make it work for all. most likely will need to use thisStudent instead of ID for lookup
   checkoutStudent() {
@@ -32,6 +35,10 @@ export class ActionButtonPage {
     selectedBtn.style.display = 'block';
     this.checkedOut.emit(this.thisStudent);
     //this is where the userID will be linked with thisStudent to to associate who is out with whom
+  }
+
+  TNcheckinStudent() {
+    this.checkedOut.emit(this.thisStudent + " returned");
   }
 
   signinDeselectStudent() {

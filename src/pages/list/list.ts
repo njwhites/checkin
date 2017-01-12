@@ -25,19 +25,31 @@ export class ListPage {
   }
 
   revert(studentID:string):void {
+    var search;
     if((this.parentPage !== 'signout') && (this.parentPage !== 'checkin')) {
-
-      //////////////////////////////////////////////////////////////////////////
-      //Checkout student to therapist
-      //////////////////////////////////////////////////////////////////////////
       if(this.parentPage === 'therapy') {
-        this.checkinService.therapistCheckout(studentID, String(this.userID));
+        ////////////////////////////////////////////////////////////////////////
+        //Checkout student to therapist
+        ////////////////////////////////////////////////////////////////////////
+        //console.log(studentID);
+        search = studentID.search(' returned');
+        if(search === -1) {
+          console.log("search returned -1");
+          this.checkinService.therapistCheckout(studentID, String(this.userID));
+        } else {
+          var returnedStudent = studentID.slice(0, search);
+          console.log(returnedStudent + " is returned student");
+          this.checkinService.therapistCheckin(String(returnedStudent), String(this.userID));
+        }
       } else if(this.parentPage === 'nurse') {
+        ////////////////////////////////////////////////////////////////////////
+        //Checkout student to nurse
+        ////////////////////////////////////////////////////////////////////////
         this.checkinService.nurseCheckout(studentID, String(this.userID));
       }
       this.listCheckedOut.emit(studentID);
     } else {
-      var search = studentID.search(' was removed');
+      search = studentID.search(' was removed');
       if(search === -1) {
         this.signoutStudents.push(studentID);
       } else {

@@ -40,12 +40,23 @@
 
   <div *ngIf="parentPage === 'therapy'">
     <div *ngFor="let student of this.studentService.data | mapValues">
-      <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out'">
+      <div *ngIf="this.studentService.data.get(student.key).location === 'Therapist checked student out'">
         <h3 ion-item>
           <ion-icon name="walk" item-left></ion-icon>
           {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
           <div item-right>
-            <page-action-button [thisStudent]="this.studentService.data.get(student.key)._id" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
+            <page-action-button [thisStudent]="this.studentService.data.get(student.key)._id" [userID]="this.userID" [studentLocation]="this.studentService.data.get(student.key).location" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
+          </div>
+        </h3>
+      </div>
+    </div>
+    <div *ngFor="let student of this.studentService.data | mapValues">
+      <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out' && this.studentService.data.get(student.key).location !==  'Therapist checked student out'">
+        <h3 ion-item>
+          <ion-icon name="walk" item-left></ion-icon>
+          {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
+          <div item-right>
+            <page-action-button [thisStudent]="this.studentService.data.get(student.key)._id" [userID]="this.userID" [studentLocation]="this.studentService.data.get(student.key).location" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
           </div>
         </h3>
       </div>
