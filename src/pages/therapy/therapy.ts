@@ -36,12 +36,23 @@ export class TherapyPage {
     var login = document.getElementById('enterIDTherapy');
     login.style.display = 'block';
     if(studentName !== 'back') {
-      let toast = this.toastCtrl.create({
-        message: studentName + ' is off to therapy',
-        duration: 2000,
-        position: 'bottom'
-      });
-      toast.present(toast);
+      var search = studentName.search(' returned');
+      if(search === -1) {
+        let toast = this.toastCtrl.create({
+          message: studentName + ' is off to therapy',
+          duration: 2000,
+          position: 'bottom'
+        });
+        toast.present(toast);
+      } else {
+        var sid = studentName.slice(0, search);
+        let toast = this.toastCtrl.create({
+          message: sid + ' returned from therapy',
+          duration: 2000,
+          position: 'bottom'
+        });
+        toast.present(toast);
+      }
     }
   }
 
