@@ -27,25 +27,35 @@ export class ListPage {
   revert(studentID:string):void {
     var search;
     if((this.parentPage !== 'signout') && (this.parentPage !== 'checkin')) {
+      var returnedStudent;
       if(this.parentPage === 'therapy') {
-        ////////////////////////////////////////////////////////////////////////
-        //Checkout student to therapist
-        ////////////////////////////////////////////////////////////////////////
-        //console.log(studentID);
         search = studentID.search(' returned');
         if(search === -1) {
-          console.log("search returned -1");
+          //////////////////////////////////////////////////////////////////////
+          //Checkout student to therapist
+          //////////////////////////////////////////////////////////////////////
           this.checkinService.therapistCheckout(studentID, String(this.userID));
         } else {
-          var returnedStudent = studentID.slice(0, search);
-          console.log(returnedStudent + " is returned student");
+          //////////////////////////////////////////////////////////////////////
+          //Checkin student to classroom from therapist
+          //////////////////////////////////////////////////////////////////////
+          returnedStudent = studentID.slice(0, search);
           this.checkinService.therapistCheckin(String(returnedStudent), String(this.userID));
         }
       } else if(this.parentPage === 'nurse') {
-        ////////////////////////////////////////////////////////////////////////
-        //Checkout student to nurse
-        ////////////////////////////////////////////////////////////////////////
-        this.checkinService.nurseCheckout(studentID, String(this.userID));
+        search = studentID.search(' returned');
+        if(search === -1) {
+          ////////////////////////////////////////////////////////////////////////
+          //Checkout student to nurse
+          ////////////////////////////////////////////////////////////////////////
+          this.checkinService.nurseCheckout(studentID, String(this.userID));
+        } else {
+          //////////////////////////////////////////////////////////////////////
+          //Checkin student to classroom from nurse
+          //////////////////////////////////////////////////////////////////////
+          returnedStudent = studentID.slice(0, search);
+          this.checkinService.nurseCheckin(String(returnedStudent), String(this.userID));
+        }
       }
       this.listCheckedOut.emit(studentID);
     } else {
