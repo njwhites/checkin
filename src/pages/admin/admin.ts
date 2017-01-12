@@ -9,4 +9,8 @@ export class AdminPage {
 
   constructor(public navCtrl: NavController) {}
 
+  normalizeToday() {
+    console.log("time to get normal");
+  }
+
 }
