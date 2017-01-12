@@ -10,6 +10,7 @@ import {CheckinProvider} from '../../providers/checkin-provider';
 export class ListPage {
   selectedStudent: any;
   emptyList: boolean;
+  buttonsLoaded: boolean;
   signoutStudents: Array<string> = new Array<string>();
   napStudents: Map<string, string> = new Map<string, string>();
   @Input() parentPage: string;
@@ -21,6 +22,7 @@ export class ListPage {
   constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams, public checkinService: CheckinProvider) {
     this.selectedStudent = navParams.get('student');
     this.emptyList = true;
+    this.buttonsLoaded = false;
   }
 
   ionViewDidLoad(){
@@ -116,7 +118,12 @@ export class ListPage {
 
   //TODO: if students are checked in after page is loaded then error is thrown
   itemInserted() {
-    this.emptyList = false;
+    if (!this.buttonsLoaded){
+      this.emptyList = false;
+    }
+  }
+  buttonsLoad() {
+    this.buttonsLoaded = true;
   }
 
 }
