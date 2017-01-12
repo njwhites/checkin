@@ -5,6 +5,7 @@ import {StudentModel} from '../models/db-models';
 @Injectable()
 export class StudentProvider {
   data: Map<String, StudentModel>;
+  private roomRoster: Array<String>;
   db: any;
   remote: String;
 
@@ -61,7 +62,7 @@ export class StudentProvider {
     //currently using get all with include docs then filter
     //could possibly see speed up if we do get all with out docs then filter then bulkget with that set of ids and revs
     //but probably only see speed up with huge docs
-    if(this.data) return Promise.resolve(this.data);
+    this.roomRoster = IDs;
 
     return new Promise(resolve => {
       this.data = new Map<String, StudentModel>();
@@ -69,7 +70,7 @@ export class StudentProvider {
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
         result.rows.map(row => {
           //if the row.doc._id is not in the array of input IDs then it shouldn't be included
-          if(~IDs.indexOf(row.doc._id)){
+          if(~this.roomRoster.indexOf(row.doc._id)){
             this.data.set(row.doc._id, row.doc);
           }
         });
@@ -207,19 +208,23 @@ export class StudentProvider {
   handleChange(change){
     let changedDoc = null;
     let changedIndex = null;
+    
 
-    //scan the docs for the one that has been changed
-    this.data.forEach((doc, index) =>{
-      if(doc._id === change.id){
-        changedDoc = doc;
-        changedIndex = index;
+
+    if(~this.roomRoster.indexOf(change.id)){
+      //scan the docs for the one that has been changed
+      this.data.forEach((doc, index) =>{
+        if(doc._id === change.id){
+          changedDoc = doc;
+          changedIndex = index;
+        }
+      });
+
+      if(change.deleted){
+        this.data.delete(changedIndex);
+      } else {
+        this.data.set(changedIndex, change.doc);
       }
-    });
-
-    if(change.deleted){
-      this.data.delete(changedIndex);
-    } else {
-      this.data.set(changedIndex, change.doc);
     }
   }
 }
