@@ -9,8 +9,6 @@ import {CheckinProvider} from '../../providers/checkin-provider';
 })
 export class ListPage {
   selectedStudent: any;
-  emptyList: boolean;
-  buttonsLoaded: boolean;
   signoutStudents: Array<string> = new Array<string>();
   napStudents: Map<string, string> = new Map<string, string>();
   @Input() parentPage: string;
@@ -21,8 +19,6 @@ export class ListPage {
 
   constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams, public checkinService: CheckinProvider) {
     this.selectedStudent = navParams.get('student');
-    this.emptyList = true;
-    this.buttonsLoaded = false;
   }
 
   ionViewDidLoad(){
@@ -117,13 +113,15 @@ export class ListPage {
   }
 
   //TODO: if students are checked in after page is loaded then error is thrown
-  itemInserted() {
-    if (!this.buttonsLoaded){
-      this.emptyList = false;
-    }
+  isListEmpty() {
+    return false;
+    // if (this.parentPage === 'signout') {
+    //   this.studentService.data.forEach(student => {
+    //     if(student.location !== 'Checked out'){
+    //       return false;
+    //     }
+    //   });
+    //   return true;
+    // }
   }
-  buttonsLoad() {
-    this.buttonsLoaded = true;
-  }
-
 }
