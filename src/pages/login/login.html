@@ -9,16 +9,15 @@
   <ion-grid id="buttonGrid">
     <ion-row class="buttonRow">
       <ion-col>
-        <ion-list>
-          <ion-item>
+        <button ion-button block (click)="selectClassroom('classroom')">Classroom</button>
+          <!--<ion-item>
             <ion-label>Classroom</ion-label>
             <ion-select [(ngModel)]="classroom" (ngModelChange)="onSelectClassroom($event)">
               <div *ngFor="let classroom of classrooms">
                 <ion-option value={{classroom.roomNumber}}>Room {{classroom.roomNumber}}</ion-option>
               </div>
             </ion-select>
-          </ion-item>
-        </ion-list>
+          </ion-item>-->
       </ion-col>
     </ion-row>
     <ion-row class="buttonRow">

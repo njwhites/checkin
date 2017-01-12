@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {NavController, NavParams, ToastController, LoadingController} from "ionic-angular";
+import {NavController, NavParams, ToastController, LoadingController, AlertController} from "ionic-angular";
 import {ClassroomPage} from "../classroom/classroom";
 import {KitchenPage} from "../kitchen/kitchen";
 import {TherapistPage} from "../therapist/therapist";
@@ -26,7 +26,7 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public loadingcontroller: LoadingController,
               public classRoomService: ClassRoomProvider, public studentService: StudentProvider, public userService: UserProvider,
-              public checkinService: CheckinProvider) {
+              public checkinService: CheckinProvider, public alertController: AlertController) {
     this.room = navParams.get('room');
     //try to estabilish an initial connection to db's
     this.classRoomService.forceInit();
@@ -119,6 +119,28 @@ export class LoginPage {
     });
 
     toast.present(toast);
+  }
+
+  selectClassroom(){
+    let alert = this.alertController.create({
+      title: 'Select A Classroom'
+    });
+    this.classrooms.forEach((value, index, array)=>{
+      alert.addButton({
+        text: value.roomNumber,
+        handler: ()=>{
+          this.onSelectClassroom(value.roomNumber);
+        }
+      })
+    });
+    alert.addButton({
+      text: "Cancle",
+      role: "cancle",
+      handler: ()=>{
+
+      }
+    })
+    alert.present();
   }
 
 
