@@ -19,4 +19,16 @@ page-list {
     align-self: center;;
     width: 50%;
   }
+
+  .centerText {
+    text-align: center;
+  }
+
+  .titleRow {
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    padding-bottom: 40px;
+    font-size: 300%;
+  }
 }
