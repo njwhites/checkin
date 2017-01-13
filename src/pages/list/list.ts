@@ -21,7 +21,8 @@ export class ListPage {
     this.selectedStudent = navParams.get('student');
   }
 
-  ionViewDidLoad(){
+  ionViewDidEnter(){
+    console.log("the list page has been made the focus with a parent page of "+ this.parentPage);
   }
 
   revert(studentID:string):void {
