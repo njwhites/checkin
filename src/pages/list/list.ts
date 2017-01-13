@@ -103,7 +103,7 @@ export class ListPage {
   undo(){
     this.userID = null;
     this.signoutStudents.length = 0;
-    if (this.parentPage === ('checkin' || 'signout')) {
+    if (this.parentPage === 'checkin' || this.parentPage === 'signout') {
       this.signoutStudents.push("back");
       this.removedStudents.emit(this.signoutStudents);
     } else {
