@@ -114,14 +114,40 @@ export class ListPage {
 
   //TODO: if students are checked in after page is loaded then error is thrown
   isListEmpty() {
-    return false;
-    // if (this.parentPage === 'signout') {
-    //   this.studentService.data.forEach(student => {
-    //     if(student.location !== 'Checked out'){
-    //       return false;
-    //     }
-    //   });
-    //   return true;
-    // }
+    let isEmpty: boolean;
+    isEmpty = true;
+    if (this.parentPage === 'signout' || this.parentPage === 'napStudents') {
+      this.studentService.data.forEach(student => {
+        if(student.location !== 'Checked out'){
+          isEmpty = false;
+        }
+      });
+    }
+    if(this.parentPage === 'checkin') {
+      this.studentService.data.forEach(student => {
+        if(student.location === 'Checked out'){
+          isEmpty = false;
+        }
+      });
+    }
+    if(this.parentPage === 'therapy') {
+      this.studentService.data.forEach(student => {
+        if(student.location === 'Therapist checked student out'){
+          isEmpty = false;
+        }else if(student.location !== 'Checked out' && student.location !==  'Therapist checked student out' && student.location !==  'Nurse checked student out'){
+          isEmpty = false;
+        }
+      });
+    }
+    if(this.parentPage === 'nurse') {
+      this.studentService.data.forEach(student => {
+        if(student.location === 'Nurse checked student out'){
+          isEmpty = false;
+        }else if(student.location !== 'Checked out' && student.location !==  'Therapist checked student out' && student.location !==  'Nurse checked student out'){
+          isEmpty = false;
+        }
+      });
+    }
+    return isEmpty;
   }
 }

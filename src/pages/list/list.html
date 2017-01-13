@@ -26,7 +26,7 @@
 
   <div *ngIf="parentPage === 'napStudents'">
     <div *ngFor="let student of this.studentService.data | mapValues">
-      <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out' || this.studentService.data.get(student.key).location !== 'Therapist checked student out'">
+      <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out'">
         <h3 ion-item>
           <ion-icon name="walk" item-left></ion-icon>
           {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
@@ -51,7 +51,7 @@
       </div>
     </div>
     <div *ngFor="let student of this.studentService.data | mapValues">
-      <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out' && this.studentService.data.get(student.key).location !==  'Therapist checked student out'">
+      <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out' && this.studentService.data.get(student.key).location !==  'Therapist checked student out'  && this.studentService.data.get(student.key).location !== 'Nurse checked student out'">
         <h3 ion-item>
           <ion-icon name="walk" item-left></ion-icon>
           {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
@@ -65,7 +65,18 @@
 
   <div *ngIf="parentPage === 'nurse'">
     <div *ngFor="let student of this.studentService.data | mapValues">
-      <div *ngIf="this.studentService.data.get(student.key).location !== ('Checked out' || 'Therapist checked student out')">
+      <div *ngIf="this.studentService.data.get(student.key).location === 'Nurse checked student out'">
+        <h3 ion-item>
+          <ion-icon name="walk" item-left></ion-icon>
+          {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
+          <div item-right>
+            <page-action-button [thisStudent]="this.studentService.data.get(student.key)._id" [userID]="this.userID" [studentLocation]="this.studentService.data.get(student.key).location" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
+          </div>
+        </h3>
+      </div>
+    </div>
+    <div *ngFor="let student of this.studentService.data | mapValues">
+      <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out' && this.studentService.data.get(student.key).location !== 'Therapist checked student out' && this.studentService.data.get(student.key).location !== 'Nurse checked student out'">
         <h3 ion-item>
           <ion-icon name="walk" item-left></ion-icon>
           {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
@@ -110,26 +121,28 @@
   <ion-grid>
     <ion-row class = "titleRow">
       <ion-col>
-        <div class = "centerText" *ngIf="isListEmpty()">
+        <div class = "centerText" *ngIf="isListEmpty() && this.parentPage === 'checkin'">
           No Students To Check In
         </div>
-        <div class = "centerText" *ngIf="isListEmpty()">
+        <div class = "centerText" *ngIf="isListEmpty() && this.parentPage === 'signout'">
           No Students To Check Out
         </div>
-        <div class = "centerText" *ngIf="isListEmpty()">
-          No Students Present
+        <div *ngIf="this.parentPage === 'therapy' || this.parentPage === 'napStudents'|| this.parentPage === 'nurse'">
+          <div class = "centerText" *ngIf="isListEmpty()">
+            No Students Present
+          </div>
         </div>
       </ion-col>
     </ion-row>
     <ion-row class="buttonRow">
       <ion-col>
-        <div *ngIf="parentPage === 'signout'">
+        <div *ngIf="parentPage === 'signout' && !isListEmpty()">
           <button ion-button block (click)="removeStudents()">Checkout</button>
         </div>
-        <div *ngIf="parentPage === 'checkin'">
+        <div *ngIf="parentPage === 'checkin' && !isListEmpty()">
           <button ion-button block (click)="addStudents()">Check In</button>
         </div>
-        <div *ngIf="parentPage === 'napStudents'">
+        <div *ngIf="parentPage === 'napStudents' && !isListEmpty()">
           <button ion-button block (click)="updateAll(this.studentService)">Update</button>
         </div>
         <div *ngIf="parentPage !== 'presentStudents' && parentPage !== 'napStudents'">
