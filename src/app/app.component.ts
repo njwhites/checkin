@@ -12,7 +12,6 @@ export class MyApp {
 
   // make HelloIonicPage the root (or first) page
   rootPage: any = LoginPage;
-  pages: Array<{title: string, component: any}>;
 
   constructor(
     public platform: Platform,
@@ -20,14 +19,6 @@ export class MyApp {
   ) {
     this.initializeApp();
 
-    // set our app's pages
-    this.pages = [
-      { title: 'Lobby', component: LoginPage },
-      { title: 'Classroom', component: LoginPage },
-      { title: 'Cafeteria', component: LoginPage },
-      { title: 'Therapy', component: LoginPage },
-      { title: 'Admin', component: LoginPage }
-    ];
   }
 
   initializeApp() {
