@@ -87,6 +87,7 @@ export class LoginPage {
   }
 
   onNotify(idCheck:number):void {
+    console.log(idCheck);
     if(idCheck >= 0) {
       if(this.btnPage == 'kitchen') {
         this.navCtrl.push(this.kitchenPage);
@@ -95,7 +96,7 @@ export class LoginPage {
       } else if(this.btnPage == 'admin') {
         this.navCtrl.push(this.adminPage);
       }
-        } else {
+    } else {
       let toast = this.toastCtrl.create({
         message: 'Invalid ID',
         duration: 1500,
