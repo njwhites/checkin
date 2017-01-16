@@ -8,13 +8,14 @@
 </ion-header>
 
 <ion-content>
-  <h3 text-center *ngIf="selectedStudent">
-    {{selectedStudent}}
-    <ion-icon [name]="selectedStudent.icon"></ion-icon>
-  </h3>
-  <h4 text-center *ngIf="selectedStudent">
-    You navigated here from <b>{{selectedStudent}}</b>
-  </h4>
+  <h2 text-center *ngIf="selectedStudent">
+    <div *ngFor="let student of this.studentService.data | mapValues">
+      <div *ngIf="student.val._id === selectedStudent">
+        {{student.val.fName}} {{student.val.lName}}
+        <ion-icon [name]="selectedStudent.icon"></ion-icon>
+      </div>
+    </div>
+  </h2>
   <ion-list inset>
     <div *ngFor="let transaction of this.transactions">
         <h3 ion-item>

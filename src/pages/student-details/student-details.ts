@@ -1,6 +1,7 @@
 import {Component, Input} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
 import {CheckinProvider} from '../../providers/checkin-provider';
+import {StudentProvider} from '../../providers/student-provider';
 
 @Component({
   selector: 'page-student-details',
@@ -10,7 +11,7 @@ export class StudentDetailsPage {
   @Input() selectedStudent: any;
   transactions: Array<any> = new Array<any>();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public checkinService: CheckinProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public checkinService: CheckinProvider, public studentService: StudentProvider) {
     // If we navigated to this page, we will have a student available as a nav param
     this.selectedStudent = navParams.get('student');
     this.loadTransactions();
