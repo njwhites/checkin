@@ -3,7 +3,7 @@
     <ion-col>
       <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'nurse'">
         <div class="titleRoom">
-          Room {{this.roomNumber}}: {{parentPage|firstUpper}} page
+          Room {{this.roomNumber}}: {{parentPage|parentReadable|firstUpper}}
         </div>
       </div>
       <div *ngIf="parentPage === 'kitchen'">

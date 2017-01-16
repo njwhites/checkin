@@ -24,6 +24,7 @@ import {TherapistPage} from "../pages/therapist/therapist";
 import {AdminPage} from "../pages/admin/admin";
 import {MapValuesPipe} from "../pipes/map-values";
 import {FirstUpperPipe} from "../pipes/first-upper";
+import {ParentReadablePipe} from "../pipes/parent-readable";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {FirstUpperPipe} from "../pipes/first-upper";
     TherapistPage,
     AdminPage,
     MapValuesPipe,
-    FirstUpperPipe
+    FirstUpperPipe,
+    ParentReadablePipe
   ],
   imports: [
     IonicModule.forRoot(MyApp)
