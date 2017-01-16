@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {NavController, NavParams} from "ionic-angular";
+import {NavController, ToastController, NavParams} from "ionic-angular";
 import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';
 
@@ -17,7 +17,7 @@ export class ListPage {
   @Output() listCheckedOut: EventEmitter<string> = new EventEmitter<string>();
   @Output() removedStudents: EventEmitter<Array<string>> = new EventEmitter<Array<string>>()
 
-  constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams, public checkinService: CheckinProvider) {
+  constructor(public studentService: StudentProvider, public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public checkinService: CheckinProvider) {
     this.selectedStudent = navParams.get('student');
   }
 
@@ -98,6 +98,13 @@ export class ListPage {
     })
 
     this.checkinService.setNaps(this.napStudents);
+    let toast = this.toastCtrl.create({
+      //message: this.napStudents.length + ' student(s) checked in!',
+      message: "Naps Updated",
+      duration: 2000,
+      position: 'bottom'
+    });
+    toast.present(toast);
     console.log(this.napStudents);
   }
 
