@@ -124,7 +124,7 @@ export class LoginPage {
 
   selectClassroom(){
     let alert = this.alertController.create({
-      title: 'Select A Classroom'
+      title: 'Select a Classroom'
     });
     this.classrooms.forEach((value, index, array)=>{
       alert.addButton({
