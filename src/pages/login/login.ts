@@ -135,8 +135,8 @@ export class LoginPage {
       })
     });
     alert.addButton({
-      text: "Cancle",
-      role: "cancle",
+      text: "Cancel",
+      role: "cancel",
       handler: ()=>{
 
       }
