@@ -18,7 +18,7 @@ export class UtilityProvider {
     console.log('Hello UtilityProvider Provider');
   }
 
-  resetTodayHelper(){
+  resetToday(){
       this.studentService.checkoutAllStudents();
       this.checkinService.clearTransactionsForDate(null);
   }

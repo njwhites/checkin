@@ -19,6 +19,7 @@ import {StudentProvider} from "../providers/student-provider";
 import {UserProvider} from "../providers/user-provider";
 import {ClassRoomProvider} from "../providers/class-room-provider";
 import {CheckinProvider} from "../providers/checkin-provider";
+import {UtilityProvider} from "../providers/utility-provider";
 import {KitchenPage} from "../pages/kitchen/kitchen";
 import {TherapistPage} from "../pages/therapist/therapist";
 import {AdminPage} from "../pages/admin/admin";
@@ -74,6 +75,6 @@ import {ParentReadablePipe} from "../pipes/parent-readable";
     TherapistPage,
     AdminPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider]
 })
 export class AppModule {}
