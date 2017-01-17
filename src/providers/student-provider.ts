@@ -33,9 +33,13 @@ export class StudentProvider {
   getStudents(){
     //if this provider already has the data, just return it
     //future changes to db will be auto synchronized
-    if(this.data){
-      return Promise.resolve(this.data);
-    }
+
+    //  this would be used to reduce the number of calls to the db
+    //  currently the setup is to only call the db once per room selection, therefore this isn't necessary
+    //  Chris 1/13/2017 commented this out so that there wouldn't be any weird bugs involving trying to get all the students and only getting students from a previously selected room
+    // if(this.data){
+    //   return Promise.resolve(this.data);
+    // }
 
     //otherwise we should do an initial gathering of docs
     return new Promise(resolve =>{
@@ -208,7 +212,7 @@ export class StudentProvider {
   handleChange(change){
     let changedDoc = null;
     let changedIndex = null;
-    
+
 
 
     if(~this.roomRoster.indexOf(change.id)){

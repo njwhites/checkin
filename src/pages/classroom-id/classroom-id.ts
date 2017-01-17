@@ -36,7 +36,6 @@ export class ClassroomIdPage {
       } else {
         //I split up inputs so we can eventually look to see if each userId is authorized for the transaction
         //user.role can be used to identify permissions
-        console.log(this.parentPage);
         if(user.role === "admin"){
           this.notify.emit(id)
         } else if(user.role === "kitchen" && this.parentPage === "kitchen"){
