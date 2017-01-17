@@ -92,7 +92,7 @@ export class ListPage {
 
   updateAll(){
     this.studentService.data.forEach(student => {
-      if(!this.napStudents.has(String(student._id))){
+      if(!this.napStudents.has(String(student._id)) && (student.location !== 'Checked out')){
         this.napStudents.set(String(student._id), "60");
       }
     })
