@@ -43,6 +43,8 @@ export class StudentProvider {
 
     //otherwise we should do an initial gathering of docs
     return new Promise(resolve =>{
+      this.data = new Map<String, StudentModel>();
+
       //start with key 0 and end with any key starting with a 9, this is to dodge other database docs like _view type metadata
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
 
