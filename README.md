@@ -19,9 +19,10 @@
 A Check-In Application for the Sunshine School
 
 # valid users for testing
-- Driver: 4
-- Nurse: 5
-- Therapist: 6
+- Driver: 50, 51
+- Nurse: 70
+- Therapist: 40, 41, 42 => three different types of therapy
+- Kitchen: 60
 
 # Classroom data flow:
 ## list
