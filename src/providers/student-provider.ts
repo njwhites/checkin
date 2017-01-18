@@ -216,20 +216,21 @@ export class StudentProvider {
     let changedIndex = null;
 
 
+    if(this.roomRoster){
+      if(~this.roomRoster.indexOf(change.id)){
+        //scan the docs for the one that has been changed
+        this.data.forEach((doc, index) =>{
+          if(doc._id === change.id){
+            changedDoc = doc;
+            changedIndex = index;
+          }
+        });
 
-    if(~this.roomRoster.indexOf(change.id)){
-      //scan the docs for the one that has been changed
-      this.data.forEach((doc, index) =>{
-        if(doc._id === change.id){
-          changedDoc = doc;
-          changedIndex = index;
+        if(change.deleted){
+          this.data.delete(changedIndex);
+        } else {
+          this.data.set(changedIndex, change.doc);
         }
-      });
-
-      if(change.deleted){
-        this.data.delete(changedIndex);
-      } else {
-        this.data.set(changedIndex, change.doc);
       }
     }
   }
