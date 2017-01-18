@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, ToastController, NavParams} from 'ionic-angular';
+import {ListPage} from '../list/list';
 
 @Component({
   selector: 'page-signout',
@@ -16,10 +17,11 @@ export class SignoutPage {
   onNotify(idCheck:number):void {
     if(idCheck >= 0) {
       this.userID = idCheck;
-      var login = document.getElementById('enterIDSignout');
-      login.style.display = 'none';
-      var list = document.getElementById('studentListSignout');
-      list.style.display = 'block';
+      this.navCtrl.push(ListPage, {
+        roomNumber: this.roomNumber,
+        parentPage: 'signout',
+        userID: this.userID
+      });
     } else {
       let toast = this.toastCtrl.create({
         message: 'Incorrect ID',

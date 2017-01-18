@@ -9,5 +9,4 @@
 
 <ion-content padding>
   <page-classroom-id id="enterIDNurse" text-center class="vertical-align-content" [parentPage]="'nurse'" [roomNumber]="this.roomNumber" (notify)='onNotify($event)'></page-classroom-id>
-  <page-list id="studentListNurse" style="display: none;" [roomNumber]="this.roomNumber" [parentPage]="'nurse'" [userID]="userID" (listCheckedOut)='revert($event)'></page-list>
 </ion-content>

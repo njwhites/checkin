@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, ToastController, NavParams} from 'ionic-angular';
+import {ListPage} from '../list/list';
 
 @Component({
   selector: 'page-nurse',
@@ -16,10 +17,11 @@ export class NursePage {
   onNotify(idCheck:number):void {
     if(idCheck >= 0) {
       this.userID = idCheck;
-      var login = document.getElementById('enterIDNurse');
-      login.style.display = 'none';
-      var list = document.getElementById('studentListNurse');
-      list.style.display = 'block';
+      this.navCtrl.push(ListPage, {
+        roomNumber: this.roomNumber,
+        parentPage: 'nurse',
+        userID: this.userID
+      });
     } else {
       let toast = this.toastCtrl.create({
         message: 'Incorrect ID',

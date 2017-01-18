@@ -3,6 +3,9 @@ import {NavController, ToastController, NavParams} from "ionic-angular";
 import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';
 import {StudentDetailsPage} from '../student-details/student-details';
+import {SigninPage} from '../signin/signin';
+import {SignoutPage} from '../signout/signout';
+
 
 @Component({
   selector: 'page-list',
@@ -20,10 +23,15 @@ export class ListPage {
 
   constructor(public studentService: StudentProvider, public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public checkinService: CheckinProvider) {
     this.selectedStudent = navParams.get('student');
+    this.parentPage = navParams.get('parentPage');
+    this.userID = navParams.get('userID');
+    this.roomNumber = navParams.get('roomNumber');
   }
 
   ionViewDidEnter(){
     console.log("the list page has been made the focus with a parent page of "+ this.parentPage);
+    console.log("the user id is: " + this.userID);
+    console.log("the room number is " + this.roomNumber);
   }
 
   revert(studentID:string):void {
@@ -36,13 +44,15 @@ export class ListPage {
           //////////////////////////////////////////////////////////////////////
           //Checkout student to therapist
           //////////////////////////////////////////////////////////////////////
-          this.checkinService.therapistCheckout(studentID, String(this.userID));
+          this.checkinService.therapistCheckout(studentID, String(this.userID), 'OT');
+          this.navCtrl.pop();
         } else {
           //////////////////////////////////////////////////////////////////////
           //Checkin student to classroom from therapist
           //////////////////////////////////////////////////////////////////////
           returnedStudent = studentID.slice(0, search);
           this.checkinService.therapistCheckin(String(returnedStudent), String(this.userID));
+          this.navCtrl.pop();
         }
       } else if(this.parentPage === 'nurse') {
         search = studentID.search(' returned');
@@ -51,12 +61,14 @@ export class ListPage {
           //Checkout student to nurse
           ////////////////////////////////////////////////////////////////////////
           this.checkinService.nurseCheckout(studentID, String(this.userID));
+          this.navCtrl.pop();
         } else {
           //////////////////////////////////////////////////////////////////////
           //Checkin student to classroom from nurse
           //////////////////////////////////////////////////////////////////////
           returnedStudent = studentID.slice(0, search);
           this.checkinService.nurseCheckin(String(returnedStudent), String(this.userID));
+          this.navCtrl.pop();
         }
       }
       this.listCheckedOut.emit(studentID);
@@ -79,12 +91,14 @@ export class ListPage {
     this.checkinService.checkoutStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
     this.signoutStudents.length = 0;
+    this.navCtrl.pop();
   }
 
   addStudents() {
     this.checkinService.checkinStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
     this.signoutStudents.length = 0;
+    this.navCtrl.pop();
   }
 
   updateNap(napTime, studentId) {
