@@ -2,6 +2,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController, ToastController, NavParams} from "ionic-angular";
 import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';
+import {StudentDetailsPage} from '../student-details/student-details';
 
 @Component({
   selector: 'page-list',
@@ -158,4 +159,11 @@ export class ListPage {
     }
     return isEmpty;
   }
+
+  studentTapped(event, student) {
+    this.navCtrl.push(StudentDetailsPage, {
+      student: student
+    })
+  }
+
 }
