@@ -1,13 +1,22 @@
 
-<div *ngIf="this.thisStudentLocation == 'Checked in/In classroom'">
-  <button ion-button id="infoButton" color="default" small (click)="displayInfo()" icon-center outline><ion-icon name="home"></ion-icon></button>
+<div *ngIf="this.thisStudentLocation === checkinService.CHECKED_IN">
+  <div id="infoButton">Present <ion-icon class="arrowIcon" name="arrow-forward"></ion-icon></div>
 </div>
-<div *ngIf="this.thisStudentLocation == 'Checked out'">
-  <button ion-button id="infoButton" color="default" small (click)="displayInfo()" icon-center outline><ion-icon name="send"></ion-icon></button>
+<div *ngIf="this.thisStudentLocation == checkinService.CHECKED_OUT">
+  <div id="infoButton">Absent <ion-icon class="arrowIcon" name="arrow-forward"></ion-icon></div>
 </div>
-<div *ngIf="this.thisStudentLocation == 'Therapist checked student out'">
-  <button ion-button id="infoButton" color="default" small (click)="displayInfo()" icon-center outline><ion-icon name="briefcase"></ion-icon></button>
+<div *ngIf="this.thisStudentLocation == checkinService.CHECKED_OUT_THERAPY">
+  <div id="infoButton">Therapy <ion-icon class="arrowIcon" name="arrow-forward"></ion-icon></div>
 </div>
-<div *ngIf="this.thisStudentLocation == 'Nurse checked student out'">
-  <button ion-button id="infoButton" color="default" small (click)="displayInfo()" icon-center outline><ion-icon name="medical"></ion-icon></button>
+<div *ngIf="this.thisStudentLocation == checkinService.CHECKED_OUT_THERAPY_OT">
+  <div id="infoButton">Therapy (OT) <ion-icon class="arrowIcon" name="arrow-forward"></ion-icon></div>
+</div>
+<div *ngIf="this.thisStudentLocation == checkinService.CHECKED_OUT_THERAPY_PT">
+  <div id="infoButton">Therapy (PT) <ion-icon class="arrowIcon" name="arrow-forward"></ion-icon></div>
+</div>
+<div *ngIf="this.thisStudentLocation == checkinService.CHECKED_OUT_THERAPY_SLP">
+  <div id="infoButton">Therapy (SLP)  <ion-icon class="arrowIcon" name="arrow-forward"></ion-icon></div>
+</div>
+<div *ngIf="this.thisStudentLocation == checkinService.CHECKED_OUT_NURSE">
+  <div id="infoButton">Nurse <ion-icon class="arrowIcon" name="arrow-forward"></ion-icon></div>
 </div>

@@ -28,7 +28,8 @@ export class UserProvider {
   }
 
   getAllUsers(){
-    if(this.data) return Promise.resolve(this.data);
+    //To enable this we will need to add a change handler
+    // if(this.data) return Promise.resolve(this.data);
 
     return new Promise(resolve =>{
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
@@ -45,9 +46,11 @@ export class UserProvider {
   }
 
   getUserByID(id: String){
-    if(this.data) {
-      return Promise.resolve(this.data[Number(id)]);
-    }
+
+    // To enable this we will need to add a change handler
+    // if(this.data) {
+    //   return Promise.resolve(this.data[Number(id)]);
+    // }
     return new Promise(resolve => {
 
       this.db.get(id).then(doc => {
@@ -57,6 +60,25 @@ export class UserProvider {
         let errMessage = new UserModel();
         errMessage._id = "missing";
         resolve(errMessage);
+      });
+    });
+  }
+
+  getTherapistTypeByID(ID: string){
+//promise for async
+  ID = String(ID);
+    return new Promise((resolve, reject) => {
+//get the user from the db
+      this.db.get(ID).then(doc => {
+//if the therapist_type is set then it
+        if(doc.therapy_type){
+          resolve(doc.therapy_type);
+        } else {
+          resolve("Not Therapist");
+        }
+      }).catch(err => {
+        console.log(err);
+        reject(err.toString);
       });
     });
   }
