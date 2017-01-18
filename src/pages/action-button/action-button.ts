@@ -50,7 +50,7 @@ export class ActionButtonPage {
   }
 
   signoutDeselectStudent() {
-    var checkoutBtn = document.getElementById('checkoutButton_' + this.thisStudent);
+    var checkoutBtn = document.getElementById('outCheckoutButton_' + this.thisStudent);
     var outSelectedBtn = document.getElementById('outSelectedButton_' + this.thisStudent);
     checkoutBtn.style.display = 'block';
     outSelectedBtn.style.display = 'none';
