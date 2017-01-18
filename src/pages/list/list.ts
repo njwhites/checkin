@@ -2,6 +2,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController, ToastController, NavParams} from "ionic-angular";
 import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';
+import {UserProvider} from '../../providers/user-provider';
 import {StudentDetailsPage} from '../student-details/student-details';
 
 @Component({
@@ -13,12 +14,12 @@ export class ListPage {
   signoutStudents: Array<string> = new Array<string>();
   napStudents: Map<string, string> = new Map<string, string>();
   @Input() parentPage: string;
-  @Input() userID: number;
+  @Input() userID: string;
   @Input() roomNumber: string;
   @Output() listCheckedOut: EventEmitter<string> = new EventEmitter<string>();
   @Output() removedStudents: EventEmitter<Array<string>> = new EventEmitter<Array<string>>()
 
-  constructor(public studentService: StudentProvider, public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public checkinService: CheckinProvider) {
+  constructor(public studentService: StudentProvider, public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public checkinService: CheckinProvider, public userService: UserProvider) {
     this.selectedStudent = navParams.get('student');
   }
 
@@ -36,7 +37,13 @@ export class ListPage {
           //////////////////////////////////////////////////////////////////////
           //Checkout student to therapist
           //////////////////////////////////////////////////////////////////////
-          this.checkinService.therapistCheckout(studentID, String(this.userID), "OT");
+          console.log(this.userID);
+          this.userService.getTherapistTypeByID(this.userID).then((type:string) => {
+            this.checkinService.therapistCheckout(studentID, String(this.userID), type);
+          }).catch(err => {
+            this.checkinService.therapistCheckout(studentID, String(this.userID), "");
+
+          })
         } else {
           //////////////////////////////////////////////////////////////////////
           //Checkin student to classroom from therapist

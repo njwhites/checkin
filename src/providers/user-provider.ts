@@ -64,9 +64,10 @@ export class UserProvider {
     });
   }
 
-  getTherapistTypeByID(ID: String){
+  getTherapistTypeByID(ID: string){
 //promise for async
-    return new Promise(resolve => {
+  ID = String(ID);
+    return new Promise((resolve, reject) => {
 //get the user from the db
       this.db.get(ID).then(doc => {
 //if the therapist_type is set then it
@@ -77,7 +78,7 @@ export class UserProvider {
         }
       }).catch(err => {
         console.log(err);
-        resolve(err.toString);
+        reject(err.toString);
       });
     });
   }
