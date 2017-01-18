@@ -420,10 +420,30 @@ export class CheckinProvider {
     });
   }
   //i/o therapist
-  therapistCheckout(id: string, by_id: string){
+  therapistCheckout(id: string, by_id: string, therapy_type: string){
     this.getTodaysTransaction(null).then(result => {
-      this.performEvent(id, result, by_id, this.THERAPY_OUT);
-      this.studentService.updateStudentLocation(id, this.CHECKED_OUT_THERAPY);
+      let event_type = "";
+      let location = ""
+      switch(therapy_type){
+        case 'OT':
+          event_type = this.THERAPY_OUT_OT;
+          location = this.CHECKED_OUT_THERAPY_OT; 
+          break;        
+        case 'PT':
+          event_type = this.THERAPY_OUT_PT;
+          location = this.CHECKED_OUT_THERAPY_PT; 
+          break;        
+        case 'SLP':
+          event_type = this.THERAPY_OUT_SLP;
+          location = this.CHECKED_OUT_THERAPY_SLP; 
+          break;
+        default:
+          event_type = this.THERAPY_OUT;
+          location = this.CHECKED_OUT_THERAPY; 
+
+      }
+      this.performEvent(id, result, by_id, event_type);
+      this.studentService.updateStudentLocation(id, location);
     });
   }
 
