@@ -19,7 +19,7 @@ export class ActionButtonPage {
   //TODO: the click toggle only works for the first element in the list. make it work for all. most likely will need to use thisStudent instead of ID for lookup
   checkoutStudent() {
     if(this.grandParentPage === 'signout') {
-      var checkoutBtn = document.getElementById('checkoutButton_' + this.thisStudent);
+      var checkoutBtn = document.getElementById('outCheckoutButton_' + this.thisStudent);
       var outSelectedBtn = document.getElementById('outSelectedButton_' + this.thisStudent);
       checkoutBtn.style.display = 'none';
       outSelectedBtn.style.display = 'block';
