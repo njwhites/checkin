@@ -36,7 +36,7 @@ export class ListPage {
           //////////////////////////////////////////////////////////////////////
           //Checkout student to therapist
           //////////////////////////////////////////////////////////////////////
-          this.checkinService.therapistCheckout(studentID, String(this.userID));
+          this.checkinService.therapistCheckout(studentID, String(this.userID), "OT");
         } else {
           //////////////////////////////////////////////////////////////////////
           //Checkin student to classroom from therapist
