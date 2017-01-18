@@ -2,24 +2,24 @@
   <div *ngIf="parentPage === 'presentStudents'">
     <div *ngFor="let student of this.studentService.data | mapValues"  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
       <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out'">
-        <h3 ion-item>
+        <ion-item>
           <ion-icon name="walk" item-left></ion-icon>
           {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
           <div item-right>
             <page-student-info-button [thisStudent]="this.studentService.data.get(student.key)._id" [thisStudentLocation]="this.studentService.data.get(student.key).location"></page-student-info-button>
           </div>
-        </h3>
+        </ion-item>
       </div>
     </div>
     <div *ngFor="let student of this.studentService.data | mapValues"  (click)="studentTapped($event, student)">
       <div *ngIf="this.studentService.data.get(student.key).location === 'Checked out'">
-        <h3 ion-item>
+        <ion-item>
           <ion-icon name="walk" item-left></ion-icon>
           {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
           <div item-right>
             <page-student-info-button [thisStudent]="this.studentService.data.get(student.key)._id" [thisStudentLocation]="this.studentService.data.get(student.key).location"></page-student-info-button>
           </div>
-        </h3>
+        </ion-item>
       </div>
     </div>
   </div>
