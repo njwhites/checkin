@@ -23,7 +23,7 @@
       </div>
       <div *ngFor="let student of this.studentService.data | mapValues"  (click)="studentTapped($event, student)">
         <div *ngIf="this.studentService.data.get(student.key).location === 'Checked out'">
-          <ion-item>
+          <ion-item class="absentRow">
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
             <div item-right>
