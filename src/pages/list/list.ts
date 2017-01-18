@@ -2,6 +2,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController, ToastController, NavParams} from "ionic-angular";
 import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';
+import {StudentDetailsPage} from '../student-details/student-details';
 
 @Component({
   selector: 'page-list',
@@ -35,7 +36,7 @@ export class ListPage {
           //////////////////////////////////////////////////////////////////////
           //Checkout student to therapist
           //////////////////////////////////////////////////////////////////////
-          this.checkinService.therapistCheckout(studentID, String(this.userID));
+          this.checkinService.therapistCheckout(studentID, String(this.userID), "OT");
         } else {
           //////////////////////////////////////////////////////////////////////
           //Checkin student to classroom from therapist
@@ -158,4 +159,11 @@ export class ListPage {
     }
     return isEmpty;
   }
+
+  studentTapped(event, student) {
+    this.navCtrl.push(StudentDetailsPage, {
+      student: student
+    })
+  }
+
 }

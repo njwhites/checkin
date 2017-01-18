@@ -1,6 +1,6 @@
 <ion-list inset>
   <div *ngIf="parentPage === 'presentStudents'">
-    <div *ngFor="let student of this.studentService.data | mapValues">
+    <div *ngFor="let student of this.studentService.data | mapValues"  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
       <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out'">
         <h3 ion-item>
           <ion-icon name="walk" item-left></ion-icon>
@@ -11,7 +11,7 @@
         </h3>
       </div>
     </div>
-    <div *ngFor="let student of this.studentService.data | mapValues">
+    <div *ngFor="let student of this.studentService.data | mapValues"  (click)="studentTapped($event, student)">
       <div *ngIf="this.studentService.data.get(student.key).location === 'Checked out'">
         <h3 ion-item>
           <ion-icon name="walk" item-left></ion-icon>

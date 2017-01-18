@@ -1,10 +1,28 @@
+# 1/17/17 meeting notes
+- Currently use one user ID per individual who may pick up a child. Fingerprint scanner in the past
+- In the checkin and checkout, only show the student a parent is authorized to check out
+- Don't allow the roster to be seen by parents/non-staff
+- Words are better than icons in the roster page
+- If a student is taken to therapy during nap time make sure that nap time and therapy time overlap properly (don't double subtract from the billable hours)
+- Designate the therapy types at all times: Occupational Therapy (OT), Physical Therapy (PT), and Speech/Language Pathology (SLP)
+- Therapists are only one kind of therapist, they won't do a combination of OT/PT/SLP
+- For drills a count/total is more important than specific list of kids
+- Add therapy checkin/out to therapist page, as well as a way for the Therapist to retroactively log student times
+- Therapist page needs some kind of outpatient capability to keep the "warm-body" count accurate in the building
+- After school care can sometimes have "late-pickup" students added
+- Therapy in After school care should not impact the regular hours billing
+- Front desk will probably check students out when they leave school from the nurse
+- A generic checkout for the purpose of location tracking was requested
+
+
 # checkin
 A Check-In Application for the Sunshine School
 
 # valid users for testing
-- Driver: 4
-- Nurse: 5
-- Therapist: 6
+- Driver: 50, 51
+- Nurse: 70
+- Therapist: 40, 41, 42 => three different types of therapy
+- Kitchen: 60
 
 # Classroom data flow:
 ## list

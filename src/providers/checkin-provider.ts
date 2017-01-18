@@ -23,10 +23,16 @@ export class CheckinProvider {
   NURSE_OUT = 'checkoutByNurse';
   THERAPY_IN = 'checkinByTherapist';
   THERAPY_OUT = 'checkoutByTherapist';
+  THERAPY_OUT_OT = 'checkoutByTherapistOT';
+  THERAPY_OUT_PT = 'checkoutByTherapistPT';
+  THERAPY_OUT_SLP = 'checkoutByTherapistSLP';
 
   CHECKED_OUT = 'Checked out';
   CHECKED_IN = 'Checked in/In classroom';
   CHECKED_OUT_THERAPY = 'Therapist checked student out';
+  CHECKED_OUT_THERAPY_OT = 'OT Therapist checked student out';
+  CHECKED_OUT_THERAPY_PT = 'PT Therapist checked student out';
+  CHECKED_OUT_THERAPY_SLP = 'SLP Therapist checked student out';
   CHECKED_OUT_NURSE = 'Nurse checked student out';
 
   db: any;
@@ -414,10 +420,30 @@ export class CheckinProvider {
     });
   }
   //i/o therapist
-  therapistCheckout(id: string, by_id: string){
+  therapistCheckout(id: string, by_id: string, therapy_type: string){
     this.getTodaysTransaction(null).then(result => {
-      this.performEvent(id, result, by_id, this.THERAPY_OUT);
-      this.studentService.updateStudentLocation(id, this.CHECKED_OUT_THERAPY);
+      let event_type = "";
+      let location = ""
+      switch(therapy_type){
+        case 'OT':
+          event_type = this.THERAPY_OUT_OT;
+          location = this.CHECKED_OUT_THERAPY_OT; 
+          break;        
+        case 'PT':
+          event_type = this.THERAPY_OUT_PT;
+          location = this.CHECKED_OUT_THERAPY_PT; 
+          break;        
+        case 'SLP':
+          event_type = this.THERAPY_OUT_SLP;
+          location = this.CHECKED_OUT_THERAPY_SLP; 
+          break;
+        default:
+          event_type = this.THERAPY_OUT;
+          location = this.CHECKED_OUT_THERAPY; 
+
+      }
+      this.performEvent(id, result, by_id, event_type);
+      this.studentService.updateStudentLocation(id, location);
     });
   }
 
