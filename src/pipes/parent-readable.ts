@@ -8,6 +8,10 @@ export class ParentReadablePipe {
         	return 'Check In';
         }if(value === 'signout'){
         	return 'Check Out';
+        }if(value === 'napStudents'){
+          return 'Nap';
+        }if(value === 'presentStudents'){
+          return 'Roster';
         }
         return value;
     }

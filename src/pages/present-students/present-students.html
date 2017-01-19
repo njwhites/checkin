@@ -8,5 +8,5 @@
 
 
 <ion-content padding>
-  <page-list [parentPage]="'presentStudents'" [roomNumber]="this.roomNumber"></page-list>
+  <page-classroom-id id="enterIDSignin" text-center class="vertical-align-content" [parentPage]="'presentStudents'" [roomNumber]="this.roomNumber" (notify)='onNotify($event)'></page-classroom-id>
 </ion-content>

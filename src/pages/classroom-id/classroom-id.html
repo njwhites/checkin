@@ -1,7 +1,7 @@
 <ion-grid class="horizontal-align-center">
   <ion-row>
     <ion-col>
-      <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'nurse'">
+      <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
         <div class="titleRoom">
           Room {{this.roomNumber}}: {{parentPage|parentReadable|firstUpper}}
         </div>
@@ -39,7 +39,7 @@
   </ion-row>
   <ion-row class="buttonRow">
     <ion-col>
-      <div *ngIf="parentPage !== 'checkin' && parentPage !== 'signout' && parentPage !== 'therapy' && parentPage !== 'nurse'">
+      <div *ngIf="parentPage !== 'checkin' && parentPage !== 'signout' && parentPage !== 'therapy' && parentPage !== 'nurse' && parentPage !== 'napStudents' && parentPage !== 'presentStudents'">
         <button ion-button block (click)='back()'>Cancel</button>
       </div>
     </ion-col>
