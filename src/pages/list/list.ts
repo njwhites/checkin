@@ -4,8 +4,6 @@ import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';
 import {UserProvider} from '../../providers/user-provider';
 import {StudentDetailsPage} from '../student-details/student-details';
-import {SigninPage} from '../signin/signin';
-import {SignoutPage} from '../signout/signout';
 
 
 @Component({
@@ -97,14 +95,12 @@ export class ListPage {
   removeStudents() {
     this.checkinService.checkoutStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
-    this.signoutStudents.length = 0;
     this.navCtrl.pop();
   }
 
   addStudents() {
     this.checkinService.checkinStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
-    this.signoutStudents.length = 0;
     this.navCtrl.pop();
   }
 

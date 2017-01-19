@@ -32,19 +32,4 @@ export class SigninPage {
       toast.present(toast);
     }
   }
-
-  revert(students:Array<string>):void {
-    if(students[0] !== 'back') {
-      let toast = this.toastCtrl.create({
-        message: students.length + ' student(s) checked in!',
-        duration: 2000,
-        position: 'bottom'
-      });
-      toast.present(toast);
-    }
-  }
-
-  ionViewDidLoad() {
-  }
-
 }

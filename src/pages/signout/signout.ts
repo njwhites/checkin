@@ -31,20 +31,4 @@ export class SignoutPage {
       toast.present(toast);
     }
   }
-
-  revert(students:Array<string>):void {
-    var list = document.getElementById('studentListSignout');
-    list.style.display = 'none';
-    var login = document.getElementById('enterIDSignout');
-    login.style.display = 'block';
-    if(students[0] !== 'back') {
-      let toast = this.toastCtrl.create({
-        message: students.length + ' student(s) checked out!',
-        duration: 2000,
-        position: 'bottom'
-      });
-      toast.present(toast);
-    }
-  }
-
 }
