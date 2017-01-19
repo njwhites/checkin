@@ -88,8 +88,10 @@ export class LoginPage {
 
   onNotify(idCheck:number):void {
     if(idCheck >= 0) {
-      if(this.btnPage == 'kitchen') {
-        this.navCtrl.push(this.kitchenPage);
+      if(this.btnPage === 'kitchen') {
+        this.studentService.getStudents().then(()=>{
+          this.navCtrl.push(this.kitchenPage);
+        });
       } else if(this.btnPage == 'therapist') {
         this.navCtrl.push(this.therapistPage);
       } else if(this.btnPage == 'admin') {

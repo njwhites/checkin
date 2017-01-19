@@ -6,6 +6,7 @@ export class StudentModel{
   public icon: String;
   public note: String;
   public location: String;
+  public dietNeed: boolean;
   
   constructor(){
     
