@@ -11,6 +11,8 @@ import {StudentDetailsPage} from '../student-details/student-details';
   templateUrl: 'list.html'
 })
 export class ListPage {
+  toastTrigger: boolean;
+  studentID: string;
   selectedStudent: any;
   signoutStudents: Array<string> = new Array<string>();
   napStudents: Map<string, string> = new Map<string, string>();
@@ -25,6 +27,8 @@ export class ListPage {
     this.parentPage = navParams.get('parentPage');
     this.userID = navParams.get('userID');
     this.roomNumber = navParams.get('roomNumber');
+    this.studentID = '';
+    this.toastTrigger = false;
   }
 
   ionViewDidEnter(){
@@ -36,6 +40,7 @@ export class ListPage {
   revert(studentID:string):void {
     var search;
     if((this.parentPage !== 'signout') && (this.parentPage !== 'checkin')) {
+      this.studentID = studentID;
       var returnedStudent;
       if(this.parentPage === 'therapy') {
         search = studentID.search(' returned');
@@ -49,6 +54,7 @@ export class ListPage {
           }).catch(err => {
             this.checkinService.therapistCheckout(studentID, String(this.userID), "");
           });
+          this.studentID = studentID;
           this.navCtrl.pop();
 
         } else {
@@ -95,12 +101,14 @@ export class ListPage {
   removeStudents() {
     this.checkinService.checkoutStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
+    this.toastTrigger = true;
     this.navCtrl.pop();
   }
 
   addStudents() {
     this.checkinService.checkinStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
+    this.toastTrigger = true;
     this.navCtrl.pop();
   }
 
@@ -181,6 +189,50 @@ export class ListPage {
     this.navCtrl.push(StudentDetailsPage, {
       student: student
     })
+  }
+
+  ionViewWillLeave() {
+    var output = '';
+    switch(this.parentPage) {
+      case 'checkin':
+        output = this.signoutStudents.length !== 0 && this.toastTrigger === true ? this.signoutStudents.length + ' student(s) have been checked in' : '';
+        this.signoutStudents.length = 0;
+        break;
+      case 'signout':
+        output = this.signoutStudents.length !== 0 && this.toastTrigger === true ? this.signoutStudents.length + ' student(s) have been checked out' : '';
+        this.signoutStudents.length = 0;
+        break;
+      case 'therapy':
+        if (this.studentID !== '') {
+          if(this.studentID.search(' returned') === -1) {
+            output = this.studentService.data.get(this.studentID).fName.toString() + ' is off to therapy';
+          }
+          else {
+            output = this.studentService.data.get(this.studentID.slice(0, this.studentID.search(' returned'))).fName.toString() + ' has returned from therapy';
+          }
+        }
+        break;
+      case 'nurse':
+        if (this.studentID !== '') {
+          if(this.studentID.search(' returned') === -1) {
+            output = this.studentService.data.get(this.studentID).fName.toString() + ' is off to the nurse';
+          }
+          else {
+            output = this.studentService.data.get(this.studentID.slice(0, this.studentID.search(' returned'))).fName.toString() + ' has returned from the nurse';
+          }
+        }
+        break;
+      default:
+        break;
+    }
+    if(output !== '') {
+      let toast = this.toastCtrl.create({
+        message: output,
+        duration: 2000,
+        position: 'bottom'
+      });
+      toast.present(toast);
+    }
   }
 
 }
