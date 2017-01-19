@@ -10,9 +10,9 @@
 <ion-content padding>
   <ion-list inset>
     <div *ngIf="parentPage === 'presentStudents'">
-      <div *ngFor="let student of this.studentService.data | mapValues"  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
+      <div *ngFor="let student of this.studentService.data | mapValues">
         <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out'">
-          <ion-item>
+          <ion-item  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
             <div item-right>
@@ -21,9 +21,9 @@
           </ion-item>
         </div>
       </div>
-      <div *ngFor="let student of this.studentService.data | mapValues"  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
+      <div *ngFor="let student of this.studentService.data | mapValues">
         <div *ngIf="this.studentService.data.get(student.key).location === 'Checked out'">
-          <ion-item class="absentRow">
+          <ion-item class="absentRow"  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
             <div item-right>
