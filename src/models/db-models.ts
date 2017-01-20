@@ -7,11 +7,17 @@ export class StudentModel{
   public note: String;
   public location: String;
   public dietNeed: boolean;
-  
+
   constructor(){
-    
+    this._id = '';
+    this._rev = '';
+    this.fName = '';
+    this.lName = '';
+    this.icon = '';
+    this.note = '';
+    this.location = '';
   }
-  
+
   setFields(t__id: String, t__rev: String, t_fName: String, t_lName: String,
               t_icon: String, t_note: String, t_loc: String){
     this._id = t__id;
@@ -31,9 +37,9 @@ export class UserModel{
   public lName: String;
   public role: String;
   public phone: String;
-  
+
   constructor(){
-    
+
   }
 }
 
@@ -42,9 +48,9 @@ export class ClassRoomModel{
   public _rev: String;
   public roomNumber: String;
   public students: Array<String>;
-  
+
   constructor(){
-    
+
   }
 }
 
@@ -53,9 +59,9 @@ export class TransactionModel{
   public _rev: String;
   public date: String;
   public students: Array<TransactionStudentModel>;
-  
+
   constructor(){
-    
+
   }
 }
 

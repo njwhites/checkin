@@ -108,7 +108,28 @@ export class StudentProvider {
   }*/
 
   createStudent(student: StudentModel){
-    this.db.upsert(student._id, (() => {return student}));
+    let newID: String = "-1";
+    //find the next available id number
+    return new Promise(resolve =>{
+      this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
+
+        result.rows.map(row => {
+          if(Number(newID) <= Number(row.id)){
+             newID = String((Number(row.id) + 1));
+           }
+        });
+
+        student._id = newID;
+        // this.db.put(student).catch(err=>{
+        //   console.log(err)
+        // })
+        this.data.set(student._id, student);
+        this.db.upsert(student._id, (() =>{return student}));
+
+        //return the generated id so that we can let the student know their id, may not be needed
+        resolve(newID);
+      });
+    });
   }
 
   createStudentByInfo(fName: String, lName: String, loc: String, note: String, icon: String){
@@ -181,8 +202,13 @@ export class StudentProvider {
 
   deleteStudent(student: StudentModel){
     //this.db.upsert(student._id, ((doc)=>{doc._deleted = true; return doc}));
-    this.db.remove(student).catch(err => {
-      console.log(err);
+
+    return new Promise(resolve => {
+      this.db.upsert(student._id, ((doc)=>{doc._deleted = true; return doc}));
+      this.data.delete(student._id);
+      console.log("just tried to delete: ");
+      console.log(student);
+      resolve();
     });
   }
 

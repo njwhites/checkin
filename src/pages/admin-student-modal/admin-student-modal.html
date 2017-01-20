@@ -1,0 +1,54 @@
+<ion-header>
+
+  <ion-navbar>
+    <!--<ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Close</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>-->
+    <ion-title>Student Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>ID:</ion-label>
+      <ion-input type="text" value="{{this.student._id}}" disabled="true"></ion-input>
+    </ion-list-header>
+
+
+    <form [formGroup]="studentForm" (ngSubmit)="updateStudent()">
+      <ion-item>
+        <ion-label>First Name</ion-label>
+        <ion-input type="text" formControlName="fName" value="{{this.studentService.data.get(this.student._id).fName}}"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Last Name</ion-label>
+        <ion-input type="text" formControlName="lName" value="{{this.studentService.data.get(this.student._id).lName}}"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Note:</ion-label>
+        <ion-input type="text" formControlName="note" value="{{this.studentService.data.get(this.student._id).note}}"></ion-input>
+      </ion-item>
+
+      <ion-card [hidden]="this.studentForm.valid">
+        <ion-card-header>Invalid input</ion-card-header>
+        <ion-card-content *ngIf="this.studentForm.controls['fName'].hasError('required')">
+          First name is required.
+        </ion-card-content>
+        <ion-card-content *ngIf="this.studentForm.controls['lName'].hasError('required')">
+          Last name is required.
+        </ion-card-content>
+      </ion-card>
+
+      <button ion-button block type="submit" [disabled]="!this.studentForm.valid">{{buttonText}}</button>
+      <button ion-button block color="danger" *ngIf="this.student._id >= 0" (click)="deleteStudent()">Delete Student</button>
+    </form>
+  </ion-list>
+</ion-content>

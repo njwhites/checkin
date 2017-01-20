@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Admin</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="homeButtonClicked()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <h3>Hello Student Info!</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list inset>
+          <div *ngFor="let student of this.studentService.data | mapValues" (click)="studentClicked(student.key)">
+            <ion-item>
+              {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+            </ion-item>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col width-20>
+        <button ion-button block (click)="addStudent()">Add A New Student</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -23,6 +23,10 @@ import {UtilityProvider} from "../providers/utility-provider";
 import {KitchenPage} from "../pages/kitchen/kitchen";
 import {TherapistPage} from "../pages/therapist/therapist";
 import {AdminPage} from "../pages/admin/admin";
+import {AdminStudentTabPage} from "../pages/admin-student-tab/admin-student-tab";
+import {AdminUserTabPage} from "../pages/admin-user-tab/admin-user-tab";
+import {AdminDebugTabPage} from "../pages/admin-debug-tab/admin-debug-tab";
+import {AdminStudentModalPage} from "../pages/admin-student-modal/admin-student-modal";
 import {MapValuesPipe} from "../pipes/map-values";
 import {FirstUpperPipe} from "../pipes/first-upper";
 import {ParentReadablePipe} from "../pipes/parent-readable";
@@ -49,7 +53,11 @@ import {ParentReadablePipe} from "../pipes/parent-readable";
     AdminPage,
     MapValuesPipe,
     FirstUpperPipe,
-    ParentReadablePipe
+    ParentReadablePipe,
+    AdminStudentTabPage,
+    AdminUserTabPage,
+    AdminDebugTabPage,
+    AdminStudentModalPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -73,7 +81,11 @@ import {ParentReadablePipe} from "../pipes/parent-readable";
     SigninPage,
     KitchenPage,
     TherapistPage,
-    AdminPage
+    AdminPage,
+    AdminStudentTabPage,
+    AdminUserTabPage,
+    AdminDebugTabPage,
+    AdminStudentModalPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider]
 })

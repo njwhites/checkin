@@ -1,13 +1,5 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>Admin</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-  <h3>Admin Page</h3>
-  <button ion-button block (click)="normalizeToday()">Normalize</button>
-</ion-content>
+<ion-tabs tabsHighlight="true">
+  <ion-tab [root]="adminDebugTab" [rootParams]="adminDebugTabParams" tabTitle="Debug"></ion-tab>
+  <ion-tab [root]="adminStudentTab" [rootParams]="adminStudentTabParams" tabTitle="Students"></ion-tab>
+  <ion-tab [root]="adminUserTab" [rootParams]="adminUserTabParams" tabTitle="Users"></ion-tab>
+</ion-tabs>

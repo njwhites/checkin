@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Admin</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="homeButtonClicked()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <h3>Debug!</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col width-50 offset-25>
+        <button ion-button block (click)="normalizeToday()">Normalize</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
