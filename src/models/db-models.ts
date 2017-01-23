@@ -16,6 +16,7 @@ export class StudentModel{
     this.icon = '';
     this.note = '';
     this.location = '';
+    this.dietNeed = false;
   }
 
   setFields(t__id: String, t__rev: String, t_fName: String, t_lName: String,
@@ -37,6 +38,8 @@ export class UserModel{
   public lName: String;
   public role: String;
   public phone: String;
+  public therapy_type: String;
+  public therapy_fav_ids: Array<String>;
 
   constructor(){
     this._id = "-1";
@@ -45,6 +48,8 @@ export class UserModel{
     this.lName = "";
     this.role = "";
     this.phone = "";
+    this.therapy_type = "";
+    this.therapy_fav_ids = [];
   }
 }
 
