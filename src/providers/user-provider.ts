@@ -162,7 +162,7 @@ export class UserProvider {
 
   getTherapistFavoriteIDs(ID: String){
     return new Promise((resolve, reject) => {      
-      this.data.get(ID).then(result => {
+      this.db.get(ID).then(result => {
 
         if(result.role.toLowerCase() === 'therapist'){
           if(!result.therapy_fav_ids){
