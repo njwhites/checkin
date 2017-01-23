@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { StudentProvider } from './student-provider'
+import { StudentProvider } from './student-provider';
+import { UserProvider } from './user-provider';
 
-import { TransactionModel, TransactionStudentModel, TransactionEvent} from '../models/db-models';
+import { TransactionModel, TransactionStudentModel, TransactionEvent, TransactionTherapy} from '../models/db-models';
 
 import PouchDB from 'pouchdb';
 
@@ -38,7 +39,7 @@ export class CheckinProvider {
   db: any;
   remote: any;
 
-  constructor(public http: Http, public studentService: StudentProvider) {
+  constructor(public http: Http, public studentService: StudentProvider, public userService: UserProvider) {
     console.log('Hello CheckinProvider Provider');
 
     this.db = new PouchDB('transactions');
@@ -245,7 +246,8 @@ export class CheckinProvider {
                   by_id: event.by_id
                 }
               }),
-              nap: minutes
+              nap: minutes,
+              therapies: me.therapies
           }
           function delta(doc) {
             doc.students = [...others, i];
@@ -286,7 +288,7 @@ export class CheckinProvider {
       if(result){
         return this.setNapsHelper(array);
       }else{
-        return Promise.resolve(false).then(result => {
+        return Promise.reject(false).then(result => {
           console.log("Naps resolved false for some reason");
         });
       }
@@ -448,11 +450,58 @@ export class CheckinProvider {
   }
 
   therapistCheckin(id: string, by_id: string){
-    this.getTodaysTransaction(null).then(result => {
-      this.performEvent(id, result, by_id, this.THERAPY_IN);
-      this.studentService.updateStudentLocation(id, this.CHECKED_IN);
-    });
+    return new Promise((resolve, reject) => {      
+      this.getTodaysTransaction(null).then(result => {
+        this.performEvent(id, result, by_id, this.THERAPY_IN);
+        this.studentService.updateStudentLocation(id, this.CHECKED_IN);
+        //resolve with the correct data (student's events for today)
+        resolve(true);
+      }).catch(err => {
+        reject(false);
+      });
+    })
   }
 
+  therapistCheckinFollowUp(student_id: string, therapist_type: string, start_time: string, length: Number){
+    return new Promise(resolve => {
+      this.getTodaysTransaction(null).then((doc: TransactionModel) => {
+        this.getStudent(student_id, doc).then((me: TransactionStudentModel) => {
+          let others = doc.students.filter(student => {
+            return student.id + "" !== me.id + "";
+          });
+          let t_model = new TransactionTherapy();
+          t_model.startTime = start_time;
+          t_model.length = length;
+          t_model.type = therapist_type;
+          let i = {
+              id: me.id,
+              events: me.events.map(event => {
+                return {
+                  type: event.type,
+                  time: event.time,
+                  time_readable: event.time_readable,
+                  by_id: event.by_id
+                }
+              }),
+              nap: me.nap,
+              therapies: [...me.therapies, {startTime: t_model.startTime, length: t_model.length, type: t_model.type}]
+          }
+          function delta(doc) {
+            doc.students = [...others, i];
+            //console.log(doc.students);
+            return doc;
+          }
+          this.db.upsert(doc._id, delta).then(() => {
+            //Success!
+            //console.log(`Successfully updated student with id:${me.id}`);
+            resolve(true);
+
+          }).catch(err => {
+            console.log(err);
+          })
+        })
+      })
+    });
+  }
 
 }

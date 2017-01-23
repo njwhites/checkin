@@ -32,4 +32,9 @@ export class SigninPage {
       toast.present(toast);
     }
   }
+
+  homeButtonClicked(){
+    console.log("home button clicked");
+    this.navCtrl.parent.parent.popToRoot();
+  }
 }
