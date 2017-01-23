@@ -16,6 +16,7 @@ export class StudentModel{
     this.icon = '';
     this.note = '';
     this.location = '';
+    this.dietNeed = false;
   }
 
   setFields(t__id: String, t__rev: String, t_fName: String, t_lName: String,
@@ -38,6 +39,10 @@ export class UserModel{
   public role: String;
   public phone: String;
   public therapy_type: String;
+<<<<<<< HEAD
+=======
+  public therapy_fav_ids: Array<String>;
+>>>>>>> origin/master
 
   constructor(){
     this._id = "-1";
@@ -46,6 +51,8 @@ export class UserModel{
     this.lName = "";
     this.role = "";
     this.phone = "";
+    this.therapy_type = "";
+    this.therapy_fav_ids = [];
   }
 }
 
@@ -74,6 +81,21 @@ export class TransactionModel{
 export class TransactionStudentModel{
   public id: String;
   public events: Array<TransactionEvent>;
+  public nap: String;
+  public therapies: Array<TransactionTherapy>;
+
+  constructor(){
+    this.id = "";
+    this.events = [];
+    this.nap = "";
+    this.therapies = [];
+  }
+}
+
+export class TransactionTherapy{
+  public startTime: String;
+  public length: Number;
+  public type: String;
 }
 
 export class TransactionEvent {
