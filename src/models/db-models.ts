@@ -39,10 +39,7 @@ export class UserModel{
   public role: String;
   public phone: String;
   public therapy_type: String;
-<<<<<<< HEAD
-=======
   public therapy_fav_ids: Array<String>;
->>>>>>> origin/master
 
   constructor(){
     this._id = "-1";

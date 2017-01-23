@@ -68,6 +68,10 @@ export class AdminUserModalPage {
       this.user.phone = this.userForm.value.phoneNumber;
       this.user.therapy_type = this.userForm.value.therapistType;
 
+      if(this.user.role != "therapist" && this.user.therapy_type){
+        this.user.therapy_type = "";
+      }
+
       if(this.user._id === "-1"){
         this.userService.createUserByDoc(this.user).then((returnedID: String)=>{
           this.user._id = returnedID;
