@@ -11,7 +11,7 @@
   <ion-list inset>
     <div *ngIf="parentPage === 'presentStudents'">
       <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out'">
+        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
           <ion-item  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location === 'Checked out'">
+        <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT">
           <ion-item class="absentRow"  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
@@ -35,7 +35,7 @@
     </div>
     <div *ngIf="parentPage === 'napStudents'">
       <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out'">
+        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
           <h3 ion-item>
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
@@ -49,7 +49,7 @@
 
     <div *ngIf="parentPage === 'therapy'">
       <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location === 'Therapist checked student out'">
+        <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT_THERAPY">
           <h3 ion-item>
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
@@ -60,7 +60,7 @@
         </div>
       </div>
       <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out' && this.studentService.data.get(student.key).location !==  'Therapist checked student out'  && this.studentService.data.get(student.key).location !== 'Nurse checked student out'">
+        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT && this.studentService.data.get(student.key).location !==  checkinService.CHECKED_OUT_THERAPY  && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_NURSE">
           <h3 ion-item>
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
@@ -74,7 +74,7 @@
 
     <div *ngIf="parentPage === 'nurse'">
       <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location === 'Nurse checked student out'">
+        <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT_NURSE">
           <h3 ion-item>
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
@@ -85,7 +85,7 @@
         </div>
       </div>
       <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out' && this.studentService.data.get(student.key).location !== 'Therapist checked student out' && this.studentService.data.get(student.key).location !== 'Nurse checked student out'">
+        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_THERAPY && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_NURSE">
           <h3 ion-item>
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
@@ -99,7 +99,7 @@
 
     <div *ngIf="parentPage === 'signout'">
       <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location !== 'Checked out'">
+        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
           <h3 ion-item>
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
@@ -113,7 +113,7 @@
 
     <div *ngIf="parentPage === 'checkin'">
       <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location === 'Checked out'">
+        <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT">
           <h3 ion-item>
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
