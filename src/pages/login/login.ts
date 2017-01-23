@@ -63,8 +63,10 @@ export class LoginPage {
         if (classroom.roomNumber === roomNumber) break;
         roomNumberIndex++;
       }
-      this.studentService.getStudentsByGroup(this.classrooms[roomNumberIndex].students).then(result =>{
-        this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
+      this.userService.getAllUsers().then(output =>{
+        this.studentService.getStudentsByGroup(this.classrooms[roomNumberIndex].students).then(result =>{
+          this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
+        });
       });
     } else{
       let toast = this.toastCtrl.create({

@@ -21,27 +21,27 @@
         <h3 ion-item>
           <div *ngIf="transaction.type === 'checkin'">
             <ion-icon name="person-add" item-left></ion-icon>
-            Checked In For the Day at {{transaction.time_readable}}
+            Checked In For the Day by {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
           </div>
           <div *ngIf="transaction.type === 'checkout'">
             <ion-icon name="send" item-left></ion-icon>
-            Checked Out For the Day at {{transaction.time_readable}}
+            Checked Out For the Day By {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
           </div>
           <div *ngIf="transaction.type === 'checkinByNurse'">
             <ion-icon name="medical" item-left></ion-icon>
-            Checked In By Nurse at {{transaction.time_readable}}
+            Checked In By {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
           </div>
           <div *ngIf="transaction.type === 'checkoutByNurse'">
             <ion-icon name="medical" item-left></ion-icon>
-            Checked Out By Nurse at {{transaction.time_readable}}
+            Checked Out By {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
           </div>
           <div *ngIf="transaction.type === 'checkinByTherapist'">
             <ion-icon name="briefcase" item-left></ion-icon>
-            Checked In By Therapist at {{transaction.time_readable}}
+            Checked In By Therapist, {{getUserName(transaction.by_id)}}, at {{transaction.time_readable}}
           </div>
           <div *ngIf="transaction.type === 'checkoutByTherapist'">
             <ion-icon name="briefcase" item-left></ion-icon>
-            Checked Out By Therapist at {{transaction.time_readable}}
+            Checked Out By Therapist, {{getUserName(transaction.by_id)}}, at {{transaction.time_readable}}
           </div>
         </h3>
     </div>
