@@ -78,6 +78,21 @@ export class TransactionModel{
 export class TransactionStudentModel{
   public id: String;
   public events: Array<TransactionEvent>;
+  public nap: String;
+  public therapies: Array<TransactionTherapy>;
+
+  constructor(){
+    this.id = "";
+    this.events = [];
+    this.nap = "";
+    this.therapies = [];
+  }
+}
+
+export class TransactionTherapy{
+  public startTime: String;
+  public length: Number;
+  public type: String;
 }
 
 export class TransactionEvent {
