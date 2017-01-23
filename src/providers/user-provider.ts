@@ -159,4 +159,51 @@ export class UserProvider {
       console.log(err)
     });
   }
+
+  getTherapistFavoriteIDs(ID: String){
+    return new Promise((resolve, reject) => {      
+      this.data.get(ID).then(result => {
+
+        if(result.role.toLowerCase() === 'therapist'){
+          if(!result.therapy_fav_ids){
+            //add it as a field with empty []
+            this.db.upsert(ID, (doc) => {
+              doc.therapy_fav_ids = [];
+              return doc;
+            })
+            resolve([]);
+          }else{
+            resolve(result.therapy_fav_ids);
+          }
+
+        }else{
+          reject("Not therapist");
+        } 
+      }).catch(err => {
+        reject("ERRORRRRR");
+      })
+    })
+  }
+
+  addTherapistFavoriteID(t_id: String, s_id: String){
+    return new Promise((resolve, reject) => {      
+      
+      this.getTherapistFavoriteIDs(t_id).then(result => {
+        this.db.upsert(t_id, (doc) => {
+          doc.therapy_fav_ids = [...doc.therapy_fav_ids, s_id];
+          return doc;
+        })
+      })
+      .catch(err => {
+        console.log(err);
+        reject(err);
+      });
+      
+    });
+  }
+
+  removeTherapistFavoriteID(t_id: String, s_id: String){
+
+  }
+
 }
