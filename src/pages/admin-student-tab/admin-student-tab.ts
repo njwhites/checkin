@@ -1,7 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { StudentProvider } from '../../providers/student-provider';
 import { AdminStudentModalPage } from '../admin-student-modal/admin-student-modal';
+
 /*
   Generated class for the AdminStudentTab page.
 
@@ -14,7 +15,9 @@ import { AdminStudentModalPage } from '../admin-student-modal/admin-student-moda
 })
 export class AdminStudentTabPage {
 
-  constructor(public navCtrl: NavController, public modalController: ModalController, public studentService: StudentProvider) {}
+  constructor(public navCtrl: NavController,
+              public modalController: ModalController,
+              public studentService: StudentProvider) {}
 
   ionViewDidLoad() {
   }

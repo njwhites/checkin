@@ -37,6 +37,7 @@ export class UserModel{
   public lName: String;
   public role: String;
   public phone: String;
+  public therapy_type: String;
 
   constructor(){
     this._id = "-1";

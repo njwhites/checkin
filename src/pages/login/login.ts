@@ -96,7 +96,9 @@ export class LoginPage {
         this.navCtrl.push(this.therapistPage);
       } else if(this.btnPage == 'admin') {
         this.studentService.getStudents().then(()=>{
-          this.navCtrl.push(this.adminPage);
+          this.userService.getAllUsers().then(()=>{
+            this.navCtrl.push(this.adminPage);
+          });
         });
       }
     } else {

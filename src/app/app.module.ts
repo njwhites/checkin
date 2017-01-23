@@ -27,6 +27,7 @@ import {AdminStudentTabPage} from "../pages/admin-student-tab/admin-student-tab"
 import {AdminUserTabPage} from "../pages/admin-user-tab/admin-user-tab";
 import {AdminDebugTabPage} from "../pages/admin-debug-tab/admin-debug-tab";
 import {AdminStudentModalPage} from "../pages/admin-student-modal/admin-student-modal";
+import {AdminUserModalPage} from "../pages/admin-user-modal/admin-user-modal";
 import {MapValuesPipe} from "../pipes/map-values";
 import {FirstUpperPipe} from "../pipes/first-upper";
 import {ParentReadablePipe} from "../pipes/parent-readable";
@@ -57,7 +58,8 @@ import {ParentReadablePipe} from "../pipes/parent-readable";
     AdminStudentTabPage,
     AdminUserTabPage,
     AdminDebugTabPage,
-    AdminStudentModalPage
+    AdminStudentModalPage,
+    AdminUserModalPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -85,7 +87,8 @@ import {ParentReadablePipe} from "../pipes/parent-readable";
     AdminStudentTabPage,
     AdminUserTabPage,
     AdminDebugTabPage,
-    AdminStudentModalPage
+    AdminStudentModalPage,
+    AdminUserModalPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider]
 })

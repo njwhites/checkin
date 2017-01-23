@@ -1,0 +1,65 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>User Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>ID:</ion-label>
+      <ion-input type="text" value="{{this.user._id}}" disabled="true"></ion-input>
+    </ion-list-header>
+
+
+    <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+      <ion-item>
+        <ion-label>First Name</ion-label>
+        <ion-input type="text" formControlName="fName" value="{{this.userService.data.get(this.user._id).fName}}"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Last Name</ion-label>
+        <ion-input type="text" formControlName="lName" value="{{this.userService.data.get(this.user._id).lName}}"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Role:</ion-label>
+        <ion-select formControlName="role">
+            <ion-option *ngFor="let role of this.userService.ROLES" value="{{role}}">{{role | firstUpper}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="this.userForm.value.role === 'therapist'">
+        <ion-label>Therapist Type:</ion-label>
+        <ion-select formControlName="therapistType">
+            <ion-option *ngFor="let type of this.userService.THERAPY_TYPES" value="{{type}}">{{type}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Phone Number:</ion-label>
+        <ion-input type="tel" formControlName="phoneNumber" value="{{this.userService.data.get(this.user._id).phone}}"></ion-input>
+      </ion-item>
+
+      <ion-card [hidden]="this.userForm.valid">
+        <ion-card-header>Invalid input</ion-card-header>
+        <ion-card-content *ngIf="this.userForm.controls['fName'].hasError('required')">
+          First name is required.
+        </ion-card-content>
+        <ion-card-content *ngIf="this.userForm.controls['lName'].hasError('required')">
+          Last name is required.
+        </ion-card-content>
+        <ion-card-content *ngIf="this.userForm.controls['role'].hasError('required')">
+          Role is required.
+        </ion-card-content>
+      </ion-card>
+
+      <button ion-button block type="submit" [disabled]="!this.userForm.valid">{{buttonText}}</button>
+      <button ion-button block color="danger" *ngIf="this.user._id >= 0" (click)="deleteUser()">Delete User</button>
+    </form>
+  </ion-list>
+</ion-content>

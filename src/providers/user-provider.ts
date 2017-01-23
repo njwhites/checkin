@@ -7,7 +7,9 @@ export class UserProvider {
   data: Map<String, UserModel>;
   db: any;
   remote: String;
-
+  public ROLES = ["admin","therapist","teacher","nurse","driver"];
+  public THERAPY_TYPES = ["OT","PT","SLP"];
+  
   constructor() {
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('users');

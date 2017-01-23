@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {UtilityProvider} from '../../providers/utility-provider';
-import {AdminPage} from '../admin/admin';
 
 
 /*
