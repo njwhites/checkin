@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import {Validators, FormBuilder } from '@angular/forms';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { StudentProvider } from "../../providers/student-provider";
 import { StudentModel } from "../../models/db-models";
-/*
-  Generated class for the AdminStudentModal page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+
+//---------------------------------------------------------
+//For a commented description of this code see
+//      admin-user-modal.ts
+// that file and this one follow nearly identical procedure
+//---------------------------------------------------------
 
 
 @Component({
@@ -23,7 +24,8 @@ export class AdminStudentModalPage {
               public formBuilder: FormBuilder,
               public studentService: StudentProvider,
               public navController: NavController,
-              public alertController: AlertController) {
+              public alertController: AlertController,
+              public toastController: ToastController) {
 
     let ID = navParams.get("key");
     if(ID === "-1"){
@@ -31,9 +33,6 @@ export class AdminStudentModalPage {
     }
     let emptyStudent = new StudentModel();
     emptyStudent._id = "-1";
-    emptyStudent.fName = "";
-    emptyStudent.lName = "";
-    emptyStudent.note = "";
     this.studentService.data.set("-1", emptyStudent);
 
     this.student = this.studentService.data.get(ID);
@@ -66,9 +65,22 @@ export class AdminStudentModalPage {
         this.studentService.createStudent(this.student).then((returnedID: String)=>{
           this.student._id = returnedID;
         });
+        let emptyStudent = new StudentModel();
+        emptyStudent._id = "-1";
+        this.studentService.data.set("-1", emptyStudent);
         this.buttonText = "Update Student Info";
+        this.toastController.create({
+          message: this.student.fName+ " " + this.student.lName + " has been added as a user.",
+          duration: 3000,
+          position: "bottom"
+        }).present();
       } else {
         this.studentService.updateStudent(this.student);
+        this.toastController.create({
+          message: this.student.fName+ " " + this.student.lName + " has been updated.",
+          duration: 3000,
+          position: "bottom"
+        }).present();
       }
     }
   }

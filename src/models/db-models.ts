@@ -42,7 +42,7 @@ export class UserModel{
   public therapy_fav_ids: Array<String>;
 
   constructor(){
-    this._id = "-1";
+    this._id = "";
     this._rev = "";
     this.fName = "";
     this.lName = "";

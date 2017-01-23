@@ -16,7 +16,10 @@ export class AdminUserTabPage {
   }
 
   homeButtonClicked(){
-    console.log("home button clicked");
+    //this.navCtrl.parent.parent gets us the navCtrl for
+    // the page encompassing the tabs, and so poping to
+    // root on that will take you to the original root
+    // page of the app
     this.navCtrl.parent.parent.popToRoot();
   }
 

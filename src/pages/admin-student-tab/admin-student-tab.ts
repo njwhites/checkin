@@ -3,12 +3,7 @@ import { NavController, ModalController } from 'ionic-angular';
 import { StudentProvider } from '../../providers/student-provider';
 import { AdminStudentModalPage } from '../admin-student-modal/admin-student-modal';
 
-/*
-  Generated class for the AdminStudentTab page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-admin-student-tab',
   templateUrl: 'admin-student-tab.html'
@@ -27,7 +22,10 @@ export class AdminStudentTabPage {
   }
 
   homeButtonClicked(){
-    console.log("home button clicked");
+    //this.navCtrl.parent.parent gets us the navCtrl for
+    // the page encompassing the tabs, and so poping to
+    // root on that will take you to the original root
+    // page of the app
     this.navCtrl.parent.parent.popToRoot();
   }
   addStudent(){

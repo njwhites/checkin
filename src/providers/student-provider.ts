@@ -208,7 +208,9 @@ export class StudentProvider {
 
     return new Promise(resolve => {
       this.db.upsert(student._id, ((doc)=>{doc._deleted = true; return doc}));
-      this.data.delete(student._id);
+      if(Number(student._id) >= 0){
+        this.data.delete(student._id);
+      }
       console.log("just tried to delete: ");
       console.log(student);
       resolve();
