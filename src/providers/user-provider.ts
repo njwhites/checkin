@@ -185,21 +185,35 @@ export class UserProvider {
     })
   }
 
+/*
+* resolve(true) -> student added
+* resolve(false) -> student already existed in list
+* reject(false) -> failed
+*/
   addTherapistFavoriteID(t_id: String, s_id: String){
     return new Promise((resolve, reject) => {      
       
-      this.getTherapistFavoriteIDs(t_id).then(result => {
-        this.db.upsert(t_id, (doc) => {
-          doc.therapy_fav_ids = [...doc.therapy_fav_ids, s_id];
-          return doc;
-        })
-      })
-      .catch(err => {
-        console.log(err);
-        reject(err);
-      });
-      
-    });
+      this.getTherapistFavoriteIDs(t_id).then((result: Array<String>) => {
+        if(result.indexOf(s_id) >= 0){
+          resolve(false);
+        }
+        else{
+          this.db.upsert(t_id, (doc) => {
+              //theoretically should add the new student
+              doc.therapy_fav_ids = [...doc.therapy_fav_ids, s_id].sort((a,b) => {return a - b;});
+              return doc;
+            }).then(result => {
+              resolve(true);
+            }).catch(err => {
+              console.log(err);
+              reject(false);
+            })
+          }
+        }).catch(err => {
+          console.log(err);
+          reject(false);
+        });
+          });
   }
 
   removeTherapistFavoriteID(t_id: String, s_id: String){
@@ -212,6 +226,11 @@ export class UserProvider {
         this.db.upsert(t_id, (doc) => {
           doc.therapy_fav_ids = result;
           return doc;
+        }).then(result => {
+          resolve(true);
+        }).catch(err => {
+          console.log(err);
+          reject(false);
         })
       })
       .catch(err => {
