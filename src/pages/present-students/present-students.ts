@@ -36,4 +36,9 @@ export class PresentStudentsPage {
     }
   }
 
+  homeButtonClicked(){
+    console.log("home button clicked");
+    this.navCtrl.parent.parent.popToRoot();
+  }
+
 }
