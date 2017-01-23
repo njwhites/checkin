@@ -39,7 +39,12 @@ export class UserModel{
   public phone: String;
 
   constructor(){
-
+    this._id = "-1";
+    this._rev = "";
+    this.fName = "";
+    this.lName = "";
+    this.role = "";
+    this.phone = "";
   }
 }
 
