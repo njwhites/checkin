@@ -48,6 +48,7 @@ export class ListPage {
   revert(studentID:string):void {
     var search;
     if((this.parentPage !== 'signout') && (this.parentPage !== 'checkin')) {
+      clearInterval(this.interval);
       this.studentID = studentID;
       var returnedStudent;
       if(this.parentPage === 'therapy') {
@@ -203,9 +204,11 @@ export class ListPage {
   ionViewWillEnter(){
     this.timeSinceLastInteraction = 0;
     this.interval = setInterval(() => {
+      console.log(this.timeSinceLastInteraction)
       if(++this.timeSinceLastInteraction >= 30){
         clearInterval(this.interval);
         // switch back from this page, nuke it, kill it with fire
+        console.log("POOPPED")
         this.navCtrl.popToRoot();
       }
     }, 1000)
