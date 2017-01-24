@@ -2,7 +2,7 @@ import {Pipe} from '@angular/core';
 
 @Pipe({
   name: 'mapValues',
-  pure: false
+  pure: true
 })
 export class MapValuesPipe {
     transform(value: any, args?: any[]): Object[] {
