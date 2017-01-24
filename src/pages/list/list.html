@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding (click)="resetInterval()">
   <ion-list inset>
     <div *ngIf="parentPage === 'presentStudents'">
       <div *ngFor="let student of this.studentService.data | mapValues">
