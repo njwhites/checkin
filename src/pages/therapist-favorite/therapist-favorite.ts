@@ -38,4 +38,8 @@ export class TherapistFavoritePage {
     })
   }
 
+  getTherapistName(_id: String) {
+    return this.userService.data.get(String(_id)).fName + " " + this.userService.data.get(String(_id)).lName;
+  }
+
 }
