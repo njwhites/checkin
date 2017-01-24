@@ -64,6 +64,7 @@ export class ListPage {
             this.checkinService.therapistCheckout(studentID, String(this.userID), "");
           });
           this.studentID = studentID;
+          clearInterval(this.interval);
           this.navCtrl.pop();
 
         } else {
@@ -72,6 +73,7 @@ export class ListPage {
           //////////////////////////////////////////////////////////////////////
           returnedStudent = studentID.slice(0, search);
           this.checkinService.therapistCheckin(String(returnedStudent), String(this.userID));
+          clearInterval(this.interval);
           this.navCtrl.pop();
         }
       } else if(this.parentPage === 'nurse') {
@@ -81,6 +83,7 @@ export class ListPage {
           //Checkout student to nurse
           ////////////////////////////////////////////////////////////////////////
           this.checkinService.nurseCheckout(studentID, String(this.userID));
+          clearInterval(this.interval);
           this.navCtrl.pop();
         } else {
           //////////////////////////////////////////////////////////////////////
@@ -88,6 +91,7 @@ export class ListPage {
           //////////////////////////////////////////////////////////////////////
           returnedStudent = studentID.slice(0, search);
           this.checkinService.nurseCheckin(String(returnedStudent), String(this.userID));
+          clearInterval(this.interval);
           this.navCtrl.pop();
         }
       }
@@ -111,6 +115,7 @@ export class ListPage {
     this.checkinService.checkoutStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
     this.toastTrigger = true;
+    clearInterval(this.interval);
     this.navCtrl.pop();
   }
 
@@ -118,6 +123,7 @@ export class ListPage {
     this.checkinService.checkinStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
     this.toastTrigger = true;
+    clearInterval(this.interval);
     this.navCtrl.pop();
   }
 
@@ -203,6 +209,9 @@ export class ListPage {
 
   ionViewWillEnter(){
     this.timeSinceLastInteraction = 0;
+    if(this.interval){
+      clearInterval(this.interval);
+    }
     this.interval = setInterval(() => {
       if(++this.timeSinceLastInteraction >= 30){
         clearInterval(this.interval);
