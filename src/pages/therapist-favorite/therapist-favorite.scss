@@ -2,7 +2,11 @@ page-therapist-favorite {
 
   .horizontal-align-center {
     align-items: center;
-    height: 80%;
+    padding-top: 5%;
+  }
+  .scrollView {
+    align-items: center;
+    height: 75%;
   }
   .push-to-bottom {
     bottom: 50px;
@@ -21,7 +25,7 @@ page-therapist-favorite {
   }
   .titleRoom {
     align-self: center;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     font-size: 300%;
   }
 
