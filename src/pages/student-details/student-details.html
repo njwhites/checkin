@@ -39,7 +39,7 @@
             <ion-icon name="briefcase" item-left></ion-icon>
             Checked In By Therapist, {{getUserName(transaction.by_id)}}, at {{transaction.time_readable}}
           </div>
-          <div *ngIf="transaction.type === 'checkoutByTherapist'">
+          <div *ngIf="transaction.type.includes('checkoutByTherapist')">
             <ion-icon name="briefcase" item-left></ion-icon>
             Checked Out By Therapist, {{getUserName(transaction.by_id)}}, at {{transaction.time_readable}}
           </div>
