@@ -149,7 +149,9 @@ export class CheckinProvider {
             time_readable: event.time_readable,
             by_id: event.by_id
           }
-        })
+        }),
+        nap: -1,
+        therapies: []
     }
     //console.log(i);
     function delta(doc) {
