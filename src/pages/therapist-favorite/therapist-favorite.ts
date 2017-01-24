@@ -33,7 +33,8 @@ export class TherapistFavoritePage {
 
   studentTapped(student) {
     this.navCtrl.push(TherapistStudentDetailsPage, {
-      student: student
+      student: student,
+      id: this.id
     })
   }
 

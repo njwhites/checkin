@@ -1,7 +1,7 @@
-<div *ngIf="grandParentPage !== 'checkin' && grandParentPage !== 'signout' && studentLocation !== 'Therapist checked student out' && studentLocation !== 'Nurse checked student out'">
+<div *ngIf="grandParentPage !== 'checkin' && grandParentPage !== 'signout' && !studentLocation.includes('Therapist checked student out') && studentLocation !== 'Nurse checked student out'">
   <button ion-button color="default" small (click)="checkoutStudent()" id="checkoutButton_{{thisStudent}}">Checkout</button>
 </div>
-<div *ngIf="grandParentPage !== 'checkin' && grandParentPage !== 'signout' && (studentLocation === 'Therapist checked student out' || studentLocation === 'Nurse checked student out')">
+<div *ngIf="grandParentPage !== 'checkin' && grandParentPage !== 'signout' && (studentLocation.includes('Therapist checked student out') || studentLocation === 'Nurse checked student out')">
   <button ion-button color="danger" small (click)="TNcheckinStudent()" id="TNcheckinButton_{{thisStudent}}">Check In</button>
 </div>
 <div *ngIf="grandParentPage === 'checkin'">
