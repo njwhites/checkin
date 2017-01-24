@@ -11,10 +11,29 @@
     <ion-col>
       <div *ngFor="let student of this.studentService.data | mapValues">
         <div *ngFor="let thisStudent of therapistStudents">
-          <ion-item *ngIf="thisStudent === this.studentService.data.get(student.key)._id" (click)="studentTapped(this.studentService.data.get(student.key)._id)">
-            <ion-icon name="walk" item-left></ion-icon>
-            {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
-          </ion-item>
+          <div *ngIf="thisStudent === this.studentService.data.get(student.key)._id && this.studentService.data.get(student.key).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentService.data.get(student.key)._id)">
+            <ion-item>
+              <ion-icon name="walk" item-left></ion-icon>
+              {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+            </ion-item>
+          </div>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <div *ngFor="let student of this.studentService.data | mapValues">
+        <div *ngFor="let thisStudent of therapistStudents">
+          <div *ngIf="thisStudent === this.studentService.data.get(student.key)._id && this.studentService.data.get(student.key).location === this.checkinService.CHECKED_OUT">
+            <ion-item class="absentRow">
+              <ion-icon name="walk" item-left></ion-icon>
+              {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+              <div item-right>
+                Absent
+              </div>
+            </ion-item>
+          </div>
         </div>
       </div>
     </ion-col>

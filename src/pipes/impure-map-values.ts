@@ -1,7 +1,7 @@
 import {Pipe} from '@angular/core';
 
 @Pipe({
-  name: 'mapValues',
+  name: 'impureMapValues',
   pure: false
 })
 export class ImpureMapValuesPipe {

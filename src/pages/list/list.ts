@@ -48,6 +48,7 @@ export class ListPage {
   revert(studentID:string):void {
     var search;
     if((this.parentPage !== 'signout') && (this.parentPage !== 'checkin')) {
+      clearInterval(this.interval);
       this.studentID = studentID;
       var returnedStudent;
       if(this.parentPage === 'therapy') {

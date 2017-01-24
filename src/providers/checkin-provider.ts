@@ -31,9 +31,9 @@ export class CheckinProvider {
   CHECKED_OUT = 'Checked out';
   CHECKED_IN = 'Checked in/In classroom';
   CHECKED_OUT_THERAPY = 'Therapist checked student out';
-  CHECKED_OUT_THERAPY_OT = 'OT Therapist checked student out';
-  CHECKED_OUT_THERAPY_PT = 'PT Therapist checked student out';
-  CHECKED_OUT_THERAPY_SLP = 'SLP Therapist checked student out';
+  CHECKED_OUT_THERAPY_OT = 'OT ' + this.CHECKED_OUT_THERAPY;
+  CHECKED_OUT_THERAPY_PT = 'PT ' + this.CHECKED_OUT_THERAPY;
+  CHECKED_OUT_THERAPY_SLP = 'SLP ' + this.CHECKED_OUT_THERAPY;;
   CHECKED_OUT_NURSE = 'Nurse checked student out';
 
   db: any;

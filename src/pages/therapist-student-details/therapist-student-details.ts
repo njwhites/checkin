@@ -1,22 +1,17 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
+import {StudentProvider} from '../../providers/student-provider';
 
-/*
-  Generated class for the TherapistStudentDetails page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-therapist-student-details',
   templateUrl: 'therapist-student-details.html'
 })
 export class TherapistStudentDetailsPage {
+  selectedStudent: any;
 
-  constructor(public navCtrl: NavController) {}
-
-  ionViewDidLoad() {
-    console.log('Hello TherapistStudentDetailsPage Page');
+  constructor(public studentService: StudentProvider, public navCtrl: NavController, public navParams: NavParams) {
+    this.selectedStudent = navParams.get('student');
   }
+
 
 }
