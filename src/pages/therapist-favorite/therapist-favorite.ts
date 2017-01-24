@@ -3,6 +3,7 @@ import {NavController, NavParams} from "ionic-angular";
 import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';
 import {UserProvider} from '../../providers/user-provider';
+import {TherapistAddPage} from '../therapist-add/therapist-add';
 
 @Component({
   selector: 'page-therapist-favorite',
@@ -18,13 +19,15 @@ export class TherapistFavoritePage {
               public checkinService: CheckinProvider,
               public userService: UserProvider) {
     this.id = navParams.data;
-    console.log(this.id)
     this.userService.getTherapistFavoriteIDs(this.id.toString()).then((result:any) => {
-      console.log(result);
       this.therapistStudents = result;
     }).catch((err) => {
       console.log(err);
     });
+  }
+
+  add() {
+    this.navCtrl.push(TherapistAddPage);
   }
 
 }

@@ -33,6 +33,7 @@ import {ImpureMapValuesPipe} from "../pipes/impure-map-values";
 import {FirstUpperPipe} from "../pipes/first-upper";
 import {ParentReadablePipe} from "../pipes/parent-readable";
 import {TherapistFavoritePage} from "../pages/therapist-favorite/therapist-favorite";
+import {TherapistAddPage} from "../pages/therapist-add/therapist-add";
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import {TherapistFavoritePage} from "../pages/therapist-favorite/therapist-favor
     AdminDebugTabPage,
     AdminStudentModalPage,
     AdminUserModalPage,
-    TherapistFavoritePage
+    TherapistFavoritePage,
+    TherapistAddPage
 
   ],
   imports: [
@@ -93,7 +95,8 @@ import {TherapistFavoritePage} from "../pages/therapist-favorite/therapist-favor
     AdminUserTabPage,
     AdminDebugTabPage,
     AdminStudentModalPage,
-    AdminUserModalPage
+    AdminUserModalPage,
+    TherapistAddPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider]
 })
