@@ -204,11 +204,9 @@ export class ListPage {
   ionViewWillEnter(){
     this.timeSinceLastInteraction = 0;
     this.interval = setInterval(() => {
-      console.log(this.timeSinceLastInteraction)
       if(++this.timeSinceLastInteraction >= 30){
         clearInterval(this.interval);
         // switch back from this page, nuke it, kill it with fire
-        console.log("POOPPED")
         this.navCtrl.popToRoot();
       }
     }, 1000)
