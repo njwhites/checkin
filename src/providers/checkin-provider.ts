@@ -106,7 +106,7 @@ export class CheckinProvider {
 
   getStudent(id: string, doc: any){
     function addStudent(doc){
-      doc.students = [...doc.students, {id:id, events: []}];
+      doc.students = [...doc.students, {id:id, events: [], nap: -1, therapies: []}];
       return doc;
     }
     //if the student searched for doesnt already exist
@@ -150,8 +150,8 @@ export class CheckinProvider {
             by_id: event.by_id
           }
         }),
-        nap: -1,
-        therapies: []
+        nap: me.nap,
+        therapies: me.therapies
     }
     //console.log(i);
     function delta(doc) {
@@ -446,9 +446,39 @@ export class CheckinProvider {
           location = this.CHECKED_OUT_THERAPY; 
 
       }
-      this.performEvent(id, result, by_id, event_type);
+      this.performEvent(id, result, by_id, event_type).then(response => {
+        this.addTherapyStart(id, by_id, Date.now(), result);
+      });
       this.studentService.updateStudentLocation(id, location);
     });
+  }
+
+  addTherapyStart(id, by_id: string, date: number, doc: any){
+    return new Promise((resolve, reject) => {
+      this.getStudent(id, doc).then((student: TransactionStudentModel) => {
+        //take the student and do something?
+        var t = new TransactionTherapy();
+        t.by_id = by_id;
+        t.start_time = date + "";
+        t.length = -1;
+        student.therapies.push(t);
+        this.getTodaysTransaction(doc._id).then(result => {
+          this.updateStudent(student, result).then(updateResult => {
+            resolve(true);
+          }).catch(err => {
+            console.log(err);
+            reject(false);
+          });
+        }).catch(err => {
+            console.log(err);
+            reject(false);
+           });
+      }).catch(err => {
+        console.log(err);
+        reject(false);
+      });
+    })
+
   }
 
   therapistCheckin(id: string, by_id: string){
@@ -457,14 +487,34 @@ export class CheckinProvider {
         this.performEvent(id, result, by_id, this.THERAPY_IN);
         this.studentService.updateStudentLocation(id, this.CHECKED_IN);
         //resolve with the correct data (student's events for today)
-        resolve(true);
+        this.getIncompleteTherapy(id, result).then((therapy: TransactionTherapy) => {
+          resolve(therapy);
+        })
       }).catch(err => {
         reject(false);
       });
     })
   }
 
-  therapistCheckinFollowUp(student_id: string, therapist_type: string, start_time: string, length: Number){
+  getIncompleteTherapy(id: string, doc: any){
+    return new Promise((resolve, reject) => {
+      this.getStudent(id, doc).then((student: TransactionStudentModel) => {
+        let incompletes = student.therapies.filter(therapy => {
+          return therapy.length === -1;
+        });
+        if(incompletes.length <= 0){
+          reject(false);
+        }else{
+          resolve(incompletes[0]);
+        }
+      }).catch(err => {
+          console.log(err);
+          reject(false);
+        });
+    })
+  }
+
+  therapistCheckinFollowUp(student_id: string, by_id: string, start_time: string, length: Number){
     return new Promise(resolve => {
       this.getTodaysTransaction(null).then((doc: TransactionModel) => {
         this.getStudent(student_id, doc).then((me: TransactionStudentModel) => {
@@ -472,9 +522,9 @@ export class CheckinProvider {
             return student.id + "" !== me.id + "";
           });
           let t_model = new TransactionTherapy();
-          t_model.startTime = start_time;
+          t_model.start_time = start_time;
           t_model.length = length;
-          t_model.type = therapist_type;
+          t_model.by_id = by_id;
           let i = {
               id: me.id,
               events: me.events.map(event => {
@@ -486,7 +536,7 @@ export class CheckinProvider {
                 }
               }),
               nap: me.nap,
-              therapies: [...me.therapies, {startTime: t_model.startTime, length: t_model.length, type: t_model.type}]
+              therapies: [...me.therapies, {startTime: t_model.start_time, length: t_model.length, by_id: t_model.by_id}]
           }
           function delta(doc) {
             doc.students = [...others, i];

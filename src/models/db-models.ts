@@ -90,9 +90,9 @@ export class TransactionStudentModel{
 }
 
 export class TransactionTherapy{
-  public startTime: String;
+  public start_time: String;
   public length: Number;
-  public type: String;
+  public by_id: String;
 }
 
 export class TransactionEvent {
