@@ -35,6 +35,7 @@ import {FirstUpperPipe} from "../pipes/first-upper";
 import {ParentReadablePipe} from "../pipes/parent-readable";
 import {TherapistFavoritePage} from "../pages/therapist-favorite/therapist-favorite";
 import {TherapistAddPage} from "../pages/therapist-add/therapist-add";
+import {TherapistStudentDetailsPage} from "../pages/therapist-student-details/therapist-student-details"
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import {TherapistAddPage} from "../pages/therapist-add/therapist-add";
     AdminStudentModalPage,
     AdminUserModalPage,
     TherapistFavoritePage,
-    TherapistAddPage
+    TherapistAddPage,
+    TherapistStudentDetailsPage
 
   ],
   imports: [
@@ -98,7 +100,9 @@ import {TherapistAddPage} from "../pages/therapist-add/therapist-add";
     AdminDebugTabPage,
     AdminStudentModalPage,
     AdminUserModalPage,
-    TherapistAddPage
+    TherapistAddPage,
+    TherapistStudentDetailsPage
+
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider]
 })

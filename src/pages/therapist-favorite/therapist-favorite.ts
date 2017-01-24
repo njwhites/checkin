@@ -4,6 +4,7 @@ import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';
 import {UserProvider} from '../../providers/user-provider';
 import {TherapistAddPage} from '../therapist-add/therapist-add';
+import {TherapistStudentDetailsPage} from '../therapist-student-details/therapist-student-details'
 
 @Component({
   selector: 'page-therapist-favorite',
@@ -28,6 +29,12 @@ export class TherapistFavoritePage {
 
   add() {
     this.navCtrl.push(TherapistAddPage);
+  }
+
+  studentTapped(student) {
+    this.navCtrl.push(TherapistStudentDetailsPage, {
+      student: student
+    })
   }
 
 }
