@@ -74,7 +74,7 @@ export class UserProvider {
 //get the user from the db
       this.db.get(ID).then(doc => {
 //if the therapist_type is set then it
-        if(doc.therapy_type !== null && doc.therapy_type !== undefined && doc.therapy_type.length() > 0){
+        if(doc.therapy_type !== null && doc.therapy_type !== undefined && doc.therapy_type.length > 0){
           resolve(doc.therapy_type);
         } else {
           resolve("Not Therapist");
