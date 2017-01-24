@@ -26,7 +26,7 @@
         <ion-label>First Name</ion-label>
         <ion-input type="text" formControlName="fName" value="{{this.studentService.data.get(this.student._id).fName}}"></ion-input>
       </ion-item>
-      
+
       <ion-item>
         <ion-label>Last Name</ion-label>
         <ion-input type="text" formControlName="lName" value="{{this.studentService.data.get(this.student._id).lName}}"></ion-input>
@@ -35,6 +35,13 @@
       <ion-item>
         <ion-label>Note:</ion-label>
         <ion-input type="text" formControlName="note" value="{{this.studentService.data.get(this.student._id).note}}"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <div>
+        <ion-label>Dietary Needs:</ion-label>
+        <ion-checkbox ion-right color="dark" checked="false"></ion-checkbox>
+      </div>
       </ion-item>
 
       <ion-card [hidden]="this.studentForm.valid">

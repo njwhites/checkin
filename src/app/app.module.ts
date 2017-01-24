@@ -29,6 +29,7 @@ import {AdminDebugTabPage} from "../pages/admin-debug-tab/admin-debug-tab";
 import {AdminStudentModalPage} from "../pages/admin-student-modal/admin-student-modal";
 import {AdminUserModalPage} from "../pages/admin-user-modal/admin-user-modal";
 import {MapValuesPipe} from "../pipes/map-values";
+import {ImpureMapValuesPipe} from "../pipes/impure-map-values";
 import {FirstUpperPipe} from "../pipes/first-upper";
 import {ParentReadablePipe} from "../pipes/parent-readable";
 import {TherapistFavoritePage} from "../pages/therapist-favorite/therapist-favorite";
@@ -54,6 +55,7 @@ import {TherapistFavoritePage} from "../pages/therapist-favorite/therapist-favor
     TherapistPage,
     AdminPage,
     MapValuesPipe,
+    ImpureMapValuesPipe,
     FirstUpperPipe,
     ParentReadablePipe,
     AdminStudentTabPage,
