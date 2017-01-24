@@ -30,6 +30,7 @@ import {AdminDebugTabPage} from "../pages/admin-debug-tab/admin-debug-tab";
 import {AdminStudentModalPage} from "../pages/admin-student-modal/admin-student-modal";
 import {AdminUserModalPage} from "../pages/admin-user-modal/admin-user-modal";
 import {MapValuesPipe} from "../pipes/map-values";
+import {PresentCountPipe} from "../pipes/present-count";
 import {ImpureMapValuesPipe} from "../pipes/impure-map-values";
 import {FirstUpperPipe} from "../pipes/first-upper";
 import {ParentReadablePipe} from "../pipes/parent-readable";
@@ -60,6 +61,7 @@ import {TherapistStudentDetailsPage} from "../pages/therapist-student-details/th
     AdminPage,
     MapValuesPipe,
     ImpureMapValuesPipe,
+    PresentCountPipe,
     FirstUpperPipe,
     ParentReadablePipe,
     AdminStudentTabPage,
