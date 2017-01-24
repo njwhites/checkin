@@ -201,7 +201,7 @@ export class ListPage {
   }
 
   ionViewWillEnter(){
-
+    this.timeSinceLastInteraction = 0;
     this.interval = setInterval(() => {
       if(++this.timeSinceLastInteraction >= 30){
         clearInterval(this.interval);
