@@ -9,7 +9,7 @@ export class UserProvider {
   remote: String;
   public ROLES = ["admin","therapist","teacher","nurse","driver"];
   public THERAPY_TYPES = ["OT","PT","SLP"];
-  
+
 
   constructor() {
     //setup a local db and then sync it to a backend db
@@ -164,9 +164,9 @@ export class UserProvider {
   }
 
   getTherapistFavoriteIDs(ID: String){
-    return new Promise((resolve, reject) => {      
+    return new Promise((resolve, reject) => {
       this.db.get(ID).then(result => {
-
+        console.log(result);
         if(result.role.toLowerCase() === 'therapist'){
           if(!result.therapy_fav_ids){
             //add it as a field with empty []
@@ -181,7 +181,7 @@ export class UserProvider {
 
         }else{
           reject("Not therapist");
-        } 
+        }
       }).catch(err => {
         reject("ERRORRRRR");
       })
@@ -194,8 +194,8 @@ export class UserProvider {
 * reject(false) -> failed
 */
   addTherapistFavoriteID(t_id: String, s_id: String){
-    return new Promise((resolve, reject) => {      
-      
+    return new Promise((resolve, reject) => {
+
       this.getTherapistFavoriteIDs(t_id).then((result: Array<String>) => {
         if(result.indexOf(s_id) >= 0){
           resolve(false);
@@ -220,8 +220,8 @@ export class UserProvider {
   }
 
   removeTherapistFavoriteID(t_id: String, s_id: String){
-    return new Promise((resolve, reject) => {      
-      
+    return new Promise((resolve, reject) => {
+
       this.getTherapistFavoriteIDs(t_id).then((result: Array<String>) => {
         if(result.indexOf(s_id) >= 0){
           result = result.splice(result.indexOf(s_id), 1);
@@ -240,7 +240,7 @@ export class UserProvider {
         console.log(err);
         reject(err);
       });
-      
+
     });
   }
 

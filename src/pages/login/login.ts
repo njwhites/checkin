@@ -95,7 +95,11 @@ export class LoginPage {
           this.navCtrl.push(this.kitchenPage);
         });
       } else if(this.btnPage == 'therapist') {
-        this.navCtrl.push(this.therapistPage);
+        this.studentService.getStudents().then(()=>{
+          this.userService.getAllUsers().then(()=>{
+            this.navCtrl.push(this.therapistPage, idCheck);
+          });
+        });
       } else if(this.btnPage == 'admin') {
         this.studentService.getStudents().then(()=>{
           this.userService.getAllUsers().then(()=>{

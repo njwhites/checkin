@@ -1,0 +1,9 @@
+<div *ngFor="let student of this.studentService.data | mapValues">
+  <div *ngFor="let thisStudent of therapistStudents">
+    <ion-item *ngIf="thisStudent === this.studentService.data.get(student.key)._id">
+      <ion-icon name="walk" item-left></ion-icon>
+      {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+    </ion-item>
+  </div>
+</div>
+

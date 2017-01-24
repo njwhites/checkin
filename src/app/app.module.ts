@@ -31,6 +31,7 @@ import {AdminUserModalPage} from "../pages/admin-user-modal/admin-user-modal";
 import {MapValuesPipe} from "../pipes/map-values";
 import {FirstUpperPipe} from "../pipes/first-upper";
 import {ParentReadablePipe} from "../pipes/parent-readable";
+import {TherapistFavoritePage} from "../pages/therapist-favorite/therapist-favorite";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,9 @@ import {ParentReadablePipe} from "../pipes/parent-readable";
     AdminUserTabPage,
     AdminDebugTabPage,
     AdminStudentModalPage,
-    AdminUserModalPage
+    AdminUserModalPage,
+    TherapistFavoritePage
+
   ],
   imports: [
     IonicModule.forRoot(MyApp)
