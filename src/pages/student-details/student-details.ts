@@ -41,6 +41,10 @@ export class StudentDetailsPage {
   }
 
   ionViewWillEnter(){
+    this.timeSinceLastInteraction = 0;
+    if(this.interval){
+      clearInterval(this.interval);
+    }
     this.interval = setInterval(() => {
       if(++this.timeSinceLastInteraction >= 30){
         clearInterval(this.interval);
@@ -51,6 +55,10 @@ export class StudentDetailsPage {
   }
 
   ionViewWillLeave(){
+    this.timeSinceLastInteraction = 25;
+  }
+
+  ionViewWillUnload(){
     clearInterval(this.interval);
   }
 }
