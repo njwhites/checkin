@@ -1,10 +1,30 @@
-<div *ngFor="let student of this.studentService.data | mapValues">
-  <div *ngFor="let thisStudent of therapistStudents">
-    <ion-item *ngIf="thisStudent === this.studentService.data.get(student.key)._id" (click)="studentTapped(this.studentService.data.get(student.key)._id)">
-      <ion-icon name="walk" item-left></ion-icon>
-      {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
-    </ion-item>
-  </div>
-</div>
-<button ion-button block (click)="add()">Add Favorite</button>
-
+<ion-scroll zooming="true" direction="y" class="horizontal-align-center">
+<ion-grid class="horizontal-align-center">
+  <ion-row class="buttonRow">
+    <ion-col>
+      <div class="titleRoom">
+        Favorite Students
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <div *ngFor="let student of this.studentService.data | mapValues">
+        <div *ngFor="let thisStudent of therapistStudents">
+          <ion-item *ngIf="thisStudent === this.studentService.data.get(student.key)._id" (click)="studentTapped(this.studentService.data.get(student.key)._id)">
+            <ion-icon name="walk" item-left></ion-icon>
+            {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+          </ion-item>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-scroll>
+<ion-grid class="push-to-bottom">
+  <ion-row class="buttonRow">
+    <ion-col>
+      <button class="addButton" ion-button block (click)="add()"> + Add Favorite</button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
