@@ -8,13 +8,14 @@
       </button>
     </ion-buttons>-->
     <ion-title>Student Details</ion-title>
+    <page-home-button></page-home-button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
+  <ion-list inset>
     <ion-list-header>
       <ion-label>ID:</ion-label>
       <ion-input type="text" value="{{this.student._id}}" disabled="true"></ion-input>
@@ -37,12 +38,22 @@
         <ion-input type="text" formControlName="note" value="{{this.studentService.data.get(this.student._id).note}}"></ion-input>
       </ion-item>
 
+      <!--<ion-grid>
+        <ion-row>
+          <ion-col width-75>
+            <ion-item>
+              <ion-label>Dietary Needs: </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col  width-25>
+            <ion-checkbox color="dark" checked="false"></ion-checkbox>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
       <ion-item>
-        <div>
         <ion-label>Dietary Needs:</ion-label>
         <ion-checkbox ion-right color="dark" checked="false"></ion-checkbox>
-      </div>
-      </ion-item>
+      </ion-item>-->
 
       <ion-card [hidden]="this.studentForm.valid">
         <ion-card-header>Invalid input</ion-card-header>

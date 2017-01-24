@@ -22,6 +22,7 @@ import {CheckinProvider} from "../providers/checkin-provider";
 import {UtilityProvider} from "../providers/utility-provider";
 import {KitchenPage} from "../pages/kitchen/kitchen";
 import {TherapistPage} from "../pages/therapist/therapist";
+import {HomeButtonPage} from "../pages/home-button/home-button";
 import {AdminPage} from "../pages/admin/admin";
 import {AdminStudentTabPage} from "../pages/admin-student-tab/admin-student-tab";
 import {AdminUserTabPage} from "../pages/admin-user-tab/admin-user-tab";
@@ -54,6 +55,7 @@ import {TherapistAddPage} from "../pages/therapist-add/therapist-add";
     SigninPage,
     KitchenPage,
     TherapistPage,
+    HomeButtonPage,
     AdminPage,
     MapValuesPipe,
     ImpureMapValuesPipe,
