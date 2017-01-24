@@ -18,13 +18,9 @@ export class ActionButtonPage {
     this.selected = false;
   }
 
-  //TODO: the click toggle only works for the first element in the list. make it work for all. most likely will need to use thisStudent instead of ID for lookup
   checkoutStudent() {
     if(this.grandParentPage === 'signout') {
-      var checkoutBtn = document.getElementById('outCheckoutButton_' + this.thisStudent);
-      var outSelectedBtn = document.getElementById('outSelectedButton_' + this.thisStudent);
-      checkoutBtn.style.display = 'none';
-      outSelectedBtn.style.display = 'block';
+      this.selected = true;
     }
     this.checkedOut.emit(this.thisStudent);
     //this is where the userID will be linked with thisStudent to to associate who is out with whom
@@ -46,10 +42,7 @@ export class ActionButtonPage {
   }
 
   signoutDeselectStudent() {
-    var checkoutBtn = document.getElementById('outCheckoutButton_' + this.thisStudent);
-    var outSelectedBtn = document.getElementById('outSelectedButton_' + this.thisStudent);
-    checkoutBtn.style.display = 'block';
-    outSelectedBtn.style.display = 'none';
+    this.selected = false;
     this.checkedOut.emit(this.thisStudent + ' was removed');
   }
 }

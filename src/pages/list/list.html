@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding (click)="resetInterval()">
   <ion-list inset>
     <div *ngIf="parentPage === 'presentStudents'">
       <div *ngFor="let student of this.studentService.data | mapValues">
@@ -102,7 +102,7 @@
         <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
           <h3 ion-item>
             <ion-icon name="walk" item-left></ion-icon>
-            {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}} {{this.studentService.data.get(student.key)._id}}
+            {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
             <div item-right>
               <page-action-button [thisStudent]="this.studentService.data.get(student.key)._id" [userID]="this.userID" (checkedOut)='revert($event)' [grandParentPage]="parentPage"></page-action-button>
             </div>

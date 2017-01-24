@@ -14,6 +14,9 @@ export class StudentDetailsPage {
   transactions: Array<any> = new Array<any>();
   name: string;
 
+  interval: any;
+  timeSinceLastInteraction: number = 0;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public checkinService: CheckinProvider, public studentService: StudentProvider, public userService: UserProvider) {
     // If we navigated to this page, we will have a student available as a nav param
     this.selectedStudent = navParams.get('student');
@@ -31,5 +34,23 @@ export class StudentDetailsPage {
   getUserName(id: string){
     
     return this.userService.data.get(id).fName + " " + this.userService.data.get(id).lName;
+  }
+
+  resetInterval(){
+    this.timeSinceLastInteraction = 0;
+  }
+
+  ionViewWillEnter(){
+    this.interval = setInterval(() => {
+      if(++this.timeSinceLastInteraction >= 30){
+        clearInterval(this.interval);
+        // switch back from this page, nuke it, kill it with fire
+        this.navCtrl.popToRoot();
+      }
+    }, 1000)
+  }
+
+  ionViewWillLeave(){
+    clearInterval(this.interval);
   }
 }

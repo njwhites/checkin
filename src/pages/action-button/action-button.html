@@ -13,6 +13,10 @@
   </div>
 </div>
 <div *ngIf="grandParentPage === 'signout'">
-  <button ion-button color="default" small (click)="checkoutStudent()" id="outCheckoutButton_{{thisStudent}}">Checkout</button>
-  <button ion-button color="danger" small id="outSelectedButton_{{thisStudent}}" (click)="signoutDeselectStudent()" style="display: none;">Selected</button>
+  <div *ngIf="!this.selected">
+    <button ion-button color="default" small (click)="checkoutStudent()" id="outCheckoutButton_{{thisStudent}}">Checkout</button>
+  </div>
+  <div *ngIf="this.selected">
+    <button ion-button color="danger" small id="outSelectedButton_{{thisStudent}}" (click)="signoutDeselectStudent()">Selected</button>
+  </div>
 </div>

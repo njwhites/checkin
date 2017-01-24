@@ -20,7 +20,10 @@ export class ListPage {
   @Input() userID: string;
   @Input() roomNumber: string;
   @Output() listCheckedOut: EventEmitter<string> = new EventEmitter<string>();
-  @Output() removedStudents: EventEmitter<Array<string>> = new EventEmitter<Array<string>>()
+  @Output() removedStudents: EventEmitter<Array<string>> = new EventEmitter<Array<string>>();
+
+  timeSinceLastInteraction: number = 0;
+  interval: any;
 
   constructor(public studentService: StudentProvider, public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public checkinService: CheckinProvider, public userService: UserProvider) {
     this.selectedStudent = navParams.get('student');
@@ -30,6 +33,11 @@ export class ListPage {
     this.studentID = '';
     this.toastTrigger = false;
   }
+
+  resetInterval () {
+    this.timeSinceLastInteraction = 0;
+  }
+
 
   ionViewDidEnter(){
     console.log("the list page has been made the focus with a parent page of "+ this.parentPage);
@@ -186,12 +194,26 @@ export class ListPage {
   }
 
   studentTapped(event, student) {
+    clearInterval(this.interval);
     this.navCtrl.push(StudentDetailsPage, {
       student: student
     })
   }
 
+  ionViewWillEnter(){
+    this.timeSinceLastInteraction = 0;
+    this.interval = setInterval(() => {
+      if(++this.timeSinceLastInteraction >= 30){
+        clearInterval(this.interval);
+        // switch back from this page, nuke it, kill it with fire
+        this.navCtrl.popToRoot();
+      }
+    }, 1000)
+  }
+
   ionViewWillLeave() {
+    this.timeSinceLastInteraction = 25;
+
     var output = '';
     switch(this.parentPage) {
       case 'checkin':

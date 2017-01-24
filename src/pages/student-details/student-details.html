@@ -7,7 +7,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content (click)="resetInterval()">
   <h2 text-center *ngIf="selectedStudent">
     <div *ngFor="let student of this.studentService.data | mapValues">
       <div *ngIf="student.val._id === selectedStudent">
