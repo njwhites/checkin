@@ -564,4 +564,40 @@ export class CheckinProvider {
     });
   }
 
+  getBillableHours(student_id: string, date: string){
+    return new Promise((resolve, reject) => {
+      this.getTodaysTransaction(date).then(doc => {
+        this.getStudent(student_id, doc).then((student: TransactionStudentModel) => {
+          let totalTherapyTime = 0;
+          student.therapies.forEach(t => {
+            ////UGHHHH Number VS number
+            if(t.length > 0 ){
+              totalTherapyTime += t.length.valueOf();
+            }
+          });
+          let checkInTime = 0;
+          let checkOutTime = 0;
+          student.events.forEach((event:TransactionEvent) => {
+            if(checkInTime === 0 && event.type === this.CHECK_IN){
+              checkInTime = Number(event.time);
+            }else if(checkOutTime === 0 && event.type === this.CHECK_OUT){
+              checkOutTime = Number(event.time);
+            }
+          });
+
+          if(checkOutTime === 0){
+            checkOutTime = Date.now();
+          }
+
+          if(checkInTime === 0){
+            resolve(0);
+          }else{
+            let v = checkOutTime - checkInTime - (totalTherapyTime * 1000 * 60);
+            resolve((v / (1000 * 60 * 60)));
+          }
+        })
+      })
+    })
+  }
+
 }
