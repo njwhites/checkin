@@ -32,6 +32,16 @@
           </ion-item>
         </div>
       </div>
+      <ion-grid>
+        <ion-row class="countRow">
+          <ion-col class="countHeader">
+              Total Students Present:
+          </ion-col>
+          <ion-col class="presentCount">
+              {{this.studentService.data|presentCount}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
     <div *ngIf="parentPage === 'napStudents'">
       <div *ngFor="let student of this.studentService.data | mapValues">
