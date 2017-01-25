@@ -529,6 +529,9 @@ export class CheckinProvider {
           t_model.start_time = start_time;
           t_model.length = length;
           t_model.by_id = by_id;
+          let otherTherapies = me.therapies.filter(therapy => {
+            return therapy.length !== -1;
+          })
           let i = {
               id: me.id,
               events: me.events.map(event => {
@@ -540,7 +543,7 @@ export class CheckinProvider {
                 }
               }),
               nap: me.nap,
-              therapies: [...me.therapies, {startTime: t_model.start_time, length: t_model.length, by_id: t_model.by_id}]
+              therapies: [...otherTherapies, {startTime: t_model.start_time, length: t_model.length, by_id: t_model.by_id}]
           }
           function delta(doc) {
             doc.students = [...others, i];
