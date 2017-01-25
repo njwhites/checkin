@@ -197,7 +197,7 @@ export class CheckinProvider {
       }
       else {
         mins = String(time.getMinutes());
-      }      
+      }
       let dateReadable = `${hours}:${mins} ${am_pm}`;
       this.getStudent(id, doc).then((student: TransactionStudentModel) => {
         //take the student and do something?
@@ -431,19 +431,19 @@ export class CheckinProvider {
       switch(therapy_type){
         case 'OT':
           event_type = this.THERAPY_OUT_OT;
-          location = this.CHECKED_OUT_THERAPY_OT; 
-          break;        
+          location = this.CHECKED_OUT_THERAPY_OT;
+          break;
         case 'PT':
           event_type = this.THERAPY_OUT_PT;
-          location = this.CHECKED_OUT_THERAPY_PT; 
-          break;        
+          location = this.CHECKED_OUT_THERAPY_PT;
+          break;
         case 'SLP':
           event_type = this.THERAPY_OUT_SLP;
-          location = this.CHECKED_OUT_THERAPY_SLP; 
+          location = this.CHECKED_OUT_THERAPY_SLP;
           break;
         default:
           event_type = this.THERAPY_OUT;
-          location = this.CHECKED_OUT_THERAPY; 
+          location = this.CHECKED_OUT_THERAPY;
 
       }
       this.performEvent(id, result, by_id, event_type).then(response => {
@@ -482,7 +482,7 @@ export class CheckinProvider {
   }
 
   therapistCheckin(id: string, by_id: string){
-    return new Promise((resolve, reject) => {      
+    return new Promise((resolve, reject) => {
       this.getTodaysTransaction(null).then(result => {
         this.performEvent(id, result, by_id, this.THERAPY_IN);
         this.studentService.updateStudentLocation(id, this.CHECKED_IN);
@@ -491,6 +491,7 @@ export class CheckinProvider {
           resolve(therapy);
         })
       }).catch(err => {
+        console.log("ERRERERERERE" + err);
         reject(false);
       });
     })
@@ -503,12 +504,13 @@ export class CheckinProvider {
           return therapy.length === -1;
         });
         if(incompletes.length <= 0){
+          console.log("ASDFSADFASDF");
           reject(false);
         }else{
           resolve(incompletes[0]);
         }
       }).catch(err => {
-          console.log(err);
+          console.log("ERERERER" + err);
           reject(false);
         });
     })

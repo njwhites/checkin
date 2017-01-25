@@ -11,7 +11,7 @@
   <ion-grid>
     <ion-row>
     <ion-col>
-      <div *ngFor="let student of this.studentService.data | mapValues">
+      <div *ngFor="let student of this.studentService.data | impureMapValues">
         <div *ngFor="let thisStudent of therapistStudents">
           <div *ngIf="thisStudent === this.studentService.data.get(student.key)._id && this.studentService.data.get(student.key).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentService.data.get(student.key)._id)">
             <ion-item>

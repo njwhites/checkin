@@ -9,10 +9,9 @@
 
 <ion-content padding>
   <div *ngIf="this.studentService.data.get(selectedStudent).location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
-    This student has a checked out by therapist status
+    <button ion-button block (click)="checkinStudent()">Check In</button>
   </div>
   <div *ngIf="!this.studentService.data.get(selectedStudent).location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
-    This student does not have a checked out by therapist status
-    <button ion-button block (click)="checkoutStudent()">Checkout</button>
+    <button ion-button block (click)="checkoutStudent()">Check Out</button>
   </div>
 </ion-content>
