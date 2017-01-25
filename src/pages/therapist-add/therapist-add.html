@@ -8,5 +8,29 @@
 
 
 <ion-content padding>
-
+<ion-item-group>
+  <div *ngFor="let class of classrooms">
+    <ion-item-divider>
+      {{class.roomNumber}}
+      <button ion-button item-right (click)="toggleDropDown(class.roomNumber)">
+        <div *ngIf="getDropDownStatus(class.roomNumber)">
+          <ion-icon id="dropDown_{{class.roomNumber}}" name="arrow-down"></ion-icon>
+        </div>
+        <div *ngIf="!getDropDownStatus(class.roomNumber)">
+          <ion-icon id="dropDown_{{class.roomNumber}}" name="arrow-up"></ion-icon>
+        </div>
+      </button>
+    </ion-item-divider>
+    <div id="classroom_{{class.roomNumber}}" style.display="none">
+      <div *ngFor="let sID of class.students">
+        <ion-item>
+          {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
+          <button ion-button item-right>
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+</ion-item-group>
 </ion-content>
