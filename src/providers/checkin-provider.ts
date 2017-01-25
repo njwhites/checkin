@@ -130,6 +130,8 @@ export class CheckinProvider {
         let student = new TransactionStudentModel();
         student.id = me[0].id;
         student.events = me[0].events;
+        student.nap = me[0].nap;
+        student.therapies = me[0].therapies;
         resolve(student);
       }
     })
