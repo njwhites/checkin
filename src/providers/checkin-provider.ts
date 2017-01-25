@@ -486,12 +486,13 @@ export class CheckinProvider {
   therapistCheckin(id: string, by_id: string){
     return new Promise((resolve, reject) => {
       this.getTodaysTransaction(null).then(result => {
-        this.performEvent(id, result, by_id, this.THERAPY_IN);
-        this.studentService.updateStudentLocation(id, this.CHECKED_IN);
-        //resolve with the correct data (student's events for today)
-        this.getIncompleteTherapy(id, result).then((therapy: TransactionTherapy) => {
-          resolve(therapy);
-        })
+        this.performEvent(id, result, by_id, this.THERAPY_IN).then(val => {
+          this.studentService.updateStudentLocation(id, this.CHECKED_IN);
+          //resolve with the correct data (student's events for today)
+          this.getIncompleteTherapy(id, result).then((therapy: TransactionTherapy) => {
+            resolve(therapy);
+          })
+        });
       }).catch(err => {
         console.log("ERRERERERERE" + err);
         reject(false);
