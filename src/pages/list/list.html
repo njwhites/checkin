@@ -10,39 +10,41 @@
 <ion-content padding (click)="resetInterval()">
   <ion-list inset>
     <div *ngIf="parentPage === 'presentStudents'">
-      <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
-          <ion-item  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
-            <ion-icon name="walk" item-left></ion-icon>
-            {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
-            <div item-right>
-              <page-student-info-button [thisStudent]="this.studentService.data.get(student.key)._id" [thisStudentLocation]="this.studentService.data.get(student.key).location"></page-student-info-button>
-            </div>
-          </ion-item>
+      <ion-content class="scrollable">
+        <div *ngFor="let student of this.studentService.data | mapValues" class="scrollableInside">
+          <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
+            <ion-item  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
+              <ion-icon name="walk" item-left></ion-icon>
+              {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+              <div item-right>
+                <page-student-info-button [thisStudent]="this.studentService.data.get(student.key)._id" [thisStudentLocation]="this.studentService.data.get(student.key).location"></page-student-info-button>
+              </div>
+            </ion-item>
+          </div>
         </div>
-      </div>
-      <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT">
-          <ion-item class="absentRow"  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
-            <ion-icon name="walk" item-left></ion-icon>
-            {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
-            <div item-right>
-              <page-student-info-button [thisStudent]="this.studentService.data.get(student.key)._id" [thisStudentLocation]="this.studentService.data.get(student.key).location"></page-student-info-button>
-            </div>
-          </ion-item>
+        <div *ngFor="let student of this.studentService.data | mapValues">
+          <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT">
+            <ion-item class="absentRow"  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
+              <ion-icon name="walk" item-left></ion-icon>
+              {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+              <div item-right>
+                <page-student-info-button [thisStudent]="this.studentService.data.get(student.key)._id" [thisStudentLocation]="this.studentService.data.get(student.key).location"></page-student-info-button>
+              </div>
+            </ion-item>
+          </div>
         </div>
-      </div>
-      <ion-grid>
-        <ion-row class="countRow">
-          <ion-col class="countHeader">
-              Total Students Present:
-          </ion-col>
-          <ion-col class="presentCount">
-              {{this.studentService.data|presentCount}}
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
+      </ion-content>
+    <ion-grid>
+      <ion-row class="countRow">
+        <ion-col class="countHeader">
+            Total Students Present:
+        </ion-col>
+        <ion-col class="presentCount">
+            {{this.studentService.data|presentCount}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
     <div *ngIf="parentPage === 'napStudents'">
       <div *ngFor="let student of this.studentService.data | mapValues">
         <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
