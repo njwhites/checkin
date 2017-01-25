@@ -39,6 +39,8 @@ export class LoginPage {
     loader.onDidDismiss(()=>{
       this.classRoomService.getAllClassRooms().then((data) =>{
         this.classrooms = <Array<ClassRoomModel>>data;
+        //don't want to go to the unallocated room, which would be room -1
+        this.classrooms.splice(0,1);
       });
     })
     loader.present();
@@ -138,18 +140,34 @@ export class LoginPage {
       title: 'Select a Classroom'
     });
     this.classrooms.forEach((value, index, array)=>{
-      alert.addButton({
-        text: value.roomNumber,
-        handler: ()=>{
-          this.onSelectClassroom(value.roomNumber);
-        }
-      })
+
+      //pick one of the below input or button
+      alert.addInput({
+            type: 'radio',
+            label: 'Room ' + value.roomNumber,
+            value: ''+value.roomNumber
+          });
+
+
+      // alert.addButton({
+      //   text: value.roomNumber,
+      //   handler: ()=>{
+      //     this.onSelectClassroom(value.roomNumber);
+      //   }
+      // })
     });
     alert.addButton({
       text: "Cancel",
       role: "cancel",
       handler: ()=>{
 
+      }
+    })
+    alert.addButton({
+      text: "Okay",
+      handler: (data)=>{
+        console.log(data);
+        this.onSelectClassroom(data);
       }
     })
     alert.present();
