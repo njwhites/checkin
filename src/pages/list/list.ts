@@ -267,4 +267,9 @@ export class ListPage {
     }
   }
 
+  
+  ionViewWillUnload(){
+    clearInterval(this.interval);
+  }
+
 }
