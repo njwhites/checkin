@@ -60,7 +60,7 @@
         </div>
       </div>
       <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT && this.studentService.data.get(student.key).location !==  checkinService.CHECKED_OUT_THERAPY  && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_NURSE">
+        <div *ngIf="!this.studentService.data.get(student.key).location.includes(checkinService.CHECKED_OUT_THERAPY) && this.studentService.data.get(student.key).location !==  checkinService.CHECKED_OUT_THERAPY  && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_NURSE">
           <h3 ion-item>
             <ion-icon name="walk" item-left></ion-icon>
             {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
