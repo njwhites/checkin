@@ -46,6 +46,7 @@ export class TherapistAddPage {
   }
 
   addToFavorites(sID) {
+    document.getElementById("student_" + sID).hidden = true;
     let toast = this.toastCtrl.create({
       message: this.studentService.data.get(sID).fName.toString() + " " + this.studentService.data.get(sID).lName.toString() + " added to favorites",
       duration: 2000,

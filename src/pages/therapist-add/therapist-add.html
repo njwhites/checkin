@@ -21,12 +21,14 @@
     </ion-item-divider>
     <div id="classroom_{{class.roomNumber}}" hidden="true">
       <div *ngFor="let sID of class.students">
-        <ion-item>
-          {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
-          <button ion-button round outline color="secondary" item-right (click)="addToFavorites(sID)">
-             <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-item>
+        <div *ngIf="!this.favStudents.includes(sID)">
+          <ion-item id="student_{{sID}}">
+            {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
+            <button ion-button round outline color="secondary" item-right (click)="addToFavorites(sID)">
+               <ion-icon name="add"></ion-icon>
+            </button>
+          </ion-item>
+        </div>
       </div>
     </div>
   </div>
