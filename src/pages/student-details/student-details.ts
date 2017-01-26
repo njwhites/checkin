@@ -3,7 +3,6 @@ import {NavController, NavParams} from "ionic-angular";
 import {CheckinProvider} from '../../providers/checkin-provider';
 import {StudentProvider} from '../../providers/student-provider';
 import {UserProvider} from '../../providers/user-provider';
-import {UserModel} from '../../models/db-models';
 
 @Component({
   selector: 'page-student-details',

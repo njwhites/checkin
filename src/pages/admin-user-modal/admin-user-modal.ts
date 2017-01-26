@@ -152,7 +152,8 @@ export class AdminUserModalPage {
           //this would be used for a modal version instead of a page version
           //this navTransition gives us some control over the order in which pages transition
           //said control is important for the asynchronous nature and page removal
-          let navTransition = deleteConfirmAlert.dismiss();
+          //let navTransition = 
+          deleteConfirmAlert.dismiss();
 
 
           //use a tempUser for deletion, and then set the user data object as the empty user

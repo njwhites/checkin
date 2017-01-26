@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { UserProvider } from '../../providers/user-provider'
 import { AdminUserModalPage } from '../admin-user-modal/admin-user-modal';
 
