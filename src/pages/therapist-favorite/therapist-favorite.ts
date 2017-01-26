@@ -28,7 +28,9 @@ export class TherapistFavoritePage {
   }
 
   add() {
-    this.navCtrl.push(TherapistAddPage);
+    this.navCtrl.push(TherapistAddPage, {
+      favStudents: this.therapistStudents
+    });
   }
 
   studentTapped(student) {

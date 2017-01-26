@@ -16,36 +16,41 @@ import {ClassRoomModel} from "../../models/db-models";
   templateUrl: 'therapist-add.html'
 })
 export class TherapistAddPage {
-
   classrooms: Array<ClassRoomModel>;
+  favStudents: Array<string>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public classRoomService: ClassRoomProvider, public studentService: StudentProvider, public userService: UserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public classRoomService: ClassRoomProvider, public studentService: StudentProvider, public userService: UserProvider, public toastCtrl: ToastController) {
     this.classRoomService.getAllClassRooms().then((data) =>{
       this.classrooms = <Array<ClassRoomModel>>data;
     });
+    this.favStudents = navParams.get('favStudents');
   }
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() {
+    console.log(this.favStudents);
+  }
 
   toggleDropDown(id) {
     let dividerId = "classroom_" + id;
-    if (document.getElementById(dividerId).style.display === "none"){
-      document.getElementById(dividerId).style.display = "block";
+    let buttonUpId = "upButton_" + id;
+    let buttonDownId = "downButton_" + id;
+    if (!document.getElementById(dividerId).hidden){
+      document.getElementById(dividerId).hidden = true;
+      document.getElementById(buttonUpId).hidden = true;
+      document.getElementById(buttonDownId).hidden = false;
     } else {
-      document.getElementById(dividerId).style.display = "none";
+      document.getElementById(dividerId).hidden = false;
+      document.getElementById(buttonUpId).hidden = false;
+      document.getElementById(buttonDownId).hidden = true;
     }
   }
 
-  getDropDownStatus(id) {
-    let dividerId = "classroom_" + id;
-    if (document.getElementById(dividerId) === null){
-      return false;
-    }
-    else if (document.getElementById(dividerId).style.display === "none"){
-      return true;
-    } else {
-      return false;
-    }
+  addToFavorites(sID) {
+    let toast = this.toastCtrl.create({
+      message: this.studentService.data.get(sID).fName.toString() + " " + this.studentService.data.get(sID).lName.toString() + " added to favorites",
+      duration: 2000,
+      position: 'bottom'
+    });
+    toast.present(toast);
   }
-
 }
