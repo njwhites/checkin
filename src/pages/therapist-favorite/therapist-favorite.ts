@@ -29,7 +29,8 @@ export class TherapistFavoritePage {
 
   add() {
     this.navCtrl.push(TherapistAddPage, {
-      favStudents: this.therapistStudents
+      favStudents: this.therapistStudents,
+      therapistID: this.id
     });
   }
 

@@ -18,17 +18,17 @@ import {ClassRoomModel} from "../../models/db-models";
 export class TherapistAddPage {
   classrooms: Array<ClassRoomModel>;
   favStudents: Array<string>;
+  tID: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public classRoomService: ClassRoomProvider, public studentService: StudentProvider, public userService: UserProvider, public toastCtrl: ToastController) {
     this.classRoomService.getAllClassRooms().then((data) =>{
       this.classrooms = <Array<ClassRoomModel>>data;
     });
     this.favStudents = navParams.get('favStudents');
+    this.tID = navParams.get('therapistID');
   }
 
-  ionViewDidLoad() {
-    console.log(this.favStudents);
-  }
+  ionViewDidLoad() {}
 
   toggleDropDown(id) {
     let dividerId = "classroom_" + id;
@@ -46,6 +46,7 @@ export class TherapistAddPage {
   }
 
   addToFavorites(sID) {
+    this.userService.addTherapistFavoriteID(String(this.tID), String(sID));
     document.getElementById("student_" + sID).hidden = true;
     let toast = this.toastCtrl.create({
       message: this.studentService.data.get(sID).fName.toString() + " " + this.studentService.data.get(sID).lName.toString() + " added to favorites",
