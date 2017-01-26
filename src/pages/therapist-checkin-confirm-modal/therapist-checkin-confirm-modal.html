@@ -11,5 +11,24 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  The Confirmation Stuff will go here.
+  <ion-grid class="horizontal-align-center">
+    <ion-row>
+        <ion-label>Therapy Start Time</ion-label>
+        <ion-select [(ngModel)]="start">
+          <ion-option value="-15">{{this.mfifteen}}</ion-option>
+          <ion-option value="-10">{{this.mten}}</ion-option>
+          <ion-option value="-5">{{this.mfive}}</ion-option>
+          <ion-option value="0">{{this.displayDate}}</ion-option>
+          <ion-option value="+5">{{this.pfive}}</ion-option>
+          <ion-option value="+10">{{this.pten}}</ion-option>
+          <ion-option value="+15">{{this.pfifteen}}</ion-option>
+        </ion-select>
+    </ion-row>
+    <ion-row>
+      <ion-input #therapyLength type="tel" placeholder="Enter The Therapy Length"></ion-input>
+    </ion-row>
+    <ion-row>
+      <button ion-button block (click)='submit(therapyLength)'>Submit</button>
+    </ion-row>
+  </ion-grid>
 </ion-content>

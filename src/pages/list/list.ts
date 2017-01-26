@@ -1,9 +1,10 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {NavController, ToastController, NavParams} from "ionic-angular";
+import {NavController, ToastController, NavParams, ModalController} from "ionic-angular";
 import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';
 import {UserProvider} from '../../providers/user-provider';
 import {StudentDetailsPage} from '../student-details/student-details';
+import {TherapistCheckinConfirmModalPage} from "../therapist-checkin-confirm-modal/therapist-checkin-confirm-modal"
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ListPage {
   timeSinceLastInteraction: number = 0;
   interval: any;
 
-  constructor(public studentService: StudentProvider, public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public checkinService: CheckinProvider, public userService: UserProvider) {
+  constructor(public studentService: StudentProvider, public navCtrl: NavController, public toastCtrl: ToastController, public modalCtrl: ModalController, public navParams: NavParams, public checkinService: CheckinProvider, public userService: UserProvider) {
     this.selectedStudent = navParams.get('student');
     this.parentPage = navParams.get('parentPage');
     this.userID = navParams.get('userID');
@@ -72,7 +73,10 @@ export class ListPage {
           //Checkin student to classroom from therapist
           //////////////////////////////////////////////////////////////////////
           returnedStudent = studentID.slice(0, search);
-          this.checkinService.therapistCheckin(String(returnedStudent), String(this.userID));
+          this.checkinService.therapistCheckin(String(returnedStudent), String(this.userID)).then((t:any) => {
+            this.followUpModal(t, String(returnedStudent));
+            //this.checkinService.therapistCheckinFollowUp(String(returnedStudent), t.by_id, t.start_time, 60);
+          });
           clearInterval(this.interval);
           this.navCtrl.pop();
         }
@@ -221,6 +225,16 @@ export class ListPage {
     }, 1000)
   }
 
+  followUpModal(TransactionTherapyObject, student) {
+    let modal = this.modalCtrl.create(TherapistCheckinConfirmModalPage, {
+      start_time: TransactionTherapyObject.start_time,
+      length: TransactionTherapyObject.length,
+      by_id: TransactionTherapyObject.by_id,
+      student: student
+    }, {enableBackdropDismiss: false});
+    modal.present(modal);
+  }
+
   ionViewWillLeave() {
     this.timeSinceLastInteraction = 25;
 
@@ -267,7 +281,7 @@ export class ListPage {
     }
   }
 
-  
+
   ionViewWillUnload(){
     clearInterval(this.interval);
   }

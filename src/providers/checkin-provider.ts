@@ -605,5 +605,21 @@ export class CheckinProvider {
     return `${hours}:${mins} ${am_pm}`
   }
 
+  parseReadableTime(dateString: string) {
+    var dontCare = dateString.split(":");
+    var rest = dontCare[1].split(" ");
+    var hours = Number(dontCare[0]);
+    var minutes = Number(rest[0]);
+    var AMPM = rest[1];
+    if(AMPM.toLowerCase() === "pm") {
+      hours += 12;
+    }
+    var date = new Date();
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    console.log(date.getTime());
+    return date.getTime();
+  }
+
 
 }
