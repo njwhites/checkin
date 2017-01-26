@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, Modal, ModalController} from 'ionic-angular';
+import {NavController, NavParams, ModalController} from 'ionic-angular';
 import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from "../../providers/checkin-provider";
 import {UserProvider} from "../../providers/user-provider";
