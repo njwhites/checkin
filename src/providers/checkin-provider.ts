@@ -184,23 +184,8 @@ export class CheckinProvider {
 
     //If the student has not interacted yet with checkin today
     return new Promise((resolve, reject) => {
-      let time = new Date();
-
-      //console.log(doc._id)
-      let mins: string;
-      let am_pm = "AM";
-      let hours = String(time.getHours());
-      if (time.getHours() > 12){
-        hours = String(time.getHours() - 12);
-        am_pm = "PM";
-      }
-      if (time.getMinutes() < 10){
-        mins = "0" + String(time.getMinutes());
-      }
-      else {
-        mins = String(time.getMinutes());
-      }
-      let dateReadable = `${hours}:${mins} ${am_pm}`;
+      
+      let dateReadable = this.createReadableTime(Date.now().getTime());
       this.getStudent(id, doc).then((student: TransactionStudentModel) => {
         //take the student and do something?
 
@@ -599,5 +584,26 @@ export class CheckinProvider {
       })
     })
   }
+
+
+  createReadableTime(time_millis: number){
+    let time = new Date(time_millis);
+
+    let mins: string;
+    let am_pm = "AM";
+    let hours = String(time.getHours());
+    if (time.getHours() > 12){
+      hours = String(time.getHours() - 12);
+      am_pm = "PM";
+    }
+    if (time.getMinutes() < 10){
+      mins = "0" + String(time.getMinutes());
+    }
+    else {
+      mins = String(time.getMinutes());
+    }
+    return `${hours}:${mins} ${am_pm}`
+  }
+
 
 }
