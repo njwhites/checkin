@@ -185,7 +185,7 @@ export class CheckinProvider {
     //If the student has not interacted yet with checkin today
     return new Promise((resolve, reject) => {
       
-      let dateReadable = this.createReadableTime(Date.now().getTime());
+      let dateReadable = this.createReadableTime(Date.now());
       this.getStudent(id, doc).then((student: TransactionStudentModel) => {
         //take the student and do something?
 
