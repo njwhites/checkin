@@ -50,6 +50,11 @@ export class TherapistPage {
 
   ionViewDidEnter() {
     this.studentList = this.studentService.data;
+    this.userService.getTherapistFavoriteIDs(this.id.toString()).then((result:any) => {
+      this.therapistStudents = result;
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
 }
