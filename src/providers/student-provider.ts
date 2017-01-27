@@ -132,37 +132,39 @@ export class StudentProvider {
     });
   }
 
-  createStudentByInfo(fName: String, lName: String, loc: String, note: String, icon: String){
-    let newID: String = "-1";
-
-    return new Promise(resolve =>{
-    //find the next available id number
-      this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
-
-        result.rows.map(row => {
-          if(Number(newID) <= Number(row.id)) newID = String((Number(row.id) + 1));
-        });
-
-        //create an object and send it to the db
-        let student = new StudentModel();
-        student._id = newID;
-        student.fName = fName;
-        student.lName = lName;
-        student.location = loc;
-        student.note = note;
-        student.icon = icon;
-
-        // this.db.put(student).catch(err=>{
-        //   console.log(err)
-        // })
-        this.data.set(student._id, student);
-        this.db.upsert(student._id, (() =>{return student}));
-
-        //return the generated id so that we can let the student know their id, may not be needed
-        return newID;
-      });
-    });
-  }
+//Chris 1/27/17 commenting this out so no one accidentally uses it
+//as of now this method of creating a student is not used, refer to createStudent(:StudentModel)
+  // createStudentByInfo(fName: String, lName: String, loc: String, note: String, icon: String){
+  //   let newID: String = "-1";
+  //
+  //   return new Promise(resolve =>{
+  //   //find the next available id number
+  //     this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
+  //
+  //       result.rows.map(row => {
+  //         if(Number(newID) <= Number(row.id)) newID = String((Number(row.id) + 1));
+  //       });
+  //
+  //       //create an object and send it to the db
+  //       let student = new StudentModel();
+  //       student._id = newID;
+  //       student.fName = fName;
+  //       student.lName = lName;
+  //       student.location = loc;
+  //       student.note = note;
+  //       student.icon = icon;
+  //
+  //       // this.db.put(student).catch(err=>{
+  //       //   console.log(err)
+  //       // })
+  //       this.data.set(student._id, student);
+  //       this.db.upsert(student._id, (() =>{return student}));
+  //
+  //       //return the generated id so that we can let the student know their id, may not be needed
+  //       return newID;
+  //     });
+  //   });
+  // }
 
   updateStudent(student: StudentModel){
     this.db.upsert(student._id, (() => {return student}));
