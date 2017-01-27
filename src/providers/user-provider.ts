@@ -42,6 +42,11 @@ export class UserProvider {
         });
 
         resolve(this.data);
+
+        //tell the db what to do when it detects a change
+        this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change => {
+          this.handleChange(change);
+        });
       }).catch(error =>{
         console.log(error);
       });
@@ -244,4 +249,12 @@ export class UserProvider {
     });
   }
 
+  handleChange(change){
+
+    if(change.deleted){
+      this.data.delete(change.doc._id);
+    } else {
+      this.data.set(change.doc._id, change.doc);
+    }
+  }
 }
