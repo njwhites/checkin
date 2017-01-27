@@ -10,6 +10,14 @@
 <ion-content padding (click)="resetInterval()">
   <ion-list inset>
     <div *ngIf="parentPage === 'presentStudents'">
+      <ion-grid class="horizontal-align-center">
+        <ion-row class="buttonRow">
+          <ion-col>
+            <div class="titleRoom">
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
       <ion-content class="scrollable">
         <div *ngFor="let student of this.studentService.data | mapValues" class="scrollableInside">
           <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">

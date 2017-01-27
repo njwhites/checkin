@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, Modal, ModalController} from 'ionic-angular';
+import {NavController, NavParams, ModalController} from 'ionic-angular';
 import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from "../../providers/checkin-provider";
 import {UserProvider} from "../../providers/user-provider";
@@ -27,8 +27,15 @@ export class TherapistStudentDetailsPage {
   }
 
   checkinStudent() {
-    let modal = this.modalCtrl.create(TherapistCheckinConfirmModalPage);
-    modal.present(modal);
+    this.checkinService.therapistCheckin(this.selectedStudent, String(this.id)).then((TransactionTherapyObject:any) => {
+      let modal = this.modalCtrl.create(TherapistCheckinConfirmModalPage, {
+        start_time: TransactionTherapyObject.start_time,
+        length: TransactionTherapyObject.length,
+        by_id: TransactionTherapyObject.by_id,
+        student: this.selectedStudent
+      }, {enableBackdropDismiss: false});
+      modal.present(modal)
+    });
   }
 
 

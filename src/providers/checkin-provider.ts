@@ -33,7 +33,7 @@ export class CheckinProvider {
   CHECKED_OUT_THERAPY = 'Therapist checked student out';
   CHECKED_OUT_THERAPY_OT = 'OT ' + this.CHECKED_OUT_THERAPY;
   CHECKED_OUT_THERAPY_PT = 'PT ' + this.CHECKED_OUT_THERAPY;
-  CHECKED_OUT_THERAPY_SLP = 'SLP ' + this.CHECKED_OUT_THERAPY;;
+  CHECKED_OUT_THERAPY_SLP = 'SLP ' + this.CHECKED_OUT_THERAPY;
   CHECKED_OUT_NURSE = 'Nurse checked student out';
 
   db: any;
@@ -185,22 +185,7 @@ export class CheckinProvider {
     //If the student has not interacted yet with checkin today
     return new Promise((resolve, reject) => {
       let time = new Date();
-
-      //console.log(doc._id)
-      let mins: string;
-      let am_pm = "AM";
-      let hours = String(time.getHours());
-      if (time.getHours() > 12){
-        hours = String(time.getHours() - 12);
-        am_pm = "PM";
-      }
-      if (time.getMinutes() < 10){
-        mins = "0" + String(time.getMinutes());
-      }
-      else {
-        mins = String(time.getMinutes());
-      }
-      let dateReadable = `${hours}:${mins} ${am_pm}`;
+      let dateReadable = this.createReadableTime(Date.now());
       this.getStudent(id, doc).then((student: TransactionStudentModel) => {
         //take the student and do something?
 
@@ -599,5 +584,42 @@ export class CheckinProvider {
       })
     })
   }
+
+
+  createReadableTime(time_millis: number){
+    let time = new Date(time_millis);
+
+    let mins: string;
+    let am_pm = "AM";
+    let hours = String(time.getHours());
+    if (time.getHours() > 12){
+      hours = String(time.getHours() - 12);
+      am_pm = "PM";
+    }
+    if (time.getMinutes() < 10){
+      mins = "0" + String(time.getMinutes());
+    }
+    else {
+      mins = String(time.getMinutes());
+    }
+    return `${hours}:${mins} ${am_pm}`
+  }
+
+  parseReadableTime(dateString: string) {
+    var dontCare = dateString.split(":");
+    var rest = dontCare[1].split(" ");
+    var hours = Number(dontCare[0]);
+    var minutes = Number(rest[0]);
+    var AMPM = rest[1];
+    if(AMPM.toLowerCase() === "pm") {
+      hours += 12;
+    }
+    var date = new Date();
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    console.log(date.getTime());
+    return date.getTime();
+  }
+
 
 }

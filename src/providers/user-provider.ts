@@ -203,7 +203,7 @@ export class UserProvider {
         else{
           this.db.upsert(t_id, (doc) => {
               //theoretically should add the new student
-              doc.therapy_fav_ids = [...doc.therapy_fav_ids, s_id].sort((a,b) => {return a - b;});
+              doc.therapy_fav_ids = [...doc.therapy_fav_ids, s_id];
               return doc;
             }).then(result => {
               resolve(true);

@@ -1,3 +1,31 @@
 page-therapist {
-
+  .horizontal-align-center {
+    align-items: center;
+    padding-top: 5%;
+  }
+  .scrollView {
+    align-items: center;
+    height: 75%;
+  }
+  .push-to-bottom {
+    bottom: 50px;
+    width: 100%;
+  }
+  .buttonRow {
+    align-self: center;
+    width: auto;
+  }
+  .addButton {
+    align-self: center;
+    width: auto;
+  }
+  .absentRow {
+    opacity: .5;
+  }
+  .titleRoom {
+    align-self: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-size: 200%;
+  }
 }

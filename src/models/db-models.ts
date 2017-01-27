@@ -38,6 +38,7 @@ export class UserModel{
   public lName: String;
   public role: String;
   public phone: String;
+  public visible_students: Array<String>;
   public therapy_type: String;
   public therapy_fav_ids: Array<String>;
 
@@ -48,6 +49,7 @@ export class UserModel{
     this.lName = "";
     this.role = "";
     this.phone = "";
+    this.visible_students = [];
     this.therapy_type = "";
     this.therapy_fav_ids = [];
   }
