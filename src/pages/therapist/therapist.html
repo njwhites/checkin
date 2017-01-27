@@ -21,12 +21,12 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <div *ngFor="let student of this.studentService.data | impureMapValues">
+          <div *ngFor="let student of this.studentList | impureMapValues">
             <div *ngFor="let thisStudent of therapistStudents">
-              <div *ngIf="thisStudent === this.studentService.data.get(student.key)._id && this.studentService.data.get(student.key).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentService.data.get(student.key)._id)">
+              <div *ngIf="thisStudent === this.studentList.get(student.key)._id && this.studentList.get(student.key).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(student.key)._id)">
                 <ion-item>
                   <ion-icon name="walk" item-left></ion-icon>
-                  {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+                  {{this.studentList.get(student.key).fName}} {{this.studentList.get(student.key).lName}}
                 </ion-item>
               </div>
             </div>
@@ -35,12 +35,12 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <div *ngFor="let student of this.studentService.data | mapValues">
+          <div *ngFor="let student of this.studentList | mapValues">
             <div *ngFor="let thisStudent of therapistStudents">
-              <div *ngIf="thisStudent === this.studentService.data.get(student.key)._id && this.studentService.data.get(student.key).location === this.checkinService.CHECKED_OUT">
+              <div *ngIf="thisStudent === this.studentList.get(student.key)._id && this.studentList.get(student.key).location === this.checkinService.CHECKED_OUT">
                 <ion-item class="absentRow">
                   <ion-icon name="walk" item-left></ion-icon>
-                  {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+                  {{this.studentList.get(student.key).fName}} {{this.studentList.get(student.key).lName}}
                   <div item-right>
                     Absent
                   </div>

@@ -8,10 +8,10 @@
 
 
 <ion-content padding>
-  <div *ngIf="this.studentService.data.get(selectedStudent).location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
+  <div *ngIf="this.location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
     <button ion-button block (click)="checkinStudent()">Check In</button>
   </div>
-  <div *ngIf="!this.studentService.data.get(selectedStudent).location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
+  <div *ngIf="!this.location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
     <button ion-button block (click)="checkoutStudent()">Check Out</button>
   </div>
 </ion-content>

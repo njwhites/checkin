@@ -11,10 +11,13 @@ import {TherapistCheckinConfirmModalPage} from "../therapist-checkin-confirm-mod
 })
 export class TherapistStudentDetailsPage {
   selectedStudent: string;
+  location: string;
   id: number;
 
   constructor(public modalCtrl: ModalController, public userService: UserProvider, public studentService: StudentProvider, public checkinService: CheckinProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.selectedStudent = navParams.get('student');
+    this.location = navParams.get('status');
+    console.log(this.location);
     this.id = navParams.get('id');
 
   }
@@ -36,6 +39,7 @@ export class TherapistStudentDetailsPage {
       }, {enableBackdropDismiss: false});
       modal.present(modal)
     });
+    this.navCtrl.pop();
   }
 
 

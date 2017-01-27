@@ -13,12 +13,14 @@ import {TherapistStudentDetailsPage} from '../therapist-student-details/therapis
 export class TherapistPage {
   id: number;
   therapistStudents: Array<string>;
+  studentList: any;
 
   constructor(public studentService: StudentProvider,
               public navCtrl: NavController,
               public navParams: NavParams,
               public checkinService: CheckinProvider,
               public userService: UserProvider) {
+    this.studentList = this.studentService.data;
     this.id = navParams.data;
     this.userService.getTherapistFavoriteIDs(this.id.toString()).then((result:any) => {
       this.therapistStudents = result;
@@ -37,12 +39,17 @@ export class TherapistPage {
   studentTapped(student) {
     this.navCtrl.push(TherapistStudentDetailsPage, {
       student: student,
+      status: this.studentList.get(student).location,
       id: this.id
-    })
+    });
   }
 
   getTherapistName(_id: String) {
     return this.userService.data.get(String(_id)).fName + " " + this.userService.data.get(String(_id)).lName;
+  }
+
+  ionViewDidEnter() {
+    this.studentList = this.studentService.data;
   }
 
 }
