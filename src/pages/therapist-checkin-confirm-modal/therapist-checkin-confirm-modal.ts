@@ -38,10 +38,6 @@ export class TherapistCheckinConfirmModalPage {
     console.log('Hello TherapistCheckinConfirmModalPage Page');
   }
 
-  // dismiss(data) {
-  //   this.viewCtrl.dismiss(data);
-  // }
-
   submit(therapyLength) {
     var therapy_length = 30;
     var start_time = ''
