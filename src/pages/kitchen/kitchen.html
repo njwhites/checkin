@@ -9,4 +9,7 @@
 
 <ion-content padding>
   <h3>Kitchen Page</h3>
+  <div *ngFor="let entry of this.roomMap">
+  {{entry.key}} {{entry.val[0]}} {{entry.val[1]}}
+  </div>
 </ion-content>
