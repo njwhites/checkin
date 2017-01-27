@@ -15,7 +15,7 @@
     <ion-row>
       <ion-col>
         <ion-list inset>
-          <div *ngFor="let user of this.userService.data | mapValues" (click)="userClicked(user.key)">
+          <div *ngFor="let user of this.userService.data | impureMapValues" (click)="userClicked(user.key)">
             <ion-item>
               {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
             </ion-item>
@@ -28,6 +28,6 @@
         <button ion-button block (click)="addUser()">Add A New User</button>
       </ion-col>
     </ion-row>
-    
+
   </ion-grid>
 </ion-content>

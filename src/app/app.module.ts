@@ -27,8 +27,10 @@ import {AdminPage} from "../pages/admin/admin";
 import {AdminStudentTabPage} from "../pages/admin-student-tab/admin-student-tab";
 import {AdminUserTabPage} from "../pages/admin-user-tab/admin-user-tab";
 import {AdminDebugTabPage} from "../pages/admin-debug-tab/admin-debug-tab";
+import {AdminClassroomTabPage} from "../pages/admin-classroom-tab/admin-classroom-tab";
 import {AdminStudentModalPage} from "../pages/admin-student-modal/admin-student-modal";
 import {AdminUserModalPage} from "../pages/admin-user-modal/admin-user-modal";
+import {AdminClassroomModalPage} from "../pages/admin-classroom-modal/admin-classroom-modal";
 import {MapValuesPipe} from "../pipes/map-values";
 import {PresentCountPipe} from "../pipes/present-count";
 import {ImpureMapValuesPipe} from "../pipes/impure-map-values";
@@ -68,8 +70,10 @@ import {TherapistCheckinConfirmModalPage} from "../pages/therapist-checkin-confi
     AdminStudentTabPage,
     AdminUserTabPage,
     AdminDebugTabPage,
+    AdminClassroomTabPage,
     AdminStudentModalPage,
     AdminUserModalPage,
+    AdminClassroomModalPage,
     TherapistFavoritePage,
     TherapistAddPage,
     TherapistStudentDetailsPage,
@@ -102,8 +106,10 @@ import {TherapistCheckinConfirmModalPage} from "../pages/therapist-checkin-confi
     AdminStudentTabPage,
     AdminUserTabPage,
     AdminDebugTabPage,
+    AdminClassroomTabPage,
     AdminStudentModalPage,
     AdminUserModalPage,
+    AdminClassroomModalPage,
     TherapistAddPage,
     TherapistStudentDetailsPage,
     TherapistCheckinConfirmModalPage

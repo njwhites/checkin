@@ -15,7 +15,7 @@
     <ion-row>
       <ion-col>
         <ion-list inset>
-          <div *ngFor="let student of this.studentService.data | mapValues" (click)="studentClicked(student.key)">
+          <div *ngFor="let student of this.studentService.data | impureMapValues" (click)="studentClicked(student.key)">
             <ion-item>
               {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
             </ion-item>
@@ -24,9 +24,12 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col width-20>
+      <ion-col>
         <button ion-button block (click)="addStudent()">Add A New Student</button>
       </ion-col>
     </ion-row>
   </ion-grid>
+  <!--<ion-fab bottom right>
+    <button ion-fab (click)="addStudent()">Add A New Student</button>
+  </ion-fab>-->
 </ion-content>

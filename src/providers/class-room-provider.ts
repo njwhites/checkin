@@ -44,6 +44,7 @@ export class ClassRoomProvider {
     });
   }
 
+
   getClassRoomByID(id: String){
     return new Promise(resolve => {
 
@@ -55,7 +56,8 @@ export class ClassRoomProvider {
       });
     });
   }
-
+  //1/25/17 Chris: This method, get...ByRoomNumber is now effectively the same as ByID
+  //I'm going to enforce that ClassRoom._id = roomNumber
   getClassRoomByRoomNumber(room: String){
     return new Promise(resolve => {
       this.db.allDocs({include_docs: true}).then(result => {
@@ -79,26 +81,45 @@ export class ClassRoomProvider {
   }
 
   addStudentToClass(classroom: ClassRoomModel, student: String){
-    classroom.students.push(student);
-    this.updateClassRoom(classroom);
+    console.log(student);
+    this.db.upsert(classroom._id, ((doc)=>{
+      console.log(doc.students);
+      doc.students.push(student);
+      console.log(doc.students);
+      return doc;
+    }));
+
+    // classroom.students.push(student);
+    // this.updateClassRoom(classroom);
   }
 
-  removeStudentFromClass(classroom: ClassRoomModel, student: String){
-    let studentIndex = -1;
-    for(let i = 0; i < classroom.students.length; i++ ){
-      if(student === classroom.students[i]) studentIndex = i;
-    }
+  removeStudentFromClass(classroom: ClassRoomModel, SID: String){
+    let studentIndex = classroom.students.indexOf(SID);
+    console.log(classroom);
+    console.log(studentIndex);
     if(studentIndex === -1){
       console.log("error: student not found in the class");
     } else {
-      classroom.students.splice(studentIndex, 1);
-      this.updateClassRoom(classroom);
+      this.db.upsert(classroom._id, ((doc)=>{
+
+
+    // let studentIndex = -1;
+    // for(let i = 0; i < classroom.students.length; i++ ){
+    //   if(SID === classroom.students[i]) studentIndex = i;
+    // }
+        console.log(doc.students);
+        doc.students.splice(studentIndex, 1);
+        console.log(doc.students);
+        return doc;
+      }));
+      console.log(classroom.students[studentIndex]);
     }
   }
 
   deleteClassRoom(classroom: ClassRoomModel){
-    this.db.remove(classroom).catch(err => {
-      console.log(err)
-    });
+    this.db.upsert(classroom._id, ((doc)=>{
+      doc._deleted = "true";
+      return doc;
+    }));
   }
 }

@@ -1,0 +1,35 @@
+page-admin-classroom-tab {
+  .roomContainer{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+    width:100%;
+  }
+  .roomCard{
+    background-color: #efce28;
+    margin:12px;
+    width: 120px;
+    height: 120px;
+
+    display:flex;
+    justify-content:center;
+    align-items: center;
+  }
+  .roomHeader{
+    font-weight: bolder;
+    font-size: 1.5em;
+  }
+  .studentItem{
+    text-align: center;
+  }
+  .addFab{
+    width: 150px;
+    height: 75px;
+    position: fixed;
+    z-index: 100;
+    bottom: 60px;
+    right: 20px;
+  }
+
+}
