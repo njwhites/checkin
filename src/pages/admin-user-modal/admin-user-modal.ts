@@ -3,6 +3,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { UserProvider } from "../../providers/user-provider";
 import { UserModel } from "../../models/db-models";
+import { StudentProvider } from "../../providers/student-provider";
 
 @Component({
   selector: 'page-admin-user-modal',
@@ -19,6 +20,7 @@ export class AdminUserModalPage {
   constructor(public navParams: NavParams,
               public formBuilder: FormBuilder,
               public userService: UserProvider,
+              public studentService: StudentProvider,
               public navController: NavController,
               public alertController: AlertController,
               public toastController: ToastController) {
@@ -47,7 +49,7 @@ export class AdminUserModalPage {
       lName: [this.user.lName, Validators.required],
       role: [this.user.role, Validators.required],
       phoneNumber: [this.user.phone],
-      therapistType: [this.user.therapy_type]
+      therapistType: [this.user.therapy_type],
     });
   }
 
@@ -152,7 +154,7 @@ export class AdminUserModalPage {
           //this would be used for a modal version instead of a page version
           //this navTransition gives us some control over the order in which pages transition
           //said control is important for the asynchronous nature and page removal
-          //let navTransition = 
+          //let navTransition =
           deleteConfirmAlert.dismiss();
 
 

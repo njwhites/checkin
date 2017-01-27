@@ -34,11 +34,26 @@
         </ion-select>
       </ion-item>
 
-      <ion-item *ngIf="this.userForm.value.role === 'therapist'">
+      <ion-item *ngIf="this.userForm.value.role ===  this.userService.ROLES[1]">
         <ion-label>Therapist Type:</ion-label>
         <ion-select formControlName="therapistType">
             <ion-option *ngFor="let type of this.userService.THERAPY_TYPES" value="{{type}}">{{type}}</ion-option>
         </ion-select>
+      </ion-item>
+
+      <!-- if the user is a "driver" show their list of approved Students-->
+      <ion-item *ngIf="this.userForm.value.role === this.userService.ROLES[4]">
+        <ion-list>
+          <ion-list-header>
+            Approved Students For Pickup
+          </ion-list-header>
+          <ion-item *ngFor="let SID of this.user.visible_students">
+            {{this.studentService.data.get(SID).fName}} {{this.studentService.data.get(SID).lName}}
+          </ion-item>
+          <button ion-button block (click)="addApprovedStudent()">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-list>
       </ion-item>
 
       <ion-item>
