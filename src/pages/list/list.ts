@@ -78,7 +78,6 @@ export class ListPage {
             //this.checkinService.therapistCheckinFollowUp(String(returnedStudent), t.by_id, t.start_time, 60);
           });
           clearInterval(this.interval);
-          this.navCtrl.pop();
         }
       } else if(this.parentPage === 'nurse') {
         search = studentID.search(' returned');
@@ -232,6 +231,9 @@ export class ListPage {
       by_id: TransactionTherapyObject.by_id,
       student: student
     }, {enableBackdropDismiss: false});
+    modal.onDidDismiss(data => {
+      this.navCtrl.pop();
+    });
     modal.present(modal);
   }
 
