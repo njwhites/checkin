@@ -124,6 +124,7 @@ export class AdminUserModalPage {
           position: "bottom"
         }).present();
       }
+      this.dismiss();
     }
   }
 

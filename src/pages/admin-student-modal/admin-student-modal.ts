@@ -39,7 +39,8 @@ export class AdminStudentModalPage {
     this.studentForm = this.formBuilder.group({
       fName: [this.student.fName, Validators.required],
       lName: [this.student.lName, Validators.required],
-      note: [this.student.note]
+      note: [this.student.note],
+      dietaryNeeds: [this.student.dietNeed]
     });
   }
 
@@ -55,11 +56,14 @@ export class AdminStudentModalPage {
       hasChanged = true;
     } else if(this.student.note != this.studentForm.value.note){
       hasChanged = true;
+    } else if(this.student.dietNeed != this.studentForm.value.dietaryNeeds){
+      hasChanged = true;
     }
     if(hasChanged){
       this.student.fName = this.studentForm.value.fName;
       this.student.lName = this.studentForm.value.lName;
       this.student.note = this.studentForm.value.note;
+      this.student.dietNeed = this.studentForm.value.dietaryNeeds;
 
       if(this.student._id === "-1"){
         this.studentService.createStudent(this.student).then((returnedID: String)=>{
@@ -82,6 +86,7 @@ export class AdminStudentModalPage {
           position: "bottom"
         }).present();
       }
+      this.dismiss();
     }
   }
 

@@ -38,7 +38,7 @@
         <ion-input type="text" formControlName="note" value="{{this.studentService.data.get(this.student._id).note}}"></ion-input>
       </ion-item>
 
-      <!--<ion-grid>
+      <!-- <ion-grid>
         <ion-row>
           <ion-col width-75>
             <ion-item>
@@ -49,11 +49,11 @@
             <ion-checkbox color="dark" checked="false"></ion-checkbox>
           </ion-col>
         </ion-row>
-      </ion-grid>
+      </ion-grid> -->
       <ion-item>
         <ion-label>Dietary Needs:</ion-label>
-        <ion-checkbox ion-right color="dark" checked="false"></ion-checkbox>
-      </ion-item>-->
+        <ion-toggle ion-right formControlName="dietaryNeeds" color="dark" checked="false"></ion-toggle>
+      </ion-item>
 
       <ion-card [hidden]="this.studentForm.valid">
         <ion-card-header>Invalid input</ion-card-header>
