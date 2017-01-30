@@ -170,10 +170,25 @@ export class ListPage {
     this.navCtrl.pop();
   }
 
+  /******************************************************************************
+  * updateNap
+  *
+  * takes length of nap and a student id and adds them to the map that will be pushed
+  * to the database when update button is pressed
+  *
+  **/
   updateNap(napTime, studentId) {
     this.napStudents.set(String(studentId), napTime);
   }
 
+  /******************************************************************************
+  * updateAll
+  *
+  * takes map of students that has been populated by updateNap and adds any students
+  * that aren't in the map with the default nap value
+  * (runs when the update button is pressed)
+  *
+  **/
   updateAll(){
     this.studentService.data.forEach(student => {
       if(!this.napStudents.has(String(student._id)) && (student.location !== 'Checked out')){
