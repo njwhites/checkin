@@ -25,14 +25,18 @@ export class StudentDetailsPage {
   loadTransactions(){
     this.checkinService.getTransactionsById(this.selectedStudent, null).then((result: Array<any>) => {
         this.transactions = result;
+    }).then(() => {
+      this.checkinService.getBillableHours(this.selectedStudent, null).then((result) =>{
+        console.log("Hours: " + result)
+      })
     }).catch(err => {
       console.log(err);
     });
   }
 
   getUserName(id: string){
-    
-    return this.userService.data.get(id).fName + " " + this.userService.data.get(id).lName;
+    let me = this.userService.data.get(id);
+    return me.fName + " " + me.lName;
   }
 
   resetInterval(){
