@@ -37,9 +37,11 @@ export class TherapistStudentDetailsPage {
         by_id: TransactionTherapyObject.by_id,
         student: this.selectedStudent
       }, {enableBackdropDismiss: false});
-      modal.present(modal)
+      modal.onDidDismiss(data => {
+        this.navCtrl.pop();
+      });
+      modal.present(modal);
     });
-    this.navCtrl.pop();
   }
 
 

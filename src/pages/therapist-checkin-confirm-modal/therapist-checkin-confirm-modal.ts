@@ -71,7 +71,8 @@ export class TherapistCheckinConfirmModalPage {
         break;
     }
     this.checkinService.therapistCheckinFollowUp(this.student.toString(), this.by_id.toString(), this.checkinService.parseReadableTime(start_time).toString(), therapy_length);
-    this.viewCtrl.dismiss();
+    let data = { 'returnValue': true };
+    this.viewCtrl.dismiss(data);
   }
 
 }
