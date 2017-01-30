@@ -9,15 +9,8 @@ import {CheckinProvider} from '../../providers/checkin-provider';
   templateUrl: 'student-info-button.html'
 })
 export class StudentInfoButtonPage {
-  @Input() thisStudent: any;
   @Input() thisStudentLocation: any;
 
   constructor(public navCtrl: NavController, public checkinService: CheckinProvider) {}
-
-  displayInfo() {
-    this.navCtrl.push(StudentDetailsPage, {
-      student: this.thisStudent
-    });
-  }
 
 }

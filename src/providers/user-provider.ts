@@ -225,10 +225,9 @@ export class UserProvider {
 
   removeTherapistFavoriteID(t_id: String, s_id: String){
     return new Promise((resolve, reject) => {
-
       this.getTherapistFavoriteIDs(t_id).then((result: Array<String>) => {
         if(result.indexOf(s_id) >= 0){
-          result = result.splice(result.indexOf(s_id), 1);
+          result.splice(result.indexOf(s_id), 1);
         }
         this.db.upsert(t_id, (doc) => {
           doc.therapy_fav_ids = result;
