@@ -18,39 +18,51 @@
     </ion-row>
   </ion-grid>
   <ion-content class="scrollView">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <div *ngFor="let student of this.studentList | impureMapValues">
-            <div *ngFor="let thisStudent of therapistStudents">
-              <div *ngIf="thisStudent === this.studentList.get(student.key)._id && this.studentList.get(student.key).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(student.key)._id)">
-                <ion-item>
-                  <ion-icon name="walk" item-left></ion-icon>
-                  {{this.studentList.get(student.key).fName}} {{this.studentList.get(student.key).lName}}
-                </ion-item>
+    <ion-list>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+              <div *ngFor="let student of this.studentList | impureMapValues">
+                <div *ngFor="let thisStudent of therapistStudents">
+                  <ion-item-sliding *ngIf="thisStudent === this.studentList.get(student.key)._id && this.studentList.get(student.key).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(student.key)._id)">
+                    <ion-item>
+                        <ion-icon name="walk" item-left></ion-icon>
+                        {{this.studentList.get(student.key).fName}} {{this.studentList.get(student.key).lName}}
+                    </ion-item>
+                    <ion-item-options>
+                      <button ion-button color="danger" (click)="removeStudent(thisStudent)">
+                        <ion-icon name="trash"></ion-icon>
+                      </button>
+                    </ion-item-options>
+                  </ion-item-sliding>
+                </div>
+              </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div *ngFor="let student of this.studentList | mapValues">
+              <div *ngFor="let thisStudent of therapistStudents">
+                <ion-item-sliding *ngIf="thisStudent === this.studentList.get(student.key)._id && this.studentList.get(student.key).location === this.checkinService.CHECKED_OUT">
+                  <ion-item class="absentRow">
+                    <ion-icon name="walk" item-left></ion-icon>
+                    {{this.studentList.get(student.key).fName}} {{this.studentList.get(student.key).lName}}
+                    <div item-right>
+                      Absent
+                    </div>
+                  </ion-item>
+                  <ion-item-options>
+                    <button ion-button color="danger" (click)="removeStudent(thisStudent)">
+                      <ion-icon name="trash"></ion-icon>
+                    </button>
+                  </ion-item-options>
+                </ion-item-sliding>
               </div>
             </div>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <div *ngFor="let student of this.studentList | mapValues">
-            <div *ngFor="let thisStudent of therapistStudents">
-              <div *ngIf="thisStudent === this.studentList.get(student.key)._id && this.studentList.get(student.key).location === this.checkinService.CHECKED_OUT">
-                <ion-item class="absentRow">
-                  <ion-icon name="walk" item-left></ion-icon>
-                  {{this.studentList.get(student.key).fName}} {{this.studentList.get(student.key).lName}}
-                  <div item-right>
-                    Absent
-                  </div>
-                </ion-item>
-              </div>
-            </div>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
   </ion-content>
   <ion-grid class="push-to-bottom">
     <ion-row class="buttonRow">
