@@ -6,18 +6,59 @@
   </ion-navbar>
 </ion-header>
 <ion-content text-center class="vertical-align-content">
-  <ion-grid id="buttonGrid">
+  <div class="cardContainer">
+        <ion-card class="cardElement" (click)="selectClassroom('classroom')">
+          <ion-card-header class="">
+            Classroom
+          </ion-card-header>
+          <!--<ion-list>
+            <ion-item class="studentItem" *ngFor="let sID of class.students">
+              {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
+            </ion-item>
+          </ion-list>-->
+        </ion-card>
+        <ion-card class="cardElement" (click)="toLogin('kitchen')">
+          <ion-card-header class="">
+            Kitchen
+          </ion-card-header>
+          <!--<ion-list>
+            <ion-item class="studentItem" *ngFor="let sID of class.students">
+              {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
+            </ion-item>
+          </ion-list>-->
+        </ion-card>
+        <ion-card class="cardElement" (click)="toLogin('therapist')">
+          <ion-card-header class="">
+            Therapy
+          </ion-card-header>
+          <!--<ion-list>
+            <ion-item class="studentItem" *ngFor="let sID of class.students">
+              {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
+            </ion-item>
+          </ion-list>-->
+        </ion-card>
+        <ion-card class="cardElement" (click)="toLogin('admin')">
+          <ion-card-header class="">
+            Admin
+          </ion-card-header>
+          <!--<ion-list>
+            <ion-item class="studentItem" *ngFor="let sID of class.students">
+              {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
+            </ion-item>
+          </ion-list>-->
+        </ion-card>
+
+        <!-- <button ion-button block class="buttonElement" (click)="selectClassroom('classroom')">Classroom</button>
+
+        <button ion-button block class="buttonElement" (click)="toLogin('kitchen')">Kitchen</button>
+
+        <button ion-button block class="buttonElement" (click)="toLogin('therapist')">Therapy</button>
+
+        <button ion-button block class="buttonElement" (click)="toLogin('admin')">Admin</button> -->
+  <!-- <ion-grid id="buttonGrid">
     <ion-row class="buttonRow">
       <ion-col>
         <button ion-button block (click)="selectClassroom('classroom')">Classroom</button>
-          <!--<ion-item>
-            <ion-label>Classroom</ion-label>
-            <ion-select [(ngModel)]="classroom" (ngModelChange)="onSelectClassroom($event)">
-              <div *ngFor="let classroom of classrooms">
-                <ion-option value={{classroom.roomNumber}}>Room {{classroom.roomNumber}}</ion-option>
-              </div>
-            </ion-select>
-          </ion-item>-->
       </ion-col>
     </ion-row>
     <ion-row class="buttonRow">
@@ -35,6 +76,7 @@
         <button ion-button block (click)="toLogin('admin')">Admin</button>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
+  </div>
   <page-classroom-id id="enterID" text-center class="vertical-align-content" [parentPage]="btnPage" (notify)='onNotify($event)' (goBack)='revert($event)' style="display: none;"></page-classroom-id>
 </ion-content>
