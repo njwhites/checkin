@@ -17,7 +17,7 @@ export class AdminClassroomTabPage {
               public modalController: ModalController,
               public studentService: StudentProvider,
               public classRoomService: ClassRoomProvider) {
-                
+
     classRoomService.getAllClassRooms().then((data: Array<ClassRoomModel>) =>{
       this.classrooms = data;
     })
@@ -30,7 +30,7 @@ export class AdminClassroomTabPage {
 
   showClassRoomInfo(classID: string){
 
-    this.modalController.create(AdminClassroomModalPage,{classroom: this.classrooms.filter((value)=>{return value._id===classID})[0]}).present();
+    this.modalController.create(AdminClassroomModalPage,{classroom: this.classrooms.find((value)=>{return value._id===classID})}).present();
   }
 
   ionViewDidLoad() {

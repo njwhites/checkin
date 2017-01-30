@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import {Validators, FormBuilder } from '@angular/forms';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { Validators, FormBuilder } from '@angular/forms';
+import { NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { ClassRoomModel } from '../../models/db-models';
 import { StudentProvider } from '../../providers/student-provider';
 import { ClassRoomProvider } from '../../providers/class-room-provider';
+import { ClassroomAddModalPage } from '../classroom-add-modal/classroom-add-modal';
 
 @Component({
   selector: 'page-admin-classroom-modal',
@@ -19,11 +20,12 @@ export class AdminClassroomModalPage {
               public studentService: StudentProvider,
               public classroomService: ClassRoomProvider,
               public formBuilder: FormBuilder,
-              public alertController: AlertController) {
+              public alertController: AlertController,
+              public modalController: ModalController) {
     this.classroom=navParams.get("classroom");
 
     this.classroomForm = this.formBuilder.group({
-      teacher: [this.classroom.teacher]
+      teacher: [this.classroom.teacher, Validators.required]
     });
   }
 
@@ -49,65 +51,12 @@ export class AdminClassroomModalPage {
     this.classroomService.getClassRoomByID("-1").then((classroom:ClassRoomModel)=>{
       this.classroomService.addStudentToClass(classroom, SID);
     });
+
+    this.classroom.students.splice(this.classroom.students.indexOf(SID), 1);
   }
 
-  //Chris 1/27/17 this method of adding students involves opening an alert and selecting students from there
-  //might be replaced with another modal or page that is more similar to the therapist add page
-  addStudentAlert(){
-    console.log("tried to add student");
-
-    //create the alert to display optional students
-    let alert = this.alertController.create({
-      title: 'Select Students To Add'
-    });
-
-    //build an array of students that don't already belong to the classroom we are in
-    Array.from(this.studentService.data.values()).filter((value)=>{
-      return this.classroom.students.indexOf(value._id)<0;
-
-      //for each student add a checkbox to the alert
-    }).forEach((value, index, array)=>{
-      //pick one of the below input or button
-      alert.addInput({
-        type: 'checkbox',
-        label: value.fName + ' ' + value.lName,
-        value: ''+value._id
-      });
-    });
-    alert.addButton({
-      text: "Cancel",
-      role: "cancel",
-      handler: ()=>{
-
-      }
-    })
-
-    alert.addButton({
-      text: "Okay",
-      handler: (data)=>{
-        console.log(data);
-        data.forEach((value)=>{this.addStudent(value)});
-      }
-    })
-    alert.present();
-
-  }
-
-  //function that takes in a student id and requests that the classroom provider add it to the class
-  addStudent(SID){
-    //for tracking and maybe user feedback purposes
-    //save the previous room for future display
-    let previousRoom: ClassRoomModel;
-
-    //first we want to get the student from the previous room and remove them
-    this.classroomService.getAllClassRooms().then((classrooms:Array<ClassRoomModel>)=>{
-      previousRoom = classrooms.find((value)=>{return value.students.indexOf(SID) >= 0});
-
-      this.classroomService.removeStudentFromClass(previousRoom, SID);
-    });
-
-    //now we add the student to the current room
-    this.classroomService.addStudentToClass(this.classroom, SID);
+  addStudentModal(){
+    this.modalController.create(ClassroomAddModalPage,{currentroom: this.classroom}).present();
 
   }
 

@@ -7,7 +7,7 @@
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Class Details</ion-title>
+    <ion-title center-text>Classroom Details</ion-title>
     <!--<page-home-button></page-home-button>-->
   </ion-navbar>
 
@@ -15,18 +15,22 @@
 
 
 <ion-content padding>
-  <div *ngIf="this.classroom._id >= 0">
+  <h3 *ngIf="this.classroom._id >= 0">
     Room {{this.classroom.roomNumber}}
-  </div>
-  <div *ngIf="this.classroom._id < 0">
+  </h3>
+  <h3 *ngIf="this.classroom._id < 0">
     {{this.classroom.roomNumber}}
-  </div>
+  </h3>
 
   <form *ngIf="this.classroom._id >= 0" [formGroup]="classroomForm" (ngSubmit)="updateClassroom()">
-    <div>
-      <ion-label>Teacher</ion-label>
-      <ion-input type="text" formControlName="teacher"></ion-input>
-    </div>
+    <ion-list>
+      <ion-list-header>
+        Teachers:
+      </ion-list-header>
+      <ion-item *ngFor>
+        <ion-input type="text" formControlName="teacher"></ion-input>
+      </ion-item>
+    </ion-list>
   </form>
     <!--
 
@@ -55,7 +59,7 @@
         </ion-item-options>
       </ion-item-sliding>
       <ion-item>
-        <button ion-button full (click)="addStudentAlert()">
+        <button ion-button full (click)="addStudentModal()">
           Add Student To Class
         </button>
       </ion-item>
