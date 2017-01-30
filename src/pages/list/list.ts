@@ -46,6 +46,22 @@ export class ListPage {
     console.log("the room number is " + this.roomNumber);
   }
 
+/*******************************************************************************
+* revert
+*
+* Driver function of list. takes in a string which it receives from a button
+* click in an instance of action-button and based on what the string says and
+* what the parent page is performs a number of operations. If the parent page is
+* therapist or nurse the string can either be the studentID or the studentID and
+* ' returned'. If it is only the studentID the student is checked out to the
+* appropriate party, otherwise the student is returned to the classroom. If the
+* parent page is checkin or signout then the string can be either the studentID
+* or studentID + ' was returned'. If studentID is the string then the student
+* will be added to an array. If studentID + ' was returned' is the string the
+* student will be removed from the array. This array is then used by addStudents
+* and removeStudents to perform the correct action based on the parent page.
+*
+**/
   revert(studentID:string):void {
     var search;
     if((this.parentPage !== 'signout') && (this.parentPage !== 'checkin')) {
@@ -82,9 +98,9 @@ export class ListPage {
       } else if(this.parentPage === 'nurse') {
         search = studentID.search(' returned');
         if(search === -1) {
-          ////////////////////////////////////////////////////////////////////////
+          //////////////////////////////////////////////////////////////////////
           //Checkout student to nurse
-          ////////////////////////////////////////////////////////////////////////
+          //////////////////////////////////////////////////////////////////////
           this.checkinService.nurseCheckout(studentID, String(this.userID));
           clearInterval(this.interval);
           this.navCtrl.pop();
@@ -102,11 +118,17 @@ export class ListPage {
     } else {
       search = studentID.search(' was removed');
       if(search === -1) {
+        ////////////////////////////////////////////////////////////////////////
+        //add to checkin/checkout array
+        ////////////////////////////////////////////////////////////////////////
         this.signoutStudents.push(studentID);
       } else {
         var deselectedStudentID = studentID.slice(0, search);
         var index = this.signoutStudents.indexOf(deselectedStudentID);
         if(index !== -1) {
+          //////////////////////////////////////////////////////////////////////
+          //add to checkin/checkout array
+          //////////////////////////////////////////////////////////////////////
           this.signoutStudents.splice(index, 1);
         }
       }
@@ -114,6 +136,15 @@ export class ListPage {
     }
   }
 
+/*******************************************************************************
+* removeStudents
+*
+* takes the array of students (this.signoutStudents) and passes it to the
+* checkoutService to check students out of the classroom. when this is done
+* the students are emitted so that an accurate count of students can be
+* toasted as checked out of the classroom.
+*
+**/
   removeStudents() {
     this.checkinService.checkoutStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
@@ -122,6 +153,15 @@ export class ListPage {
     this.navCtrl.pop();
   }
 
+/******************************************************************************
+* addStudents
+*
+* takes the array of students (this.signoutStudents) and passes it to the
+* checkinService to check students into the classroom. when this is done
+* the students are emitted so that an accurate count of students can be
+* toasted as checked into the classroom.
+*
+**/
   addStudents() {
     this.checkinService.checkinStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
@@ -203,6 +243,12 @@ export class ListPage {
     return isEmpty;
   }
 
+/*******************************************************************************
+* studentTapped
+*
+* Used to go to the StudentDetailsPage given a student
+*
+**/
   studentTapped(event, student) {
     clearInterval(this.interval);
     this.navCtrl.push(StudentDetailsPage, {
@@ -224,6 +270,14 @@ export class ListPage {
     }, 1000)
   }
 
+/*******************************************************************************
+* followUpModal
+*
+* called from inside revert, this function creates the modal for therapists to
+* state when exactly they checked students out for therapy and how long the
+* session was.
+*
+**/
   followUpModal(TransactionTherapyObject, student) {
     let modal = this.modalCtrl.create(TherapistCheckinConfirmModalPage, {
       start_time: TransactionTherapyObject.start_time,
