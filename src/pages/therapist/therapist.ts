@@ -49,7 +49,6 @@ export class TherapistPage {
   }
 
   ionViewDidEnter() {
-    this.studentList = 0;
     this.studentService.getStudents().then(()=> {
       this.studentList = this.studentService.data;
     }).catch((err) => {
