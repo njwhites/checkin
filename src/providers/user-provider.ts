@@ -28,6 +28,10 @@ export class UserProvider {
 
   forceInit(){
     console.log("user provider force init");
+    //tell the db what to do when it detects a change
+    this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change => {
+      this.handleChange(change);
+    });
   }
 
   getAllUsers(){
@@ -43,10 +47,7 @@ export class UserProvider {
 
         resolve(this.data);
 
-        //tell the db what to do when it detects a change
-        this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change => {
-          this.handleChange(change);
-        });
+
       }).catch(error =>{
         console.log(error);
       });
