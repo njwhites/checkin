@@ -7,41 +7,48 @@
 </ion-header>
 <ion-content text-center class="vertical-align-content">
   <div id="buttonGrid" class="cardContainer">
-        <ion-card class="cardElement" (click)="selectClassroom('classroom')">
-          <ion-card-header class="card-header">
-            Classroom
-          </ion-card-header>
+        <ion-card class="cardElement">
+          <button class="no-format-button" (click)="selectClassroom('classroom')">
+            <ion-card-header class="card-header">
+              Classroom
+            </ion-card-header>
+          </button>
           <!--<ion-list>
             <ion-item class="studentItem" *ngFor="let sID of class.students">
               {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
             </ion-item>
           </ion-list>-->
         </ion-card>
-        <ion-card class="cardElement" (click)="toLogin('kitchen')">
-          <ion-card-header class="card-header">
-            Kitchen
-          </ion-card-header>
+        <ion-card class="cardElement" >
+          <button class="no-format-button" (click)="toLogin('kitchen')">
+            <ion-card-header class="card-header">
+              Kitchen
+            </ion-card-header>
+          </button>
           <!--<ion-list>
             <ion-item class="studentItem" *ngFor="let sID of class.students">
               {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
             </ion-item>
           </ion-list>-->
         </ion-card>
-        <ion-card class="cardElement" (click)="toLogin('therapist')">
-          <ion-card-header class="card-header">
-            Therapy
-          </ion-card-header>
+        <ion-card class="cardElement">
+          <button class="no-format-button" (click)="toLogin('therapist')">
+            <ion-card-header class="card-header">
+              Therapy
+            </ion-card-header>
+          </button>
           <!--<ion-list>
             <ion-item class="studentItem" *ngFor="let sID of class.students">
               {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
             </ion-item>
           </ion-list>-->
         </ion-card>
-        <ion-card class="cardElement" (click)="toLogin('admin')">
-          <ion-card-header class="card-header">
-            Admin
-          </ion-card-header>
-          <!--<ion-list>
+        <ion-card class="cardElement" >
+          <button class="no-format-button" (click)="toLogin('admin')">
+            <ion-card-header class="card-header">
+              Admin
+            </ion-card-header>
+          </button>          <!--<ion-list>
             <ion-item class="studentItem" *ngFor="let sID of class.students">
               {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
             </ion-item>
