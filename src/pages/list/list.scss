@@ -5,11 +5,8 @@ page-list {
     align-content: center!important;
   }
   .countRow{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    padding-top:10%;
-    bottom: 50px
+    position: absolute;
+    bottom: 0px;
   }
 
   .countHeader{
@@ -61,10 +58,16 @@ page-list {
 
   .scrollable {
     align-self: center;
-    height: 650px;
+    height: 1000px;
+    max-height: 85vh;
   }
 
   .scrollableInside {
     height: auto;
+  }
+
+  .fill {
+    height: 1000px;
+    max-height: 80vh;
   }
 }

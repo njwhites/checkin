@@ -8,8 +8,8 @@
 
 
 <ion-content padding (click)="resetInterval()">
-  <ion-list inset>
     <div *ngIf="parentPage === 'presentStudents'">
+      <ion-list inset class="fill">
       <ion-grid class="horizontal-align-center">
         <ion-row class="buttonRow">
           <ion-col>
@@ -52,7 +52,9 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+  </ion-list>
   </div>
+<ion-list inset>
     <div *ngIf="parentPage === 'napStudents'">
       <div *ngFor="let student of this.studentService.data | mapValues">
         <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
