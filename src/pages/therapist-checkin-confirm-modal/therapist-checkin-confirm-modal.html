@@ -1,25 +1,25 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Check In Confirmation
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  <ion-grid class="horizontal-align-center">
-    <ion-row>
-        <ion-label>Therapy Start Time</ion-label>
-        <ion-select [(ngModel)]="start">
-          <ion-option value="-15">{{this.mfifteen}}</ion-option>
-          <ion-option value="-10">{{this.mten}}</ion-option>
-          <ion-option value="-5">{{this.mfive}}</ion-option>
-          <ion-option value="0">{{this.displayDate}}</ion-option>
-          <ion-option value="+5">{{this.pfive}}</ion-option>
-          <ion-option value="+10">{{this.pten}}</ion-option>
-          <ion-option value="+15">{{this.pfifteen}}</ion-option>
-        </ion-select>
-    </ion-row>
-    <ion-row>
+<div class="modal-wrapper-height-shrink">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        Check In Confirmation
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content scrollbar-y="false" overflow-scroll="false">
+    <div>
+      <ion-list-header>
+        Therapy Start Time
+      </ion-list-header>
+      <ion-select [(ngModel)]="start">
+        <ion-option value="-15">{{this.mfifteen}}</ion-option>
+        <ion-option value="-10">{{this.mten}}</ion-option>
+        <ion-option value="-5">{{this.mfive}}</ion-option>
+        <ion-option value="0">{{this.displayDate}}</ion-option>
+        <ion-option value="+5">{{this.pfive}}</ion-option>
+        <ion-option value="+10">{{this.pten}}</ion-option>
+        <ion-option value="+15">{{this.pfifteen}}</ion-option>
+      </ion-select>
       <ion-list-header>
         Adjust Therapy Length
         <ion-badge item-right>{{length}}</ion-badge>
@@ -30,10 +30,14 @@
           <ion-label range-right>60</ion-label>
         </ion-range>
       </ion-item>
-      <!--<ion-input #therapyLength type="tel" placeholder="Enter The Therapy Length (Default: 30)"></ion-input>-->
-    </ion-row>
-    <ion-row>
-      <button ion-button block (click)='submit()'>Submit</button>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+    </div>
+    <ion-footer>
+      <div>
+        <button ion-button block (click)='submit()' style="margin-right: -5px; margin-left: 5px;">
+          Submit
+        </button>
+      </div>
+    </ion-footer>
+  </ion-content>
+</div>
+
