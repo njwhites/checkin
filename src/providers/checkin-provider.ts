@@ -596,7 +596,7 @@ export class CheckinProvider {
     let mins: string;
     let am_pm = "AM";
     let hours = String(time.getHours());
-    if (time.getHours() > 12){
+    if (time.getHours() >= 12 && time.getHours() != 0){
       hours = String(time.getHours() - 12);
       am_pm = "PM";
     }
