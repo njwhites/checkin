@@ -150,21 +150,6 @@
   </ion-list>
   <div class="vertical-align-content">
     <ion-grid>
-      <ion-row class = "titleRow">
-        <ion-col>
-          <div class = "centerText" *ngIf="isListEmpty() && this.parentPage === 'checkin'">
-            No Students To Check In
-          </div>
-          <div class = "centerText" *ngIf="isListEmpty() && this.parentPage === 'signout'">
-            No Students To Check Out
-          </div>
-          <div *ngIf="this.parentPage === 'therapy' || this.parentPage === 'napStudents'|| this.parentPage === 'nurse'">
-            <div class = "centerText" *ngIf="isListEmpty()">
-              No Students Present
-            </div>
-          </div>
-        </ion-col>
-      </ion-row>
       <ion-row class="buttonRow">
         <ion-col>
           <div *ngIf="parentPage === 'signout' && !isListEmpty()">
@@ -175,6 +160,34 @@
           </div>
           <div *ngIf="parentPage === 'napStudents' && !isListEmpty()">
             <button ion-button block (click)="updateAll(this.studentService)">Update</button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="emptyRow">
+        <ion-col>
+          <div *ngIf="isListEmpty() && this.parentPage === 'checkin'">
+            <ion-item class="emptyItem">
+              <ion-icon class="emptyIcon" name="archive"></ion-icon>
+            </ion-item>
+            <ion-item class="emptyText">
+              All your students are currently checked in.
+            </ion-item>
+          </div>
+          <div *ngIf="isListEmpty() && this.parentPage === 'signout'">
+            <ion-item class="emptyItem">
+              <ion-icon class="emptyIcon" name="archive"></ion-icon>
+            </ion-item>
+            <ion-item class="emptyText">
+              All your students are currently checked out.
+            </ion-item>
+          </div>
+          <div *ngIf="this.parentPage === 'therapy' || this.parentPage === 'napStudents'|| this.parentPage === 'nurse'">
+            <ion-item class="emptyItem">
+              <ion-icon class="emptyIcon" name="archive"></ion-icon>
+            </ion-item>
+            <ion-item class="emptyText">
+              No students are present in this class.
+            </ion-item>
           </div>
         </ion-col>
       </ion-row>
