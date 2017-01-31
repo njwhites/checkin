@@ -22,45 +22,41 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-              <div *ngFor="let student of this.studentList | mapValues">
-                <div *ngFor="let thisStudent of therapistStudents">
-                  <ion-item-sliding *ngIf="thisStudent === this.studentList.get(student.key)._id && this.studentList.get(student.key).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(student.key)._id)">
-                    <ion-item>
-                        <ion-icon name="walk" item-left></ion-icon>
-                        {{this.studentList.get(student.key).fName}} {{this.studentList.get(student.key).lName}}
-                        <div item-right>
-                          <page-student-info-button [thisStudentLocation]="this.studentList.get(student.key).location"></page-student-info-button>
-                        </div>
-                    </ion-item>
-                    <ion-item-options>
-                      <button ion-button color="danger" (click)="removeStudent(thisStudent)">
-                        <ion-icon name="trash"></ion-icon>
-                      </button>
-                    </ion-item-options>
-                  </ion-item-sliding>
-                </div>
-              </div>
+            <div *ngFor="let thisStudent of therapistStudents">
+              <ion-item-sliding *ngIf="this.studentList.get(thisStudent).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(thisStudent)._id)">
+                <ion-item>
+                  <ion-icon name="walk" item-left></ion-icon>
+                  {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
+                  <div item-right>
+                    <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
+                  </div>
+                </ion-item>
+                <ion-item-options>
+                  <button ion-button color="danger" (click)="removeStudent(thisStudent)">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                </ion-item-options>
+              </ion-item-sliding>
+            </div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <div *ngFor="let student of this.studentList | mapValues">
-              <div *ngFor="let thisStudent of therapistStudents">
-                <ion-item-sliding *ngIf="thisStudent === this.studentList.get(student.key)._id && this.studentList.get(student.key).location === this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(student.key)._id)">
-                  <ion-item class="absentRow">
-                    <ion-icon name="walk" item-left></ion-icon>
-                    {{this.studentList.get(student.key).fName}} {{this.studentList.get(student.key).lName}}
-                    <div item-right>
-                      <page-student-info-button [thisStudentLocation]="this.studentList.get(student.key).location"></page-student-info-button>
-                    </div>
-                  </ion-item>
-                  <ion-item-options>
-                    <button ion-button color="danger" (click)="removeStudent(thisStudent)">
-                      <ion-icon name="trash"></ion-icon>
-                    </button>
-                  </ion-item-options>
-                </ion-item-sliding>
-              </div>
+            <div *ngFor="let thisStudent of therapistStudents">
+              <ion-item-sliding *ngIf="this.studentList.get(thisStudent).location === this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(thisStudent)._id)">
+                <ion-item class="absentRow">
+                  <ion-icon name="walk" item-left></ion-icon>
+                  {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
+                  <div item-right>
+                    <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
+                  </div>
+                </ion-item>
+                <ion-item-options>
+                  <button ion-button color="danger" (click)="removeStudent(thisStudent)">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                </ion-item-options>
+              </ion-item-sliding>
             </div>
           </ion-col>
         </ion-row>
