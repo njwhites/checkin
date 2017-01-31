@@ -22,7 +22,7 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-              <div *ngFor="let student of this.studentList | impureMapValues">
+              <div *ngFor="let student of this.studentList | mapValues">
                 <div *ngFor="let thisStudent of therapistStudents">
                   <ion-item-sliding *ngIf="thisStudent === this.studentList.get(student.key)._id && this.studentList.get(student.key).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(student.key)._id)">
                     <ion-item>
