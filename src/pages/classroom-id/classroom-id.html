@@ -1,47 +1,63 @@
-<ion-grid class="horizontal-align-center">
-  <ion-row>
-    <ion-col>
-      <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
-        <div class="titleRoom">
-          Room {{this.roomNumber}}: {{parentPage|parentReadable|firstUpper}}
+<ion-grid class="fill-parent">
+
+  <div id="login-card" class="login-flex-container">
+    <div class="outer-flex-element room-title-element">
+      <div class="room-title">
+          <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
+            <div class="titleRoom">
+              Room {{this.roomNumber}}
+            </div>
+          </div>
+          <div *ngIf="parentPage === 'kitchen'">
+            <div class="titleRoom">
+              Kitchen
+            </div>
+          </div>
+          <div *ngIf="parentPage === 'admin'">
+            <div class="titleRoom">
+              Admin
+            </div>
+          </div>
+          <div *ngIf="parentPage === 'therapist'">
+            <div class="titleRoom">
+              Therapist
+            </div>
+          </div>
+      </div>
+    </div>
+    <ion-card class="outer-flex-element card-element">
+
+      <div class="card-row">
+        <div class="card-row-child card-title">
+          <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
+            <div class="titleRoom">
+              {{parentPage|parentReadable|firstUpper}}
+            </div>
+          </div>
+          <div *ngIf="parentPage === 'kitchen' || parentPage === 'admin' || parentPage === 'therapist'">
+            <div class="titleRoom">
+              Login
+            </div>
+          </div>
         </div>
       </div>
-      <div *ngIf="parentPage === 'kitchen'">
-        <div class="titleRoom">
-          Kitchen Login
+      <div id='login-input' class= 'card-row'>
+        <div class="card-row-child">
+          <div class="inputRow">
+              <ion-input #userId text-center class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder="Enter Your ID Number"></ion-input>
+          </div>
+
+          <div class="buttonRow">
+              <button ion-button block (click)='checkUser(userId)'>Submit</button>
+          </div>
+
+          <div *ngIf="parentPage !== 'checkin' && parentPage !== 'signout' && parentPage !== 'therapy' && parentPage !== 'nurse' && parentPage !== 'napStudents' && parentPage !== 'presentStudents'">
+            <div class="buttonRow">
+                <button ion-button block (click)='back()'>Cancel</button>
+              </div>
+          </div>
         </div>
       </div>
-      <div *ngIf="parentPage === 'admin'">
-        <div class="titleRoom">
-          Admin Login
-        </div>
-      </div>
-      <div *ngIf="parentPage === 'therapist'">
-        <div class="titleRoom">
-          Therapist Login
-        </div>
-      </div>
-    </ion-col>
-  </ion-row>
-  <ion-row class="inputRow">
-    <ion-col>
-      <ion-list>
-        <ion-item>
-          <ion-input #userId type="tel" (keyup.enter)='checkUser(userId)' placeholder="Enter Your ID Number"></ion-input>
-        </ion-item>
-      </ion-list>
-    </ion-col>
-  </ion-row>
-  <ion-row class="buttonRow">
-    <ion-col>
-      <button ion-button block (click)='checkUser(userId)'>Submit</button>
-    </ion-col>
-  </ion-row>
-  <ion-row class="buttonRow">
-    <ion-col>
-      <div *ngIf="parentPage !== 'checkin' && parentPage !== 'signout' && parentPage !== 'therapy' && parentPage !== 'nurse' && parentPage !== 'napStudents' && parentPage !== 'presentStudents'">
-        <button ion-button block (click)='back()'>Cancel</button>
-      </div>
-    </ion-col>
-  </ion-row>
+    </ion-card>
+  </div>
 </ion-grid>

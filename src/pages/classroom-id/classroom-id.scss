@@ -1,26 +1,74 @@
 page-classroom-id {
 
-  .horizontal-align-center{
-    padding: 120px 0;
+  .fill-parent{
+    height:100%;
+    width: 100%;
+    display: flex;
   }
-  .row {
-    margin-top: 10%;
-    margin-bottom: 20%;
+  
+  .login-flex-container{
+    align-items:center;
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    flex-flow: column nowrap;
+
   }
-  .buttonRow {
-    align-self: center;
-    width: 50%;
+
+  .outer-flex-element{
+    justify-content: center;
+    align-items: center;
+
+    display:flex;
+    
+    width:55%;
+
   }
-  .inputRow {
-    align-self: center;
-    width: 75%;
+  .outer-flex-element.room-title-element{
+    height:25%
   }
-  .titleRoom {
-    padding-bottom: 40px;
+
+  .room-title {
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+
     font-size: 300%;
   }
+
+  .card-title{
+    font-size: 400%;
+  }
+
+  .card-element{
+    height:50%;
+    flex-flow: column nowrap;
+  }
+
+  .card-row{
+    width: 50%;
+    height: 50%;
+    justify-content: center;
+    align-items:center;
+    display: flex;
+  }
+
+  .card-row-child{
+    width:100%;
+  }
+
+
   ::-webkit-input-placeholder {
-   text-align: center;
- }
+   text-align:center; 
+  }
+
+  .input-style{
+    padding: 4px;
+    padding-left: 30px;
+  }
+
+
 
 }
