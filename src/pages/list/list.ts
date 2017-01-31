@@ -219,7 +219,6 @@ export class ListPage {
     }
   }
 
-  //TODO: if students are checked in after page is loaded then error is thrown
   isListEmpty() {
     let isEmpty: boolean;
     isEmpty = true;

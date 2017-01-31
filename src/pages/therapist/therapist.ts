@@ -44,6 +44,19 @@ export class TherapistPage {
     });
   }
 
+  isEmpty() {
+    let isEmpty: boolean;
+    isEmpty = true;
+    if(this.therapistStudents){
+      if(this.therapistStudents.length !== 0){
+        console.log(this.therapistStudents.length);
+        isEmpty = false;
+      }
+      console.log(this.therapistStudents.length);
+    }
+    return isEmpty;
+  }
+
   getTherapistName(_id: String) {
     return this.userService.data.get(String(_id)).fName + " " + this.userService.data.get(String(_id)).lName;
   }

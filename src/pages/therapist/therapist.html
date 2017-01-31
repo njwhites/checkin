@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding *ngIf="!isEmpty()">
   <ion-grid class="horizontal-align-center">
     <ion-row class="buttonRow">
       <ion-col>
@@ -70,4 +70,29 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+</ion-content>
+<ion-content *ngIf="isEmpty()">
+<ion-list>
+<div class="vertical-align-content">
+  <ion-grid>
+    <ion-row class="emptyRow">
+      <ion-col>
+        <ion-item class="emptyItem">
+          <ion-icon class="emptyIcon" name="archive"></ion-icon>
+        </ion-item>
+        <ion-item class="emptyText">
+          You dont have any favorited students.
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="push-to-bottom">
+    <ion-row class="buttonRow">
+      <ion-col>
+        <button class="addButton" ion-button block (click)="add()"> + Add Favorite</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+</ion-list>
 </ion-content>

@@ -3,11 +3,18 @@ page-therapist {
     align-items: center;
     padding-top: 5%;
   }
+  .vertical-align-content
+  {
+    //display: flex!important;
+    align-content: center!important;
+  }
   .scrollView {
     align-items: center;
     height: 75%;
+    max-height: 63vh
   }
   .push-to-bottom {
+    position: absolute;
     bottom: 50px;
     width: 100%;
   }
@@ -27,5 +34,30 @@ page-therapist {
     padding-bottom: 20px;
     padding-top: 20px;
     font-size: 200%;
+  }
+
+  .emptyRow {
+    padding-top: 25vh;
+    align-self: center;
+    width: 60%;
+  }
+
+  .emptyItem {
+    align-self: center;
+    text-align: center;
+  }
+
+  .emptyIcon {
+    width: 75px;
+    height: 75px;
+    color: gray;
+    font-size: 800%
+  }
+
+  .emptyText {
+    align-self: center;
+    text-align: center;
+    color: gray;
+    font-size: 150%;
   }
 }
