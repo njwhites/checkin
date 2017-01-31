@@ -80,10 +80,6 @@ export class StudentProvider {
 
         resolve(this.data);
 
-        //tell the db what to do when it detects a change
-        this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change => {
-          this.handleChange(change);
-        });
       }).catch(error => {
         console.log(error)
       });
