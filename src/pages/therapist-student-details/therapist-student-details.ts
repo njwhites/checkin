@@ -43,6 +43,4 @@ export class TherapistStudentDetailsPage {
       modal.present(modal);
     });
   }
-
-
 }

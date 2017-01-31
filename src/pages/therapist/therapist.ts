@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController, NavParams} from "ionic-angular";
 import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';

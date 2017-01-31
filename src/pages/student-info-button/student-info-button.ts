@@ -1,6 +1,5 @@
 import {Component, Input} from "@angular/core";
 import {NavController} from 'ionic-angular';
-import {StudentDetailsPage} from '../student-details/student-details'
 import {CheckinProvider} from '../../providers/checkin-provider';
 
 
