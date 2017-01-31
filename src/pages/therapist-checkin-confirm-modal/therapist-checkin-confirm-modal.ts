@@ -30,20 +30,19 @@ export class TherapistCheckinConfirmModalPage {
     this.pten = this.checkinService.createReadableTime((Math.round(Number(this.navParams.get('start_time')) / 300000) * 300000) + 600000);
     this.pfifteen = this.checkinService.createReadableTime((Math.round(Number(this.navParams.get('start_time')) / 300000) * 300000) + 900000);
     this.length = this.navParams.get('length');
+    if(this.length > 60) {
+      this.length = 60;
+    }
     this.by_id = this.navParams.get('by_id');
     this.student = this.navParams.get('student');
   }
 
   ionViewDidLoad() {
-    console.log('Hello TherapistCheckinConfirmModalPage Page');
+    console.log('length ' + this.length);
   }
 
-  submit(therapyLength) {
-    var therapy_length = 30;
+  submit() {
     var start_time = ''
-    if(therapyLength.value !== '') {
-      therapy_length = Number(therapyLength.value);
-    }
     switch(this.start) {
       case "-15":
         start_time = this.mfifteen;
@@ -70,7 +69,7 @@ export class TherapistCheckinConfirmModalPage {
         console.log("error");
         break;
     }
-    this.checkinService.therapistCheckinFollowUp(this.student.toString(), this.by_id.toString(), this.checkinService.parseReadableTime(start_time).toString(), therapy_length);
+    this.checkinService.therapistCheckinFollowUp(this.student.toString(), this.by_id.toString(), this.checkinService.parseReadableTime(start_time).toString(), this.length);
     let data = { 'returnValue': true };
     this.viewCtrl.dismiss(data);
   }

@@ -20,10 +20,20 @@
         </ion-select>
     </ion-row>
     <ion-row>
-      <ion-input #therapyLength type="tel" placeholder="Enter The Therapy Length (Default: 30)"></ion-input>
+      <ion-list-header>
+        Adjust Therapy Length
+        <ion-badge item-right>{{length}}</ion-badge>
+      </ion-list-header>
+      <ion-item>
+        <ion-range min="0" max="60" step="15" snaps="true" [(ngModel)]="length">
+          <ion-label range-left class="small-text">0</ion-label>
+          <ion-label range-right>60</ion-label>
+        </ion-range>
+      </ion-item>
+      <!--<ion-input #therapyLength type="tel" placeholder="Enter The Therapy Length (Default: 30)"></ion-input>-->
     </ion-row>
     <ion-row>
-      <button ion-button block (click)='submit(therapyLength)'>Submit</button>
+      <button ion-button block (click)='submit()'>Submit</button>
     </ion-row>
   </ion-grid>
 </ion-content>

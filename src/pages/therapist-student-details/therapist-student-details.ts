@@ -33,7 +33,7 @@ export class TherapistStudentDetailsPage {
     this.checkinService.therapistCheckin(this.selectedStudent, String(this.id)).then((TransactionTherapyObject:any) => {
       let modal = this.modalCtrl.create(TherapistCheckinConfirmModalPage, {
         start_time: TransactionTherapyObject.start_time,
-        length: TransactionTherapyObject.length,
+        length: (Math.round(Number(Date.now() - TransactionTherapyObject.start_time) / 900000) * 900000)/60000,
         by_id: TransactionTherapyObject.by_id,
         student: this.selectedStudent
       }, {enableBackdropDismiss: false});
