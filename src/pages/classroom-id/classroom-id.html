@@ -50,12 +50,6 @@
           <div class="buttonRow">
               <button ion-button block (click)='checkUser(userId)'>Submit</button>
           </div>
-
-          <div *ngIf="parentPage !== 'checkin' && parentPage !== 'signout' && parentPage !== 'therapy' && parentPage !== 'nurse' && parentPage !== 'napStudents' && parentPage !== 'presentStudents'">
-            <div class="buttonRow">
-                <button ion-button block (click)='back()'>Cancel</button>
-              </div>
-          </div>
         </div>
       </div>
     </ion-card>

@@ -1,0 +1,12 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <page-classroom-id id="enterID" text-center class="vertical-align-content" [parentPage]="this.parentPage" (notify)='onNotify($event)'></page-classroom-id>
+</ion-content>

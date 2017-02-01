@@ -41,6 +41,7 @@ import {ParentReadablePipe} from "../pipes/parent-readable";
 import {TherapistAddPage} from "../pages/therapist-add/therapist-add";
 import {TherapistStudentDetailsPage} from "../pages/therapist-student-details/therapist-student-details";
 import {TherapistCheckinConfirmModalPage} from "../pages/therapist-checkin-confirm-modal/therapist-checkin-confirm-modal";
+import {UserLoginPage} from "../pages/user-login/user-login";
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import {TherapistCheckinConfirmModalPage} from "../pages/therapist-checkin-confi
     UserAddModalPage,
     TherapistAddPage,
     TherapistStudentDetailsPage,
-    TherapistCheckinConfirmModalPage
+    TherapistCheckinConfirmModalPage,
+    UserLoginPage
 
   ],
   imports: [
@@ -116,7 +118,8 @@ import {TherapistCheckinConfirmModalPage} from "../pages/therapist-checkin-confi
     UserAddModalPage,
     TherapistAddPage,
     TherapistStudentDetailsPage,
-    TherapistCheckinConfirmModalPage
+    TherapistCheckinConfirmModalPage,
+    UserLoginPage
 
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider]
