@@ -507,6 +507,18 @@ export class CheckinProvider {
     })
   }
 
+  getAllTherapies(id:string){
+    return new Promise((resolve, reject) => {
+      this.getTodaysTransaction(null).then(doc => {
+        this.getStudent(id, doc).then((student: TransactionStudentModel) => {
+          resolve(student.therapies);
+        })
+      }).catch(err => {
+        reject(false);
+      })
+    })
+  }
+
   //on follow up write the therapy length in
   therapistCheckinFollowUp(student_id: string, by_id: string, start_time: string, length: Number){
     return new Promise(resolve => {
