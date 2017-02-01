@@ -60,13 +60,17 @@ page-classroom-id {
   }
 
 
-  ::-webkit-input-placeholder {
-   text-align:center; 
-  }
+  // ::-webkit-input-placeholder {
+  //  text-align:center; 
+  // }
 
   .input-style{
     padding: 4px;
     //padding-left: 30px;
+  }
+
+  .submit-button{
+    padding-bottom:2%;
   }
 
 
@@ -86,12 +90,22 @@ page-classroom-id {
 
   @media only screen and (min-width: 425px){
     .room-title {
-      font-size: 200%;
+      font-size: 170%;
     }
 
     .card-title{
-      font-size: 250%;
+      font-size: 220%;
     }
+  }
+
+  @media only screen and (orientation: portrait) {
+    // .outer-flex-element.room-title-element{
+    //   height:15%;
+    // }
+
+    // .card-element{
+    //   height:40%;
+    // }
   }
 
 

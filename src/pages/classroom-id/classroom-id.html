@@ -44,11 +44,11 @@
       <div id='login-input' class= 'card-row'>
         <div class="card-row-child">
           <div class="inputRow">
-              <ion-input #userId text-center class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder="Enter Your ID Number"></ion-input>
+              <ion-input #userId text-center class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder="Enter ID"></ion-input>
           </div>
 
           <div class="buttonRow">
-              <button ion-button block (click)='checkUser(userId)'>Submit</button>
+              <button ion-button block class="submit-button" (click)='checkUser(userId)'>Submit</button>
           </div>
         </div>
       </div>
