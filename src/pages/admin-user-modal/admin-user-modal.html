@@ -45,14 +45,23 @@
       <ion-item *ngIf="this.userForm.value.role === this.userService.ROLES[4]">
         <ion-list>
           <ion-list-header>
-            Approved Students For Pickup
+            Approved Students For Pickup:
           </ion-list-header>
-          <ion-item *ngFor="let SID of this.user.visible_students">
-            {{this.studentService.data.get(SID).fName}} {{this.studentService.data.get(SID).lName}}
+          <ion-item-sliding *ngFor="let SID of this.user.visible_students">
+            <ion-item>
+              {{this.studentService.data.get(SID).fName}} {{this.studentService.data.get(SID).lName}}
+            </ion-item>
+            <ion-item-options>
+              <button ion-button color="danger" (click)="removeApprovedStudent(SID)">
+                <ion-icon name="trash"></ion-icon>
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+          <ion-item>
+            <button ion-button block (click)="addApprovedStudent()">
+              <ion-icon name="add"></ion-icon>
+            </button>
           </ion-item>
-          <button ion-button block (click)="addApprovedStudent()">
-            <ion-icon name="add"></ion-icon>
-          </button>
         </ion-list>
       </ion-item>
 

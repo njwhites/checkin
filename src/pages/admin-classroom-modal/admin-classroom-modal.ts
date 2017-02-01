@@ -3,6 +3,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { ClassRoomModel } from '../../models/db-models';
 import { StudentProvider } from '../../providers/student-provider';
+import { UserProvider } from '../../providers/user-provider';
 import { ClassRoomProvider } from '../../providers/class-room-provider';
 import { ClassroomAddModalPage } from '../classroom-add-modal/classroom-add-modal';
 
@@ -18,6 +19,7 @@ export class AdminClassroomModalPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public studentService: StudentProvider,
+              public userService: UserProvider,
               public classroomService: ClassRoomProvider,
               public formBuilder: FormBuilder,
               public alertController: AlertController,
@@ -58,6 +60,17 @@ export class AdminClassroomModalPage {
   addStudentModal(){
     this.modalController.create(ClassroomAddModalPage,{currentroom: this.classroom}).present();
 
+  }
+
+  removeAide(userID){
+    console.log("trying to remove aide: " + userID);
+
+    //ask the  classroom provider to remove the aide from the classroom
+    this.classroomService.removeAideFromClass(this.classroom, userID);
+  }
+
+  addAideModal(){
+    console.log("This is gonna be an aide modal");
   }
 
   dismiss(){

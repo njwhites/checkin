@@ -17,16 +17,18 @@
     </ion-row>
     <ion-row>
       <div class="roomContainer">
-        <ion-card class="roomCard" *ngFor="let class of classrooms" (click)="showClassRoomInfo(class._id)">
-            <ion-card-header class="roomHeader">
-              {{class.roomNumber}}
-            </ion-card-header>
+        <button class="roomButton" *ngFor="let class of classrooms"  (click)="showClassRoomInfo(class._id)">
+          <div class="roomDummy">
+          </div>
+          <div class="roomText">
+            {{class.roomNumber}}
+          </div>
             <!--<ion-list>
               <ion-item class="studentItem" *ngFor="let sID of class.students">
                 {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
               </ion-item>
             </ion-list>-->
-        </ion-card>
+        </button>
       </div>
     </ion-row>
   </ion-grid>

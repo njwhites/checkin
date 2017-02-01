@@ -248,6 +248,31 @@ export class UserProvider {
     });
   }
 
+  addVisibleStudent(user: UserModel, SID: String){
+    this.db.upsert(user._id, (doc: UserModel)=>{
+      if(!doc.visible_students){
+        doc.visible_students = new Array<String>();
+      }
+      doc.visible_students.push(SID);
+      return doc;
+    })
+  }
+
+  removeVisibleStudent(user: UserModel, SID: String){
+    console.log(user);
+    console.log(SID);
+    let studentIndex = user.visible_students.indexOf(SID);
+    console.log(studentIndex);
+    if(studentIndex === -1){
+      console.log("error: user not found in the class");
+    } else {
+      this.db.upsert(user._id, ((doc: UserModel)=>{
+        doc.visible_students.splice(studentIndex, 1);
+        return doc;
+      }));
+    }
+  }
+
   handleChange(change){
 
     if(change.deleted){

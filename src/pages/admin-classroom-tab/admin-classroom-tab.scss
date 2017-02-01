@@ -6,19 +6,21 @@ page-admin-classroom-tab {
     justify-content: space-around;
     width:100%;
   }
-  .roomCard{
+  .roomButton{
     background-color: #efce28;
     margin:12px;
-    width: 120px;
-    height: 120px;
+    width: 15%;
 
-    display:flex;
-    justify-content:center;
+    display: flex;
+    justify-content: center;
     align-items: center;
   }
-  .roomHeader{
+  .roomDummy{
+    margin-top: 100%;
+  }
+  .roomText{
     font-weight: bolder;
-    font-size: 1.5em;
+    font-size: 100%;
   }
   .studentItem{
     text-align: center;

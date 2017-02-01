@@ -116,6 +116,33 @@ export class ClassRoomProvider {
     }
   }
 
+  addAideToClass(classroom: ClassRoomModel, aide: string){
+    console.log(aide);
+    this.db.upsert(classroom._id, ((doc)=>{
+      console.log(doc.aides);
+      doc.aides.push(aide);
+      console.log(doc.aides);
+      return doc;
+    }));
+  }
+
+  removeAideFromClass(classroom: ClassRoomModel, userID: string){
+    let userIndex = classroom.aides.indexOf(userID);
+    console.log(classroom);
+    console.log(userIndex);
+    if(userIndex === -1){
+      console.log("error: user not found in the class");
+    } else {
+      this.db.upsert(classroom._id, ((doc)=>{
+        console.log(doc.aides);
+        doc.aides.splice(userIndex, 1);
+        console.log(doc.aides);
+        return doc;
+      }));
+      console.log(classroom.aides[userIndex]);
+    }
+  }
+
   deleteClassRoom(classroom: ClassRoomModel){
     this.db.upsert(classroom._id, ((doc)=>{
       doc._deleted = "true";

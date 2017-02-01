@@ -32,6 +32,7 @@ import {AdminStudentModalPage} from "../pages/admin-student-modal/admin-student-
 import {AdminUserModalPage} from "../pages/admin-user-modal/admin-user-modal";
 import {AdminClassroomModalPage} from "../pages/admin-classroom-modal/admin-classroom-modal";
 import {ClassroomAddModalPage} from "../pages/classroom-add-modal/classroom-add-modal";
+import {UserAddModalPage} from "../pages/user-add-modal/user-add-modal";
 import {MapValuesPipe} from "../pipes/map-values";
 import {PresentCountPipe} from "../pipes/present-count";
 import {ImpureMapValuesPipe} from "../pipes/impure-map-values";
@@ -75,6 +76,7 @@ import {TherapistCheckinConfirmModalPage} from "../pages/therapist-checkin-confi
     AdminUserModalPage,
     AdminClassroomModalPage,
     ClassroomAddModalPage,
+    UserAddModalPage,
     TherapistAddPage,
     TherapistStudentDetailsPage,
     TherapistCheckinConfirmModalPage
@@ -111,6 +113,7 @@ import {TherapistCheckinConfirmModalPage} from "../pages/therapist-checkin-confi
     AdminUserModalPage,
     AdminClassroomModalPage,
     ClassroomAddModalPage,
+    UserAddModalPage,
     TherapistAddPage,
     TherapistStudentDetailsPage,
     TherapistCheckinConfirmModalPage

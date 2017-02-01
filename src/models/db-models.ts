@@ -59,6 +59,7 @@ export class ClassRoomModel{
   public _id: String;
   public _rev: String;
   public teacher: string;
+  public aides: Array<string>;
   public roomNumber: String;
   public students: Array<String>;
 

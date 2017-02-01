@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, ModalController } from 'ionic-angular';
 import { UserProvider } from "../../providers/user-provider";
 import { UserModel } from "../../models/db-models";
 import { StudentProvider } from "../../providers/student-provider";
+import { UserAddModalPage } from "../user-add-modal/user-add-modal";
 
 @Component({
   selector: 'page-admin-user-modal',
@@ -23,7 +24,8 @@ export class AdminUserModalPage {
               public studentService: StudentProvider,
               public navController: NavController,
               public alertController: AlertController,
-              public toastController: ToastController) {
+              public toastController: ToastController,
+              public modalController: ModalController) {
     //For convenience set the ID to what the previous page supplied
     //this is the id corresponding to the user that was clicked
     let ID = navParams.get("key");
@@ -185,4 +187,14 @@ export class AdminUserModalPage {
 
   }
 
+  addApprovedStudent(){
+    console.log("add");
+    this.modalController.create(UserAddModalPage,{user: this.user}).present();
+  }
+
+  removeApprovedStudent(SID: String){
+    console.log("remove");
+    this.userService.removeVisibleStudent(this.user, SID);
+    this.user.visible_students.splice(this.user.visible_students.indexOf(SID),1);
+  }
 }

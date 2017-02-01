@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Close</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title center-text>Add Students to {{this.user.fName}} {{this.user.lName}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding>
+<ion-item-group>
+  <div *ngFor="let class of classrooms">
+    <ion-item-divider>
+      Room {{class.roomNumber}}
+      <button id="downButton_{{class.roomNumber}}" ion-button item-right (click)="toggleDropDown(class.roomNumber)">
+          <ion-icon id="dropDown_{{class.roomNumber}}" name="arrow-down"></ion-icon>
+      </button>
+      <button id="upButton_{{class.roomNumber}}" hidden="true" ion-button item-right (click)="toggleDropDown(class.roomNumber)">
+          <ion-icon id="dropDown_{{class.roomNumber}}" name="arrow-up"></ion-icon>
+      </button>
+    </ion-item-divider>
+    <div id="classroom_{{class.roomNumber}}" hidden="true">
+      <div *ngFor="let sID of class.students">
+        <div *ngIf="!this.approvedStudents.includes(sID)">
+          <ion-item id="student_{{sID}}">
+            {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
+            <button ion-button round outline color="secondary" item-right (click)="addApprovedStudent(sID)">
+               <ion-icon name="add"></ion-icon>
+            </button>
+          </ion-item>
+        </div>
+      </div>
+      <div *ngIf="isClassroomSubsetOfThis(class)">
+        <ion-item>
+          This room is empty!
+        </ion-item>
+      </div>
+    </div>
+  </div>
+</ion-item-group>
+</ion-content>

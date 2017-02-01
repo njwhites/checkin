@@ -25,55 +25,72 @@
   <form *ngIf="this.classroom._id >= 0" [formGroup]="classroomForm" (ngSubmit)="updateClassroom()">
     <ion-list>
       <ion-list-header>
-        Teachers:
+        Teacher:
       </ion-list-header>
-      <ion-item *ngFor>
+      <ion-item>
         <ion-input type="text" formControlName="teacher"></ion-input>
       </ion-item>
     </ion-list>
   </form>
-    <!--
 
-    <ion-card [hidden]="this.studentForm.valid">
-      <ion-card-header>Invalid input</ion-card-header>
-      <ion-card-content *ngIf="this.studentForm.controls['fName'].hasError('required')">
-        First name is required.
-      </ion-card-content>
-      <ion-card-content *ngIf="this.studentForm.controls['lName'].hasError('required')">
-        Last name is required.
-      </ion-card-content>
-    </ion-card>
-  -->
-    <ion-list *ngIf="this.classroom._id >= 0">
-      <ion-list-header>
-        Students:
-      </ion-list-header>
-      <ion-item-sliding *ngFor="let SID of this.classroom.students">
-        <ion-item>
-          {{this.studentService.data.get(SID).fName}} {{this.studentService.data.get(SID).lName}}
-        </ion-item>
-        <ion-item-options>
-          <button ion-button color="danger" (click)="removeStudent(SID)">
-            <ion-icon name="trash"></ion-icon>
-          </button>
-        </ion-item-options>
-      </ion-item-sliding>
+  <ion-card [hidden]="this.classroomForm.valid">
+    <ion-card-header>Invalid input</ion-card-header>
+    <ion-card-content *ngIf="this.classroomForm.controls['teacher'].hasError('required')">
+      Teacher is required.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="this.classroom._id >= 0">
+    <ion-list-header>
+      Teacher Aides:
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let userID of this.classroom.aides">
       <ion-item>
-        <button ion-button full (click)="addStudentModal()">
-          Add Student To Class
-        </button>
+        {{this.userService.data.get(userID).fName}} {{this.userService.data.get(userID).lName}}
       </ion-item>
-    </ion-list>
+      <ion-item-options>
+        <button ion-button color="danger" (click)="removeAide(userID)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item>
+      <button ion-button full (click)="addAideModal()">
+        Add Aide To Class
+      </button>
+    </ion-item>
+  </ion-list>
 
-    <ion-list *ngIf="this.classroom._id < 0">
-      <ion-list-header>
-        Students:
-      </ion-list-header>
-      <ion-item *ngFor="let SID of this.classroom.students">
+  <ion-list *ngIf="this.classroom._id >= 0">
+    <ion-list-header>
+      Students:
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let SID of this.classroom.students">
+      <ion-item>
         {{this.studentService.data.get(SID).fName}} {{this.studentService.data.get(SID).lName}}
       </ion-item>
-    </ion-list>
+      <ion-item-options>
+        <button ion-button color="danger" (click)="removeStudent(SID)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item>
+      <button ion-button full (click)="addStudentModal()">
+        Add Student To Class
+      </button>
+    </ion-item>
+  </ion-list>
 
-    <button ion-button block *ngIf="this.classroom._id >= 0" [disabled]="!this.classroomForm.valid" (click)="updateClassroom()">{{buttonText}}</button>
-    <button ion-button block color="danger" *ngIf="this.classroom._id >= 0" (click)="deleteClassroom()">Delete Class</button>
+  <ion-list *ngIf="this.classroom._id < 0">
+    <ion-list-header>
+      Students:
+    </ion-list-header>
+    <ion-item *ngFor="let SID of this.classroom.students">
+      {{this.studentService.data.get(SID).fName}} {{this.studentService.data.get(SID).lName}}
+    </ion-item>
+  </ion-list>
+
+  <button ion-button block color="primary" *ngIf="this.classroom._id >= 0" [disabled]="!this.classroomForm.valid" (click)="updateClassroom()">{{buttonText}}</button>
+  <button ion-button block color="danger" *ngIf="this.classroom._id >= 0" (click)="deleteClassroom()">Delete Class</button>
 </ion-content>
