@@ -29,14 +29,15 @@ export class LoginPage {
               public checkinService: CheckinProvider, public alertController: AlertController) {
     this.room = navParams.get('room');
     //try to estabilish an initial connection to db's
-    this.classRoomService.forceInit();
-    this.studentService.forceInit();
-    this.userService.forceInit();
+
     let loader = loadingcontroller.create({
       content: "Loading your app now!",
       duration: 3000
     });
     loader.onDidDismiss(()=>{
+      this.classRoomService.forceInit();
+      this.studentService.forceInit();
+      this.userService.forceInit();
       this.classRoomService.getAllClassRooms().then((data) =>{
         this.classrooms = <Array<ClassRoomModel>>data;
         //don't want to go to the unallocated room, which would be room -1
