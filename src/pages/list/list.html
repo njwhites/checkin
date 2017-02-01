@@ -163,9 +163,9 @@
           </div>
         </ion-col>
       </ion-row>
-      <ion-row class="emptyRow">
+      <ion-row class="emptyRow" *ngIf="isListEmpty()">
         <ion-col>
-          <div *ngIf="isListEmpty() && this.parentPage === 'checkin'">
+          <div *ngIf="this.parentPage === 'checkin'">
             <ion-item class="emptyItem">
               <ion-icon class="emptyIcon" name="archive"></ion-icon>
             </ion-item>
@@ -173,7 +173,7 @@
               All your students are currently checked in.
             </ion-item>
           </div>
-          <div *ngIf="isListEmpty() && this.parentPage === 'signout'">
+          <div *ngIf="this.parentPage === 'signout'">
             <ion-item class="emptyItem">
               <ion-icon class="emptyIcon" name="archive"></ion-icon>
             </ion-item>
