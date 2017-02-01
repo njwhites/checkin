@@ -49,10 +49,8 @@ export class TherapistPage {
     isEmpty = true;
     if(this.therapistStudents){
       if(this.therapistStudents.length !== 0){
-        console.log(this.therapistStudents.length);
         isEmpty = false;
       }
-      console.log(this.therapistStudents.length);
     }
     return isEmpty;
   }

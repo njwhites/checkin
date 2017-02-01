@@ -1,4 +1,4 @@
-<ion-grid class="fill-parent">
+<ion-grid class="fill-parent bgc">
 
   <div id="login-card" class="login-flex-container">
     <div class="outer-flex-element room-title-element">
@@ -43,18 +43,14 @@
       </div>
       <div id='login-input' class= 'card-row'>
         <div class="card-row-child">
-          <div class="inputRow">
-              <ion-input #userId text-center class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder="Enter Your ID Number"></ion-input>
+          <div>
+            <ion-item class="ion-item-wrapper">
+              <ion-input #userId class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder='Enter ID'></ion-input>
+            </ion-item>
           </div>
 
           <div class="buttonRow">
-              <button ion-button block (click)='checkUser(userId)'>Submit</button>
-          </div>
-
-          <div *ngIf="parentPage !== 'checkin' && parentPage !== 'signout' && parentPage !== 'therapy' && parentPage !== 'nurse' && parentPage !== 'napStudents' && parentPage !== 'presentStudents'">
-            <div class="buttonRow">
-                <button ion-button block (click)='back()'>Cancel</button>
-              </div>
+              <button ion-button block class="submit-button" (click)='checkUser(userId)'>Submit</button>
           </div>
         </div>
       </div>

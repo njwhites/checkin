@@ -30,6 +30,9 @@
           </ion-item>
         </div>
       </div>
+      <ion-item class="emptyItem" id="empty_{{class.roomNumber}}" *ngIf="isEmpty(class)">
+        No more students to add
+      </ion-item>
     </div>
   </div>
 </ion-item-group>

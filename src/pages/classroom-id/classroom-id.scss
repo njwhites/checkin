@@ -1,11 +1,17 @@
 page-classroom-id {
 
+  .bgc {
+    background-color: #eee5de;
+    height: 100%;
+    width: 100%;
+  }
+
   .fill-parent{
     height:100%;
     width: 100%;
     display: flex;
   }
-  
+
   .login-flex-container{
     align-items:center;
 
@@ -22,7 +28,7 @@ page-classroom-id {
     align-items: center;
 
     display:flex;
-    
+
     width:55%;
 
   }
@@ -35,11 +41,11 @@ page-classroom-id {
     align-content: center;
     justify-content: center;
 
-    font-size: 300%;
+    font-size: 120%;
   }
 
   .card-title{
-    font-size: 400%;
+    font-size: 150%;
   }
 
   .card-element{
@@ -48,7 +54,7 @@ page-classroom-id {
   }
 
   .card-row{
-    width: 50%;
+    width: 95%;
     height: 50%;
     justify-content: center;
     align-items:center;
@@ -60,15 +66,76 @@ page-classroom-id {
   }
 
 
-  ::-webkit-input-placeholder {
-   text-align:center; 
+  // ::-webkit-input-placeholder {
+  //  text-align:center;
+  // }
+
+  .ion-item-wrapper {
+    border:1px solid #000000;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+  }
+
+  .item-ios {
+    padding-left: 0px;
   }
 
   .input-style{
     padding: 4px;
-    padding-left: 30px;
+    //padding-left: 30px;
   }
 
+  .submit-button{
+    padding-bottom:2%;
+  }
+
+  @media only screen and (min-width: 1024px){
+    .room-title {
+      font-size: 325%;
+    }
+
+    .card-title{
+      font-size: 375%;
+    }
+    .card-row{
+      width:50%
+    }
+  }
+
+  //For bigger than mobile
+  @media only screen and (min-width: 768px) and (max-width: 1023px){
+    .room-title {
+      font-size: 250%;
+    }
+
+    .card-title{
+      font-size: 300%;
+    }
+    .card-row{
+      width:60%
+    }
+  }
+
+  @media only screen and (min-width: 425px) and (max-width:767px){
+    .room-title {
+      font-size: 170%;
+    }
+
+    .card-title{
+      font-size: 220%;
+    }
+  }
+
+  @media only screen and (orientation: portrait) {
+    // .outer-flex-element.room-title-element{
+    //   height:15%;
+    // }
+
+    // .card-element{
+    //   height:40%;
+    // }
+  }
 
 
 }

@@ -9,6 +9,7 @@ import {StudentProvider} from "../../providers/student-provider";
 import {UserProvider} from "../../providers/user-provider";
 import {CheckinProvider} from "../../providers/checkin-provider";
 import {ClassRoomModel} from "../../models/db-models";
+import {UserLoginPage} from "../user-login/user-login";
 
 @Component({
   selector: 'page-login',
@@ -86,44 +87,7 @@ export class LoginPage {
   }
 
   toLogin(userRole) {
-    this.btnPage = userRole;
-    document.getElementById('buttonGrid').style.display = 'none';
-    document.getElementById('enterID').style.display = 'block';
-  }
-
-  onNotify(idCheck:number):void {
-    if(idCheck >= 0) {
-      if(this.btnPage === 'kitchen') {
-        this.studentService.getStudents().then(()=>{
-          this.navCtrl.push(this.kitchenPage);
-        });
-      } else if(this.btnPage == 'therapist') {
-        this.studentService.getStudents().then(()=>{
-          this.userService.getAllUsers().then(()=>{
-            this.navCtrl.push(this.therapistPage, idCheck);
-          });
-        });
-      } else if(this.btnPage == 'admin') {
-        this.studentService.getStudents().then(()=>{
-          this.userService.getAllUsers().then(()=>{
-            this.navCtrl.push(this.adminPage);
-          });
-        });
-      }
-    } else {
-      let toast = this.toastCtrl.create({
-        message: 'Invalid ID',
-        duration: 1500,
-        position: 'bottom'
-      });
-      toast.present(toast);
-    }
-  }
-
-  revert(){
-    document.getElementById('enterID').style.display = 'none';
-    document.getElementById('buttonGrid').style.display = 'flex';
-    this.btnPage = '';
+    this.navCtrl.push(UserLoginPage, {parentPage: userRole});
   }
 
   help(){

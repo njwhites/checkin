@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {NavController, ToastController} from 'ionic-angular';
+import {NavController, NavParams, ToastController} from 'ionic-angular';
 import {UserProvider} from '../../providers/user-provider';
 import {UserModel} from '../../models/db-models';
 
@@ -13,7 +13,8 @@ export class ClassroomIdPage {
   @Output() notify: EventEmitter<number> = new EventEmitter<number>();
   @Output() goBack: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(public navCtrl: NavController, public userService: UserProvider, public toastCtrl: ToastController) {}
+  constructor(public navCtrl: NavController, public userService: UserProvider, public toastCtrl: ToastController, public navParams: NavParams) {
+  }
 
   ionViewDidLoad(){
   }
