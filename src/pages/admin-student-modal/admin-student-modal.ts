@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Validators, FormBuilder } from '@angular/forms';
+import {Validators, FormBuilder, FormControl} from '@angular/forms';
 import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { StudentProvider } from "../../providers/student-provider";
 import { StudentModel } from "../../models/db-models";
@@ -28,15 +28,49 @@ export class AdminStudentModalPage {
               public toastController: ToastController) {
 
     let ID = navParams.get("key");
+    let isNewStudent = false;
     if(ID === "-1"){
       this.buttonText = "Add New Student";
+      isNewStudent = true;
     }
     let emptyStudent = new StudentModel();
     emptyStudent._id = "-1";
     this.studentService.data.set("-1", emptyStudent);
 
+
     this.student = this.studentService.data.get(ID);
     this.studentForm = this.formBuilder.group({
+      ID: [this.student._id,
+           Validators.compose([Validators.required, (control: FormControl)=>{
+             const controlID = control.value;
+             // console.log("this is in the validator");
+             // console.log(control.value);
+             if(controlID === "-1"){
+               return null;
+             }
+
+             if(this.studentService){
+               if(this.studentService.data){
+                 if(isNewStudent){
+                   return (this.studentService.data.get(controlID) === undefined) ? null : {collision: true};
+                 } else {
+                   return null;
+                 }
+               } else {
+                 return { nodata: true};
+               }
+             } else {
+               return {noservice: true};
+             }
+           }, (control: FormControl)=>{
+             if(control.value === "-1"){
+               return null;
+             } else if(!isNaN(Number(control.value))){
+               return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+             } else {
+               return {notPositiveNumber:true}
+             }
+           } ])],
       fName: [this.student.fName, Validators.required],
       lName: [this.student.lName, Validators.required],
       note: [this.student.note],
@@ -65,7 +99,11 @@ export class AdminStudentModalPage {
       this.student.note = this.studentForm.value.note;
       this.student.dietNeed = this.studentForm.value.dietaryNeeds;
 
+
+
       if(this.student._id === "-1"){
+        let returnedID;
+        this.student._id = this.studentForm.value.ID;
         this.studentService.createStudent(this.student).then((returnedID: String)=>{
           this.student._id = returnedID;
         });

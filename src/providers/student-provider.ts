@@ -101,28 +101,39 @@ export class StudentProvider {
   }*/
 
   createStudent(student: StudentModel){
-    let newID: String = "-1";
-    //find the next available id number
-    return new Promise(resolve =>{
-      this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
+    //if student._id is not -1 the user supplied an ID rather than getting an auto generated one
+    if(Number(student._id) >= 0){
+      this.updateStudent(student);
+      this.data.set(student._id, student);
 
-        result.rows.map(row => {
-          if(Number(newID) <= Number(row.id)){
-             newID = String((Number(row.id) + 1));
-           }
+      return new Promise(resolve=>{
+        resolve(student._id);
+      })
+    } else {
+
+      let newID: String = "-1";
+      //find the next available id number
+      return new Promise(resolve =>{
+        this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
+
+          result.rows.map(row => {
+            if(Number(newID) <= Number(row.id)){
+               newID = String((Number(row.id) + 1));
+             }
+          });
+
+          student._id = newID;
+          // this.db.put(student).catch(err=>{
+          //   console.log(err)
+          // })
+          this.data.set(student._id, student);
+          this.db.upsert(student._id, (() =>{return student}));
+
+          //return the generated id so that we can let the student know their id, may not be needed
+          resolve(newID);
         });
-
-        student._id = newID;
-        // this.db.put(student).catch(err=>{
-        //   console.log(err)
-        // })
-        this.data.set(student._id, student);
-        this.db.upsert(student._id, (() =>{return student}));
-
-        //return the generated id so that we can let the student know their id, may not be needed
-        resolve(newID);
       });
-    });
+    }
   }
 
 //Chris 1/27/17 commenting this out so no one accidentally uses it

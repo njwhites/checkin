@@ -16,13 +16,19 @@
 
 <ion-content padding>
   <ion-list inset>
-    <ion-list-header>
-      <ion-label>ID:</ion-label>
-      <ion-input type="text" value="{{this.student._id}}" disabled="true"></ion-input>
-    </ion-list-header>
+     <ion-list-header *ngIf="this.student._id >= 0">
+       <ion-label>ID:</ion-label>
+       <ion-input type="text" value="{{this.student._id}}" disabled="true"></ion-input>
+     </ion-list-header>
+
 
 
     <form [formGroup]="studentForm" (ngSubmit)="updateStudent()">
+      <ion-list-header *ngIf="this.student._id < 0">
+        <ion-label>ID:</ion-label>
+        <ion-input type="text" formControlName="ID" value="{{this.student._id}}"></ion-input>
+      </ion-list-header>
+
       <ion-item>
         <ion-label>First Name</ion-label>
         <ion-input type="text" formControlName="fName" value="{{this.studentService.data.get(this.student._id).fName}}"></ion-input>
@@ -57,6 +63,15 @@
 
       <ion-card [hidden]="this.studentForm.valid">
         <ion-card-header>Invalid input</ion-card-header>
+        <ion-card-content *ngIf="this.studentForm.controls['ID'].hasError('required')">
+          ID is required.
+        </ion-card-content>
+        <ion-card-content *ngIf="this.studentForm.controls['ID'].hasError('collision')">
+          ID is already taken.
+        </ion-card-content>
+        <ion-card-content *ngIf="this.studentForm.controls['ID'].hasError('notPositiveNumber')">
+          ID needs to be a positive number.
+        </ion-card-content>
         <ion-card-content *ngIf="this.studentForm.controls['fName'].hasError('required')">
           First name is required.
         </ion-card-content>
