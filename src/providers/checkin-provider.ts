@@ -139,7 +139,7 @@ export class CheckinProvider {
   }
   //Takes the student model and pushes/replaces the info in the db with the model's data
   updateStudent(me: TransactionStudentModel, doc){
-    
+
     let others = doc.students.filter(student => {
       return student.id + "" !== me.id + "";
     })
@@ -545,7 +545,7 @@ export class CheckinProvider {
                 }
               }),
               nap: me.nap,
-              therapies: [...otherTherapies, {startTime: t_model.start_time, length: t_model.length, by_id: t_model.by_id}]
+              therapies: [...otherTherapies, {start_time: t_model.start_time, length: t_model.length, by_id: t_model.by_id}]
           }
           function delta(doc) {
             doc.students = [...others, i];

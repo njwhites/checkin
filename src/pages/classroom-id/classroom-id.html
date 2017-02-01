@@ -1,4 +1,4 @@
-<ion-grid class="fill-parent">
+<ion-grid class="fill-parent bgc">
 
   <div id="login-card" class="login-flex-container">
     <div class="outer-flex-element room-title-element">
@@ -43,8 +43,10 @@
       </div>
       <div id='login-input' class= 'card-row'>
         <div class="card-row-child">
-          <div class="inputRow">
-              <ion-input #userId text-center class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder="Enter ID"></ion-input>
+          <div>
+            <ion-item class="ion-item-wrapper">
+              <ion-input #userId class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder='Enter ID'></ion-input>
+            </ion-item>
           </div>
 
           <div class="buttonRow">

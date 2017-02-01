@@ -8,10 +8,24 @@
 
 
 <ion-content padding>
-  <div *ngIf="this.location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
-    <button ion-button block (click)="checkinStudent()">Check In</button>
-  </div>
-  <div *ngIf="!this.location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
-    <button ion-button block (click)="checkoutStudent()">Check Out</button>
-  </div>
+  <ion-list inset class="therapyList">
+    <div *ngFor="let transaction of this.transactions">
+      <h3 ion-item>
+        <ion-icon name="briefcase" item-left></ion-icon>
+        {{getUserName(transaction.by_id)}}, at {{this.checkinService.createReadableTime(transaction.start_time)}} for {{transaction.length}} mins.
+      </h3>
+    </div>
+  </ion-list>
+  <ion-grid>
+    <ion-row class="buttonRow">
+      <ion-col>
+        <div *ngIf="this.location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
+          <button ion-button block (click)="checkinStudent()">Check In</button>
+        </div>
+        <div *ngIf="!this.location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
+          <button ion-button block (click)="checkoutStudent()">Check Out</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

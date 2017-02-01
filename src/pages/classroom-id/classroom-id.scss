@@ -1,11 +1,17 @@
 page-classroom-id {
 
+  .bgc {
+    background-color: #eee5de;
+    height: 100%;
+    width: 100%;
+  }
+
   .fill-parent{
     height:100%;
     width: 100%;
     display: flex;
   }
-  
+
   .login-flex-container{
     align-items:center;
 
@@ -22,7 +28,7 @@ page-classroom-id {
     align-items: center;
 
     display:flex;
-    
+
     width:55%;
 
   }
@@ -61,8 +67,19 @@ page-classroom-id {
 
 
   // ::-webkit-input-placeholder {
-  //  text-align:center; 
+  //  text-align:center;
   // }
+
+  .ion-item-wrapper {
+    border:1px solid #000000;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+  }
+
+  .item-ios {
+    padding-left: 0px;
+  }
 
   .input-style{
     padding: 4px;
