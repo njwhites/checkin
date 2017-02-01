@@ -47,6 +47,7 @@ export class TherapistAddPage {
 
   addToFavorites(sID) {
     this.userService.addTherapistFavoriteID(String(this.tID), String(sID));
+    this.favStudents.push(sID);
     document.getElementById("student_" + sID).hidden = true;
     let toast = this.toastCtrl.create({
       message: this.studentService.data.get(sID).fName.toString() + " " + this.studentService.data.get(sID).lName.toString() + " added to favorites",
@@ -54,5 +55,14 @@ export class TherapistAddPage {
       position: 'bottom'
     });
     toast.present(toast);
+  }
+
+  isEmpty(classroom) {
+    for (let sID of classroom.students) {
+      if (this.favStudents.indexOf(sID) == -1){
+        return false;
+      }
+    }
+    return true;
   }
 }
