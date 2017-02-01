@@ -73,9 +73,21 @@ page-classroom-id {
     padding-bottom:2%;
   }
 
+  @media only screen and (min-width: 1024px){
+    .room-title {
+      font-size: 325%;
+    }
+
+    .card-title{
+      font-size: 375%;
+    }
+    .card-row{
+      width:50%
+    }
+  }
 
   //For bigger than mobile
-  @media only screen and (min-width: 768px){
+  @media only screen and (min-width: 768px) and (max-width: 1023px){
     .room-title {
       font-size: 250%;
     }
@@ -88,7 +100,7 @@ page-classroom-id {
     }
   }
 
-  @media only screen and (min-width: 425px){
+  @media only screen and (min-width: 425px) and (max-width:767px){
     .room-title {
       font-size: 170%;
     }
