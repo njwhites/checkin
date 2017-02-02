@@ -42,17 +42,21 @@
           </div>
         </div>
       </ion-content>
-    <ion-grid>
-      <ion-row class="countRow">
-        <ion-col class="countHeader">
-            Total Students Present:
-        </ion-col>
-        <ion-col class="presentCount">
-            {{this.studentService.data|presentCount}}
-        </ion-col>
-      </ion-row>
-    </ion-grid>
   </ion-list>
+  <ion-grid>
+    <ion-row class="countRow">
+      <ion-col>
+        <ion-item>
+          <span class="countHeader" item-right>
+              Total Students Present:
+          </span>
+          <span class="presentCount" item-right>
+              {{this.studentService.data|presentCount}}
+          </span>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   </div>
 <ion-list inset>
     <div *ngIf="parentPage === 'napStudents'">
