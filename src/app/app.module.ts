@@ -12,7 +12,7 @@ import {NapButtonsPage} from "../pages/nap-buttons/nap-buttons";
 import {TherapyPage} from "../pages/therapy/therapy";
 import {ClassroomIdPage} from "../pages/classroom-id/classroom-id";
 import {ActionButtonPage} from "../pages/action-button/action-button";
-import {NursePage} from "../pages/nurse/nurse";
+import {GenericPage} from "../pages/generic/generic";
 import {SignoutPage} from "../pages/signout/signout";
 import {SigninPage} from "../pages/signin/signin";
 import {StudentProvider} from "../providers/student-provider";
@@ -57,7 +57,7 @@ import {UserLoginPage} from "../pages/user-login/user-login";
     TherapyPage,
     ClassroomIdPage,
     ActionButtonPage,
-    NursePage,
+    GenericPage,
     SignoutPage,
     SigninPage,
     KitchenPage,
@@ -101,7 +101,7 @@ import {UserLoginPage} from "../pages/user-login/user-login";
     TherapyPage,
     ClassroomIdPage,
     ActionButtonPage,
-    NursePage,
+    GenericPage,
     SignoutPage,
     SigninPage,
     KitchenPage,

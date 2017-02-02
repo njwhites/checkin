@@ -94,7 +94,7 @@
       </div>
     </div>
 
-    <div *ngIf="parentPage === 'nurse'">
+    <div *ngIf="parentPage === 'generic'">
       <div *ngFor="let student of this.studentService.data | mapValues">
         <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT_NURSE">
           <h3 ion-item>
@@ -181,7 +181,7 @@
               All your students are currently checked out.
             </ion-item>
           </div>
-          <div *ngIf="this.parentPage === 'therapy' || this.parentPage === 'napStudents'|| this.parentPage === 'nurse'">
+          <div *ngIf="this.parentPage === 'therapy' || this.parentPage === 'napStudents'|| this.parentPage === 'generic'">
             <ion-item class="emptyItem">
               <ion-icon class="emptyIcon" name="archive"></ion-icon>
             </ion-item>

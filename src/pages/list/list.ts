@@ -52,8 +52,8 @@ export class ListPage {
 * Driver function of list. takes in a string which it receives from a button
 * click in an instance of action-button and based on what the string says and
 * what the parent page is performs a number of operations. If the parent page is
-* therapist or nurse the string can either be the studentID or the studentID and
-* ' returned'. If it is only the studentID the student is checked out to the
+* therapist or generic the string can either be the studentID or the studentID
+* and ' returned'. If it is only the studentID the student is checked out to the
 * appropriate party, otherwise the student is returned to the classroom. If the
 * parent page is checkin or signout then the string can be either the studentID
 * or studentID + ' was returned'. If studentID is the string then the student
@@ -95,18 +95,18 @@ export class ListPage {
           });
           clearInterval(this.interval);
         }
-      } else if(this.parentPage === 'nurse') {
+      } else if(this.parentPage === 'generic') {
         search = studentID.search(' returned');
         if(search === -1) {
           //////////////////////////////////////////////////////////////////////
-          //Checkout student to nurse
+          //Checkout student to generic
           //////////////////////////////////////////////////////////////////////
           this.checkinService.nurseCheckout(studentID, String(this.userID));
           clearInterval(this.interval);
           this.navCtrl.pop();
         } else {
           //////////////////////////////////////////////////////////////////////
-          //Checkin student to classroom from nurse
+          //Checkin student to classroom from generic
           //////////////////////////////////////////////////////////////////////
           returnedStudent = studentID.slice(0, search);
           this.checkinService.nurseCheckin(String(returnedStudent), String(this.userID));
@@ -245,7 +245,7 @@ export class ListPage {
         }
       });
     }
-    if(this.parentPage === 'nurse') {
+    if(this.parentPage === 'generic') {
       this.studentService.data.forEach(student => {
         if(student.location === 'Nurse checked student out'){
           isEmpty = false;
@@ -328,13 +328,13 @@ export class ListPage {
           }
         }
         break;
-      case 'nurse':
+      case 'generic':
         if (this.studentID !== '') {
           if(this.studentID.search(' returned') === -1) {
-            output = this.studentService.data.get(this.studentID).fName.toString() + ' is off to the nurse';
+            output = this.studentService.data.get(this.studentID).fName.toString() + ' is checked out by ' + this.userService.data.get(String(this.userID)).fName + " " +  this.userService.data.get(String(this.userID)).lName;
           }
           else {
-            output = this.studentService.data.get(this.studentID.slice(0, this.studentID.search(' returned'))).fName.toString() + ' has returned from the nurse';
+            output = this.studentService.data.get(this.studentID.slice(0, this.studentID.search(' returned'))).fName.toString() + ' has returned';
           }
         }
         break;

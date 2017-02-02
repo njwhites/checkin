@@ -1,0 +1,13 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Generic Check In/Check Out</ion-title>
+    <page-home-button></page-home-button>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <page-classroom-id id="enterIDGeneric" text-center class="vertical-align-content" [parentPage]="'generic'" [roomNumber]="this.roomNumber" (notify)='onNotify($event)'></page-classroom-id>
+</ion-content>
