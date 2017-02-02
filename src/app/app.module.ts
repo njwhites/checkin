@@ -38,6 +38,7 @@ import {PresentCountPipe} from "../pipes/present-count";
 import {ImpureMapValuesPipe} from "../pipes/impure-map-values";
 import {FirstUpperPipe} from "../pipes/first-upper";
 import {ParentReadablePipe} from "../pipes/parent-readable";
+import {FilterParentsPipe} from "../pipes/filter-parents";
 import {TherapistAddPage} from "../pages/therapist-add/therapist-add";
 import {TherapistStudentDetailsPage} from "../pages/therapist-student-details/therapist-student-details";
 import {TherapistCheckinConfirmModalPage} from "../pages/therapist-checkin-confirm-modal/therapist-checkin-confirm-modal";
@@ -69,6 +70,7 @@ import {UserLoginPage} from "../pages/user-login/user-login";
     PresentCountPipe,
     FirstUpperPipe,
     ParentReadablePipe,
+    FilterParentsPipe,
     AdminStudentTabPage,
     AdminUserTabPage,
     AdminDebugTabPage,
