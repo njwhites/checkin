@@ -45,7 +45,7 @@ export class ClassroomIdPage {
           this.notify.emit(id)
         }else if(user.role === "therapist" && this.parentPage === 'therapy') {
           this.notify.emit(id);
-        } else if(user.role === "nurse" && this.parentPage === 'nurse') {
+        } else if(user.role !== "driver" && this.parentPage === 'generic') {
           this.notify.emit(id);
         } else if(user.role === "driver" && this.parentPage === 'signout') {
           this.notify.emit(id);

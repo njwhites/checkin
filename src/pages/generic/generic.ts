@@ -3,10 +3,10 @@ import {NavController, ToastController, NavParams} from 'ionic-angular';
 import {ListPage} from '../list/list';
 
 @Component({
-  selector: 'page-nurse',
-  templateUrl: 'nurse.html'
+  selector: 'page-generic',
+  templateUrl: 'generic.html'
 })
-export class NursePage {
+export class GenericPage {
   userID: number;
   roomNumber: string;
 
@@ -19,7 +19,7 @@ export class NursePage {
       this.userID = idCheck;
       this.navCtrl.push(ListPage, {
         roomNumber: this.roomNumber,
-        parentPage: 'nurse',
+        parentPage: 'generic',
         userID: this.userID
       });
     } else {

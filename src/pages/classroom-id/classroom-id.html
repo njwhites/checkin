@@ -3,7 +3,7 @@
   <div id="login-card" class="login-flex-container">
     <div class="outer-flex-element room-title-element">
       <div class="room-title">
-          <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
+          <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'generic' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
             <div class="titleRoom">
               Room {{this.roomNumber}}
             </div>
@@ -29,7 +29,7 @@
 
       <div class="card-row">
         <div class="card-row-child card-title">
-          <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'nurse' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
+          <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'generic' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
             <div class="titleRoom">
               {{parentPage|parentReadable|firstUpper}}
             </div>
