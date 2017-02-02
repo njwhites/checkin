@@ -1,5 +1,11 @@
 page-therapist-student-details {
 
+  .vertical-align-content
+  {
+    //display: flex!important;
+    align-content: center!important;
+  }
+
   .buttonRow {
     padding-top: 5%;
     padding-bottom: 5%;
@@ -10,6 +16,31 @@ page-therapist-student-details {
 
   .therapyList {
     padding-top: 5%;
+  }
+
+  .emptyRow {
+    padding-top: 25vh;
+    align-self: center;
+    width: 80%;
+  }
+
+  .emptyItem {
+    align-self: center;
+    text-align: center;
+  }
+
+  .emptyIcon {
+    width: 75px;
+    height: 75px;
+    color: gray;
+    font-size: 800%
+  }
+
+  .emptyText {
+    align-self: center;
+    text-align: center;
+    color: gray;
+    font-size: 150%;
   }
 
 }
