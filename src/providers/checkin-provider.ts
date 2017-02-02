@@ -610,6 +610,9 @@ export class CheckinProvider {
     let hours = String(time.getHours());
     if (time.getHours() >= 12 && time.getHours() != 0){
       hours = String(time.getHours() - 12);
+      if(hours === "0"){
+        hours = "12";
+      }
       am_pm = "PM";
     }
     if (time.getMinutes() < 10){
