@@ -10,13 +10,18 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-list-header>
+    <ion-list-header *ngIf="this.user._id >=0">
       <ion-label>ID:</ion-label>
       <ion-input type="text" value="{{this.user._id}}" disabled="true"></ion-input>
     </ion-list-header>
 
 
-    <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+    <form [formGroup]="userForm" >
+      <ion-list-header *ngIf="this.user._id < 0">
+        <ion-label>ID:</ion-label>
+        <ion-input type="text" formControlName="ID" value="{{this.user._id}}"></ion-input>
+      </ion-list-header>
+
       <ion-item>
         <ion-label>First Name</ion-label>
         <ion-input type="text" formControlName="fName" value="{{this.userService.data.get(this.user._id).fName}}"></ion-input>
@@ -72,6 +77,15 @@
 
       <ion-card [hidden]="this.userForm.valid">
         <ion-card-header>Invalid input</ion-card-header>
+        <ion-card-content *ngIf="this.userForm.controls['ID'].hasError('required')">
+          ID is required.
+        </ion-card-content>
+        <ion-card-content *ngIf="this.userForm.controls['ID'].hasError('collision')">
+          ID is already taken.
+        </ion-card-content>
+        <ion-card-content *ngIf="this.userForm.controls['ID'].hasError('notPositiveNumber')">
+          ID needs to be a positive number.
+        </ion-card-content>
         <ion-card-content *ngIf="this.userForm.controls['fName'].hasError('required')">
           First name is required.
         </ion-card-content>
@@ -83,7 +97,7 @@
         </ion-card-content>
       </ion-card>
 
-      <button ion-button block type="submit" [disabled]="!this.userForm.valid">{{buttonText}}</button>
+      <button ion-button block type="submit" [disabled]="!this.userForm.valid" (click)="updateUser()">{{buttonText}}</button>
       <button ion-button block color="danger" *ngIf="this.user._id >= 0" (click)="deleteUser()">Delete User</button>
     </form>
   </ion-list>

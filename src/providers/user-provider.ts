@@ -93,28 +93,39 @@ export class UserProvider {
   }
 
   createUserByDoc(user: UserModel){
-    return new Promise(resolve =>{
-      let newID: String = "-1";
+    //if student._id is not -1 then the user wants to supply their own ID
+    if(Number(user._id) >= 0){
+      this.updateUser(user);
+      this.data.set(user._id, user);
 
-      //find the next available id number
-      this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
+      return new Promise(resolve=>{
+        resolve(user._id);
+      })
+    } else {
 
-        result.rows.map(row => {
-          if(Number(newID) <= Number(row.id)){
-             newID = String((Number(row.id) + 1));
-           }
+      return new Promise(resolve =>{
+        let newID: String = "-1";
+
+        //find the next available id number
+        this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
+
+          result.rows.map(row => {
+            if(Number(newID) <= Number(row.id)){
+               newID = String((Number(row.id) + 1));
+             }
+          });
+
+          user._id = newID;
+
+          this.data.set(user._id, user);
+          this.db.upsert(user._id,(()=>{return user}));
+
+
+          //return the generated id so that we can let the user know their id
+          resolve(newID);
         });
-
-        user._id = newID;
-
-        this.data.set(user._id, user);
-        this.db.upsert(user._id,(()=>{return user}));
-
-
-        //return the generated id so that we can let the user know their id
-        resolve(newID);
-      });
-    })
+      })
+    }
   }
 
   //Chris 1/27/17 this will probably not be used, refer to createUserByDoc(:UserModel)

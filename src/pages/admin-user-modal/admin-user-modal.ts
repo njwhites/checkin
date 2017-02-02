@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { NavController, NavParams, AlertController, ToastController, ModalController } from 'ionic-angular';
 import { UserProvider } from "../../providers/user-provider";
 import { UserModel } from "../../models/db-models";
@@ -28,11 +28,14 @@ export class AdminUserModalPage {
               public modalController: ModalController) {
     //For convenience set the ID to what the previous page supplied
     //this is the id corresponding to the user that was clicked
+    //if it was add a new user then the ID is -1 and we will use isNewUser for logic later
     let ID = navParams.get("key");
+    let isNewUser = false;
 
     //if the ID is -1 we are adding a new user, not editing so we should make that clear
     if(ID === "-1"){
       this.buttonText = "Add New User";
+      isNewUser = true;
     }
 
     //For two-way binding purposes I add an empty user to the Map in the user provider
@@ -47,6 +50,43 @@ export class AdminUserModalPage {
     //require a full name and role, therapist type theroretically should be required
     //but that hasn't been strictly enforced due to the counter requirement that non-therapists have a null therapist role
     this.userForm = this.formBuilder.group({
+      ID: [this.user._id,
+        //3 validators composed together, the first is to make sure that the id exists
+        //the second is to make sure that the id isn't already taken
+        //and the third is to make sure it is a positive number
+        //there is some exceptions right now where if it is a new user -1 is allowed as the "take the next available" ID
+        Validators.compose([Validators.required, (control: FormControl)=>{
+          console.log(control.value);
+
+          const controlID = control.value;
+          // console.log("this is in the validator");
+          // console.log(control.value);
+          if(controlID === "-1"){
+            return null;
+          }
+
+          if(this.userService){
+            if(this.userService.data){
+              if(isNewUser){
+                return (this.userService.data.get(controlID) === undefined) ? null : {collision: true};
+              } else {
+                return null;
+              }
+            } else {
+              return { nodata: true};
+            }
+          } else {
+            return {noservice: true};
+          }
+        }, (control: FormControl)=>{
+          if(control.value === "-1"){
+            return null;
+          } else if(!isNaN(Number(control.value))){
+            return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+          } else {
+            return {notPositiveNumber:true}
+          }
+        } ])],
       fName: [this.user.fName, Validators.required],
       lName: [this.user.lName, Validators.required],
       role: [this.user.role, Validators.required],
@@ -95,6 +135,9 @@ export class AdminUserModalPage {
         //user service to create a new user, it will resolve the newly created user id
         //which happens to be the larges ID in the db +1
         //we then set the current user object equal to that id
+
+        //alternately if the user supplies a positive number that isn't taken, then we will assign the new user with that id
+        this.user._id = this.userForm.value.ID;
         this.userService.createUserByDoc(this.user).then((returnedID: String)=>{
           this.user._id = returnedID;
         });
@@ -189,6 +232,8 @@ export class AdminUserModalPage {
 
   addApprovedStudent(){
     console.log("add");
+    this.user.fName = this.userForm.value.fName;
+    this.user.lName = this.userForm.value.lName;
     this.modalController.create(UserAddModalPage,{user: this.user}).present();
   }
 
