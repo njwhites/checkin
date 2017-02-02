@@ -8,15 +8,15 @@
 </ion-header>
 
 <ion-content (click)="resetInterval()">
-  <h2 text-center *ngIf="selectedStudent">
+  <h1 text-center *ngIf="selectedStudent" class="titleRow">
     <div *ngFor="let student of this.studentService.data | mapValues">
       <div *ngIf="student.val._id === selectedStudent">
         {{student.val.fName}} {{student.val.lName}}
         <ion-icon [name]="selectedStudent.icon"></ion-icon>
       </div>
     </div>
-  </h2>
-  <ion-list inset>
+  </h1>
+  <ion-list inset class="transactionList">
     <div *ngFor="let transaction of this.transactions">
         <h3 ion-item>
           <div *ngIf="transaction.type === 'checkin'">
@@ -44,6 +44,20 @@
             Checked Out By Therapist, {{getUserName(transaction.by_id)}}, at {{transaction.time_readable}}
           </div>
         </h3>
+    </div>
+    <div *ngIf="this.transactions.length === 0"class="vertical-align-content">
+      <ion-grid>
+        <ion-row class="emptyRow">
+          <ion-col>
+            <ion-item class="emptyItem">
+              <ion-icon class="emptyIcon" name="archive"></ion-icon>
+            </ion-item>
+            <ion-item class="emptyText">
+              {{this.studentService.data.get(selectedStudent).fName}} {{this.studentService.data.get(selectedStudent).lName}} has no transactions today.
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
   </ion-list>
 </ion-content>
