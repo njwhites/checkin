@@ -21,7 +21,7 @@ page-login {
     padding-bottom: 5%;
     align-self: center;
     width: 40%;
-    height: 10%
+    height: 10%;
   }
 
   .inputRow {
@@ -55,7 +55,8 @@ page-login {
   }
 
   .card-header {
-    font-size: 4em;
+    width:100%;
+    font-size: 150%;
     color: #EEE5DE;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   }
@@ -65,4 +66,18 @@ page-login {
     height: 100%;
     background-color: transparent;
   }
+
+  //For bigger than mobile
+  @media only screen and (min-width: 768px){
+    .card-header {
+      font-size: 400%;
+    }
+  }
+
+  @media only screen and (min-width: 425px) and (max-width: 767px){
+    .card-header {
+      font-size: 250%;
+    }
+  }
+
 }
