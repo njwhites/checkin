@@ -37,6 +37,8 @@ import {MapValuesPipe} from "../pipes/map-values";
 import {PresentCountPipe} from "../pipes/present-count";
 import {ImpureMapValuesPipe} from "../pipes/impure-map-values";
 import {FirstUpperPipe} from "../pipes/first-upper";
+import {StudentFilterPipe} from "../pipes/student-filter";
+import {UserRoleFilterPipe} from "../pipes/user-role-filter";
 import {ParentReadablePipe} from "../pipes/parent-readable";
 import {FilterParentsPipe} from "../pipes/filter-parents";
 import {TherapistAddPage} from "../pages/therapist-add/therapist-add";
@@ -69,6 +71,8 @@ import {UserLoginPage} from "../pages/user-login/user-login";
     ImpureMapValuesPipe,
     PresentCountPipe,
     FirstUpperPipe,
+    StudentFilterPipe,
+    UserRoleFilterPipe,
     ParentReadablePipe,
     FilterParentsPipe,
     AdminStudentTabPage,

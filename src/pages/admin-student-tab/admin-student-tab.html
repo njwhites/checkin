@@ -3,19 +3,19 @@
     <ion-title center-text>Admin</ion-title>
     <page-home-button></page-home-button>
   </ion-navbar>
+  <ion-toolbar no-border-top>
+    <ion-item text-center>Student Info</ion-item>
+    <ion-searchbar (ionInput)="setFilter($event)" debounce="500"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
+
 <ion-content padding>
-  <ion-grid>
-    <ion-row>
-      <ion-col text-center>
-        <h3>Hello Student Info!</h3>
-      </ion-col>
-    </ion-row>
+  <ion-grid >
     <ion-row>
       <ion-col>
         <ion-list inset>
-          <div *ngFor="let student of this.studentService.data | impureMapValues" (click)="studentClicked(student.key)">
+          <div *ngFor="let student of this.studentService.data | impureMapValues | studentFilter:this.filter" (click)="studentClicked(student.key)">
             <ion-item>
               {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
             </ion-item>

@@ -9,8 +9,12 @@ import { AdminUserModalPage } from '../admin-user-modal/admin-user-modal';
 })
 export class AdminUserTabPage {
 
+  roleSelection;
+
   constructor(public navCtrl: NavController,
-              public userService: UserProvider) {}
+              public userService: UserProvider) {
+    this.roleSelection = this.userService.ROLES[1];
+  }
 
   ionViewDidLoad() {
   }

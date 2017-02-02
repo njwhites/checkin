@@ -10,9 +10,13 @@ import { AdminStudentModalPage } from '../admin-student-modal/admin-student-moda
 })
 export class AdminStudentTabPage {
 
+  private filter: string = " ";
+
   constructor(public navCtrl: NavController,
               public modalController: ModalController,
-              public studentService: StudentProvider) {}
+              public studentService: StudentProvider) {
+    this.filter=" ";
+  }
 
   ionViewDidLoad() {
   }
@@ -30,5 +34,11 @@ export class AdminStudentTabPage {
   }
   addStudent(){
     this.navCtrl.push(AdminStudentModalPage, {key: "-1"});
+  }
+  setFilter(event){
+    this.filter = event.target.value;
+    if(this.filter === ''){
+      this.filter = ' ';
+    }
   }
 }
