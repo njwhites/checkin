@@ -7,14 +7,15 @@
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title center-text>Classroom Details</ion-title>
+    <ion-title center-text *ngIf="!this.isAddNewClassroom">Classroom Details</ion-title>
+    <ion-title center-text *ngIf="this.isAddNewClassroom">New Classroom</ion-title>
     <!--<page-home-button></page-home-button>-->
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding *ngIf="!this.isAddNewClassroom && this.classroomService.data.get(this.classroom._id)!=undefined">
   <h3 *ngIf="this.classroom._id >= 0">
     Room {{this.classroom.roomNumber}}
   </h3>
@@ -44,7 +45,7 @@
     <ion-list-header>
       Teacher Aides:
     </ion-list-header>
-    <ion-item-sliding *ngFor="let userID of this.classroom.aides">
+    <ion-item-sliding *ngFor="let userID of this.classroomService.data.get(this.classroom._id).aides">
       <ion-item>
         {{this.userService.data.get(userID).fName}} {{this.userService.data.get(userID).lName}}
       </ion-item>
@@ -65,7 +66,7 @@
     <ion-list-header>
       Students:
     </ion-list-header>
-    <ion-item-sliding *ngFor="let SID of this.classroom.students">
+    <ion-item-sliding *ngFor="let SID of this.classroomService.data.get(this.classroom._id).students">
       <ion-item>
         {{this.studentService.data.get(SID).fName}} {{this.studentService.data.get(SID).lName}}
       </ion-item>
@@ -93,4 +94,43 @@
 
   <button ion-button block color="primary" *ngIf="this.classroom._id >= 0" [disabled]="!this.classroomForm.valid" (click)="updateClassroom()">{{buttonText}}</button>
   <button ion-button block color="danger" *ngIf="this.classroom._id >= 0" (click)="deleteClassroom()">Delete Class</button>
+</ion-content>
+
+
+<ion-content padding *ngIf="this.isAddNewClassroom">
+  <form [formGroup]="classroomForm" >
+    <ion-list>
+      <ion-list-header>
+        Room Number:
+      </ion-list-header>
+      <ion-item>
+        <ion-input type="text" formControlName="roomNumber"></ion-input>
+      </ion-item>
+      <ion-list-header>
+        Teacher:
+      </ion-list-header>
+      <ion-item>
+        <ion-input type="text" formControlName="teacher"></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+
+  <ion-card [hidden]="this.classroomForm.valid">
+    <ion-card-header>Invalid input</ion-card-header>
+    <ion-card-content *ngIf="this.classroomForm.controls['roomNumber'].hasError('required')">
+      Room Number is required.
+    </ion-card-content>
+    <ion-card-content *ngIf="this.classroomForm.controls['roomNumber'].hasError('collision')">
+      Room Number is already in use.
+    </ion-card-content>
+    <ion-card-content *ngIf="this.classroomForm.controls['roomNumber'].hasError('notPositiveNumber')">
+      Room Number must be a positive number.
+    </ion-card-content>
+    <ion-card-content *ngIf="this.classroomForm.controls['teacher'].hasError('required')">
+      Teacher is required.
+    </ion-card-content>
+  </ion-card>
+
+  <button ion-button block color="primary" [disabled]="!this.classroomForm.valid" (click)="addClassroom()">Add Classroom</button>
+
 </ion-content>

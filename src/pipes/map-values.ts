@@ -5,10 +5,10 @@ import {Pipe} from '@angular/core';
   pure: true
 })
 export class MapValuesPipe {
-    transform(value: any, args?: any[]): Object[] {
+    transform(inputMap: any, args?: any[]): Object[] {
         let returnArray = [];
 
-        value.forEach((entryVal, entryKey) => {
+        inputMap.forEach((entryVal, entryKey) => {
           if(Number(entryKey) >= 0){
             returnArray.push({
                 key: entryKey,

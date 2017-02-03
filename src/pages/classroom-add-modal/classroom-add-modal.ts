@@ -11,8 +11,6 @@ import {ClassRoomModel} from "../../models/db-models";
   templateUrl: 'classroom-add-modal.html'
 })
 export class ClassroomAddModalPage {
-
-  classrooms: Array<ClassRoomModel>;
   students: Array<string>;
   aides: Array<string>;
   classroom: ClassRoomModel;
@@ -31,9 +29,6 @@ export class ClassroomAddModalPage {
     console.log(this.isStudentAdd);
     if(this.isStudentAdd){
       this.titleText = "Add Students to Room " + this.classroom.roomNumber;
-      this.classRoomService.getAllClassRooms().then((data) =>{
-        this.classrooms = <Array<ClassRoomModel>>data;
-      });
       this.students = <Array<string>>this.classroom.students;
     } else {
       this.titleText = "Add teaching aides to Room " + this.classroom.roomNumber;
@@ -68,11 +63,13 @@ export class ClassroomAddModalPage {
     let previousRoom: ClassRoomModel;
 
     //first we want to get the student from the previous room and remove them
-    this.classRoomService.getAllClassRooms().then((classrooms:Array<ClassRoomModel>)=>{
-      previousRoom = classrooms.find((value)=>{return value.students.indexOf(SID) >= 0});
-
-      this.classRoomService.removeStudentFromClass(previousRoom, SID);
+    this.classRoomService.data.forEach((value)=>{
+      if (value.students.indexOf(SID)>=0){
+        previousRoom = value;
+      }
     });
+    this.classRoomService.removeStudentFromClass(previousRoom, SID);
+
 
     //now we add the student to the current room
     this.classRoomService.addStudentToClass(this.classroom, SID);

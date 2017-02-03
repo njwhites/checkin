@@ -17,11 +17,11 @@
     </ion-row>
     <ion-row>
       <div class="roomContainer">
-        <button class="roomButton" *ngFor="let class of classrooms"  (click)="showClassRoomInfo(class._id)">
+        <button class="roomButton" *ngFor="let class of this.classRoomService.data | impureMapValues"  (click)="showClassRoomInfo(class.val)">
           <div class="roomDummy">
           </div>
           <div class="roomText">
-            {{class.roomNumber}}
+            {{class.val.roomNumber}}
           </div>
             <!--<ion-list>
               <ion-item class="studentItem" *ngFor="let sID of class.students">

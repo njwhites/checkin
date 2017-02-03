@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { ClassRoomModel } from '../../models/db-models';
 import { StudentProvider } from '../../providers/student-provider';
@@ -15,6 +15,7 @@ export class AdminClassroomModalPage {
   classroom: ClassRoomModel;
   classroomForm;
   buttonText = "Update classroom";
+  isAddNewClassroom: boolean;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -24,14 +25,44 @@ export class AdminClassroomModalPage {
               public formBuilder: FormBuilder,
               public alertController: AlertController,
               public modalController: ModalController) {
-    this.classroom=navParams.get("classroom");
+    this.isAddNewClassroom = navParams.get("isAddNewClassroom");
 
-    this.classroomForm = this.formBuilder.group({
-      teacher: [this.classroom.teacher, Validators.required]
-    });
+    if(!this.isAddNewClassroom){
+      this.classroom=this.classroomService.data.get(navParams.get("classroom")._id);
+      this.classroomForm = this.formBuilder.group({
+        teacher: [this.classroom.teacher, Validators.required]
+      });
+    } else {
+      this.classroomForm = this.formBuilder.group({
+        roomNumber: ["",
+          Validators.compose([Validators.required, (control: FormControl)=>{
+              return (this.classroomService.data.get(control.value) === undefined) ? null : {collision: true};
+          }, (control: FormControl)=>{
+            if(!isNaN(Number(control.value))){
+              return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+            } else {
+              return {notPositiveNumber:true}
+            }
+          }])
+        ],
+        teacher: ["", Validators.required]
+      })
+    }
   }
 
   ionViewDidLoad() {
+  }
+
+  addClassroom(){
+    let newRoom = new ClassRoomModel();
+    newRoom._id = this.classroomForm.value.roomNumber;
+    newRoom.roomNumber = this.classroomForm.value.roomNumber;
+    newRoom.teacher = this.classroomForm.value.teacher;
+    newRoom.aides = new Array<string>();
+    newRoom.students = new Array<string>();
+
+    this.classroomService.createClassroom(newRoom);
+    this.dismiss();
   }
 
   updateClassroom(){
@@ -40,6 +71,8 @@ export class AdminClassroomModalPage {
 
   deleteClassroom(){
     console.log("tried to delete room " + this.classroom._id);
+    this.dismiss();
+    this.classroomService.deleteClassRoom(this.classroom);
   }
 
   //remove a student from a class room
@@ -62,10 +95,11 @@ export class AdminClassroomModalPage {
   }
 
   removeAide(userID){
-    console.log("trying to remove aide: " + userID);
 
     //ask the  classroom provider to remove the aide from the classroom
     this.classroomService.removeAideFromClass(this.classroom, userID);
+
+    this.classroom.aides.splice(this.classroom.aides.indexOf(userID), 1);
   }
 
   addAideModal(){
@@ -73,7 +107,7 @@ export class AdminClassroomModalPage {
   }
 
   dismiss(){
-    this.navCtrl.pop();
+      this.navCtrl.pop();
   }
 
 }

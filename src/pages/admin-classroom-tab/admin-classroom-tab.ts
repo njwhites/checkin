@@ -11,29 +11,19 @@ import { AdminClassroomModalPage } from "../admin-classroom-modal/admin-classroo
 })
 export class AdminClassroomTabPage {
 
-  classrooms: Array<ClassRoomModel>;
-
   constructor(public navCtrl: NavController,
               public modalController: ModalController,
               public studentService: StudentProvider,
               public classRoomService: ClassRoomProvider) {
-
-    classRoomService.getAllClassRooms().then((data: Array<ClassRoomModel>) =>{
-      this.classrooms = data;
-    })
   }
 
   addClassroom(){
-    console.log("click");
-
+    this.modalController.create(AdminClassroomModalPage,{isAddNewClassroom:true}).present();
   }
 
-  showClassRoomInfo(classID: string){
-
-    this.modalController.create(AdminClassroomModalPage,{classroom: this.classrooms.find((value)=>{return value._id===classID})}).present();
+  showClassRoomInfo(classroom: ClassRoomModel){
+    this.modalController.create(AdminClassroomModalPage,{classroom: classroom, isAddNewClassroom: false}).present();
   }
 
-  ionViewDidLoad() {
-  }
 
 }

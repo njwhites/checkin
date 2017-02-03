@@ -39,10 +39,8 @@ export class LoginPage {
       this.classRoomService.forceInit();
       this.studentService.forceInit();
       this.userService.forceInit();
-      this.classRoomService.getAllClassRooms().then((data) =>{
-        this.classrooms = <Array<ClassRoomModel>>data;
-        //don't want to go to the unallocated room, which would be room -1
-        this.classrooms.splice(0,1);
+      this.classRoomService.getAllClassRooms().then((data: Map<String, ClassRoomModel>) =>{
+        this.classrooms = Array.from(data.values());
       });
     })
     loader.present();
@@ -56,20 +54,15 @@ export class LoginPage {
     // });
   }
 
-  onSelectClassroom(roomNumber) {
+  onSelectClassroom(id) {
 
     //******************************************************************
     //testing to see if class room selection works
     //******************************************************************
-    if(roomNumber){
-      let roomNumberIndex = 0;
-      for (let classroom of this.classrooms){
-        if (classroom.roomNumber === roomNumber) break;
-        roomNumberIndex++;
-      }
+    if(id){
       this.userService.getAllUsers().then(output =>{
-        this.studentService.getStudentsByGroup(this.classrooms[roomNumberIndex].students).then(result =>{
-          this.navCtrl.push(this.classroomPage, {roomNumber: roomNumber});
+        this.studentService.getStudentsByGroup(this.classRoomService.data.get(id).students).then(result =>{
+          this.navCtrl.push(this.classroomPage, {roomNumber: this.classRoomService.data.get(id).roomNumber});
         });
       });
     } else{
@@ -104,22 +97,16 @@ export class LoginPage {
     let alert = this.alertController.create({
       title: 'Select a Classroom'
     });
-    this.classrooms.forEach((value, index, array)=>{
+    this.classRoomService.data.forEach((value, index, map)=>{
 
       //pick one of the below input or button
-      alert.addInput({
-            type: 'radio',
-            label: 'Room ' + value.roomNumber,
-            value: ''+value.roomNumber
-          });
-
-
-      // alert.addButton({
-      //   text: value.roomNumber,
-      //   handler: ()=>{
-      //     this.onSelectClassroom(value.roomNumber);
-      //   }
-      // })
+      if(Number(index) >=0){
+        alert.addInput({
+              type: 'radio',
+              label: 'Room ' + value.roomNumber,
+              value: ''+value.roomNumber
+        });
+      }
     });
     alert.addButton({
       text: "Cancel",

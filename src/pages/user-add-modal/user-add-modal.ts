@@ -10,8 +10,6 @@ import {ClassRoomModel, UserModel} from "../../models/db-models";
   templateUrl: 'user-add-modal.html'
 })
 export class UserAddModalPage {
-
-  classrooms: Array<ClassRoomModel>;
   approvedStudents: Array<String>;
   user: UserModel;
 
@@ -21,9 +19,6 @@ export class UserAddModalPage {
               public studentService: StudentProvider,
               public userService: UserProvider,
               public toastCtrl: ToastController) {
-    this.classRoomService.getAllClassRooms().then((data) =>{
-      this.classrooms = <Array<ClassRoomModel>>data;
-    });
     this.user = navParams.get('user');
     if(!this.user.visible_students){
       this.user.visible_students= new Array<String>();

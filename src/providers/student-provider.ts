@@ -32,7 +32,6 @@ export class StudentProvider {
     });
   }
 
-//I don't think this will be used and if it is it needs to be updated as it will make this.data inconsistent with getStudentsByGroup
   getStudents(){
     //if this provider already has the data, just return it
     //future changes to db will be auto synchronized
@@ -249,26 +248,11 @@ export class StudentProvider {
 
 
   handleChange(change){
-    let changedDoc = null;
-    let changedIndex = null;
 
-
-    if(this.roomRoster){
-      if(~this.roomRoster.indexOf(change.id)){
-        //scan the docs for the one that has been changed
-        this.data.forEach((doc, index) =>{
-          if(doc._id === change.id){
-            changedDoc = doc;
-            changedIndex = index;
-          }
-        });
-
-        if(change.deleted){
-          this.data.delete(changedIndex);
-        } else {
-          this.data.set(changedIndex, change.doc);
-        }
-      }
+    if(change.deleted){
+      this.data.delete(change.doc._id);
+    } else {
+      this.data.set(change.doc._id, change.doc);
     }
   }
 }
