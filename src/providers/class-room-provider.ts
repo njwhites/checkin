@@ -120,6 +120,9 @@ export class ClassRoomProvider {
     console.log(aide);
     this.db.upsert(classroom._id, ((doc)=>{
       console.log(doc.aides);
+      if(doc.aides === undefined){
+        doc.aides = new Array<string>();
+      }
       doc.aides.push(aide);
       console.log(doc.aides);
       return doc;

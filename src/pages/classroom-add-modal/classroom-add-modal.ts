@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {NavController, ToastController, NavParams} from "ionic-angular";
 import {ClassRoomProvider} from "../../providers/class-room-provider";
 import {StudentProvider} from "../../providers/student-provider";
+import {UserProvider} from "../../providers/user-provider";
 import {ClassRoomModel} from "../../models/db-models";
 
 
@@ -13,19 +14,35 @@ export class ClassroomAddModalPage {
 
   classrooms: Array<ClassRoomModel>;
   students: Array<string>;
+  aides: Array<string>;
   classroom: ClassRoomModel;
+  isStudentAdd: boolean;
+  titleText: string;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public classRoomService: ClassRoomProvider,
               public studentService: StudentProvider,
+              public userService: UserProvider,
               public toastCtrl: ToastController) {
-    this.classRoomService.getAllClassRooms().then((data) =>{
-      this.classrooms = <Array<ClassRoomModel>>data;
-    });
     this.classroom = navParams.get('currentroom');
+    this.isStudentAdd = navParams.get('isStudentAdd');
     console.log(this.classroom);
-    this.students = <Array<string>>this.classroom.students;
+    console.log(this.isStudentAdd);
+    if(this.isStudentAdd){
+      this.titleText = "Add Students to Room " + this.classroom.roomNumber;
+      this.classRoomService.getAllClassRooms().then((data) =>{
+        this.classrooms = <Array<ClassRoomModel>>data;
+      });
+      this.students = <Array<string>>this.classroom.students;
+    } else {
+      this.titleText = "Add teaching aides to Room " + this.classroom.roomNumber;
+      if(this.classroom.aides === undefined){
+        this.classroom.aides = new Array<string>();
+      }
+      this.aides = <Array<string>>this.classroom.aides;
+      console.log(this.aides);
+    }
   }
 
   ionViewDidLoad() {}
@@ -72,6 +89,21 @@ export class ClassroomAddModalPage {
 
   isClassroomSubsetOfThis(classroom): boolean{
     return classroom.students.every((value)=>{return this.students.indexOf(value) >= 0})
+  }
+
+  addAideToClass(user) {
+
+    //now we add the student to the current room
+    this.classRoomService.addAideToClass(this.classroom, user.key);
+
+
+    document.getElementById("aide_" + user.key).hidden = true;
+    let toast = this.toastCtrl.create({
+      message: user.val.fName.toString() + " " + user.val.lName.toString() + " added to classroom " + this.classroom.roomNumber,
+      duration: 2000,
+      position: 'bottom'
+    });
+    toast.present(toast);
   }
 
   dismiss(){

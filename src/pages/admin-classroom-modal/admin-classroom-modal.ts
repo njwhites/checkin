@@ -58,8 +58,7 @@ export class AdminClassroomModalPage {
   }
 
   addStudentModal(){
-    this.modalController.create(ClassroomAddModalPage,{currentroom: this.classroom}).present();
-
+    this.modalController.create(ClassroomAddModalPage,{currentroom: this.classroom, isStudentAdd: true}).present();
   }
 
   removeAide(userID){
@@ -70,7 +69,7 @@ export class AdminClassroomModalPage {
   }
 
   addAideModal(){
-    console.log("This is gonna be an aide modal");
+    this.modalController.create(ClassroomAddModalPage,{currentroom: this.classroom, isStudentAdd: false}).present();
   }
 
   dismiss(){
