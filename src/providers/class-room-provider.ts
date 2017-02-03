@@ -5,12 +5,18 @@ import {ClassRoomModel} from '../models/db-models';
 @Injectable()
 export class ClassRoomProvider {
 
+  //data is a data object to facilitate live changes
+  data: Map<String, ClassRoomModel>;
   db: any;
   remote: String;
 
   constructor() {
+    this.data = new Map<String,ClassRoomModel>();
+
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('classrooms');
+
+
 
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/classrooms';
     //this.remote = 'http://localhost:5984/classrooms';
@@ -21,23 +27,54 @@ export class ClassRoomProvider {
     };
 
     this.db.sync(this.remote, options);
+
+    //tell the db wha to do when it detects a change
+    this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change=>{
+      this.handleChange(change);
+    })
   }
 
+//function originally to make sure the provider makes a connection
+//I believe this might be unnecessary Chris 2/3/17
   forceInit(){
     console.log("classroom provider force init");
+
   }
 
+  //this will set the data object to one classroom and return the data object
+  setClassRoomByID(ID: String){
+    //use a promise because db wants async functions and I prefer them over callbacks
+    return new Promise(resolve=>{
+      //set the data object to a new empty map
+      this.data = new Map<String, ClassRoomModel>();
+
+      //get the specified document
+      this.db.get(ID).then(doc=>{
+        //set the data object
+        this.data.set(doc._id, doc);
+        resolve(this.data);
+      }).catch(error=>{
+        console.log(error);
+      })
+    })
+  }
+
+//this will return the data object and also set the data object to be information about all classrooms
   getAllClassRooms(){
+    //use promises because the db needs async and I like promises more than callbacks
     return new Promise(resolve =>{
+      //set the data object to be a fresh map
+      this.data = new Map<String, ClassRoomModel>();
+
+      //get all the docs from classroom db
       this.db.allDocs({include_docs: true}).then(result => {
-
-        let data = Array<ClassRoomModel>();
-
+        //for each row in the set of rows from the result of .allDocs
+        //set the doc._id and doc as key and value for the map
         result.rows.map(row => {
-          data.push(<ClassRoomModel>row.doc);
+          this.data.set(row.doc._id, (row.doc));
         });
-
-        resolve(<Array<ClassRoomModel>>(data));
+        //finish the promise
+        resolve(this.data);
       }).catch(error =>{
         console.log(error);
       });
@@ -46,9 +83,13 @@ export class ClassRoomProvider {
 
 
   getClassRoomByID(id: String){
+
+    //promise for async the db requires and I like them more than callbacks
     return new Promise(resolve => {
 
+      //get the document from classroom db corresponding to the id provided
       this.db.get(id).then(doc => {
+        //return the document that corresponds
         resolve(doc);
       }).catch(err => {
         console.log(err);
@@ -74,18 +115,21 @@ export class ClassRoomProvider {
   }
 
   updateClassRoom(classroom: ClassRoomModel){
-    // this.db.update(classroom).catch(err => {
-    //   console.log(err)
-    // });
+    // use upsert because it handles timing really well
+    //i.e. if a document tried to get pushed and some error occured it would retry
     this.db.upsert(classroom._id, (()=>{return classroom}));
   }
 
+//convenience function for adding a student to the classroom document
+//prevents the other parts of the code from having to do more work
+//classroom needs to be the document for the classroom to be modified and student is just the student id
   addStudentToClass(classroom: ClassRoomModel, student: String){
-    console.log(student);
+    //upsert>push
+    //upsert takes a document id and a function that should return a document
+    //this function is how the document should be modified
+    //so the returned doc is what will be put in the db as the document corresponding to the input id
     this.db.upsert(classroom._id, ((doc)=>{
-      console.log(doc.students);
       doc.students.push(student);
-      console.log(doc.students);
       return doc;
     }));
 
@@ -93,63 +137,89 @@ export class ClassRoomProvider {
     // this.updateClassRoom(classroom);
   }
 
+  //convenience function for removing a student, similar and opposite to addStudent
   removeStudentFromClass(classroom: ClassRoomModel, SID: String){
+    // find the array location of the input student in the classrooms array of students
     let studentIndex = classroom.students.indexOf(SID);
-    console.log(classroom);
-    console.log(studentIndex);
+    //if it wasn't found don't do anything and tell the user
     if(studentIndex === -1){
       console.log("error: student not found in the class");
     } else {
+      //upsert with the specified student spliced out of the array
       this.db.upsert(classroom._id, ((doc)=>{
-
-
-    // let studentIndex = -1;
-    // for(let i = 0; i < classroom.students.length; i++ ){
-    //   if(SID === classroom.students[i]) studentIndex = i;
-    // }
-        console.log(doc.students);
         doc.students.splice(studentIndex, 1);
-        console.log(doc.students);
         return doc;
       }));
-      console.log(classroom.students[studentIndex]);
     }
   }
 
+  //same Idea as addStudent but instead its a classroom aide
   addAideToClass(classroom: ClassRoomModel, aide: string){
-    console.log(aide);
     this.db.upsert(classroom._id, ((doc)=>{
-      console.log(doc.aides);
+      //safety thing so that the code doesn't break if the document somehow doesn't have an aide array
       if(doc.aides === undefined){
         doc.aides = new Array<string>();
       }
       doc.aides.push(aide);
-      console.log(doc.aides);
       return doc;
     }));
+    classroom.aides.push(aide);
+    this.data.set(classroom._id,classroom);
   }
 
+  //same idea as remove student but for classroom aides instead
   removeAideFromClass(classroom: ClassRoomModel, userID: string){
+    //find the specified aides array location
     let userIndex = classroom.aides.indexOf(userID);
-    console.log(classroom);
-    console.log(userIndex);
+
+    //if they aren't found don't do anything but tell the user they weren't found
     if(userIndex === -1){
       console.log("error: user not found in the class");
     } else {
+      //upsert the new doc where we splice out the specified aide
       this.db.upsert(classroom._id, ((doc)=>{
-        console.log(doc.aides);
         doc.aides.splice(userIndex, 1);
-        console.log(doc.aides);
         return doc;
       }));
-      console.log(classroom.aides[userIndex]);
     }
   }
 
+//function to delete a classroom from the db
+//requires the classroom document
   deleteClassRoom(classroom: ClassRoomModel){
+    //setting the doc._deleted field to true is the same as deleting it as far as couch and pouch are concerned
     this.db.upsert(classroom._id, ((doc)=>{
-      doc._deleted = "true";
+      doc._deleted = true;
       return doc;
     }));
+
+    //make sure the dataobject is immediately up to date on the deleted classroom
+    this.data.delete(classroom._id);
+
+  }
+
+  //function for adding new classrooms
+  createClassroom(classroom: ClassRoomModel){
+    //update performs the same function as add
+    this.updateClassRoom(classroom);
+
+    //add it to the data object for timing purposes
+    this.data.set(classroom._id, classroom);
+
+    return new Promise(resolve=>{
+      resolve(classroom._id);
+    })
+  }
+
+  //function for what to do when the db detects a change
+  handleChange(change){
+    //if the change is a delete, delete it from the data object
+    if(change.deleted){
+      this.data.delete(change.doc._id);
+    }
+    //otherwise its an update or an add which are both treated the same
+    else {
+      this.data.set(change.doc._id, change.doc);
+    }
   }
 }

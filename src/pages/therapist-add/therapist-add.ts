@@ -16,14 +16,10 @@ import {ClassRoomModel} from "../../models/db-models";
   templateUrl: 'therapist-add.html'
 })
 export class TherapistAddPage {
-  classrooms: Array<ClassRoomModel>;
   favStudents: Array<string>;
   tID: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public classRoomService: ClassRoomProvider, public studentService: StudentProvider, public userService: UserProvider, public toastCtrl: ToastController) {
-    this.classRoomService.getAllClassRooms().then((data) =>{
-      this.classrooms = <Array<ClassRoomModel>>data;
-    });
     this.favStudents = navParams.get('favStudents');
     this.tID = navParams.get('therapistID');
   }
