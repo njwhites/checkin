@@ -18,8 +18,6 @@ export class UserLoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public studentService: StudentProvider, public userService: UserProvider, public toastCtrl: ToastController) {
     this.parentPage = this.navParams.get('parentPage');
-    this.studentService.forceInit();
-    this.userService.forceInit();
   }
 
   onNotify(idCheck:number):void {
