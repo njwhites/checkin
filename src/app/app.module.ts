@@ -8,7 +8,7 @@ import {ClassroomPage} from "../pages/classroom/classroom";
 import {NapPage} from "../pages/nap/nap";
 import {PresentStudentsPage} from "../pages/present-students/present-students";
 import {StudentInfoButtonPage} from "../pages/student-info-button/student-info-button";
-import {NapButtonsPage} from "../pages/nap-buttons/nap-buttons";
+import {NapSliderPage} from "../pages/nap-slider/nap-slider";
 import {TherapyPage} from "../pages/therapy/therapy";
 import {ClassroomIdPage} from "../pages/classroom-id/classroom-id";
 import {ActionButtonPage} from "../pages/action-button/action-button";
@@ -57,7 +57,7 @@ import {UserLoginPage} from "../pages/user-login/user-login";
     NapPage,
     PresentStudentsPage,
     StudentInfoButtonPage,
-    NapButtonsPage,
+    NapSliderPage,
     TherapyPage,
     ClassroomIdPage,
     ActionButtonPage,
@@ -105,7 +105,7 @@ import {UserLoginPage} from "../pages/user-login/user-login";
     NapPage,
     PresentStudentsPage,
     StudentInfoButtonPage,
-    NapButtonsPage,
+    NapSliderPage,
     TherapyPage,
     ClassroomIdPage,
     ActionButtonPage,

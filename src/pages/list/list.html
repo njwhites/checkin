@@ -75,7 +75,7 @@
                     {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
                   </ion-col>
                   <ion-col width-67>
-                    <page-nap-buttons [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-buttons>
+                    <page-nap-slider [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-slider>
                   </ion-col>
                 </ion-row>
               </ion-grid>
