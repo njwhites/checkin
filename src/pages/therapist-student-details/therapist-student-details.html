@@ -8,7 +8,7 @@
 
 
 <ion-content padding>
-  <ion-list inset class="therapyList">
+  <ion-content inset class="therapyList" class="scrollView">
     <div *ngFor="let transaction of this.transactions">
       <ion-card *ngIf="transaction.length !== -1">
         <ion-card-content>
@@ -37,8 +37,8 @@
         </ion-row>
       </ion-grid>
     </div>
-  </ion-list>
-  <ion-grid>
+  </ion-content>
+  <ion-grid class="push-to-bottom">
     <ion-row class="buttonRow">
       <ion-col>
         <div *ngIf="this.location.includes(this.checkinService.CHECKED_OUT_THERAPY)">

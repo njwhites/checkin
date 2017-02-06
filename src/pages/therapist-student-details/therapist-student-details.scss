@@ -42,5 +42,17 @@ page-therapist-student-details {
     color: gray;
     font-size: 150%;
   }
+  .scrollView {
+    position: absolute;
+    top: 10vh;
+    align-items: center;
+    height: 75%;
+    max-height: 63vh
+  }
+  .push-to-bottom {
+    position: absolute;
+    bottom: 5vh;
+    width: 100%;
+  }
 
 }
