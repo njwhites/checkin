@@ -105,3 +105,47 @@ export class TransactionEvent {
   public by_id: String;
   public type: String;
 }
+
+export class BillingWeekModel{
+  //these are metadata
+  public start_date: Date;
+  public room_number: String;
+  
+  //this is the data
+  public students: Array<StudentBillingWeek>;
+
+  //These are based on the data in days
+  public billing_percent: Number;
+
+  constructor(){
+    this.room_number = "";
+    this.students = [];
+    this.billing_percent = -1;
+  }
+}
+
+export class StudentBillingWeek{
+  public student_id: String;
+
+  public average_hours_billed_per_day: Number;
+  public student_days: Array<BillingDay>;
+
+}
+
+export class BillingDay{
+  public date: Date;
+  public start_time: Number;
+  public end_time: Number;
+  public gross_hours: Number;
+  public nap_hours: Number;
+  public SP_therapy_hours: Number;
+  public PT_therapy_hours: Number;
+  public OT_therapy_hours: Number;
+  public net_hours: Number;
+  public billable_hours: Number;
+  public total_billed: Number;
+
+  public isLessThan7(){
+    return this.gross_hours < 7;
+  }
+}
