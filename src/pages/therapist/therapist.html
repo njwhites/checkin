@@ -23,40 +23,44 @@
         <ion-row>
           <ion-col>
             <div *ngFor="let thisStudent of therapistStudents">
-              <ion-item-sliding *ngIf="this.studentList.get(thisStudent).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(thisStudent)._id)">
-                <ion-item>
-                  <ion-icon name="walk" item-left></ion-icon>
-                  {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
-                  <div item-right>
-                    <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
-                  </div>
-                </ion-item>
-                <ion-item-options>
-                  <button ion-button color="danger" (click)="removeStudent(thisStudent)">
-                    <ion-icon name="trash"></ion-icon>
-                  </button>
-                </ion-item-options>
-              </ion-item-sliding>
+              <ion-card class="cardElement" *ngIf="this.studentList.get(thisStudent).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(thisStudent)._id)">
+                  <ion-item-sliding>
+                    <ion-item>
+                      <ion-icon name="walk" item-left></ion-icon>
+                      {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
+                      <div item-right>
+                        <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
+                      </div>
+                    </ion-item>
+                    <ion-item-options>
+                      <button ion-button color="danger" (click)="removeStudent(thisStudent)">
+                        <ion-icon name="trash"></ion-icon>
+                      </button>
+                    </ion-item-options>
+                  </ion-item-sliding>
+              </ion-card>
             </div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
             <div *ngFor="let thisStudent of therapistStudents">
-              <ion-item-sliding *ngIf="this.studentList.get(thisStudent).location === this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(thisStudent)._id)">
-                <ion-item class="absentRow">
-                  <ion-icon name="walk" item-left></ion-icon>
-                  {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
-                  <div item-right>
-                    <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
-                  </div>
-                </ion-item>
-                <ion-item-options>
-                  <button ion-button color="danger" (click)="removeStudent(thisStudent)">
-                    <ion-icon name="trash"></ion-icon>
-                  </button>
-                </ion-item-options>
-              </ion-item-sliding>
+              <ion-card class="cardElement" *ngIf="this.studentList.get(thisStudent).location === this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(thisStudent)._id)">
+                  <ion-item-sliding>
+                    <ion-item class="absentRow">
+                      <ion-icon name="walk" item-left></ion-icon>
+                      {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
+                      <div item-right>
+                        <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
+                      </div>
+                    </ion-item>
+                    <ion-item-options>
+                      <button ion-button color="danger" (click)="removeStudent(thisStudent)">
+                        <ion-icon name="trash"></ion-icon>
+                      </button>
+                    </ion-item-options>
+                  </ion-item-sliding>
+              </ion-card>
             </div>
           </ion-col>
         </ion-row>

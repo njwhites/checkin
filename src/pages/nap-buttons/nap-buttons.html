@@ -1,7 +1,6 @@
 <div class="item item-select">
-  <select #selected (change)="updateNap(selected.value)">
-    <option *ngFor="let time of napTimes" [value]="time.value">
-      {{time.text}}
-    </option>
-  </select>
+    <ion-range (ionChange)="updateNap(this.time)" min="0" max="60" step="15" pin="true" snaps="true" [(ngModel)]="time">
+      <ion-label range-left class="small-text">0</ion-label>
+      <ion-label range-right>60</ion-label>
+    </ion-range>
 </div>
