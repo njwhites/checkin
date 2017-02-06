@@ -18,32 +18,42 @@
   </h1>
   <ion-list inset class="transactionList">
     <div *ngFor="let transaction of this.transactions">
-        <h3 ion-item>
-          <div *ngIf="transaction.type === 'checkin'">
-            <ion-icon name="person-add" item-left></ion-icon>
-            Checked In For the Day by {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
-          </div>
-          <div *ngIf="transaction.type === 'checkout'">
-            <ion-icon name="send" item-left></ion-icon>
-            Checked Out For the Day By {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
-          </div>
-          <div *ngIf="transaction.type === 'checkinByNurse'">
-            <ion-icon name="medical" item-left></ion-icon>
-            Checked In By {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
-          </div>
-          <div *ngIf="transaction.type === 'checkoutByNurse'">
-            <ion-icon name="medical" item-left></ion-icon>
-            Checked Out By {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
-          </div>
-          <div *ngIf="transaction.type === 'checkinByTherapist'">
-            <ion-icon name="briefcase" item-left></ion-icon>
-            Checked In By Therapist, {{getUserName(transaction.by_id)}}, at {{transaction.time_readable}}
-          </div>
-          <div *ngIf="transaction.type.includes('checkoutByTherapist')">
-            <ion-icon name="briefcase" item-left></ion-icon>
-            Checked Out By Therapist, {{getUserName(transaction.by_id)}}, at {{transaction.time_readable}}
-          </div>
-        </h3>
+          <ion-card *ngIf="transaction.type === 'checkin'">
+            <ion-card-content>
+              <ion-icon name="person-add" item-left></ion-icon>
+              Checked In For the Day by {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
+            </ion-card-content>
+          </ion-card>
+          <ion-card *ngIf="transaction.type === 'checkout'">
+            <ion-card-content>
+              <ion-icon name="send" item-left></ion-icon>
+              Checked Out For the Day By {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
+            </ion-card-content>
+          </ion-card>
+          <ion-card *ngIf="transaction.type === 'checkinByNurse'">
+            <ion-card-content>
+              <ion-icon name="medical" item-left></ion-icon>
+              Checked In By {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
+            </ion-card-content>
+          </ion-card>
+          <ion-card *ngIf="transaction.type === 'checkoutByNurse'">
+            <ion-card-content>
+              <ion-icon name="medical" item-left></ion-icon>
+              Checked Out By {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
+            </ion-card-content>
+          </ion-card>
+          <ion-card *ngIf="transaction.type === 'checkinByTherapist'">
+            <ion-card-content>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              Checked In By Therapist, {{getUserName(transaction.by_id)}}, at {{transaction.time_readable}}
+            </ion-card-content>
+          </ion-card>
+          <ion-card *ngIf="transaction.type.includes('checkoutByTherapist')">
+            <ion-card-content>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              Checked Out By Therapist, {{getUserName(transaction.by_id)}}, at {{transaction.time_readable}}
+            </ion-card-content>
+          </ion-card>
     </div>
     <div *ngIf="this.transactions.length === 0"class="vertical-align-content">
       <ion-grid>
