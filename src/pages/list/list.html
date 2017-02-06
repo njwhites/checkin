@@ -67,12 +67,18 @@
       <div *ngFor="let student of this.studentService.data | mapValues">
         <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
           <ion-card>
-            <ion-card-header>
-              <ion-icon name="walk" item-left></ion-icon>
-              {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
-            </ion-card-header>
             <ion-card-content>
-              <page-nap-buttons [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-buttons>
+              <ion-grid>
+                <ion-row>
+                  <ion-col class="infoCol">
+                    <ion-icon name="walk" item-left></ion-icon>
+                    {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+                  </ion-col>
+                  <ion-col class="sliderCol">
+                    <page-nap-buttons [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-buttons>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-card-content>
           </ion-card>
         </div>
