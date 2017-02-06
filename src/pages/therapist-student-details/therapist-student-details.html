@@ -10,14 +10,18 @@
 <ion-content padding>
   <ion-list inset class="therapyList">
     <div *ngFor="let transaction of this.transactions">
-      <h3 ion-item *ngIf="transaction.length !== -1">
-        <ion-icon name="briefcase" item-left></ion-icon>
-        {{getUserName(transaction.by_id)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} for {{transaction.length}} mins.
-      </h3>
-      <h3 ion-item *ngIf="transaction.length === -1">
-        <ion-icon name="briefcase" item-left></ion-icon>
-        {{getUserName(transaction.by_id)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} and has not yet been checked back in.
-      </h3>
+      <ion-card *ngIf="transaction.length !== -1">
+        <ion-card-content>
+          <ion-icon name="briefcase" item-left></ion-icon>
+          {{getUserName(transaction.by_id)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} for {{transaction.length}} mins.
+        </ion-card-content>
+      </ion-card>
+      <ion-card *ngIf="transaction.length === -1">
+        <ion-card-content>
+          <ion-icon name="briefcase" item-left></ion-icon>
+          {{getUserName(transaction.by_id)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} and has not yet been checked back in.
+        </ion-card-content>
+      </ion-card>
     </div>
     <div *ngIf="this.transactions.length === 0"class="vertical-align-content">
       <ion-grid>
