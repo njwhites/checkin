@@ -9,7 +9,7 @@ export class MapValuesPipe {
         let returnArray = [];
 
         inputMap.forEach((entryVal, entryKey) => {
-          if(Number(entryKey) >= 0){
+          if(Number(entryKey) >= 0 || args){
             returnArray.push({
                 key: entryKey,
                 val: entryVal
