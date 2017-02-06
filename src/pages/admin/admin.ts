@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
+import {AdminReportingPage} from "../admin-reporting/admin-reporting";
 import {AdminStudentTabPage} from "../admin-student-tab/admin-student-tab";
 import {AdminUserTabPage} from "../admin-user-tab/admin-user-tab";
 import {AdminDebugTabPage} from "../admin-debug-tab/admin-debug-tab";
@@ -10,6 +11,11 @@ import {AdminClassroomTabPage} from "../admin-classroom-tab/admin-classroom-tab"
   templateUrl: 'admin.html'
 })
 export class AdminPage {
+  adminReportingTab = AdminReportingPage;
+  adminReportingTabParams = {
+
+  }
+  
   adminStudentTab = AdminStudentTabPage;
   adminStudentTabParams = {
 

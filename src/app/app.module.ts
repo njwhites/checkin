@@ -25,6 +25,7 @@ import {KitchenPage} from "../pages/kitchen/kitchen";
 import {TherapistPage} from "../pages/therapist/therapist";
 import {HomeButtonPage} from "../pages/home-button/home-button";
 import {AdminPage} from "../pages/admin/admin";
+import {AdminReportingPage} from "../pages/admin-reporting/admin-reporting";
 import {AdminStudentTabPage} from "../pages/admin-student-tab/admin-student-tab";
 import {AdminUserTabPage} from "../pages/admin-user-tab/admin-user-tab";
 import {AdminDebugTabPage} from "../pages/admin-debug-tab/admin-debug-tab";
@@ -78,6 +79,7 @@ import {UserLoginPage} from "../pages/user-login/user-login";
     ParentReadablePipe,
     KitchenPipe,
     FilterParentsPipe,
+    AdminReportingPage,
     AdminStudentTabPage,
     AdminUserTabPage,
     AdminDebugTabPage,
@@ -116,6 +118,7 @@ import {UserLoginPage} from "../pages/user-login/user-login";
     KitchenPage,
     TherapistPage,
     AdminPage,
+    AdminReportingPage,
     AdminStudentTabPage,
     AdminUserTabPage,
     AdminDebugTabPage,
