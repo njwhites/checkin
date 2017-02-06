@@ -70,11 +70,11 @@
             <ion-card-content>
               <ion-grid>
                 <ion-row>
-                  <ion-col class="infoCol">
+                  <ion-col width-33 class="infoCol">
                     <ion-icon name="walk" item-left></ion-icon>
                     {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
                   </ion-col>
-                  <ion-col class="sliderCol">
+                  <ion-col width-67>
                     <page-nap-buttons [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-buttons>
                   </ion-col>
                 </ion-row>
