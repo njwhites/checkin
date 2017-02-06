@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content padding (click)="resetInterval()">
+<ion-content class="bgc" (click)="resetInterval()">
   <div *ngIf="parentPage === 'presentStudents'">
     <ion-list inset class="fill">
       <ion-grid class="horizontal-align-center">
@@ -50,7 +50,7 @@
     <ion-grid>
       <ion-row class="countRow">
         <ion-col>
-          <ion-item>
+          <ion-item class="bg">
             <span class="countHeader" item-right>
               Total Students Present:
             </span>

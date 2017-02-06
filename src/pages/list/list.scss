@@ -1,9 +1,20 @@
 page-list {
+  .bgc {
+    background-color: #eee5de;
+    height: 100%;
+    width: 100%;
+  }
+
   .vertical-align-content
   {
     //display: flex!important;
     align-content: center!important;
   }
+
+  .bg {
+    background-color: #eee5de;
+  }
+
   .countRow{
     position: absolute;
     bottom: 15%;
@@ -57,7 +68,10 @@ page-list {
     font-size: 200%;
   }
 
+
+
   .scrollable {
+    background-color: #eee5de;
     align-self: center;
     height: 1000px;
     max-height: 80vh;
@@ -73,12 +87,14 @@ page-list {
   }
 
   .emptyRow {
+    background-color: #eee5de;
     padding-top: 15vh;
     align-self: center;
     width: 80%;
   }
 
   .emptyItem {
+    background-color: #eee5de;
     align-self: center;
     text-align: center;
   }
@@ -91,6 +107,7 @@ page-list {
   }
 
   .emptyText {
+    background-color: #eee5de;
     align-self: center;
     text-align: center;
     color: gray;
