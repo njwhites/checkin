@@ -15,7 +15,7 @@
 
 <ion-content padding>
 <ion-item-group *ngIf="this.isStudentAdd">
-  <div *ngFor="let class of this.classRoomService.data | mapValues">
+  <div *ngFor="let class of this.classRoomService.data | mapValues:true">
     <div *ngIf="this.classroom.roomNumber != class.key">
       <ion-item-divider>
         Room {{class.key}}
@@ -49,7 +49,7 @@
 
 <ion-item-group *ngIf="!this.isStudentAdd">
   <div *ngFor="let user of this.userService.data | mapValues">
-    <div *ngIf="user.val.role === this.userService.ROLES[2] && !this.aides.includes(user.key)">
+    <div *ngIf="user.val.role === this.userService.ROLES[5] && !this.aides.includes(user.key)">
       <ion-item id="aide_{{user.key}}">
         {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
         <button ion-button round outline color="secondary" item-right (click)="addAideToClass(user)">

@@ -16,72 +16,76 @@
 
 
 <ion-content padding *ngIf="!this.isAddNewClassroom && this.classroomService.data.get(this.classroom._id)!=undefined">
-  <h3 *ngIf="this.classroom._id >= 0">
-    Room {{this.classroom.roomNumber}}
-  </h3>
+  <div *ngIf="this.classroom._id >= 0">
+    <h3>
+      Room {{this.classroom.roomNumber}}
+    </h3>
+
+
+    <form [formGroup]="classroomForm" (ngSubmit)="updateClassroom()">
+      <ion-list>
+        <ion-list-header>
+          Teacher:
+        </ion-list-header>
+        <ion-item>
+          <ion-input type="text" formControlName="teacher"></ion-input>
+        </ion-item>
+      </ion-list>
+    </form>
+
+    <ion-card [hidden]="this.classroomForm.valid">
+      <ion-card-header>Invalid input</ion-card-header>
+      <ion-card-content *ngIf="this.classroomForm.controls['teacher'].hasError('required')">
+        Teacher is required.
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list>
+      <ion-list-header>
+        Teacher Aides:
+      </ion-list-header>
+      <ion-item-sliding *ngFor="let userID of this.classroomService.data.get(this.classroom._id).aides">
+        <ion-item>
+          {{this.userService.data.get(userID).fName}} {{this.userService.data.get(userID).lName}}
+        </ion-item>
+        <ion-item-options>
+          <button ion-button color="danger" (click)="removeAide(userID)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+      <ion-item>
+        <button ion-button full (click)="addAideModal()">
+          Add Aide To Class
+        </button>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header>
+        Students:
+      </ion-list-header>
+      <ion-item-sliding *ngFor="let SID of this.classroomService.data.get(this.classroom._id).students">
+        <ion-item>
+          {{this.studentService.data.get(SID).fName}} {{this.studentService.data.get(SID).lName}}
+        </ion-item>
+        <ion-item-options>
+          <button ion-button color="danger" (click)="removeStudent(SID)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+      <ion-item>
+        <button ion-button full (click)="addStudentModal()">
+          Add Student To Class
+        </button>
+      </ion-item>
+    </ion-list>
+  </div>
+
   <h3 *ngIf="this.classroom._id < 0">
     {{this.classroom.roomNumber}}
   </h3>
-
-  <form *ngIf="this.classroom._id >= 0" [formGroup]="classroomForm" (ngSubmit)="updateClassroom()">
-    <ion-list>
-      <ion-list-header>
-        Teacher:
-      </ion-list-header>
-      <ion-item>
-        <ion-input type="text" formControlName="teacher"></ion-input>
-      </ion-item>
-    </ion-list>
-  </form>
-
-  <ion-card [hidden]="this.classroomForm.valid">
-    <ion-card-header>Invalid input</ion-card-header>
-    <ion-card-content *ngIf="this.classroomForm.controls['teacher'].hasError('required')">
-      Teacher is required.
-    </ion-card-content>
-  </ion-card>
-
-  <ion-list *ngIf="this.classroom._id >= 0">
-    <ion-list-header>
-      Teacher Aides:
-    </ion-list-header>
-    <ion-item-sliding *ngFor="let userID of this.classroomService.data.get(this.classroom._id).aides">
-      <ion-item>
-        {{this.userService.data.get(userID).fName}} {{this.userService.data.get(userID).lName}}
-      </ion-item>
-      <ion-item-options>
-        <button ion-button color="danger" (click)="removeAide(userID)">
-          <ion-icon name="trash"></ion-icon>
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-    <ion-item>
-      <button ion-button full (click)="addAideModal()">
-        Add Aide To Class
-      </button>
-    </ion-item>
-  </ion-list>
-
-  <ion-list *ngIf="this.classroom._id >= 0">
-    <ion-list-header>
-      Students:
-    </ion-list-header>
-    <ion-item-sliding *ngFor="let SID of this.classroomService.data.get(this.classroom._id).students">
-      <ion-item>
-        {{this.studentService.data.get(SID).fName}} {{this.studentService.data.get(SID).lName}}
-      </ion-item>
-      <ion-item-options>
-        <button ion-button color="danger" (click)="removeStudent(SID)">
-          <ion-icon name="trash"></ion-icon>
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-    <ion-item>
-      <button ion-button full (click)="addStudentModal()">
-        Add Student To Class
-      </button>
-    </ion-item>
-  </ion-list>
 
   <ion-list *ngIf="this.classroom._id < 0">
     <ion-list-header>

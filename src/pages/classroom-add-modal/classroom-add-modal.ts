@@ -23,20 +23,28 @@ export class ClassroomAddModalPage {
               public studentService: StudentProvider,
               public userService: UserProvider,
               public toastCtrl: ToastController) {
+
+    //get the classroom to show details of
     this.classroom = navParams.get('currentroom');
+
+    //are we adding a new student or are we adding a teachers aide
     this.isStudentAdd = navParams.get('isStudentAdd');
-    console.log(this.classroom);
-    console.log(this.isStudentAdd);
+
+
     if(this.isStudentAdd){
+      //set the title text for the modal indicating the user is adding students
       this.titleText = "Add Students to Room " + this.classroom.roomNumber;
+      //set the students to be the students this classroom already has
       this.students = <Array<string>>this.classroom.students;
     } else {
+      //title text for the modal indicating the user is adding teaching aides
       this.titleText = "Add teaching aides to Room " + this.classroom.roomNumber;
+      //just incase the classroom doesn't have an aides field make sure it does
       if(this.classroom.aides === undefined){
         this.classroom.aides = new Array<string>();
       }
+      //set the aides to be the teacher aides this classroom already has
       this.aides = <Array<string>>this.classroom.aides;
-      console.log(this.aides);
     }
   }
 

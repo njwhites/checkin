@@ -56,6 +56,14 @@
               </ion-item>
             </div>
           </ion-list>
+
+          <ion-list inset *ngSwitchCase="this.userService.ROLES[5]">
+            <div *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[5]" (click)="userClicked(user.key)">
+              <ion-item>
+                {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
+              </ion-item>
+            </div>
+          </ion-list>
         </div>
       </ion-col>
     </ion-row>
