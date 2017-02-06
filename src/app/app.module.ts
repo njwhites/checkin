@@ -41,6 +41,7 @@ import {StudentFilterPipe} from "../pipes/student-filter";
 import {UserRoleFilterPipe} from "../pipes/user-role-filter";
 import {ParentReadablePipe} from "../pipes/parent-readable";
 import {FilterParentsPipe} from "../pipes/filter-parents";
+import {KitchenPipe} from "../pipes/kitchen-map";
 import {TherapistAddPage} from "../pages/therapist-add/therapist-add";
 import {TherapistStudentDetailsPage} from "../pages/therapist-student-details/therapist-student-details";
 import {TherapistCheckinConfirmModalPage} from "../pages/therapist-checkin-confirm-modal/therapist-checkin-confirm-modal";
@@ -74,6 +75,7 @@ import {UserLoginPage} from "../pages/user-login/user-login";
     StudentFilterPipe,
     UserRoleFilterPipe,
     ParentReadablePipe,
+    KitchenPipe,
     FilterParentsPipe,
     AdminStudentTabPage,
     AdminUserTabPage,

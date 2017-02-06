@@ -8,12 +8,28 @@
 
 
 <ion-content padding>
-	<h3>Kitchen Page</h3>
-	<div *ngFor="let entry of this.roomMap">
-		<ion-card class="cardElement">
-			<ion-card-header class="card-header">
- 				{{entry.key}} {{entry.val[0]}} {{entry.val[1]}}
-			</ion-card-header>
-		</ion-card>
-  </div>
+	<!--<h3>Kitchen Page</h3>-->
+	<div class="card-container">
+        <ion-card class="flex-element" *ngFor="let class of this.classroomService.data | kitchenPipe" >
+          <div class="roomDummy">
+          </div>
+          <div class="roomText">
+            {{class.roomNum}} {{class.presentCount}} {{class.dietCount}}
+          </div>
+            <!--<ion-list>
+              <ion-item class="studentItem" *ngFor="let sID of class.students">
+                {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
+              </ion-item>
+            </ion-list>-->
+        </ion-card>
+      </div>
+	<!-- <div id="card-wrapper" class="card-container">
+		<div *ngFor="let entry of this.roomMap"  class="flex-element">
+			<ion-card class="card-element">
+				<ion-card-header class="card-header">
+	 				{{entry.key}} {{entry.val[0]}} {{entry.val[1]}}
+				</ion-card-header>
+			</ion-card>
+		</div>
+  	</div> -->
 </ion-content>
