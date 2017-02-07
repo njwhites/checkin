@@ -29,6 +29,7 @@ export class ClassRoomProvider {
     this.db.sync(this.remote, options);
 
     //tell the db wha to do when it detects a change
+    this.data = new Map<String, ClassRoomModel>();
     this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change=>{
       this.handleChange(change);
     })
@@ -129,7 +130,9 @@ export class ClassRoomProvider {
     //this function is how the document should be modified
     //so the returned doc is what will be put in the db as the document corresponding to the input id
     this.db.upsert(classroom._id, ((doc)=>{
-      doc.students.push(student);
+      if(doc.students.indexOf(student) < 0){
+        doc.students.push(student);
+      }
       return doc;
     }));
 
@@ -160,7 +163,9 @@ export class ClassRoomProvider {
       if(doc.aides === undefined){
         doc.aides = new Array<string>();
       }
-      doc.aides.push(aide);
+      if(doc.aides.indexOf(aide) < 0 ){
+        doc.aides.push(aide);
+      }
       return doc;
     }));
     classroom.aides.push(aide);

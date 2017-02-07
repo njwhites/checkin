@@ -264,14 +264,15 @@ export class UserProvider {
       if(!doc.visible_students){
         doc.visible_students = new Array<String>();
       }
-      doc.visible_students.push(SID);
+      if(doc.visible_students.indexOf(SID) < 0){
+        doc.visible_students.push(SID);
+      }
       return doc;
     })
   }
 
   removeVisibleStudent(user: UserModel, SID: String){
-    console.log(user);
-    console.log(SID);
+
     let studentIndex = user.visible_students.indexOf(SID);
     console.log(studentIndex);
     if(studentIndex === -1){

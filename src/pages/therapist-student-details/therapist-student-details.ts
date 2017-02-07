@@ -28,7 +28,7 @@ export class TherapistStudentDetailsPage {
             length: t.length
           }
         }).sort((a, b)=>{
-          return a.start_time, b.start_time;
+          return a.start_time - b.start_time;
         });
     });
   }

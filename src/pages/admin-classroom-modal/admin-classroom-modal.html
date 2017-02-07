@@ -28,7 +28,11 @@
           Teacher:
         </ion-list-header>
         <ion-item>
-          <ion-input type="text" formControlName="teacher"></ion-input>
+          <select formControlName="teacher">
+            <option *ngFor="let teacher of this.userService.data|mapValues|userRoleFilter:this.userService.ROLES[2]" value="{{teacher.key}}">
+              {{teacher.val.fName}} {{teacher.val.lName}}
+            </option>
+          </select>
         </ion-item>
       </ion-list>
     </form>

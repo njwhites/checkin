@@ -112,7 +112,7 @@ export class AdminStudentModalPage {
         this.studentService.data.set("-1", emptyStudent);
         this.buttonText = "Update Student Info";
         this.toastController.create({
-          message: this.student.fName+ " " + this.student.lName + " has been added as a user.",
+          message: this.student.fName+ " " + this.student.lName + " has been added as a student.",
           duration: 3000,
           position: "bottom"
         }).present();

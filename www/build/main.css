@@ -21813,6 +21813,30 @@ page-admin-student-tab .fixedSearchbar {
   width: 100%;
 }
 
+page-admin-student-tab .listContainer {
+  margin-top: 120px;
+  height: 60%;
+  width: 90%;
+}
+
+page-admin-student-tab .addFab {
+  width: 150px;
+  height: 75px;
+  position: fixed;
+  z-index: 100;
+  bottom: 60px;
+  right: 20px;
+}
+
+page-admin-user-tab .addFab {
+  width: 150px;
+  height: 75px;
+  position: fixed;
+  z-index: 100;
+  bottom: 60px;
+  right: 20px;
+}
+
 page-classroom-id .vertical-align-content {
   -webkit-align-content: center !important;
   -ms-flex-line-pack: center !important;

@@ -5,6 +5,17 @@ page-admin-student-tab {
     top: 44px;
     width: 100%;
   }
-  .studentList{
+  .listContainer{
+    margin-top:120px;
+    height:60%;
+    width:90%;
+  }
+  .addFab{
+    width: 150px;
+    height: 75px;
+    position: fixed;
+    z-index: 100;
+    bottom: 60px;
+    right: 20px;
   }
 }

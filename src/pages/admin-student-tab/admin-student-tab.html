@@ -9,11 +9,18 @@
   </ion-toolbar>
 </ion-header>
 
-
-<ion-content padding>
-  <ion-grid >
+<ion-content scroll="false" padding>
+    <ion-list inset>
+      <ion-card *ngFor="let student of this.studentService.data | impureMapValues | studentFilter:this.filter" (click)="studentClicked(student.key)">
+        <ion-item>
+          {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+        </ion-item>
+      </ion-card>
+    </ion-list>
+  <!-- <ion-grid>
     <ion-row>
       <ion-col>
+        <ion-scroll>
         <ion-list inset>
           <div *ngFor="let student of this.studentService.data | impureMapValues | studentFilter:this.filter" (click)="studentClicked(student.key)">
             <ion-item>
@@ -21,14 +28,12 @@
             </ion-item>
           </div>
         </ion-list>
+      </ion-scroll>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <button ion-button block (click)="addStudent()">Add A New Student</button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  </ion-grid> -->
+  <button ion-button block (click)="addStudent()">Add A New Student</button>
+
   <!--<ion-fab bottom right>
     <button ion-fab (click)="addStudent()">Add A New Student</button>
   </ion-fab>-->

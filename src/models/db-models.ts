@@ -106,6 +106,15 @@ export class TransactionEvent {
   public type: String;
 }
 
+export class ClassroomWeek{
+  public room_number: String;
+  public weeks: Array<BillingWeekModel>;
+
+  constructor(){
+    this.weeks = [];
+  }
+}
+
 export class BillingWeekModel{
   //these are metadata
   public start_date: Date;
