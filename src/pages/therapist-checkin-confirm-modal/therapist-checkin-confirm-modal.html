@@ -31,8 +31,8 @@
         </ion-range>
       </ion-item>
     </div>
-    <ion-footer>
-      <div style="padding-left: 20px; padding-right: 25px">
+    <ion-footer [hidden]="this.length === 0" style="padding-top: 5px;">
+      <div style="padding-left: 2px; padding-right: 2px">
         <button ion-button block (click)='submit()'>
           Submit
         </button>
