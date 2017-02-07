@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import {BillingWeekModel, StudentBillingWeek, BillingDay, 
-	TransactionEvent, TransactionStudentModel, TransactionTherapy} from '../models/db-models';
+	TransactionEvent, TransactionStudentModel, TransactionTherapy, ClassroomWeek} from '../models/db-models';
 
 import {ClassRoomProvider} from './class-room-provider';
 import {CheckinProvider} from './checkin-provider';
@@ -45,6 +45,43 @@ export class BillingProvider {
     this.db.sync(this.remote, options);
   }
 
+  getClassroomBilling(room_number: String){
+  	return new Promise((resolve, reject) => {
+		this.db.allDocs({include_docs: true}).then(result => {
+
+	        //get today's object, if it does not exist, create it
+	  	    let trans = result.rows.filter((row) => {
+	  	    	return row.doc._id === room_number;
+	  	    });
+
+	        //Day already exists in the db
+	  	    if(trans.length > 0){
+				let room = new ClassroomWeek();
+				room.room_number = trans[0]._id;
+				room.weeks = trans.billingWeeks;
+				resolve(room);
+	  	    }else{
+	          //Day did not exist, creates and puts it
+	          this.db.upsert(room_number, (doc) => {
+	            return {
+	              _id: room_number,
+	              billingWeeks: []
+	            }
+	          }).then(response => {
+	            //unsure how to do this without recursion. basically since it has been added to the db,
+	            //it will on recursion go into the other part of the if/else
+	            console.log("Successfully added billing document for room: " + room_number)
+	            resolve(this.getClassroomBilling(room_number));
+	          }).catch(function (err) {
+	            console.log(err);
+	          });
+	  	    }
+     	}).catch(err =>{
+        	console.log(err)
+    	});
+  	});
+  }
+
 
   writeBillingWeek(start_date: Date, room_number: String){
 	 //these are metadata
@@ -55,6 +92,56 @@ export class BillingProvider {
 	this.writeBillingWeekHelper(ids, start_date, []).then((billing_week: BillingWeekModel) => {
 		billing_week.room_number = room_number;
 		//upsert
+		var dateString = `${room_number}`;
+		this.getClassroomBilling(room_number).then((doc: ClassroomWeek) => {
+			let others = doc.weeks.filter((week: BillingWeekModel) => {
+				return start_date.getDate() === week.start_date.getDate() &&
+					start_date.getMonth() === week.start_date.getMonth() &&
+					start_date.getFullYear() === week.start_date.getFullYear();
+			});
+			let me = {
+				start_date: billing_week.start_date,
+				room_number: billing_week.room_number,
+
+				students: billing_week.students.map((each:StudentBillingWeek) => {
+					return {
+						student_id: each.student_id,
+						average_hours_billed_per_day: each.average_hours_billed_per_day,
+
+						billing_days: each.student_days.map((day:BillingDay) => {
+							return {
+								date: day.date,
+								start_time: day.start_time,
+								end_time: day.end_time,
+
+								nap_hours: day.nap_hours,
+								SP_therapy_hours: day.SP_therapy_hours,
+								OT_therapy_hours: day.OT_therapy_hours,
+								PT_therapy_hours: day.PT_therapy_hours,
+
+								net_hours: day.net_hours,
+								billable_hours: day.billable_hours
+							}
+						})
+					}
+				}),
+
+				billing_percent: billing_week.billing_percent
+
+			}
+			this.db.upsert(doc.room_number, (document) => {
+				document.weeks = [...document.weeks, me]
+				return document;
+			}).then(response => {
+				//unsure how to do this without recursion. basically since it has been added to the db,
+				//it will on recursion go into the other part of the if/else
+				console.log("Successfully added transaction for day: " + dateString)
+				//resolve();
+			}).catch(function (err) {
+				console.log(err);
+			});
+		})
+
 		console.log(billing_week);
 	})
 
