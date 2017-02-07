@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
-import { NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ModalController, ToastController } from 'ionic-angular';
 import { ClassRoomModel } from '../../models/db-models';
 import { StudentProvider } from '../../providers/student-provider';
 import { UserProvider } from '../../providers/user-provider';
@@ -24,7 +24,8 @@ export class AdminClassroomModalPage {
               public classroomService: ClassRoomProvider,
               public formBuilder: FormBuilder,
               public alertController: AlertController,
-              public modalController: ModalController) {
+              public modalController: ModalController,
+              public toastController: ToastController) {
     this.isAddNewClassroom = navParams.get("isAddNewClassroom");
 
     if(!this.isAddNewClassroom){
@@ -66,7 +67,16 @@ export class AdminClassroomModalPage {
   }
 
   updateClassroom(){
-    console.log("tried to update room " + this.classroom._id);
+    if(this.classroom.teacher != this.classroomForm.value.teacher){
+      this.classroom.teacher = this.classroomForm.value.teacher;
+      this.classroomService.updateClassRoom(this.classroom);
+    }
+    this.toastController.create({
+      message: this.classroom._id + " has been updated.",
+      duration: 3000,
+      position: "bottom"
+    }).present();
+    this.dismiss();
   }
 
   deleteClassroom(){
