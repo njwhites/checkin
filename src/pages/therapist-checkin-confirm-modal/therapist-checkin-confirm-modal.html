@@ -24,7 +24,7 @@
         Adjust Therapy Length
         <ion-badge item-right>{{length}}</ion-badge>
       </ion-list-header>
-      <ion-item>
+      <ion-item style="padding-left: 0px">
         <ion-range min="0" max="60" step="15" pin="true" snaps="true" [(ngModel)]="length">
           <ion-label range-left class="small-text">0</ion-label>
           <ion-label range-right>60</ion-label>
@@ -32,8 +32,8 @@
       </ion-item>
     </div>
     <ion-footer>
-      <div>
-        <button ion-button block (click)='submit()' style="margin-right: -5px; margin-left: 5px;">
+      <div style="padding-left: 20px; padding-right: 25px">
+        <button ion-button block (click)='submit()'>
           Submit
         </button>
       </div>
