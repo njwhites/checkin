@@ -1,15 +1,39 @@
 page-classroom-id {
 
-  .bgc {
+  .vertical-align-content
+  {
+    //display: flex!important;
+    align-content: center!important;
+  }
+
+  .scroll-content {
     background-color: #eee5de;
-    height: 100%;
-    width: 100%;
+  }
+
+  .blockGrid {
+    display: block;
+  }
+
+  .buttonRow {
+    align-self: center;
+    width: 55%;
+  }
+
+  .titleRow {
+    padding-top: 5vh;
+    align-self: center;
+    width: 55%;
+    padding-bottom: 5vh;
+  }
+
+  .emptyRow {
+    padding-top: 15vh;
   }
 
   .fill-parent{
     height:100%;
     width: 100%;
-    display: flex;
+    display: block;
   }
 
   .login-flex-container{
@@ -18,8 +42,7 @@ page-classroom-id {
     width:100%;
     height:100%;
 
-    display:flex;
-    flex-flow: column nowrap;
+    display:block;
 
   }
 
@@ -27,9 +50,7 @@ page-classroom-id {
     justify-content: center;
     align-items: center;
 
-    display:flex;
-
-    width:55%;
+    display:block;
 
   }
   .outer-flex-element.room-title-element{
@@ -49,8 +70,7 @@ page-classroom-id {
   }
 
   .card-element{
-    height:50%;
-    flex-flow: column nowrap;
+
   }
 
   .card-row{
@@ -58,11 +78,21 @@ page-classroom-id {
     height: 50%;
     justify-content: center;
     align-items:center;
-    display: flex;
+    display: block;
   }
 
   .card-row-child{
     width:100%;
+  }
+
+  .inputRowCard {
+    align-items: center;
+  }
+
+  .buttonRowCard {
+    align-self: center;
+    width: 50%;
+    padding-bottom: 5vh;
   }
 
 
@@ -79,6 +109,10 @@ page-classroom-id {
 
   .item-ios {
     padding-left: 0px;
+  }
+
+  .text-input {
+    text-align: center;
   }
 
   .input-style{

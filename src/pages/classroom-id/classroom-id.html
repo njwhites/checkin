@@ -1,7 +1,10 @@
-<ion-grid class="fill-parent bgc">
-
-  <div id="login-card" class="login-flex-container">
-    <div class="outer-flex-element room-title-element">
+<ion-content scroll="false">
+  <div class="blockGrid">
+<ion-grid>
+  <ion-row class="emptyRow">
+  </ion-row>
+  <ion-row class="titleRow">
+    <ion-col>
       <div class="room-title">
           <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'generic' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
             <div class="titleRoom">
@@ -24,11 +27,14 @@
             </div>
           </div>
       </div>
-    </div>
+    </ion-col>
+  </ion-row>
+  <ion-row class="buttonRow">
+    <ion-col>
     <ion-card class="outer-flex-element card-element">
-
-      <div class="card-row">
-        <div class="card-row-child card-title">
+      <ion-grid>
+      <ion-row class="titleRow">
+        <ion-col class="card-row-child card-title">
           <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'generic' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
             <div class="titleRoom">
               {{parentPage|parentReadable|firstUpper}}
@@ -39,21 +45,22 @@
               Login
             </div>
           </div>
-        </div>
-      </div>
-      <div id='login-input' class= 'card-row'>
-        <div class="card-row-child">
-          <div>
-            <ion-item class="ion-item-wrapper">
+        </ion-col>
+      </ion-row>
+      <ion-row id='login-input' class= 'inputRowCard'>
+        <ion-col class="card-row-child">
               <ion-input #userId class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder='Enter ID'></ion-input>
-            </ion-item>
-          </div>
-
-          <div class="buttonRow">
+        </ion-col>
+      </ion-row>
+      <ion-row id='login-input' class= 'buttonRowCard'>
+        <ion-col class="card-row-child">
               <button ion-button block class="submit-button" (click)='checkUser(userId)'>Submit</button>
-          </div>
-        </div>
-      </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
     </ion-card>
-  </div>
+</ion-col>
+</ion-row>
 </ion-grid>
+</div>
+</ion-content>
