@@ -1,24 +1,33 @@
 page-therapist {
+  .scroll-content {
+    background-color: #eee5de;
+  }
+
   .horizontal-align-center {
+    background-color: #eee5de;
     align-items: center;
     padding-top: 5%;
   }
   .vertical-align-content
   {
     //display: flex!important;
+    background-color: #eee5de;
     align-content: center!important;
   }
   .scrollView {
+    background-color: #eee5de;
     align-items: center;
     height: 75%;
     max-height: 63vh
   }
   .push-to-bottom {
+    background-color: #eee5de;
     position: absolute;
     bottom: 5vh;
     width: 100%;
   }
   .buttonRow {
+    background-color: #eee5de;
     align-self: center;
     width: auto;
   }
@@ -37,17 +46,20 @@ page-therapist {
   }
 
   .emptyRow {
+    background-color: #eee5de;
     padding-top: 25vh;
     align-self: center;
     width: 60%;
   }
 
   .emptyItem {
+    background-color: #eee5de;
     align-self: center;
     text-align: center;
   }
 
   .emptyIcon {
+    background-color: #eee5de;
     width: 75px;
     height: 75px;
     color: gray;

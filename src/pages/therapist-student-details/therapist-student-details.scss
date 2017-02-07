@@ -1,8 +1,13 @@
 page-therapist-student-details {
 
+  .scroll-content {
+    background-color: #eee5de;
+  }
+
   .vertical-align-content
   {
     //display: flex!important;
+    background-color: #eee5de;
     align-content: center!important;
   }
 
@@ -15,21 +20,25 @@ page-therapist-student-details {
   }
 
   .therapyList {
+    background-color: #eee5de;
     padding-top: 5%;
   }
 
   .emptyRow {
+    background-color: #eee5de;
     padding-top: 25vh;
     align-self: center;
     width: 80%;
   }
 
   .emptyItem {
+    background-color: #eee5de;
     align-self: center;
     text-align: center;
   }
 
   .emptyIcon {
+    background-color: #eee5de;
     width: 75px;
     height: 75px;
     color: gray;
@@ -37,6 +46,7 @@ page-therapist-student-details {
   }
 
   .emptyText {
+    background-color: #eee5de;
     align-self: center;
     text-align: center;
     color: gray;
