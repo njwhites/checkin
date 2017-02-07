@@ -22048,8 +22048,13 @@ page-list .bg {
 
 page-list .countRow {
   position: absolute;
-  bottom: 15%;
+  bottom: 3vh;
   padding-right: 5%;
+}
+
+page-list .emptyGrid {
+  position: absolute;
+  top: 20vh;
 }
 
 page-list .countHeader {
@@ -22065,6 +22070,13 @@ page-list .buttonRow {
   -ms-flex-item-align: center;
   align-self: center;
   width: 50%;
+}
+
+page-list .push-to-bottom {
+  background-color: #eee5de;
+  position: absolute;
+  bottom: 10vh;
+  width: 100%;
 }
 
 page-list .centerButton {

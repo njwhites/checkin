@@ -17,8 +17,13 @@ page-list {
 
   .countRow{
     position: absolute;
-    bottom: 15%;
+    bottom: 3vh;
     padding-right: 5%;
+  }
+
+  .emptyGrid {
+    position: absolute;
+    top: 20vh;
   }
 
   .countHeader{
@@ -32,6 +37,13 @@ page-list {
   .buttonRow {
     align-self: center;
     width: 50%;
+  }
+
+  .push-to-bottom {
+    background-color: #eee5de;
+    position: absolute;
+    bottom: 10vh;
+    width: 100%;
   }
 
   .centerButton {
@@ -67,8 +79,6 @@ page-list {
     padding-top: 20px;
     font-size: 200%;
   }
-
-
 
   .scrollable {
     background-color: #eee5de;

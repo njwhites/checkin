@@ -47,45 +47,52 @@
         </div>
       </ion-content>
     </ion-list>
-    <ion-grid>
-      <ion-row class="countRow">
-        <ion-col>
-          <ion-item class="bg">
-            <span class="countHeader" item-right>
-              Total Students Present:
-            </span>
-            <span class="presentCount" item-right>
-              {{this.studentService.data|presentCount}}
-            </span>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
   </div>
-  <ion-list inset>
     <div *ngIf="parentPage === 'napStudents'">
-      <div *ngFor="let student of this.studentService.data | mapValues">
-        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
-          <ion-card>
-            <ion-card-content>
-              <ion-grid>
-                <ion-row>
-                  <ion-col width-33 class="infoCol">
-                    <ion-icon name="walk" item-left></ion-icon>
-                    {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
-                  </ion-col>
-                  <ion-col width-67>
-                    <page-nap-slider [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-slider>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-card-content>
-          </ion-card>
+      <ion-content class="scrollable">
+        <ion-grid class="horizontal-align-center">
+          <ion-row class="buttonRow">
+            <ion-col>
+              <div class="titleRoom">
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      <ion-list inset>
+        <div *ngFor="let student of this.studentService.data | mapValues">
+          <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
+            <ion-card>
+              <ion-card-content>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col width-33 class="infoCol">
+                      <ion-icon name="walk" item-left></ion-icon>
+                      {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+                    </ion-col>
+                    <ion-col width-67>
+                      <page-nap-slider [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-slider>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+          </div>
         </div>
-      </div>
+      </ion-list>
+      </ion-content>
     </div>
 
     <div *ngIf="parentPage === 'therapy'">
+      <ion-content class="scrollable">
+        <ion-grid class="horizontal-align-center">
+          <ion-row class="buttonRow">
+            <ion-col>
+              <div class="titleRoom">
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      <ion-list inset>
       <div *ngFor="let student of this.studentService.data | mapValues">
         <div *ngIf="this.studentService.data.get(student.key).location.includes(checkinService.CHECKED_OUT_THERAPY)">
           <ion-card>
@@ -112,9 +119,21 @@
           </ion-card>
         </div>
       </div>
+    </ion-list>
+    </ion-content>
     </div>
 
     <div *ngIf="parentPage === 'generic'">
+      <ion-content class="scrollable">
+        <ion-grid class="horizontal-align-center">
+          <ion-row class="buttonRow">
+            <ion-col>
+              <div class="titleRoom">
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      <ion-list inset>
       <div *ngFor="let student of this.studentService.data | mapValues">
         <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT_NURSE">
           <ion-card>
@@ -141,9 +160,21 @@
           </ion-card>
         </div>
       </div>
+    </ion-list>
+    </ion-content>
     </div>
 
     <div *ngIf="parentPage === 'signout'">
+      <ion-content class="scrollable">
+        <ion-grid class="horizontal-align-center">
+          <ion-row class="buttonRow">
+            <ion-col>
+              <div class="titleRoom">
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      <ion-list inset>
       <div *ngFor="let student of this.studentService.data | mapValues">
         <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
           <ion-card>
@@ -157,9 +188,21 @@
           </ion-card>
         </div>
       </div>
+    </ion-list>
+    </ion-content>
     </div>
 
     <div *ngIf="parentPage === 'checkin'">
+      <ion-content class="scrollable">
+        <ion-grid class="horizontal-align-center">
+          <ion-row class="buttonRow">
+            <ion-col>
+              <div class="titleRoom">
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      <ion-list inset>
       <div *ngFor="let student of this.studentService.data | mapValues">
         <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT">
           <ion-card>
@@ -173,24 +216,25 @@
           </ion-card>
         </div>
       </div>
+    </ion-list>
+    </ion-content>
     </div>
-
-  </ion-list>
-  <div class="vertical-align-content">
-    <ion-grid>
-      <ion-row class="buttonRow">
-        <ion-col>
-          <div *ngIf="parentPage === 'signout' && !isListEmpty()">
-            <button ion-button block (click)="removeStudents()">Checkout</button>
-          </div>
-          <div *ngIf="parentPage === 'checkin' && !isListEmpty()">
-            <button ion-button block (click)="addStudents()">Check In</button>
-          </div>
-          <div *ngIf="parentPage === 'napStudents' && !isListEmpty()">
-            <button ion-button block (click)="updateAll(this.studentService)">Update</button>
-          </div>
-        </ion-col>
-      </ion-row>
+  <div *ngIf="parentPage === 'presentStudents'" class="vertical-align-content">
+    <ion-grid class="push-to-bottom">
+        <ion-row class="countRow">
+          <ion-item class="bg">
+            <span class="countHeader" item-right>
+              Total Students Present:
+            </span>
+            <span class="presentCount" item-right>
+              {{this.studentService.data|presentCount}}
+            </span>
+          </ion-item>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <div *ngIf="isListEmpty() && parentPage !== 'presentStudents'">
+    <ion-grid class="emptyGrid">
       <ion-row class="emptyRow" *ngIf="isListEmpty()">
         <ion-col>
           <div *ngIf="this.parentPage === 'checkin'">
@@ -216,6 +260,23 @@
             <ion-item class="emptyText">
               No students are present in this class.
             </ion-item>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+    <div *ngIf="parentPage !== 'presentStudents'" class="vertical-align-content">
+      <ion-grid class="push-to-bottom">
+      <ion-row class="buttonRow">
+        <ion-col>
+          <div *ngIf="parentPage === 'signout' && !isListEmpty()">
+            <button ion-button block (click)="removeStudents()">Checkout</button>
+          </div>
+          <div *ngIf="parentPage === 'checkin' && !isListEmpty()">
+            <button ion-button block (click)="addStudents()">Check In</button>
+          </div>
+          <div *ngIf="parentPage === 'napStudents' && !isListEmpty()">
+            <button ion-button block (click)="updateAll(this.studentService)">Update</button>
           </div>
         </ion-col>
       </ion-row>
