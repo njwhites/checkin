@@ -115,7 +115,7 @@ export class BillingWeekModel{
   public students: Array<StudentBillingWeek>;
 
   //These are based on the data in days
-  public billing_percent: Number;
+  public billing_percent: number;
 
   constructor(){
     this.room_number = "";
@@ -127,25 +127,38 @@ export class BillingWeekModel{
 export class StudentBillingWeek{
   public student_id: String;
 
-  public average_hours_billed_per_day: Number;
+  public average_hours_billed_per_day: number;
   public student_days: Array<BillingDay>;
 
 }
 
 export class BillingDay{
   public date: Date;
-  public start_time: Number;
-  public end_time: Number;
-  public gross_hours: Number;
-  public nap_hours: Number;
-  public SP_therapy_hours: Number;
-  public PT_therapy_hours: Number;
-  public OT_therapy_hours: Number;
-  public net_hours: Number;
-  public billable_hours: Number;
-  public total_billed: Number;
+
+  public start_time: number;
+  public end_time: number;
+  public gross_hours: number;
+
+  public nap_hours: number;
+  public SP_therapy_hours: number;
+  public PT_therapy_hours: number;
+  public OT_therapy_hours: number;
+
+  public net_hours: number;
+  public billable_hours: number;
+  public total_billed: number;
 
   public isLessThan7(){
     return this.gross_hours < 7;
+  }
+
+  constructor() {
+
+    this.start_time = -1;
+    this.end_time = -1;
+    this.gross_hours = -1;
+    this.net_hours = -1;
+    this.billable_hours = 0;
+
   }
 }
