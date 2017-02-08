@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {CheckinProvider} from '../../providers/checkin-provider'
+import {BillingProvider} from '../../providers/billing-provider'
 
 
 @Component({
@@ -10,7 +11,8 @@ import {CheckinProvider} from '../../providers/checkin-provider'
 export class AdminReportingPage {
 
   constructor(public navCtrl: NavController,
-              public checkinService: CheckinProvider){
+              public checkinService: CheckinProvider,
+              public billingService: BillingProvider){
   }
 
   ionViewDidLoad() {
@@ -19,5 +21,11 @@ export class AdminReportingPage {
 
   exportData(){
     console.log("gonna export here");
+    var date = new Date();
+    while(date.getDay() !== 1){
+      date.setDate(date.getDate()-1);
+    }
+    console.log(date);
+    this.billingService.writeBillingWeek(date,"102");
   }
 }
