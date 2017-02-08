@@ -3,13 +3,14 @@
     <ion-title center-text>Admin</ion-title>
     <page-home-button></page-home-button>
   </ion-navbar>
-  <ion-toolbar no-border-top>
+  <ion-toolbar no-border-top class="toolBar">
     <ion-item text-center>Student Info</ion-item>
     <ion-searchbar (ionInput)="setFilter($event)" debounce="00"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content scroll="false" padding>
+<ion-content padding>
+  <ion-content class="scrollView">
     <ion-list inset>
       <ion-card *ngFor="let student of this.studentService.data | impureMapValues | studentFilter:this.filter" (click)="studentClicked(student.key)">
         <ion-item>
@@ -17,24 +18,12 @@
         </ion-item>
       </ion-card>
     </ion-list>
-  <!-- <ion-grid>
-    <ion-row>
+  </ion-content>
+  <ion-grid class="push-to-bottom">
+    <ion-row class="buttonRow">
       <ion-col>
-        <ion-scroll>
-        <ion-list inset>
-          <div *ngFor="let student of this.studentService.data | impureMapValues | studentFilter:this.filter" (click)="studentClicked(student.key)">
-            <ion-item>
-              {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
-            </ion-item>
-          </div>
-        </ion-list>
-      </ion-scroll>
+        <button ion-button block (click)="addStudent()">Add A New Student</button>
       </ion-col>
     </ion-row>
-  </ion-grid> -->
-  <button ion-button block (click)="addStudent()">Add A New Student</button>
-
-  <!--<ion-fab bottom right>
-    <button ion-fab (click)="addStudent()">Add A New Student</button>
-  </ion-fab>-->
+  </ion-grid>
 </ion-content>
