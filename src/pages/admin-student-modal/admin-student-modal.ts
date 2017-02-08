@@ -3,7 +3,7 @@ import {Validators, FormBuilder, FormControl} from '@angular/forms';
 import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { StudentProvider } from "../../providers/student-provider";
 import { StudentModel } from "../../models/db-models";
-
+import { ClassRoomProvider } from "../../providers/class-room-provider";
 
 //---------------------------------------------------------
 //For a commented description of this code see
@@ -23,6 +23,7 @@ export class AdminStudentModalPage {
   constructor(public navParams: NavParams,
               public formBuilder: FormBuilder,
               public studentService: StudentProvider,
+              public classroomService: ClassRoomProvider,
               public navController: NavController,
               public alertController: AlertController,
               public toastController: ToastController) {
@@ -106,6 +107,7 @@ export class AdminStudentModalPage {
         this.student._id = this.studentForm.value.ID;
         this.studentService.createStudent(this.student).then((returnedID: String)=>{
           this.student._id = returnedID;
+          this.classroomService.addStudentToClass(this.classroomService.data.get("-1"),this.student._id);
         });
         let emptyStudent = new StudentModel();
         emptyStudent._id = "-1";

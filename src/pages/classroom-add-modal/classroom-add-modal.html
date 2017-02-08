@@ -18,7 +18,7 @@
   <div *ngFor="let class of this.classRoomService.data | mapValues:true">
     <div *ngIf="this.classroom.roomNumber != class.key">
       <ion-item-divider>
-        Room {{class.key}}
+        <div *ngIf="class.key>=0">Room</div>{{class.val.roomNumber}}
         <button id="downButton_{{class.key}}" ion-button item-right (click)="toggleDropDown(class.key)">
             <ion-icon id="dropDown_{{class.key}}" name="arrow-down"></ion-icon>
         </button>
