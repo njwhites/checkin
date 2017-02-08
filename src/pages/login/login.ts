@@ -47,8 +47,8 @@ export class LoginPage {
 
   }
 
-  ionViewDidLoad(){
-
+  ionViewDidEnter(){
+    this.classRoomService.selectedClassroom = null;
     // this.classRoomService.getAllClassRooms().then((data) => {
     //   this.classrooms = <Array<ClassRoomModel>>data;
     // });
@@ -60,6 +60,7 @@ export class LoginPage {
     //testing to see if class room selection works
     //******************************************************************
     if(id){
+      this.classRoomService.selectedClassroom = id;
       this.userService.getAllUsers().then(output =>{
         this.studentService.getStudentsByGroup(this.classRoomService.data.get(id).students).then(result =>{
           this.navCtrl.push(this.classroomPage, {roomNumber: this.classRoomService.data.get(id).roomNumber});
