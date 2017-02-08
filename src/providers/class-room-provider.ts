@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import {ClassRoomModel} from '../models/db-models';
+import {StudentProvider} from './student-provider';
 
 @Injectable()
 export class ClassRoomProvider {
@@ -9,8 +10,9 @@ export class ClassRoomProvider {
   data: Map<String, ClassRoomModel>;
   db: any;
   remote: String;
+  selectedClassroom: String;
 
-  constructor() {
+  constructor(public studentService: StudentProvider) {
     this.data = new Map<String,ClassRoomModel>();
 
     //setup a local db and then sync it to a backend db
@@ -29,7 +31,6 @@ export class ClassRoomProvider {
     this.db.sync(this.remote, options);
 
     //tell the db wha to do when it detects a change
-    this.data = new Map<String, ClassRoomModel>();
     this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change=>{
       this.handleChange(change);
     })
@@ -218,13 +219,29 @@ export class ClassRoomProvider {
 
   //function for what to do when the db detects a change
   handleChange(change){
+    if(this.data === undefined){
+      this.data = new Map<String,ClassRoomModel>();
+    }
     //if the change is a delete, delete it from the data object
     if(change.deleted){
       this.data.delete(change.doc._id);
+
     }
     //otherwise its an update or an add which are both treated the same
     else {
+      //double check this !!!!!!
+      console.log("selectedClassroom: "+this.selectedClassroom +"\nchange doc id "+change.doc._id);
+      if(this.selectedClassroom === change.doc._id){
+        this.studentService.getStudentsByGroup(change.doc.students);
+      }
+
       this.data.set(change.doc._id, change.doc);
     }
+  }
+
+  areTheseEqual(array1: Array<any>, array2: Array<any>){
+
+
+    return false;
   }
 }

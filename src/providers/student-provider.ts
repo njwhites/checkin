@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import {StudentModel} from '../models/db-models';
-import {ClassRoomProvider} from './class-room-provider';
 
 @Injectable()
 export class StudentProvider {
@@ -10,7 +9,7 @@ export class StudentProvider {
   db: any;
   remote: String;
 
-  constructor(public classroomService: ClassRoomProvider) {
+  constructor() {
 
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('students');
@@ -128,7 +127,6 @@ export class StudentProvider {
           // })
           this.data.set(student._id, student);
           this.db.upsert(student._id, (() =>{return student}));
-          this.classroomService.addStudentToClass(this.classroomService.data.get("-1"),student._id);
           //return the generated id so that we can let the student know their id, may not be needed
           resolve(newID);
         });
