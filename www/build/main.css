@@ -22189,7 +22189,7 @@ page-list .emptyIcon {
   width: 75px;
   height: 75px;
   color: gray;
-  font-size: 800%;
+  font-size: 900%;
 }
 
 page-list .emptyText {
@@ -22199,7 +22199,7 @@ page-list .emptyText {
   align-self: center;
   text-align: center;
   color: gray;
-  font-size: 150%;
+  font-size: 200%;
 }
 
 page-list .infoCol {
@@ -22479,7 +22479,7 @@ page-therapist .emptyIcon {
   width: 75px;
   height: 75px;
   color: gray;
-  font-size: 800%;
+  font-size: 900%;
 }
 
 page-therapist .emptyText {
@@ -22489,7 +22489,7 @@ page-therapist .emptyText {
   align-self: center;
   text-align: center;
   color: gray;
-  font-size: 150%;
+  font-size: 200%;
 }
 
 page-therapist-add .scroll-content {
@@ -22552,7 +22552,7 @@ page-therapist-student-details .emptyIcon {
   width: 75px;
   height: 75px;
   color: gray;
-  font-size: 800%;
+  font-size: 900%;
 }
 
 page-therapist-student-details .emptyText {
@@ -22562,7 +22562,7 @@ page-therapist-student-details .emptyText {
   align-self: center;
   text-align: center;
   color: gray;
-  font-size: 150%;
+  font-size: 200%;
 }
 
 page-therapist-student-details .scrollView {
