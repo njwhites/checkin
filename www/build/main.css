@@ -21753,6 +21753,10 @@ page-action-button .buttonItem {
   width: 70px;
 }
 
+page-admin-classroom-tab .bgc {
+  background-color: #eee5de;
+}
+
 page-admin-classroom-tab .roomContainer {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -21804,6 +21808,14 @@ page-admin-classroom-tab .addFab {
   z-index: 100;
   bottom: 60px;
   right: 20px;
+}
+
+page-admin-debug-tab .bgc {
+  background-color: #eee5de;
+}
+
+page-admin-reporting .bgc {
+  background-color: #eee5de;
 }
 
 page-admin-student-tab .fixedSearchbar {
@@ -21862,13 +21874,37 @@ page-admin-student-tab .toolBar {
   background-color: #eee5de;
 }
 
-page-admin-user-tab .addFab {
-  width: 150px;
-  height: 75px;
-  position: fixed;
-  z-index: 100;
-  bottom: 60px;
-  right: 20px;
+page-admin-user-tab .bgc {
+  background-color: #eee5de;
+}
+
+page-admin-user-tab .scroll-content {
+  padding-top: 5vh !important;
+  background-color: #eee5de;
+}
+
+page-admin-user-tab .scrollView {
+  background-color: #eee5de;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+  max-height: 75vh;
+}
+
+page-admin-user-tab .push-to-bottom {
+  background-color: #eee5de;
+  position: absolute;
+  bottom: 7vh;
+  width: 100%;
+}
+
+page-admin-user-tab .buttonRow {
+  background-color: #eee5de;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: auto;
 }
 
 page-classroom-id .vertical-align-content {
