@@ -21965,6 +21965,7 @@ page-classroom-id .item-ios {
 
 page-classroom-id .text-input {
   text-align: center;
+  padding-right: 0px !important;
 }
 
 page-classroom-id .input-style {
