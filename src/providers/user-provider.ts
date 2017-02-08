@@ -12,6 +12,7 @@ export class UserProvider {
 
 
   constructor() {
+    this.data = new Map<String, UserModel>();
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('users');
 

@@ -10,7 +10,7 @@ export class StudentProvider {
   remote: String;
 
   constructor() {
-
+    this.data = new Map<String,StudentModel>();
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('students');
 
