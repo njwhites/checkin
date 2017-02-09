@@ -11,24 +11,20 @@
 <ion-content class="bgc">
   <ion-grid>
     <ion-row>
-      <ion-col>
-        Classrooms:
-      </ion-col>
-    </ion-row>
-    <ion-row>
       <div class="roomContainer">
-        <button class="roomButton" *ngFor="let class of this.classRoomService.data | impureMapValues:true"  (click)="showClassRoomInfo(class.val)">
-          <div class="roomDummy">
-          </div>
-          <div class="roomText">
+        <ion-card *ngFor="let class of this.classRoomService.data | impureMapValues:true"  (click)="showClassRoomInfo(class.val)">
+          <ion-item *ngIf="class.val.roomNumber === 'Unallocated'">
             {{class.val.roomNumber}}
-          </div>
-            <!--<ion-list>
-              <ion-item class="studentItem" *ngFor="let sID of class.students">
-                {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
-              </ion-item>
-            </ion-list>-->
-        </button>
+          </ion-item>
+          <ion-item *ngIf="class.val.roomNumber !== 'Unallocated'">
+            Classroom {{class.val.roomNumber}}
+          </ion-item>
+          <!--<ion-list>
+            <ion-item class="studentItem" *ngFor="let sID of class.students">
+              {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
+            </ion-item>
+          </ion-list>-->
+        </ion-card>
       </div>
     </ion-row>
   </ion-grid>
