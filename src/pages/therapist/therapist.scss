@@ -6,7 +6,7 @@ page-therapist {
   .horizontal-align-center {
     background-color: #eee5de;
     align-items: center;
-    padding-top: 5%;
+    padding-top: 3%;
   }
   .vertical-align-content
   {
@@ -17,8 +17,7 @@ page-therapist {
   .scrollView {
     background-color: #eee5de;
     align-items: center;
-    height: 75%;
-    max-height: 63vh
+    height: 65vh;
   }
   .push-to-bottom {
     background-color: #eee5de;
@@ -30,6 +29,12 @@ page-therapist {
     background-color: #eee5de;
     align-self: center;
     width: auto;
+  }
+  .titleRow {
+    background-color: #eee5de;
+    align-self: center;
+    width: auto;
+    padding-top: 3%;
   }
   .addButton {
     align-self: center;
@@ -44,20 +49,17 @@ page-therapist {
     padding-top: 20px;
     font-size: 200%;
   }
-
   .emptyRow {
     background-color: #eee5de;
     padding-top: 25vh;
     align-self: center;
-    width: 60%;
+    width: auto;
   }
-
   .emptyItem {
     background-color: #eee5de;
     align-self: center;
     text-align: center;
   }
-
   .emptyIcon {
     background-color: #eee5de;
     width: 75px;
@@ -65,7 +67,6 @@ page-therapist {
     color: gray;
     font-size: 900%
   }
-
   .emptyText {
     background-color: #eee5de;
     align-self: center;
@@ -73,10 +74,8 @@ page-therapist {
     color: gray;
     font-size: 200%;
   }
-
   .cardElement {
   }
-
   .cardContent {
   }
 }

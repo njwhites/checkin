@@ -22515,7 +22515,7 @@ page-therapist .horizontal-align-center {
   -ms-flex-align: center;
   -ms-grid-row-align: center;
   align-items: center;
-  padding-top: 5%;
+  padding-top: 3%;
 }
 
 page-therapist .vertical-align-content {
@@ -22531,8 +22531,7 @@ page-therapist .scrollView {
   -ms-flex-align: center;
   -ms-grid-row-align: center;
   align-items: center;
-  height: 75%;
-  max-height: 63vh;
+  height: 65vh;
 }
 
 page-therapist .push-to-bottom {
@@ -22548,6 +22547,15 @@ page-therapist .buttonRow {
   -ms-flex-item-align: center;
   align-self: center;
   width: auto;
+}
+
+page-therapist .titleRow {
+  background-color: #eee5de;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: auto;
+  padding-top: 3%;
 }
 
 page-therapist .addButton {
@@ -22576,7 +22584,7 @@ page-therapist .emptyRow {
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
-  width: 60%;
+  width: auto;
 }
 
 page-therapist .emptyItem {
