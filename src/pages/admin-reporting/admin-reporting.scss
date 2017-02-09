@@ -1,3 +1,31 @@
 page-admin-reporting {
-
+  .weekText{
+    height: 5vh;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left:12px;
+    margin-right:12px;
+  }
+  .arrowButton{
+    height:100%;
+    width:100%;
+  }
+  .totalBar{
+    background-color:rgba(0,0,0,0.08);
+  }
+  .attendanceWarning{
+    height:100%;
+    background-color:rgb(255,0,0);
+    border: 3px;
+  }
+  .billedWarning{
+    height:100%;
+    background-color:rgb(0,255,0);
+    border: 3px;
+  }
+  .therapyWarning{
+    height:100%;
+    background-color:rgb(0,0,255);
+    border: 3px;
+  }
 }
