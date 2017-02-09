@@ -14,6 +14,7 @@
       <ion-card *ngFor="let student of this.studentService.data | impureMapValues | studentFilter:this.filter" (click)="studentClicked(student.key)">
         <ion-item>
           {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
+          <ion-icon name="arrow-forward" item-right></ion-icon>
         </ion-item>
       </ion-card>
     </ion-list>
