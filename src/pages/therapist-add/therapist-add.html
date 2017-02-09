@@ -10,30 +10,34 @@
 <ion-content padding>
 <ion-item-group>
   <div *ngFor="let class of this.classRoomService.data | mapValues">
-    <ion-item-divider *ngIf="class.key >= 0">
-      Room {{class.key}}
-      <button id="downButton_{{class.key}}" ion-button item-right (click)="toggleDropDown(class.key)">
-          <ion-icon id="dropDown_{{class.key}}" name="arrow-down"></ion-icon>
-      </button>
-      <button id="upButton_{{class.key}}" hidden="true" ion-button item-right (click)="toggleDropDown(class.key)">
-          <ion-icon id="dropDown_{{class.key}}" name="arrow-up"></ion-icon>
-      </button>
-    </ion-item-divider>
-    <div id="classroom_{{class.key}}" hidden="true">
-      <div *ngFor="let sID of class.val.students">
-        <div *ngIf="!this.favStudents.includes(sID)">
-          <ion-item id="student_{{sID}}">
-            {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
-            <button ion-button round outline color="secondary" item-right (click)="addToFavorites(sID)">
-               <ion-icon name="add"></ion-icon>
-            </button>
-          </ion-item>
-        </div>
-      </div>
-      <ion-item class="emptyItem" id="empty_{{class.key}}" *ngIf="isEmpty(class.val)">
-        No more students to add
+    <ion-card *ngIf="class.key >= 0">
+      <ion-item>
+        Room {{class.key}}
+        <button id="downButton_{{class.key}}" ion-button item-right (click)="toggleDropDown(class.key)">
+            <ion-icon id="dropDown_{{class.key}}" name="arrow-down"></ion-icon>
+        </button>
+        <button id="upButton_{{class.key}}" hidden="true" ion-button item-right (click)="toggleDropDown(class.key)">
+            <ion-icon id="dropDown_{{class.key}}" name="arrow-up"></ion-icon>
+        </button>
       </ion-item>
-    </div>
+      <div id="classroom_{{class.key}}" hidden="true">
+        <ion-list>
+          <div *ngFor="let sID of class.val.students">
+            <div *ngIf="!this.favStudents.includes(sID)">
+              <ion-item id="student_{{sID}}">
+                {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
+                <button ion-button round outline color="secondary" item-right (click)="addToFavorites(sID)">
+                   <ion-icon name="add"></ion-icon>
+                </button>
+              </ion-item>
+            </div>
+          </div>
+          <ion-item class="emptyItem" id="empty_{{class.key}}" *ngIf="isEmpty(class.val)">
+            No more students to add
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-card>
   </div>
 </ion-item-group>
 </ion-content>
