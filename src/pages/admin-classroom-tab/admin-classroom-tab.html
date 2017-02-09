@@ -9,34 +9,27 @@
 
 
 <ion-content class="bgc">
-  <ion-grid>
-    <ion-row>
-      <div class="roomContainer">
-        <ion-card *ngFor="let class of this.classRoomService.data | impureMapValues:true"  (click)="showClassRoomInfo(class.val)">
-          <ion-item *ngIf="class.val.roomNumber === 'Unallocated'">
-            {{class.val.roomNumber}}
-            <ion-icon name="arrow-forward" item-right></ion-icon>
-          </ion-item>
-          <ion-item *ngIf="class.val.roomNumber !== 'Unallocated'">
-            Classroom {{class.val.roomNumber}}
-            <ion-icon name="arrow-forward" item-right></ion-icon>
-          </ion-item>
-          <!--<ion-list>
-            <ion-item class="studentItem" *ngFor="let sID of class.students">
-              {{this.studentService.data.get(sID).fName}} {{this.studentService.data.get(sID).lName}}
-            </ion-item>
-          </ion-list>-->
-        </ion-card>
-      </div>
+  <ion-content class="scrollView">
+    <ion-list inset>
+      <ion-card *ngFor="let class of this.classRoomService.data | impureMapValues:true"  (click)="showClassRoomInfo(class.val)">
+        <ion-item *ngIf="class.val.roomNumber === 'Unallocated'">
+          {{class.val.roomNumber}}
+          <ion-icon name="arrow-forward" item-right></ion-icon>
+        </ion-item>
+        <ion-item *ngIf="class.val.roomNumber !== 'Unallocated'">
+          Classroom {{class.val.roomNumber}}
+          <ion-icon name="arrow-forward" item-right></ion-icon>
+        </ion-item>
+      </ion-card>
+    </ion-list>
+  </ion-content>
+  <ion-grid class="push-to-bottom">
+    <ion-row class="buttonRow">
+      <ion-col>
+        <button ion-button block (click)="addClassroom()">
+          Add Classroom
+        </button>
+      </ion-col>
     </ion-row>
   </ion-grid>
-  <!-- <ion-fab bottom right>
-    <button ion-fab block class="addFab">
-      <ion-icon name="add">
-      </ion-icon>
-    </button>
-  </ion-fab> -->
-  <button ion-button block (click)="addClassroom()">
-    Add Classroom
-  </button>
 </ion-content>

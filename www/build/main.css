@@ -21758,34 +21758,8 @@ page-admin-classroom-tab .bgc {
 }
 
 page-admin-classroom-tab .roomContainer {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-align-content: space-around;
-  -ms-flex-line-pack: distribute;
-  align-content: space-around;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: distribute;
-  justify-content: space-around;
+  display: block;
   width: 100%;
-}
-
-page-admin-classroom-tab .roomButton {
-  background-color: #efce28;
-  margin: 12px;
-  width: 15%;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 
 page-admin-classroom-tab .roomDummy {
@@ -21808,6 +21782,35 @@ page-admin-classroom-tab .addFab {
   z-index: 100;
   bottom: 60px;
   right: 20px;
+}
+
+page-admin-classroom-tab .scroll-content {
+  padding-top: 3% !important;
+  background-color: #eee5de;
+}
+
+page-admin-classroom-tab .scrollView {
+  background-color: #eee5de;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+  max-height: 83vh;
+}
+
+page-admin-classroom-tab .push-to-bottom {
+  background-color: #eee5de;
+  position: absolute;
+  bottom: 7vh;
+  width: 100%;
+}
+
+page-admin-classroom-tab .buttonRow {
+  background-color: #eee5de;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: auto;
 }
 
 page-admin-debug-tab .bgc {

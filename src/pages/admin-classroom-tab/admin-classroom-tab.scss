@@ -2,23 +2,11 @@ page-admin-classroom-tab {
   .bgc {
     background-color: #eee5de;
   }
-
   .roomContainer{
-    display: flex;
-    flex-wrap: wrap;
-    align-content: space-around;
-    justify-content: space-around;
+    display: block;
     width:100%;
   }
-  .roomButton{
-    background-color: #efce28;
-    margin:12px;
-    width: 15%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   .roomDummy{
     margin-top: 100%;
   }
@@ -36,6 +24,26 @@ page-admin-classroom-tab {
     z-index: 100;
     bottom: 60px;
     right: 20px;
+  }
+  .scroll-content {
+    padding-top: 3% !important;
+    background-color: #eee5de;
+  }
+  .scrollView {
+    background-color: #eee5de;
+    align-items: center;
+    max-height: 83vh;
+  }
+  .push-to-bottom {
+    background-color: #eee5de;
+    position: absolute;
+    bottom: 7vh;
+    width: 100%;
+  }
+  .buttonRow {
+    background-color: #eee5de;
+    align-self: center;
+    width: auto;
   }
 
 }
