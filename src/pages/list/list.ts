@@ -194,7 +194,7 @@ export class ListPage {
       if(!this.napStudents.has(String(student._id)) && (student.location !== 'Checked out')){
         this.napStudents.set(String(student._id), "60");
       }
-    })
+    });
 
     this.checkinService.setNaps(this.napStudents);
     let toast = this.toastCtrl.create({
@@ -205,6 +205,7 @@ export class ListPage {
     });
     toast.present(toast);
     console.log(this.napStudents);
+    this.navCtrl.pop();
   }
 
   undo(){
