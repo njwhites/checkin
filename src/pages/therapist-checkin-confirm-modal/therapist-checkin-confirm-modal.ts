@@ -42,7 +42,7 @@ export class TherapistCheckinConfirmModalPage {
   }
 
   submit() {
-    var start_time = ''
+    var start_time = '';
     switch(this.start) {
       case "-15":
         start_time = this.mfifteen;

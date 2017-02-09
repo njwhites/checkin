@@ -21814,6 +21814,41 @@ page-admin-debug-tab .bgc {
   background-color: #eee5de;
 }
 
+page-admin-reporting .weekText {
+  height: 5vh;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+page-admin-reporting .arrowButton {
+  height: 100%;
+  width: 100%;
+}
+
+page-admin-reporting .totalBar {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+page-admin-reporting .attendanceWarning {
+  height: 100%;
+  background-color: red;
+  border: 3px;
+}
+
+page-admin-reporting .billedWarning {
+  height: 100%;
+  background-color: lime;
+  border: 3px;
+}
+
+page-admin-reporting .therapyWarning {
+  height: 100%;
+  background-color: blue;
+  border: 3px;
+}
+
 page-admin-reporting .bgc {
   background-color: #eee5de;
 }
