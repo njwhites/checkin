@@ -18,29 +18,57 @@ export class ActionButtonPage {
     this.selected = false;
   }
 
+/*******************************************************************************
+ * checkoutStudent
+ *
+ * used for denoting a student has been checkout from the therapist or generic
+ * perspective
+ *
+ **/
   checkoutStudent() {
     if(this.grandParentPage === 'signout') {
       this.selected = true;
     }
     this.checkedOut.emit(this.thisStudent);
-    //this is where the userID will be linked with thisStudent to to associate who is out with whom
   }
-
+/*******************************************************************************
+ * checkinStudent
+ *
+ * used for denoting a student has been selected for checking in or checking out
+ *
+ **/
   checkinStudent() {
     this.selected = true;
     this.checkedOut.emit(this.thisStudent);
-    //this is where the userID will be linked with thisStudent to to associate who is out with whom
   }
 
+/*******************************************************************************
+ * TNcheckinStudent
+ *
+ * used for denoting a student has returned from therapist or generic
+ *
+ **/
   TNcheckinStudent() {
     this.checkedOut.emit(this.thisStudent + " returned");
   }
 
+/*******************************************************************************
+ * signinDeselectStudent
+ *
+ * used for removing student from checkin array
+ *
+ **/
   signinDeselectStudent() {
     this.selected = false;
     this.checkedOut.emit(this.thisStudent + ' was removed');
   }
 
+/*******************************************************************************
+ * signoutDeselectStudent
+ *
+ * used for removing student from checkout array
+ *
+ **/
   signoutDeselectStudent() {
     this.selected = false;
     this.checkedOut.emit(this.thisStudent + ' was removed');
