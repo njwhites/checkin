@@ -26,7 +26,7 @@ export class ClassroomIdPage {
     //getUserByID takes a string and the input to .then() is a single java object that matches that id
     this.userService.getUserByID(userID.value).then((user: UserModel) => {
 
-      if(user._id === "missing"){
+      if(user._id === 'missing'){
 
         let toast = this.toastCtrl.create({
           message: 'Invalid User ID',
@@ -37,19 +37,19 @@ export class ClassroomIdPage {
       } else {
         //I split up inputs so we can eventually look to see if each userId is authorized for the transaction
         //user.role can be used to identify permissions
-        if(user.role === "admin"){
+        if(user.role === 'admin' && this.parentPage !== 'therapist' && this.parentPage !== 'therapy'){
           this.notify.emit(id)
-        } else if(user.role === "kitchen" && this.parentPage === "kitchen"){
+        } else if(user.role === 'kitchen' && this.parentPage === 'kitchen'){
           this.notify.emit(id)
-        } else if(user.role === "therapist" && this.parentPage === "therapist") {
+        } else if(user.role === 'therapist' && this.parentPage === 'therapist') {
           this.notify.emit(id)
-        }else if(user.role === "therapist" && this.parentPage === 'therapy') {
+        }else if(user.role === 'therapist' && this.parentPage === 'therapy') {
           this.notify.emit(id);
-        } else if(user.role !== "driver" && this.parentPage === 'generic') {
+        } else if(user.role !== 'driver' && this.parentPage === 'generic') {
           this.notify.emit(id);
-        } else if(user.role === "driver" && this.parentPage === 'signout') {
+        } else if(user.role === 'driver' && this.parentPage === 'signout') {
           this.notify.emit(id);
-        } else if(user.role === "driver" && this.parentPage === 'checkin') {
+        } else if(user.role === 'driver' && this.parentPage === 'checkin') {
           this.notify.emit(id);
         } else {
           this.notify.emit(-1);
@@ -62,7 +62,7 @@ export class ClassroomIdPage {
   }
 
   back(){
-    this.goBack.emit("back");
+    this.goBack.emit('back');
   }
 
 }
