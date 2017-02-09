@@ -19,6 +19,15 @@ export class ClassroomIdPage {
   ionViewDidLoad(){
   }
 
+/*******************************************************************************
+ * checkUser
+ *
+ * Takes in the user ID and casts it at a number before checking to see if the
+ * user exists. If they do it checks if they have the appropriate role for the
+ * page they are trying to log into.
+ *
+ * @param userID
+ **/
   checkUser(userID) {
     let id = Number(userID.value);
 
@@ -61,6 +70,12 @@ export class ClassroomIdPage {
 
   }
 
+/*******************************************************************************
+ * back
+ *
+ * Emits to the parent page that the user is trying to go back
+ *
+ **/
   back(){
     this.goBack.emit('back');
   }
