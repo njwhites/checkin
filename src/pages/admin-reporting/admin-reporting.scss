@@ -14,16 +14,19 @@ page-admin-reporting {
     background-color:rgba(0,0,0,0.08);
   }
   .attendanceWarning{
+    flex-grow: 1;
     height:100%;
     background-color:rgb(255,0,0);
     border: 3px;
   }
   .billedWarning{
+    flex-grow: 1;
     height:100%;
     background-color:rgb(0,255,0);
     border: 3px;
   }
   .therapyWarning{
+    flex-grow: 1;
     height:100%;
     background-color:rgb(0,0,255);
     border: 3px;
@@ -31,4 +34,29 @@ page-admin-reporting {
   .bgc {
     background-color: #eee5de;
   }
+  .container{
+    height: 30px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .nameContainer{
+    font-size: 120%;
+    font-weight: bold;
+    text-align: left;
+    flex-grow: 1;
+    flex-basis: 50%;
+  }
+  .errorsContainer{
+    display: flex;
+    flex-grow: 1;
+    align-self:stretch;
+  }
+  .hoursContainer{
+    font-size: 120%;
+    fong-weight: bold;
+    text-align: right;
+    flex-grow: 1;
+    flex-basis: 30px;
+  }
+  $label-ios-margin: 0px;
 }
