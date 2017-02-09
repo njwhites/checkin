@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title center-text>Admin</ion-title>
+    <ion-title center-text>Admin: User Information</ion-title>
     <page-home-button></page-home-button>
   </ion-navbar>
   <ion-toolbar no-border-top>
@@ -12,63 +12,67 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-grid>
-    <ion-row>
+<ion-content class="bgc">
+  <ion-content class="scrollView">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div [ngSwitch]="this.roleSelection">
+            <ion-list inset *ngSwitchCase="this.userService.ROLES[0]">
+              <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[0]" (click)="userClicked(user.key)">
+                <ion-item>
+                  {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
+                </ion-item>
+              </ion-card>
+            </ion-list>
+
+            <ion-list inset *ngSwitchCase="this.userService.ROLES[1]">
+              <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[1]" (click)="userClicked(user.key)">
+                <ion-item>
+                  {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
+                </ion-item>
+              </ion-card>
+            </ion-list>
+
+            <ion-list inset *ngSwitchCase="this.userService.ROLES[2]">
+              <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[2]" (click)="userClicked(user.key)">
+                <ion-item>
+                  {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
+                </ion-item>
+              </ion-card>
+            </ion-list>
+
+            <ion-list inset *ngSwitchCase="this.userService.ROLES[3]">
+              <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[3]" (click)="userClicked(user.key)">
+                <ion-item>
+                  {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
+                </ion-item>
+              </ion-card>
+            </ion-list>
+
+            <ion-list inset *ngSwitchCase="this.userService.ROLES[4]">
+              <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[4]" (click)="userClicked(user.key)">
+                <ion-item>
+                  {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
+                </ion-item>
+              </ion-card>
+            </ion-list>
+
+            <ion-list inset *ngSwitchCase="this.userService.ROLES[5]">
+              <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[5]" (click)="userClicked(user.key)">
+                <ion-item>
+                  {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
+                </ion-item>
+              </ion-card>
+            </ion-list>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  <ion-grid class="push-to-bottom">
+    <ion-row class="buttonRow">
       <ion-col>
-        <div [ngSwitch]="this.roleSelection">
-          <ion-list inset *ngSwitchCase="this.userService.ROLES[0]">
-            <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[0]" (click)="userClicked(user.key)">
-              <ion-item>
-                {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
-              </ion-item>
-            </ion-card>
-          </ion-list>
-
-          <ion-list inset *ngSwitchCase="this.userService.ROLES[1]">
-            <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[1]" (click)="userClicked(user.key)">
-              <ion-item>
-                {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
-              </ion-item>
-            </ion-card>
-          </ion-list>
-
-          <ion-list inset *ngSwitchCase="this.userService.ROLES[2]">
-            <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[2]" (click)="userClicked(user.key)">
-              <ion-item>
-                {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
-              </ion-item>
-            </ion-card>
-          </ion-list>
-
-          <ion-list inset *ngSwitchCase="this.userService.ROLES[3]">
-            <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[3]" (click)="userClicked(user.key)">
-              <ion-item>
-                {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
-              </ion-item>
-            </ion-card>
-          </ion-list>
-
-          <ion-list inset *ngSwitchCase="this.userService.ROLES[4]">
-            <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[4]" (click)="userClicked(user.key)">
-              <ion-item>
-                {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
-              </ion-item>
-            </ion-card>
-          </ion-list>
-
-          <ion-list inset *ngSwitchCase="this.userService.ROLES[5]">
-            <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[5]" (click)="userClicked(user.key)">
-              <ion-item>
-                {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
-              </ion-item>
-            </ion-card>
-          </ion-list>
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col width-20>
         <button ion-button block (click)="addUser()">Add A New User</button>
       </ion-col>
     </ion-row>
