@@ -20,6 +20,15 @@ export class UserLoginPage {
     this.parentPage = this.navParams.get('parentPage');
   }
 
+  /*******************************************************************************
+   * onNotify
+   *
+   * takes in the ID and if its a valid ID will push to the correct page, if not
+   * it toasts that the ID was incorrect (only used for kitchen, therapist and
+   * admin pages from the initial splash screen)
+   *
+   * @param idCheck
+   **/
   onNotify(idCheck:number):void {
     if(idCheck >= 0) {
       if(this.parentPage === 'kitchen') {
