@@ -38,7 +38,7 @@
       </ion-grid>
     </div>
   </ion-content>
-  <ion-grid class="push-to-bottom">
+  <ion-grid class="push-to-bottom" *ngIf="!this.location.includes(this.checkinService.CHECKED_OUT)">
     <ion-row class="buttonRow">
       <ion-col>
         <div *ngIf="this.location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
