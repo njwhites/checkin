@@ -10,8 +10,6 @@ export class FilterParentsPipe {
         const user = this.userService.data.get(String(args));
         if(user.role === this.userService.ROLES[4]){
           const visibleStudents = this.userService.data.get(String(args)).visible_students;
-          console.log("visibleStudents");
-          console.log(visibleStudents);
           // //this is the case where if they don't need a filter
           // if(visibleStudents === undefined){
           //     return visibleStudents;
