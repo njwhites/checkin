@@ -37,10 +37,14 @@ export class TherapistCheckinConfirmModalPage {
     this.student = this.navParams.get('student');
   }
 
-  ionViewDidLoad() {
-    console.log('length ' + this.length);
-  }
 
+/*******************************************************************************
+ * submit
+ *
+ * takes values from modal and passes them to the therapistCheckinFollowUp
+ * function; specifically updating the start time and the length
+ *
+ */
   submit() {
     var start_time = '';
     switch(this.start) {
@@ -72,6 +76,10 @@ export class TherapistCheckinConfirmModalPage {
     this.checkinService.therapistCheckinFollowUp(this.student.toString(), this.by_id.toString(), this.checkinService.parseReadableTime(start_time).toString(), this.length);
     let data = { 'returnValue': true };
     this.viewCtrl.dismiss(data);
+  }
+
+  ionViewDidLoad() {
+    console.log('length ' + this.length);
   }
 
 }
