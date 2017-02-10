@@ -649,7 +649,7 @@ export class CheckinProvider {
     return date.getTime();
   }
 
-    getClassroomBilling(title: String, room_number: String, callback){
+    getClassroomBilling(room_number: String, callback){
       this.billingdb.allDocs({include_docs: true}).then(result => {
 
           //get today's object, if it does not exist, create it
@@ -660,6 +660,7 @@ export class CheckinProvider {
           //console.log(trans);
           //Day already exists in the db
           if(trans.length > 0){
+            console.log(trans[0]);
             let room = new ClassroomWeek();
             room.room_number = trans[0].doc.room_number;
             room.weeks = trans[0].doc.billingWeeks;
@@ -669,9 +670,9 @@ export class CheckinProvider {
             return;
           }else{
             //Day did not exist, creates and puts it
-            this.billingdb.upsert(title, (doc) => {
+            this.billingdb.upsert(room_number, (doc) => {
               return {
-                _id: title,
+                _id: room_number,
                 room_number: room_number,
                 billingWeeks: []
               }
@@ -680,7 +681,7 @@ export class CheckinProvider {
               //it will on recursion go into the other part of the if/else
               console.log("Successfully added billing document for room: " + room_number)
               console.log(`Recursing ${room_number}`)
-              this.getClassroomBilling(title, room_number, callback);
+              this.getClassroomBilling(room_number, callback);
             }).catch(function (err) {
               console.log(err);
             });
@@ -689,6 +690,16 @@ export class CheckinProvider {
           console.log(err)
       });
   }
+
+  getBillingWeek(start_date: Date, room_number: String){
+    var dateString = `${room_number}`;
+    return new Promise((resolve, reject) => {
+      this.getClassroomBilling(room_number, (cw: ClassroomWeek) => {
+        resolve(cw);
+      })
+    });
+  }
+
 
 
   writeBillingWeek(start_date: Date, room_number: String){
@@ -702,13 +713,13 @@ export class CheckinProvider {
       
       //upsert
       var dateString = `${room_number}`;
-      var title = `${dateString}-${start_date.getDate()}.${start_date.getMonth() + 1}.${start_date.getFullYear()}`;
-      this.getClassroomBilling(title,room_number, (doc: ClassroomWeek) => {
-        //console.log("WE MADE IT OUT");
+      this.getClassroomBilling(room_number, (doc: ClassroomWeek) => {
+        console.log(doc);
         let others = doc.weeks.filter((week: BillingWeekModel) => {
-          return start_date.getDate() === week.start_date.getDate() &&
-            start_date.getMonth() === week.start_date.getMonth() &&
-            start_date.getFullYear() === week.start_date.getFullYear();
+          var sd = new Date(week.start_date);
+          return start_date.getDate() !== sd.getDate() ||
+            start_date.getMonth() !== sd.getMonth() ||
+            start_date.getFullYear() !== sd.getFullYear();
         });
         let me = {
           start_date: billing_week.start_date,
@@ -741,8 +752,8 @@ export class CheckinProvider {
           billing_percent: billing_week.billing_percent
 
         }
-        this.billingdb.upsert(title, (document) => {
-          document.weeks = [...others, me]
+        this.billingdb.upsert(room_number, (document) => {
+          document.billingWeeks = [...others, me]
           return document;
         }).then(response => {
           //unsure how to do this without recursion. basically since it has been added to the db,

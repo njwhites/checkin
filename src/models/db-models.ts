@@ -166,6 +166,7 @@ export class BillingDay{
     this.start_time = -1;
     this.end_time = -1;
     this.gross_hours = -1;
+    this.nap_hours = 0;
     this.net_hours = -1;
     this.billable_hours = 0;
     this.SP_therapy_hours = 0;
