@@ -168,6 +168,9 @@ export class BillingDay{
     this.gross_hours = -1;
     this.net_hours = -1;
     this.billable_hours = 0;
+    this.SP_therapy_hours = 0;
+    this.PT_therapy_hours = 0;
+    this.OT_therapy_hours = 0;
 
   }
 }

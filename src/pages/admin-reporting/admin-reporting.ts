@@ -11,8 +11,7 @@ import {BillingProvider} from '../../providers/billing-provider'
 export class AdminReportingPage {
 
   constructor(public navCtrl: NavController,
-              public checkinService: CheckinProvider,
-              public billingService: BillingProvider){
+              public checkinService: CheckinProvider){
   }
 
   ionViewDidLoad() {
@@ -26,6 +25,6 @@ export class AdminReportingPage {
       date.setDate(date.getDate()-1);
     }
     console.log(date);
-    this.billingService.writeBillingWeek(date,"102");
+    this.checkinService.writeBillingWeek(date,"102");
   }
 }

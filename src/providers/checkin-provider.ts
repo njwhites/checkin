@@ -4,8 +4,10 @@ import 'rxjs/add/operator/map';
 
 import { StudentProvider } from './student-provider';
 import { UserProvider } from './user-provider';
+import { ClassRoomProvider } from './class-room-provider';
 
-import { TransactionModel, TransactionStudentModel, TransactionEvent, TransactionTherapy} from '../models/db-models';
+import { TransactionModel, TransactionStudentModel, TransactionEvent, TransactionTherapy, 
+      BillingDay, BillingWeekModel, StudentBillingWeek, ClassroomWeek} from '../models/db-models';
 
 import PouchDB from 'pouchdb';
 
@@ -39,14 +41,19 @@ export class CheckinProvider {
   CHECKED_OUT_NURSE = 'Nurse checked student out';
 
   db: any;
+  billingdb: any;
   remote: any;
+  billingRemote: any;
 
-  constructor(public http: Http, public studentService: StudentProvider, public userService: UserProvider) {
+  constructor(public http: Http, public studentService: StudentProvider, public userService: UserProvider, public classroomService: ClassRoomProvider) {
     console.log('Hello CheckinProvider Provider');
 
     this.db = new PouchDB('transactions');
+    this.billingdb = new PouchDB('billing');
 
     PouchDB.plugin(require('pouchdb-upsert'));
+
+    this.billingRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/billing';
 
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/transactions';
     //this.remote = 'http://localhost:5984/classrooms';
@@ -57,6 +64,7 @@ export class CheckinProvider {
     };
 
     this.db.sync(this.remote, options);
+    this.billingdb.sync(this.billingRemote, options);
   }
 
   getTodaysTransaction(dateString: string){
@@ -68,7 +76,7 @@ export class CheckinProvider {
 
   	return new Promise((resolve) => {
   		this.db.allDocs({include_docs: true}).then(result => {
-
+        //console.log(result);
         //get today's object, if it does not exist, create it
   	    let trans = result.rows.filter((row) => {
   	    	return row.doc.date === dateString;
@@ -641,5 +649,258 @@ export class CheckinProvider {
     return date.getTime();
   }
 
+    getClassroomBilling(title: String, room_number: String, callback){
+      this.billingdb.allDocs({include_docs: true}).then(result => {
+
+          //get today's object, if it does not exist, create it
+          //console.log(result);
+          let trans = result.rows.filter((row) => {
+            return row.doc._id === room_number;
+          });
+          //console.log(trans);
+          //Day already exists in the db
+          if(trans.length > 0){
+            let room = new ClassroomWeek();
+            room.room_number = trans[0].doc.room_number;
+            room.weeks = trans[0].doc.billingWeeks;
+            //console.log(room);
+            //console.log("resolving from getClassroomBilling")
+            callback(room);
+            return;
+          }else{
+            //Day did not exist, creates and puts it
+            this.billingdb.upsert(title, (doc) => {
+              return {
+                _id: title,
+                room_number: room_number,
+                billingWeeks: []
+              }
+            }).then(response => {
+              //unsure how to do this without recursion. basically since it has been added to the db,
+              //it will on recursion go into the other part of the if/else
+              console.log("Successfully added billing document for room: " + room_number)
+              console.log(`Recursing ${room_number}`)
+              this.getClassroomBilling(title, room_number, callback);
+            }).catch(function (err) {
+              console.log(err);
+            });
+          }
+       }).catch(err =>{
+          console.log(err)
+      });
+  }
+
+
+  writeBillingWeek(start_date: Date, room_number: String){
+   //these are metadata
+
+    //this is the data
+    var ids = this.classroomService.data.get(room_number).students;
+
+    this.writeBillingWeekHelper(ids, start_date, [], (billing_week: BillingWeekModel) => {
+      billing_week.room_number = room_number;
+      
+      //upsert
+      var dateString = `${room_number}`;
+      var title = `${dateString}-${start_date.getDate()}.${start_date.getMonth() + 1}.${start_date.getFullYear()}`;
+      this.getClassroomBilling(title,room_number, (doc: ClassroomWeek) => {
+        //console.log("WE MADE IT OUT");
+        let others = doc.weeks.filter((week: BillingWeekModel) => {
+          return start_date.getDate() === week.start_date.getDate() &&
+            start_date.getMonth() === week.start_date.getMonth() &&
+            start_date.getFullYear() === week.start_date.getFullYear();
+        });
+        let me = {
+          start_date: billing_week.start_date,
+          room_number: billing_week.room_number,
+
+          students: billing_week.students.map((each:StudentBillingWeek) => {
+            return {
+              student_id: each.student_id,
+              average_hours_billed_per_day: each.average_hours_billed_per_day,
+
+              billing_days: each.student_days.map((day:BillingDay) => {
+                return {
+                  date: day.date,
+                  start_time: day.start_time,
+                  end_time: day.end_time,
+
+                  nap_hours: day.nap_hours,
+                  SP_therapy_hours: day.SP_therapy_hours,
+                  OT_therapy_hours: day.OT_therapy_hours,
+                  PT_therapy_hours: day.PT_therapy_hours,
+
+                  gross_hours: day.gross_hours,
+                  net_hours: day.net_hours,
+                  billable_hours: day.billable_hours
+                }
+              })
+            }
+          }),
+
+          billing_percent: billing_week.billing_percent
+
+        }
+        this.billingdb.upsert(title, (document) => {
+          document.weeks = [...others, me]
+          return document;
+        }).then(response => {
+          //unsure how to do this without recursion. basically since it has been added to the db,
+          //it will on recursion go into the other part of the if/else
+          console.log("Successfully added bills for week: " + dateString)
+          //resolve();
+        }).catch(function (err) {
+          console.log("UPSERT ERROR?")
+          console.log(err);
+        });
+      })
+      //console.log(`theoretical end`);
+      //console.log(billing_week);
+    })
+
+
+  }
+
+  writeBillingWeekHelper(ids: Array<String>, start_date: Date, data: Array<StudentBillingWeek>, callback){
+
+    if(ids.length <= 0){
+      const billing_week = new BillingWeekModel();
+      billing_week.students = data;
+      billing_week.start_date = start_date;
+
+      //percent or something
+      var count = 0;
+      var hours = 0;
+      //console.log("BASECASE IDS.LENGTH = 0 HELPER");
+      //console.log(billing_week.students)
+      billing_week.students.forEach(student => {
+        count++;
+        hours += student.average_hours_billed_per_day;
+      });
+
+      billing_week.billing_percent = (hours / count / 5) * 100;
+
+      callback(billing_week);
+      return;
+    }
+
+
+    //console.log("IDS" + ids.length);
+    //console.log(ids);
+    var currentID = ids.splice(0,1);
+    //console.log(currentID);
+    this.createBillingWeek(String(currentID[0]), start_date).then((sbw:StudentBillingWeek) => {
+      data.push(sbw);
+      this.writeBillingWeekHelper(ids, start_date, data, callback);
+    })
+  }
+
+
+  createBillingWeek(s_id: string, start_date:Date){
+    var array = [];
+    for(var i = 0; i < 5; i++){
+      array.push(new Date(start_date.getTime() + (i * 1000 * 60 * 60 * 24)));
+    }
+    return new Promise(resolve => {
+
+      this.createBillingWeekHelper(s_id, array, [], (sbw:StudentBillingWeek) => {
+        resolve(sbw);
+      });
+
+    })
+  }
+
+  createBillingWeekHelper(s_id: string, dates: Array<Date>, data: Array<BillingDay>, callback){
+    if(dates.length <= 0){
+        var week = new StudentBillingWeek();
+        week.student_days = data;
+        week.student_id = s_id;
+
+        //calculate avg billed hours
+        var count = 0;
+        var totalBilled = 0;
+        //console.log(data)
+        data.forEach(day => {
+          //if(day.billable_hours > 0){
+            count++;
+            totalBilled += day.billable_hours;
+          //}
+        })
+        week.average_hours_billed_per_day = totalBilled/count;
+        
+        callback(week);
+        return;
+    }
+
+    var currentDate = dates.splice(0,1);
+    this.createBillingDay(s_id, currentDate[0]).then((billingDay: BillingDay) => {
+      data.push(billingDay);
+      this.createBillingWeekHelper(s_id, dates, data, callback);
+    })
+
+  }
+  
+  createBillingDay(s_id:string, date:Date){
+    return new Promise((resolve, reject) => {
+      const day = new BillingDay();
+      const dateString = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
+      this.getTodaysTransaction(dateString).then(doc => {
+        this.getStudent(s_id, doc).then((student:TransactionStudentModel) => {
+          if(Number(student.nap) >= 0){
+            day.nap_hours = Number(student.nap) / 60;
+          }
+          //event info
+          //console.log(student.events);
+          student.events.forEach((event:TransactionEvent) => {
+            if(day.start_time < 0 && event.type === this.CHECK_IN){
+              day.start_time = Number(event.time);
+            }
+            if(day.end_time < 0 && event.type === this.CHECK_OUT){
+              day.end_time = Number(event.time);
+            }
+          });
+
+          if(day.start_time >= 0 && day.end_time >= 0){
+            day.gross_hours = (day.end_time - day.start_time) / (1000 * 60 * 60);
+          }
+
+          //therapy info
+          var totalTherapy = 0;
+          //console.log(student.therapies);
+          if(student.therapies){
+            student.therapies.forEach((therapy:TransactionTherapy) => {
+              var type = this.userService.data.get(therapy.by_id).therapy_type;
+              console.log("Therapy type: " + type);
+              var therapyLength = therapy.length.valueOf() / 60;
+              if(type === 'PT'){
+                day.PT_therapy_hours += therapyLength;
+                totalTherapy += therapyLength;
+              }else if(type === 'OT'){
+                day.OT_therapy_hours += therapyLength;   
+                totalTherapy += therapyLength;   
+              }else{
+                day.SP_therapy_hours += therapyLength;
+                totalTherapy += therapyLength;
+              }
+            })
+
+
+          }
+          //net hours = gross - nap - therapy
+          if(day.gross_hours > 0){
+            day.net_hours = day.gross_hours - day.nap_hours - totalTherapy;
+          }
+
+          //billable = min(net, 5).truncate
+          if(day.net_hours > 0){
+            day.billable_hours = Math.floor(Math.min(day.net_hours, 5));
+          }
+          resolve(day);
+        })
+      })
+
+    })
+
+  }
 
 }
