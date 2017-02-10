@@ -207,6 +207,13 @@ export class ListPage {
     this.navCtrl.pop();
   }
 
+/*******************************************************************************
+ * isListEmpty
+ *
+ * Checks to see if the list the page has populated is empty to conditionally format
+ * null list cases. Returns true if list is empty and false if list is populated
+ *
+ **/
   isListEmpty() {
     let isEmpty: boolean;
     isEmpty = true;
