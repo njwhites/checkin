@@ -9,5 +9,76 @@
 
 
 <ion-content class="bgc">
-  <button ion-button (click)="exportData()">Export Attendance Data</button>
+  <ion-grid>
+    <ion-row>
+      <ion-col width-33>
+        <ion-card class="weekText">
+            <ion-row style="height:100%">
+              <ion-col width-10 no-padding>
+                <button class="arrowButton">
+                  <ion-icon name="arrow-back"></ion-icon>
+                </button>
+              </ion-col>
+              <ion-col width-80 text-center style="font-size:100%">
+                12/12/12-17/12/12
+              </ion-col>
+              <ion-col width-10 no-padding>
+                <button class="arrowButton">
+                  <ion-icon name="arrow-forward"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+        </ion-card>
+      </ion-col>
+      <ion-col width-33>
+      </ion-col>
+      <ion-col width-33>
+        <button class="arrowButton" (click)="exportData()">Export Attendance Data</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-card *ngFor="let room of rooms">
+            <ion-card-header (click)="toggleRoom(room.number)" style="background-color:rgba(0, 0, 0, 0.13)">
+              <ion-row>
+                <ion-col width-20>
+                  Room {{room.number}}
+                </ion-col>
+                <ion-col width-50>
+                </ion-col>
+                <ion-col width-20>
+                  <ion-row no-margin>
+                    <ion-col no-margin>
+                      <div class="attendanceWarning"></div>
+                    </ion-col>
+                    <ion-col no-margin>
+                      <div class="billedWarning"></div>
+                    </ion-col>
+                    <ion-col no-margin>
+                      <span class="therapyWarning"></span>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>
+            <div *ngIf="room.on">
+              <div *ngFor="let student of students" class="container">
+                <div class="nameContainer">{{student.name}}</div>
+                <div class="errorsContainer">
+                  <div class="attendanceWarning"></div>
+                  <div class="billedWarning"></div>
+                  <div class="therapyWarning"></div>
+                </div>
+                <div class="hoursContainer">{{student.hours}}</div>
+              </div>
+            </div>
+            <ion-item class="totalBar">
+              Total:
+            </ion-item>
+          </ion-card>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -35,15 +35,14 @@ export class ListPage {
     this.toastTrigger = false;
   }
 
-  resetInterval () {
+/*******************************************************************************
+ * resetInterval
+ *
+ * resets timeout
+ *
+ **/
+  resetInterval() {
     this.timeSinceLastInteraction = 0;
-  }
-
-
-  ionViewDidEnter(){
-    console.log("the list page has been made the focus with a parent page of "+ this.parentPage);
-    console.log("the user id is: " + this.userID);
-    console.log("the room number is " + this.roomNumber);
   }
 
 /*******************************************************************************
@@ -153,15 +152,15 @@ export class ListPage {
     this.navCtrl.pop();
   }
 
-/******************************************************************************
-* addStudents
-*
-* takes the array of students (this.signoutStudents) and passes it to the
-* checkinService to check students into the classroom. when this is done
-* the students are emitted so that an accurate count of students can be
-* toasted as checked into the classroom.
-*
-**/
+/*******************************************************************************
+ * addStudents
+ *
+ * takes the array of students (this.signoutStudents) and passes it to the
+ * checkinService to check students into the classroom. when this is done
+ * the students are emitted so that an accurate count of students can be
+ * toasted as checked into the classroom.
+ *
+ **/
   addStudents() {
     this.checkinService.checkinStudents(this.signoutStudents, String(this.userID));
     this.removedStudents.emit(this.signoutStudents);
@@ -170,31 +169,31 @@ export class ListPage {
     this.navCtrl.pop();
   }
 
-  /******************************************************************************
-  * updateNap
-  *
-  * takes length of nap and a student id and adds them to the map that will be pushed
-  * to the database when update button is pressed
-  *
-  **/
+/*******************************************************************************
+ * updateNap
+ *
+ * takes length of nap and a student id and adds them to the map that will be pushed
+ * to the database when update button is pressed
+ *
+ **/
   updateNap(napTime, studentId) {
     this.napStudents.set(String(studentId), napTime);
   }
 
-  /******************************************************************************
-  * updateAll
-  *
-  * takes map of students that has been populated by updateNap and adds any students
-  * that aren't in the map with the default nap value
-  * (runs when the update button is pressed)
-  *
-  **/
+/*******************************************************************************
+ * updateAll
+ *
+ * takes map of students that has been populated by updateNap and adds any students
+ * that aren't in the map with the default nap value
+ * (runs when the update button is pressed)
+ *
+ **/
   updateAll(){
     this.studentService.data.forEach(student => {
       if(!this.napStudents.has(String(student._id)) && (student.location !== 'Checked out')){
         this.napStudents.set(String(student._id), "60");
       }
-    })
+    });
 
     this.checkinService.setNaps(this.napStudents);
     let toast = this.toastCtrl.create({
@@ -205,18 +204,7 @@ export class ListPage {
     });
     toast.present(toast);
     console.log(this.napStudents);
-  }
-
-  undo(){
-    this.userID = null;
-    this.signoutStudents.length = 0;
-    if (this.parentPage === 'checkin' || this.parentPage === 'signout') {
-      this.signoutStudents.push("back");
-      this.removedStudents.emit(this.signoutStudents);
-    } else {
-      this.selectedStudent = '';
-      this.listCheckedOut.emit("back");
-    }
+    this.navCtrl.pop();
   }
 
   isListEmpty() {
@@ -268,20 +256,6 @@ export class ListPage {
     this.navCtrl.push(StudentDetailsPage, {
       student: student
     })
-  }
-
-  ionViewWillEnter(){
-    this.timeSinceLastInteraction = 0;
-    if(this.interval){
-      clearInterval(this.interval);
-    }
-    this.interval = setInterval(() => {
-      if(++this.timeSinceLastInteraction >= 30){
-        clearInterval(this.interval);
-        // switch back from this page, nuke it, kill it with fire
-        this.navCtrl.popToRoot();
-      }
-    }, 1000)
   }
 
 /*******************************************************************************
@@ -354,6 +328,26 @@ export class ListPage {
 
   ionViewWillUnload(){
     clearInterval(this.interval);
+  }
+
+  ionViewWillEnter(){
+    this.timeSinceLastInteraction = 0;
+    if(this.interval){
+      clearInterval(this.interval);
+    }
+    this.interval = setInterval(() => {
+      if(++this.timeSinceLastInteraction >= 30){
+        clearInterval(this.interval);
+        // switch back from this page, nuke it, kill it with fire
+        this.navCtrl.popToRoot();
+      }
+    }, 1000)
+  }
+
+  ionViewDidEnter(){
+    console.log("the list page has been made the focus with a parent page of "+ this.parentPage);
+    console.log("the user id is: " + this.userID);
+    console.log("the room number is " + this.roomNumber);
   }
 
 }

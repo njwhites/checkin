@@ -21758,34 +21758,8 @@ page-admin-classroom-tab .bgc {
 }
 
 page-admin-classroom-tab .roomContainer {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-align-content: space-around;
-  -ms-flex-line-pack: distribute;
-  align-content: space-around;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: distribute;
-  justify-content: space-around;
+  display: block;
   width: 100%;
-}
-
-page-admin-classroom-tab .roomButton {
-  background-color: #efce28;
-  margin: 12px;
-  width: 15%;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 
 page-admin-classroom-tab .roomDummy {
@@ -21810,12 +21784,131 @@ page-admin-classroom-tab .addFab {
   right: 20px;
 }
 
+page-admin-classroom-tab .scroll-content {
+  padding-top: 3% !important;
+  background-color: #eee5de;
+}
+
+page-admin-classroom-tab .scrollView {
+  background-color: #eee5de;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+  max-height: 83vh;
+}
+
+page-admin-classroom-tab .push-to-bottom {
+  background-color: #eee5de;
+  position: absolute;
+  bottom: 7vh;
+  width: 100%;
+}
+
+page-admin-classroom-tab .buttonRow {
+  background-color: #eee5de;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: auto;
+}
+
 page-admin-debug-tab .bgc {
   background-color: #eee5de;
 }
 
+page-admin-reporting .weekText {
+  height: 5vh;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+page-admin-reporting .arrowButton {
+  height: 100%;
+  width: 100%;
+}
+
+page-admin-reporting .totalBar {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+page-admin-reporting .attendanceWarning {
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  height: 100%;
+  background-color: red;
+  border: 3px;
+}
+
+page-admin-reporting .billedWarning {
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  height: 100%;
+  background-color: lime;
+  border: 3px;
+}
+
+page-admin-reporting .therapyWarning {
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  height: 100%;
+  background-color: blue;
+  border: 3px;
+}
+
 page-admin-reporting .bgc {
   background-color: #eee5de;
+}
+
+page-admin-reporting .container {
+  height: 30px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+
+page-admin-reporting .nameContainer {
+  font-size: 120%;
+  font-weight: bold;
+  text-align: left;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-flex-basis: 50%;
+  -ms-flex-preferred-size: 50%;
+  flex-basis: 50%;
+}
+
+page-admin-reporting .errorsContainer {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+}
+
+page-admin-reporting .hoursContainer {
+  font-size: 120%;
+  fong-weight: bold;
+  text-align: right;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
 }
 
 page-admin-student-tab .bgc {
@@ -21846,7 +21939,7 @@ page-admin-student-tab .addFab {
 }
 
 page-admin-student-tab .scroll-content {
-  padding-top: 6vh !important;
+  padding-top: 7% !important;
   background-color: #eee5de;
 }
 
@@ -21883,7 +21976,7 @@ page-admin-user-tab .bgc {
 }
 
 page-admin-user-tab .scroll-content {
-  padding-top: 5vh !important;
+  padding-top: 5.5% !important;
   background-color: #eee5de;
 }
 
@@ -22477,7 +22570,7 @@ page-therapist .horizontal-align-center {
   -ms-flex-align: center;
   -ms-grid-row-align: center;
   align-items: center;
-  padding-top: 5%;
+  padding-top: 3%;
 }
 
 page-therapist .vertical-align-content {
@@ -22493,8 +22586,7 @@ page-therapist .scrollView {
   -ms-flex-align: center;
   -ms-grid-row-align: center;
   align-items: center;
-  height: 75%;
-  max-height: 63vh;
+  height: 65vh;
 }
 
 page-therapist .push-to-bottom {
@@ -22510,6 +22602,15 @@ page-therapist .buttonRow {
   -ms-flex-item-align: center;
   align-self: center;
   width: auto;
+}
+
+page-therapist .titleRow {
+  background-color: #eee5de;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: auto;
+  padding-top: 3%;
 }
 
 page-therapist .addButton {
@@ -22538,7 +22639,7 @@ page-therapist .emptyRow {
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
-  width: 60%;
+  width: auto;
 }
 
 page-therapist .emptyItem {
