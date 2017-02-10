@@ -20,7 +20,6 @@ import {UserProvider} from "../providers/user-provider";
 import {ClassRoomProvider} from "../providers/class-room-provider";
 import {CheckinProvider} from "../providers/checkin-provider";
 import {UtilityProvider} from "../providers/utility-provider";
-import {BillingProvider} from "../providers/billing-provider";
 import {KitchenPage} from "../pages/kitchen/kitchen";
 import {TherapistPage} from "../pages/therapist/therapist";
 import {HomeButtonPage} from "../pages/home-button/home-button";
@@ -134,6 +133,6 @@ import {UserLoginPage} from "../pages/user-login/user-login";
     UserLoginPage
 
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider, BillingProvider]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider]
 })
 export class AppModule {}
