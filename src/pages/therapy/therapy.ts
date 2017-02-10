@@ -14,6 +14,14 @@ export class TherapyPage {
     this.roomNumber = this.navParams.data;
   }
 
+/*******************************************************************************
+ * onNotify
+ *
+ * takes in the ID and if its a valid ID will push to the correct page, if not
+ * it toasts that the ID was incorrect
+ *
+ * @param idCheck
+ **/
   onNotify(idCheck:number):void {
     if(idCheck >= 0) {
       this.userID = idCheck;
@@ -31,7 +39,13 @@ export class TherapyPage {
       toast.present(toast);
     }
   }
-  
+
+/*******************************************************************************
+ * homeButtonClicked
+ *
+ * pops to the splash screen
+ *
+ **/
   homeButtonClicked(){
     console.log("home button clicked");
     this.navCtrl.parent.parent.popToRoot();
