@@ -22,6 +22,7 @@
         </ion-item>
       <div id="classroom_{{class.key}}" hidden="true">
         <ion-list>
+          <ion-item>
           <div *ngFor="let sID of class.val.students">
             <div *ngIf="!this.favStudents.includes(sID)">
               <ion-item id="student_{{sID}}">
@@ -35,6 +36,7 @@
           <ion-item class="emptyItem" id="empty_{{class.key}}" *ngIf="isEmpty(class.val)">
             No more students to add
           </ion-item>
+        </ion-item>
         </ion-list>
       </div>
     </ion-card>

@@ -21835,18 +21835,27 @@ page-admin-reporting .totalBar {
 }
 
 page-admin-reporting .attendanceWarning {
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   height: 100%;
   background-color: red;
   border: 3px;
 }
 
 page-admin-reporting .billedWarning {
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   height: 100%;
   background-color: lime;
   border: 3px;
 }
 
 page-admin-reporting .therapyWarning {
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   height: 100%;
   background-color: blue;
   border: 3px;
@@ -21854,6 +21863,52 @@ page-admin-reporting .therapyWarning {
 
 page-admin-reporting .bgc {
   background-color: #eee5de;
+}
+
+page-admin-reporting .container {
+  height: 30px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+
+page-admin-reporting .nameContainer {
+  font-size: 120%;
+  font-weight: bold;
+  text-align: left;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-flex-basis: 50%;
+  -ms-flex-preferred-size: 50%;
+  flex-basis: 50%;
+}
+
+page-admin-reporting .errorsContainer {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+}
+
+page-admin-reporting .hoursContainer {
+  font-size: 120%;
+  fong-weight: bold;
+  text-align: right;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
 }
 
 page-admin-student-tab .bgc {
