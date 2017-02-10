@@ -160,6 +160,10 @@ export class AdminStudentModalPage {
             // first transition has finished animating out
 
             this.navController.popToRoot();
+
+
+            //also need to remove student from whatever room they are in
+            this.classroomService.removeStudent(tempStudent._id);
             // navTransition.then(() => {
             //   this.dismiss();
             // });

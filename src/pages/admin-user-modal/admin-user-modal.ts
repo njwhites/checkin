@@ -5,6 +5,7 @@ import { UserProvider } from "../../providers/user-provider";
 import { UserModel } from "../../models/db-models";
 import { StudentProvider } from "../../providers/student-provider";
 import { UserAddModalPage } from "../user-add-modal/user-add-modal";
+import { ClassRoomProvider } from "../../providers/class-room-provider";
 
 @Component({
   selector: 'page-admin-user-modal',
@@ -22,6 +23,7 @@ export class AdminUserModalPage {
               public formBuilder: FormBuilder,
               public userService: UserProvider,
               public studentService: StudentProvider,
+              public classroomService: ClassRoomProvider,
               public navController: NavController,
               public alertController: AlertController,
               public toastController: ToastController,
@@ -56,7 +58,6 @@ export class AdminUserModalPage {
         //and the third is to make sure it is a positive number
         //there is some exceptions right now where if it is a new user -1 is allowed as the "take the next available" ID
         Validators.compose([Validators.required, (control: FormControl)=>{
-          console.log(control.value);
 
           const controlID = control.value;
           // console.log("this is in the validator");
@@ -214,6 +215,9 @@ export class AdminUserModalPage {
             // once the async operation has completed
             // then run the next nav transition after the
             // first transition has finished animating out
+
+            //remove the aide from any classes
+            this.classroomService.removeAide(<string>(tempUser._id));
 
             this.navController.popToRoot();
             // navTransition.then(() => {

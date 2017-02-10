@@ -157,6 +157,16 @@ export class ClassRoomProvider {
     }
   }
 
+  removeStudent(SID: String){
+    //go through each classroom
+    this.data.forEach(value=>{
+      //if that classroom has the student in their array remove them
+      if(value.students.find(student=>{ return student === SID})){
+        this.removeStudentFromClass(value,SID);
+      }
+    })
+  }
+
   //same Idea as addStudent but instead its a classroom aide
   addAideToClass(classroom: ClassRoomModel, aide: string){
     this.db.upsert(classroom._id, ((doc)=>{
@@ -188,6 +198,18 @@ export class ClassRoomProvider {
         return doc;
       }));
     }
+  }
+
+  removeAide(UID: string){
+    //go through each classroom
+    this.data.forEach(value=>{
+      //if that classroom has the user in their array remove them
+      if(value.aides){
+        if(value.aides.find(aide=>{ return aide === UID})){
+          this.removeAideFromClass(value,UID);
+        }
+      }
+    })
   }
 
 //function to delete a classroom from the db
@@ -230,7 +252,6 @@ export class ClassRoomProvider {
     //otherwise its an update or an add which are both treated the same
     else {
       //double check this !!!!!!
-      console.log("selectedClassroom: "+this.selectedClassroom +"\nchange doc id "+change.doc._id);
       if(this.selectedClassroom === change.doc._id){
         this.studentService.getStudentsByGroup(change.doc.students);
       }
