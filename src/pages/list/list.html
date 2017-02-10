@@ -19,7 +19,7 @@
         </ion-row>
       </ion-grid>
       <ion-content class="scrollable">
-        <div *ngFor="let student of this.studentService.data | mapValues" class="scrollableInside">
+        <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID" class="scrollableInside">
           <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
             <ion-card>
               <ion-item  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
@@ -32,7 +32,7 @@
             </ion-card>
           </div>
         </div>
-        <div *ngFor="let student of this.studentService.data | mapValues">
+        <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
           <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT">
             <ion-card>
               <ion-item class="absentRow"  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
@@ -59,7 +59,7 @@
           </ion-row>
         </ion-grid>
       <ion-list inset>
-        <div *ngFor="let student of this.studentService.data | mapValues">
+        <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
           <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
             <ion-card>
               <ion-card-content>
@@ -93,7 +93,7 @@
           </ion-row>
         </ion-grid>
       <ion-list inset>
-      <div *ngFor="let student of this.studentService.data | mapValues">
+      <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
         <div *ngIf="this.studentService.data.get(student.key).location.includes(checkinService.CHECKED_OUT_THERAPY)">
           <ion-card>
             <ion-item>
@@ -106,7 +106,7 @@
           </ion-card>
         </div>
       </div>
-      <div *ngFor="let student of this.studentService.data | mapValues">
+      <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
         <div *ngIf="!this.studentService.data.get(student.key).location.includes(checkinService.CHECKED_OUT_THERAPY) && this.studentService.data.get(student.key).location !==  checkinService.CHECKED_OUT  && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_NURSE">
           <ion-card>
             <ion-item>
@@ -134,7 +134,7 @@
           </ion-row>
         </ion-grid>
       <ion-list inset>
-      <div *ngFor="let student of this.studentService.data | mapValues">
+      <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
         <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT_NURSE">
           <ion-card>
             <ion-item>
@@ -147,7 +147,7 @@
           </ion-card>
         </div>
       </div>
-      <div *ngFor="let student of this.studentService.data | mapValues">
+      <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
         <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_THERAPY && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_NURSE">
           <ion-card>
             <ion-item>
@@ -175,7 +175,7 @@
           </ion-row>
         </ion-grid>
       <ion-list inset>
-      <div *ngFor="let student of this.studentService.data | mapValues">
+      <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
         <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
           <ion-card>
             <ion-item>
@@ -203,7 +203,7 @@
           </ion-row>
         </ion-grid>
       <ion-list inset>
-      <div *ngFor="let student of this.studentService.data | mapValues">
+      <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
         <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT">
           <ion-card>
             <ion-item>

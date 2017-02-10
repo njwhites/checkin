@@ -20,7 +20,7 @@ export class UtilityProvider {
 
   resetToday(){
       this.studentService.checkoutAllStudents();
-      this.checkinService.clearTransactionsForDate(null);
+      //this.checkinService.clearTransactionsForDate(null);
   }
 
 }
