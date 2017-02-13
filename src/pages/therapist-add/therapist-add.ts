@@ -26,6 +26,13 @@ export class TherapistAddPage {
 
   ionViewDidLoad() {}
 
+/*******************************************************************************
+ * toggleDropDown
+ *
+ * takes in an id that is an index of a card. the card associated with that id
+ * will toggle between show and hide of the list within the card.
+ *
+ **/
   toggleDropDown(id) {
     let dividerId = "classroom_" + id;
     let buttonUpId = "upButton_" + id;
@@ -41,6 +48,12 @@ export class TherapistAddPage {
     }
   }
 
+/*******************************************************************************
+ * addToFavorites
+ *
+ * takes in a student id and adds the student id to the therapist's favorites list
+ *
+ **/
   addToFavorites(sID) {
     this.userService.addTherapistFavoriteID(String(this.tID), String(sID));
     this.favStudents.push(sID);
@@ -53,6 +66,13 @@ export class TherapistAddPage {
     toast.present(toast);
   }
 
+/*******************************************************************************
+ * isEmpty
+ *
+ * takes in a classroom id as a parameter and checks if the list of students for
+ * that room is empty. Returns false if the lsit is populated and true if not.
+ *
+ **/
   isEmpty(classroom) {
     for (let sID of classroom.students) {
       if (this.favStudents.indexOf(sID) == -1){

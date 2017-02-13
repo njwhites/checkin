@@ -34,11 +34,24 @@ export class StudentDetailsPage {
     });
   }
 
+
+/*******************************************************************************
+ * getUserName
+ *
+ * takes in an id as a string and returns the user's name who is associated with
+ * that id in a single firstname lastname string
+ *
+ **/
   getUserName(id: string){
     let me = this.userService.data.get(id);
     return me.fName + " " + me.lName;
   }
-
+/*******************************************************************************
+ * resetInterval
+ *
+ * resets the interval for the timeout timer
+ *
+ **/
   resetInterval(){
     this.timeSinceLastInteraction = 0;
   }
