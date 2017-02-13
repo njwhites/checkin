@@ -31,6 +31,12 @@ page-admin-reporting {
     background-color:rgb(255,0,255);
     border: 3px;
   }
+  .blanckError{
+    flex-grow: 1;
+    height: 100%;
+    background-color:rgb(255,255,255);
+    border: 3px;
+  }
   .bgc {
     background-color: #eee5de;
   }
@@ -58,5 +64,4 @@ page-admin-reporting {
     flex-grow: 1;
     flex-basis: 30px;
   }
-  $label-ios-margin: 0px;
 }

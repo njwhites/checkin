@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{this.student.name}}'s Billing Data</ion-title>
+    <page-home-button></page-home-button>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-grid no-padding>
+      <ion-row class="headerRow">
+        <ion-col> <strong>Days:</strong> </ion-col>
+        <ion-col *ngFor="let title of titles"> <strong>{{title}}</strong> </ion-col>
+      </ion-row>
+      <div *ngFor="let day of days">
+        <ion-row *ngIf="days.indexOf(day)%2" class="evenRow">
+          <ion-col> <strong>{{day}}</strong> </ion-col>
+          <ion-col *ngFor="let title of titles">{{data[days.indexOf(day)*12+titles.indexOf(title)]}}</ion-col>
+        </ion-row>
+        <ion-row *ngIf="!(days.indexOf(day)%2)" class="oddRow">
+          <ion-col>{{day}}</ion-col>
+          <ion-col *ngFor="let title of titles">{{data[days.indexOf(day)*12+titles.indexOf(title)]}}</ion-col>
+        </ion-row>
+      </div>
+      <ion-row class="totalRow">
+        <ion-col></ion-col>
+        <ion-col></ion-col>
+        <ion-col> <strong>Total:</strong> </ion-col>
+        <ion-col *ngFor="let total of totals">{{total}}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>

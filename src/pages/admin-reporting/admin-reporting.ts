@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {CheckinProvider} from '../../providers/checkin-provider'
-import {BillingProvider} from '../../providers/billing-provider'
-
+import {CheckinProvider} from '../../providers/checkin-provider';
+import {BillingProvider} from '../../providers/billing-provider';
+import {AdminReportingDetailsPage} from '../admin-reporting-details/admin-reporting-details';
 
 @Component({
   selector: 'page-admin-reporting',
@@ -14,11 +14,13 @@ export class AdminReportingPage {
            {number: 2, on: false},
            {number: 3, on: false}];
   students = [{name: "John Deere", hours:17},
-              {name: "Jane Doe", hours:20},
-              {name: "Fred Jones", hours:25}];
+              {name: "Jane Deere", hours:20},
+              {name: "Fred Jones", hours:25},
+              {name: "James Dean", hours:25},
+              {name: "Will Smith", hours:18}];
 
-  constructor(public navCtrl: NavController,
-              public checkinService: CheckinProvider){
+  constructor(public navCtrl: NavController
+              ){
   }
 
   ionViewDidLoad() {
@@ -32,11 +34,14 @@ export class AdminReportingPage {
       date.setDate(date.getDate()-1);
     }
     console.log(date);
-    this.checkinService.writeBillingWeek(date,"102");
+    //this.checkinService.writeBillingWeek(date,"102");
   }
 
   toggleRoom(number:number){
-    console.log("click");
     this.rooms[number].on = !this.rooms[number].on;
+  }
+
+  showDetails(SID){
+    this.navCtrl.push(AdminReportingDetailsPage, {SID:SID}, {});
   }
 }
