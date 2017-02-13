@@ -4,6 +4,7 @@ import { NavController, NavParams, AlertController, ToastController } from 'ioni
 import { StudentProvider } from "../../providers/student-provider";
 import { StudentModel } from "../../models/db-models";
 import { ClassRoomProvider } from "../../providers/class-room-provider";
+import { CheckinProvider } from "../../providers/checkin-provider";
 
 //---------------------------------------------------------
 //For a commented description of this code see
@@ -24,6 +25,7 @@ export class AdminStudentModalPage {
               public formBuilder: FormBuilder,
               public studentService: StudentProvider,
               public classroomService: ClassRoomProvider,
+              public checkinService: CheckinProvider,
               public navController: NavController,
               public alertController: AlertController,
               public toastController: ToastController) {
@@ -105,6 +107,7 @@ export class AdminStudentModalPage {
       if(this.student._id === "-1"){
         let returnedID;
         this.student._id = this.studentForm.value.ID;
+        this.student.location = this.checkinService.CHECKED_OUT;
         this.studentService.createStudent(this.student).then((returnedID: String)=>{
           this.student._id = returnedID;
           this.classroomService.addStudentToClass(this.classroomService.data.get("-1"),this.student._id);
