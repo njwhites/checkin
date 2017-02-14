@@ -483,13 +483,9 @@ export class CheckinProvider {
   therapistCheckin(id: string, by_id: string){
     return new Promise((resolve, reject) => {
       this.getTodaysTransaction(null).then(result => {
-        this.performEvent(id, result, by_id, this.THERAPY_IN).then(val => {
-          this.studentService.updateStudentLocation(id, this.CHECKED_IN);
-          //resolve with the correct data (student's events for today)
-          this.getIncompleteTherapy(id, result).then((therapy: TransactionTherapy) => {
-            resolve(therapy);
-          })
-        });
+        this.getIncompleteTherapy(id, result).then((therapy: TransactionTherapy) => {
+          resolve(therapy);
+        })
       }).catch(err => {
         console.log(err);
         reject(false);
@@ -532,42 +528,50 @@ export class CheckinProvider {
     return new Promise(resolve => {
       this.getTodaysTransaction(null).then((doc: TransactionModel) => {
         this.getStudent(student_id, doc).then((me: TransactionStudentModel) => {
-          let others = doc.students.filter(student => {
-            return student.id + "" !== me.id + "";
-          });
-          let t_model = new TransactionTherapy();
-          t_model.start_time = start_time;
-          t_model.length = length;
-          t_model.by_id = by_id;
-          let otherTherapies = me.therapies.filter(therapy => {
-            return therapy.length !== -1;
-          })
-          let i = {
-              id: me.id,
-              events: me.events.map(event => {
-                return {
-                  type: event.type,
-                  time: event.time,
-                  time_readable: event.time_readable,
-                  by_id: event.by_id
-                }
-              }),
-              nap: me.nap,
-              therapies: [...otherTherapies, {start_time: t_model.start_time, length: t_model.length, by_id: t_model.by_id}]
-          }
-          function delta(doc) {
-            doc.students = [...others, i];
-            //console.log(doc.students);
-            return doc;
-          }
-          this.db.upsert(doc._id, delta).then(() => {
-            //Success!
-            //console.log(`Successfully updated student with id:${me.id}`);
-            resolve(true);
 
-          }).catch(err => {
-            console.log(err);
-          })
+          this.performEvent(student_id, doc, by_id, this.THERAPY_IN).then(val => {
+            this.studentService.updateStudentLocation(student_id, this.CHECKED_IN);
+
+
+            let others = doc.students.filter(student => {
+              return student.id + "" !== me.id + "";
+            });
+            let t_model = new TransactionTherapy();
+            t_model.start_time = start_time;
+            t_model.length = length;
+            t_model.by_id = by_id;
+            let otherTherapies = me.therapies.filter(therapy => {
+              return therapy.length !== -1;
+            })
+            let i = {
+                id: me.id,
+                events: me.events.map(event => {
+                  return {
+                    type: event.type,
+                    time: event.time,
+                    time_readable: event.time_readable,
+                    by_id: event.by_id
+                  }
+                }),
+                nap: me.nap,
+                therapies: [...otherTherapies, {start_time: t_model.start_time, length: t_model.length, by_id: t_model.by_id}]
+            }
+            function delta(doc) {
+              doc.students = [...others, i];
+              //console.log(doc.students);
+              return doc;
+            }
+          
+            this.db.upsert(doc._id, delta).then(() => {
+              //Success!
+              //console.log(`Successfully updated student with id:${me.id}`);
+              resolve(true);
+
+            }).catch(err => {
+              console.log(err);
+            })
+          });
+
         })
       })
     });
