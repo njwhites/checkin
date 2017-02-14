@@ -857,11 +857,13 @@ export class CheckinProvider {
       const dateString = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
       this.getTodaysTransaction(dateString).then(doc => {
         this.getStudent(s_id, doc).then((student:TransactionStudentModel) => {
+
+          //If student nap is set for the day
           if(Number(student.nap) >= 0){
             day.nap_hours = Number(student.nap) / 60;
           }
-          //event info
-          //console.log(student.events);
+
+          //event info          
           student.events.forEach((event:TransactionEvent) => {
             if(day.start_time < 0 && event.type === this.CHECK_IN){
               day.start_time = Number(event.time);
@@ -871,13 +873,20 @@ export class CheckinProvider {
             }
           });
 
+          //if not checked out for the day, but checked in, the checkout time for billing is set to 3:00PM
+          if(day.end_time < 0 && day.start_time > 0){
+            var d = new Date(date.getTime());
+            d.setHours(15,0,0,0);
+            day.end_time = d.getTime();
+          }
+
+          //if both are set, start doing total calculations
           if(day.start_time >= 0 && day.end_time >= 0){
             day.gross_hours = (day.end_time - day.start_time) / (1000 * 60 * 60);
           }
 
           //therapy info
           var totalTherapy = 0;
-          //console.log(student.therapies);
           if(student.therapies){
             student.therapies.forEach((therapy:TransactionTherapy) => {
               var type = this.userService.data.get(therapy.by_id).therapy_type;
