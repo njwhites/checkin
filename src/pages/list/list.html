@@ -20,7 +20,7 @@
       </ion-grid>
       <ion-content class="presentScrollable">
         <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID" class="scrollableInside">
-          <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes(String(student.key))">
+          <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
             <ion-card>
               <ion-item  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
                 <ion-icon name="walk" item-left></ion-icon>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
-          <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes(String(student.key))">
+          <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
             <ion-card>
               <ion-item class="absentRow"  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
                 <ion-icon name="walk" item-left></ion-icon>
@@ -60,7 +60,7 @@
         </ion-grid>
       <ion-list inset>
         <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
-          <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes(String(student.key))">
+          <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
             <ion-card>
               <ion-card-content>
                 <ion-grid>
@@ -94,7 +94,7 @@
         </ion-grid>
       <ion-list inset>
       <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
-        <div *ngIf="this.studentService.data.get(student.key).location.includes(checkinService.CHECKED_OUT_THERAPY) && this.classroomService.data.get(this.roomNumber).students.includes(String(student.key))">
+        <div *ngIf="this.studentService.data.get(student.key).location.includes(checkinService.CHECKED_OUT_THERAPY) && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
           <ion-card>
             <ion-item>
               <ion-icon name="walk" item-left></ion-icon>
@@ -107,7 +107,7 @@
         </div>
       </div>
       <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
-        <div *ngIf="!this.studentService.data.get(student.key).location.includes(checkinService.CHECKED_OUT_THERAPY) && this.studentService.data.get(student.key).location !==  checkinService.CHECKED_OUT  && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_NURSE  && this.classroomService.data.get(this.roomNumber).students.includes(String(student.key))">
+        <div *ngIf="!this.studentService.data.get(student.key).location.includes(checkinService.CHECKED_OUT_THERAPY) && this.studentService.data.get(student.key).location !==  checkinService.CHECKED_OUT  && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_NURSE  && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
           <ion-card>
             <ion-item>
               <ion-icon name="walk" item-left></ion-icon>
@@ -135,7 +135,7 @@
         </ion-grid>
       <ion-list inset>
       <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
-        <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT_NURSE  && this.classroomService.data.get(this.roomNumber).students.includes(String(student.key))">
+        <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT_NURSE  && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
           <ion-card>
             <ion-item>
               <ion-icon name="walk" item-left></ion-icon>
@@ -148,7 +148,7 @@
         </div>
       </div>
       <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
-        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_THERAPY && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_NURSE  && this.classroomService.data.get(this.roomNumber).students.includes(String(student.key))">
+        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_THERAPY && this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT_NURSE  && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
           <ion-card>
             <ion-item>
               <ion-icon name="walk" item-left></ion-icon>
@@ -176,7 +176,7 @@
         </ion-grid>
       <ion-list inset>
       <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
-        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes(String(student.key))">
+        <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
           <ion-card>
             <ion-item>
               <ion-icon name="walk" item-left></ion-icon>
@@ -204,7 +204,7 @@
         </ion-grid>
       <ion-list inset>
       <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
-        <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes(String(student.key))">
+        <div *ngIf="this.studentService.data.get(student.key).location === checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
           <ion-card>
             <ion-item>
               <ion-icon name="walk" item-left></ion-icon>
