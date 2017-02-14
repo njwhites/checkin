@@ -21839,7 +21839,7 @@ page-admin-reporting .attendanceWarning {
   -ms-flex-positive: 1;
   flex-grow: 1;
   height: 100%;
-  background-color: red;
+  background-color: #ff9900;
   border: 3px;
 }
 
@@ -21848,7 +21848,7 @@ page-admin-reporting .billedWarning {
   -ms-flex-positive: 1;
   flex-grow: 1;
   height: 100%;
-  background-color: lime;
+  background-color: red;
   border: 3px;
 }
 
@@ -21857,7 +21857,16 @@ page-admin-reporting .therapyWarning {
   -ms-flex-positive: 1;
   flex-grow: 1;
   height: 100%;
-  background-color: blue;
+  background-color: magenta;
+  border: 3px;
+}
+
+page-admin-reporting .blanckError {
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  height: 100%;
+  background-color: white;
   border: 3px;
 }
 
@@ -21901,7 +21910,7 @@ page-admin-reporting .errorsContainer {
 
 page-admin-reporting .hoursContainer {
   font-size: 120%;
-  fong-weight: bold;
+  font-weight: bold;
   text-align: right;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -21909,6 +21918,18 @@ page-admin-reporting .hoursContainer {
   -webkit-flex-basis: 30px;
   -ms-flex-preferred-size: 30px;
   flex-basis: 30px;
+}
+
+page-admin-reporting-details .headerRow {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+page-admin-reporting-details .evenRow {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+page-admin-reporting-details .totalRow {
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
 page-admin-student-tab .bgc {
@@ -22318,13 +22339,22 @@ page-list .titleRoom {
   font-size: 200%;
 }
 
-page-list .scrollable {
+page-list .presentScrollable {
   background-color: #eee5de;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
   height: 1000px;
   max-height: 80vh;
+}
+
+page-list .scrollable {
+  background-color: #eee5de;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  height: 1000px;
+  max-height: 86vh;
 }
 
 page-list .scrollableInside {

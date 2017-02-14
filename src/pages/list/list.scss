@@ -80,11 +80,18 @@ page-list {
     font-size: 200%;
   }
 
+  .presentScrollable {
+    background-color: #eee5de;
+    align-self: center;
+    height: 1000px;
+    max-height: 80vh;
+  }
+
   .scrollable {
     background-color: #eee5de;
     align-self: center;
     height: 1000px;
-    max-height: 66vh;
+    max-height: 86vh;
   }
 
   .scrollableInside {

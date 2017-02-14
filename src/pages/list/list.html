@@ -18,7 +18,7 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      <ion-content class="scrollable">
+      <ion-content class="presentScrollable">
         <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID" class="scrollableInside">
           <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT">
             <ion-card>
