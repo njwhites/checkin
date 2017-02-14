@@ -6,7 +6,7 @@ page-classroom-id {
     align-content: center!important;
   }
 
-  .scroll-content {
+  .fixed-content {
     background-color: #eee5de;
   }
 
@@ -20,14 +20,16 @@ page-classroom-id {
   }
 
   .titleRow {
-    padding-top: 5vh;
+    padding-top: 2vh;
     align-self: center;
     width: 55%;
     padding-bottom: 5vh;
   }
-
-  .emptyRow {
-    padding-top: 15vh;
+  .modalTitleRow {
+    padding-top: 2vh;
+    align-self: center;
+    width: 55%;
+    padding-bottom: 2vh;
   }
 
   .fill-parent{

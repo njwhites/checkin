@@ -22031,7 +22031,7 @@ page-classroom-id .vertical-align-content {
   align-content: center !important;
 }
 
-page-classroom-id .scroll-content {
+page-classroom-id .fixed-content {
   background-color: #eee5de;
 }
 
@@ -22047,7 +22047,7 @@ page-classroom-id .buttonRow {
 }
 
 page-classroom-id .titleRow {
-  padding-top: 5vh;
+  padding-top: 2vh;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
@@ -22055,8 +22055,13 @@ page-classroom-id .titleRow {
   padding-bottom: 5vh;
 }
 
-page-classroom-id .emptyRow {
-  padding-top: 15vh;
+page-classroom-id .modalTitleRow {
+  padding-top: 2vh;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: 55%;
+  padding-bottom: 2vh;
 }
 
 page-classroom-id .fill-parent {
