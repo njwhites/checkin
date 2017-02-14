@@ -524,7 +524,7 @@ export class CheckinProvider {
   }
 
   //on follow up write the therapy length in
-  therapistCheckinFollowUp(student_id: string, by_id: string, start_time: string, length: Number){
+  therapistCheckinFollowUp(student_id: string, by_id: string, start_time: string, length: Number, nap_subtract: Number){
     return new Promise(resolve => {
       this.getTodaysTransaction(null).then((doc: TransactionModel) => {
         this.getStudent(student_id, doc).then((me: TransactionStudentModel) => {
@@ -539,6 +539,7 @@ export class CheckinProvider {
             let t_model = new TransactionTherapy();
             t_model.start_time = start_time;
             t_model.length = length;
+            t_model.nap_subtract = nap_subtract;
             t_model.by_id = by_id;
             let otherTherapies = me.therapies.filter(therapy => {
               return therapy.length !== -1;
@@ -554,7 +555,8 @@ export class CheckinProvider {
                   }
                 }),
                 nap: me.nap,
-                therapies: [...otherTherapies, {start_time: t_model.start_time, length: t_model.length, by_id: t_model.by_id}]
+                therapies: [...otherTherapies, {start_time: t_model.start_time, length: t_model.length, 
+                  by_id: t_model.by_id, nap_subtract: t_model.nap_subtract}]
             }
             function delta(doc) {
               doc.students = [...others, i];
@@ -906,6 +908,7 @@ export class CheckinProvider {
                 day.SP_therapy_hours += therapyLength;
                 totalTherapy += therapyLength;
               }
+              day.nap_hours -= Number(therapy.nap_subtract) / 60;
             })
 
 

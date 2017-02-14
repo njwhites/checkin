@@ -19,7 +19,7 @@ export class TherapistCheckinConfirmModalPage {
   length: Number;
   by_id: String;
   student: String;
-  napTime: Number;
+  nap_subtract: Number;
 
   constructor(public navCtrl: NavController, private viewCtrl: ViewController, public navParams: NavParams, public checkinService: CheckinProvider) {
     this.original_start_time =  new Date(Math.round(Number(this.navParams.get('start_time')) / 300000) * 300000);
@@ -36,7 +36,7 @@ export class TherapistCheckinConfirmModalPage {
     }
     this.by_id = this.navParams.get('by_id');
     this.student = this.navParams.get('student');
-    this.napTime = 0;
+    this.nap_subtract = 0;
   }
 
 
@@ -75,7 +75,7 @@ export class TherapistCheckinConfirmModalPage {
         console.log("error");
         break;
     }
-    this.checkinService.therapistCheckinFollowUp(this.student.toString(), this.by_id.toString(), this.checkinService.parseReadableTime(start_time).toString(), this.length);
+    this.checkinService.therapistCheckinFollowUp(this.student.toString(), this.by_id.toString(), this.checkinService.parseReadableTime(start_time).toString(), this.length, this.nap_subtract);
     let data = { 'returnValue': true };
     this.viewCtrl.dismiss(data);
   }
