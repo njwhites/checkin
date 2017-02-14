@@ -18,11 +18,13 @@ export class AdminClassroomTabPage {
   }
 
   addClassroom(){
-    this.modalController.create(AdminClassroomModalPage,{isAddNewClassroom:true}).present();
+    this.navCtrl.push(AdminClassroomModalPage,{isAddNewClassroom:true});
+    //this.modalController.create(AdminClassroomModalPage,{isAddNewClassroom:true}).present();
   }
 
   showClassRoomInfo(classroom: ClassRoomModel){
-    this.modalController.create(AdminClassroomModalPage,{classroom: classroom, isAddNewClassroom: false}).present();
+    this.navCtrl.push(AdminClassroomModalPage,{classroom: classroom, isAddNewClassroom: false});
+    //this.modalController.create(AdminClassroomModalPage,{classroom: classroom, isAddNewClassroom: false}).present();
   }
 
 
