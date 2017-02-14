@@ -239,7 +239,7 @@ export class CheckinProvider {
                   by_id: event.by_id
                 }
               }),
-              nap: minutes,
+              nap: Number(minutes),
               therapies: me.therapies
           }
           function delta(doc) {
@@ -720,46 +720,18 @@ export class CheckinProvider {
       //upsert
       var dateString = `${room_number}`;
       this.getClassroomBilling(room_number, (doc: ClassroomWeek) => {
-        console.log(doc);
+        //console.log(doc);
         let others = doc.weeks.filter((week: BillingWeekModel) => {
           var sd = new Date(week.start_date);
           return start_date.getDate() !== sd.getDate() ||
             start_date.getMonth() !== sd.getMonth() ||
             start_date.getFullYear() !== sd.getFullYear();
         });
-        let me = {
-          start_date: billing_week.start_date,
-          room_number: billing_week.room_number,
-
-          students: billing_week.students.map((each:StudentBillingWeek) => {
-            return {
-              student_id: each.student_id,
-              average_hours_billed_per_day: each.average_hours_billed_per_day,
-
-              billing_days: each.student_days.map((day:BillingDay) => {
-                return {
-                  date: day.date,
-                  start_time: day.start_time,
-                  end_time: day.end_time,
-
-                  nap_hours: day.nap_hours,
-                  SP_therapy_hours: day.SP_therapy_hours,
-                  OT_therapy_hours: day.OT_therapy_hours,
-                  PT_therapy_hours: day.PT_therapy_hours,
-
-                  gross_hours: day.gross_hours,
-                  net_hours: day.net_hours,
-                  billable_hours: day.billable_hours
-                }
-              })
-            }
-          }),
-
-          billing_percent: billing_week.billing_percent
-
-        }
+        let me = billing_week;
         this.billingdb.upsert(room_number, (document) => {
+          //console.log(me);
           document.billingWeeks = [...others, me]
+          //console.log(document);
           return document;
         }).then(response => {
           //unsure how to do this without recursion. basically since it has been added to the db,
@@ -796,7 +768,8 @@ export class CheckinProvider {
       });
 
       billing_week.billing_percent = (hours / count / 5) * 100;
-
+      console.log("ASDASD")
+      console.log(billing_week)
       callback(billing_week);
       return;
     }
@@ -844,7 +817,7 @@ export class CheckinProvider {
           //}
         })
         week.average_hours_billed_per_day = totalBilled/count;
-        
+        //console.log(week);
         callback(week);
         return;
     }
@@ -865,8 +838,10 @@ export class CheckinProvider {
         this.getStudent(s_id, doc).then((student:TransactionStudentModel) => {
 
           //If student nap is set for the day
-          if(Number(student.nap) >= 0){
-            day.nap_hours = Number(student.nap) / 60;
+          if(!isNaN(Number(student.nap)) && Number(student.nap) >= 0){
+            day.nap_hours = Number(student.nap).valueOf() / 60;
+          }else{
+            day.nap_hours = 0;
           }
 
           //event info          
@@ -896,7 +871,7 @@ export class CheckinProvider {
           if(student.therapies){
             student.therapies.forEach((therapy:TransactionTherapy) => {
               var type = this.userService.data.get(therapy.by_id).therapy_type;
-              console.log("Therapy type: " + type);
+              //console.log("Therapy type: " + type);
               var therapyLength = therapy.length.valueOf() / 60;
               if(type === 'PT'){
                 day.PT_therapy_hours += therapyLength;
@@ -908,7 +883,10 @@ export class CheckinProvider {
                 day.SP_therapy_hours += therapyLength;
                 totalTherapy += therapyLength;
               }
-              day.nap_hours -= Number(therapy.nap_subtract) / 60;
+
+              if(therapy.nap_subtract){
+                day.nap_hours -= therapy.nap_subtract.valueOf() / 60;
+              }
             })
 
 
@@ -916,11 +894,15 @@ export class CheckinProvider {
           //net hours = gross - nap - therapy
           if(day.gross_hours > 0){
             day.net_hours = day.gross_hours - day.nap_hours - totalTherapy;
+          }else{
+            day.net_hours = -1;
           }
 
           //billable = min(net, 5).truncate
           if(day.net_hours > 0){
             day.billable_hours = Math.floor(Math.min(day.net_hours, 5));
+          }else{
+            day.billable_hours = -1;
           }
           resolve(day);
         })
