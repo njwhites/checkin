@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content scroll=false class="bgc" (click)="resetInterval()">
+<div class="fixed-content" scroll=false class="bgc" (click)="resetInterval()">
   <div *ngIf="parentPage === 'presentStudents'">
     <ion-list inset class="fill">
       <ion-grid class="horizontal-align-center">
@@ -18,7 +18,7 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      <ion-content class="presentScrollable">
+      <ion-content class="presentScrollable" (onscroll)="resetInterval()">
         <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID" class="scrollableInside">
           <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
             <ion-card>
@@ -282,4 +282,4 @@
       </ion-row>
     </ion-grid>
   </div>
-</ion-content>
+</div>

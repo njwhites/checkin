@@ -22345,7 +22345,7 @@ page-list .presentScrollable {
   -ms-flex-item-align: center;
   align-self: center;
   height: 1000px;
-  max-height: 80vh;
+  max-height: 66vh;
 }
 
 page-list .scrollable {
