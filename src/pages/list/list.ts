@@ -3,6 +3,7 @@ import {NavController, ToastController, NavParams, ModalController} from "ionic-
 import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';
 import {UserProvider} from '../../providers/user-provider';
+import {ClassRoomProvider} from '../../providers/class-room-provider';
 import {StudentDetailsPage} from '../student-details/student-details';
 import {TherapistCheckinConfirmModalPage} from "../therapist-checkin-confirm-modal/therapist-checkin-confirm-modal"
 
@@ -26,7 +27,7 @@ export class ListPage {
   timeSinceLastInteraction: number = 0;
   interval: any;
 
-  constructor(public studentService: StudentProvider, public navCtrl: NavController, public toastCtrl: ToastController, public modalCtrl: ModalController, public navParams: NavParams, public checkinService: CheckinProvider, public userService: UserProvider) {
+  constructor(public studentService: StudentProvider, public navCtrl: NavController, public toastCtrl: ToastController, public modalCtrl: ModalController, public navParams: NavParams, public checkinService: CheckinProvider, public userService: UserProvider, public classroomService: ClassRoomProvider) {
     this.selectedStudent = navParams.get('student');
     this.parentPage = navParams.get('parentPage');
     this.userID = navParams.get('userID');
