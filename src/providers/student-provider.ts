@@ -11,6 +11,7 @@ export class StudentProvider {
 
   constructor() {
     this.data = new Map<String,StudentModel>();
+    this.roomRoster = new Array<String>();
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('students');
 
@@ -42,6 +43,7 @@ export class StudentProvider {
     // if(this.data){
     //   return Promise.resolve(this.data);
     // }
+
 
     //otherwise we should do an initial gathering of docs
     return new Promise(resolve =>{
@@ -247,11 +249,23 @@ export class StudentProvider {
 
 
   handleChange(change){
-
-    if(change.deleted){
-      this.data.delete(change.doc._id);
+    //if roomRoster is set then we need to make sure that people who are not part of roomRoster aren't added to the data object
+    //otherwise the data object should have everyone
+    if(this.roomRoster){
+      //if the changed student id is not in the roomRoster then proceed with the updates
+      if(~this.roomRoster.indexOf(change.doc._id)){
+        if(change.deleted){
+          this.data.delete(change.doc._id);
+        } else {
+          this.data.set(change.doc._id, change.doc);
+        }
+      }
     } else {
-      this.data.set(change.doc._id, change.doc);
+      if(change.deleted){
+        this.data.delete(change.doc._id);
+      } else {
+        this.data.set(change.doc._id, change.doc);
+      }
     }
   }
 }
