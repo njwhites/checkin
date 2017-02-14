@@ -19,6 +19,7 @@ export class TherapistCheckinConfirmModalPage {
   length: Number;
   by_id: String;
   student: String;
+  napTime: Number;
 
   constructor(public navCtrl: NavController, private viewCtrl: ViewController, public navParams: NavParams, public checkinService: CheckinProvider) {
     this.original_start_time =  new Date(Math.round(Number(this.navParams.get('start_time')) / 300000) * 300000);
@@ -35,6 +36,7 @@ export class TherapistCheckinConfirmModalPage {
     }
     this.by_id = this.navParams.get('by_id');
     this.student = this.navParams.get('student');
+    this.napTime = 0;
   }
 
 
