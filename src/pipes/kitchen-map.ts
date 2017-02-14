@@ -12,13 +12,7 @@ import {ClassRoomModel} from '../models/db-models'
     pure: false
 })
 export class KitchenPipe {
-    checkinService: any;
-    studentService: any;
-    classroomService: any;
-    constructor(checkinService: CheckinProvider, studentService: StudentProvider, classroomService: ClassRoomProvider){
-        this.checkinService = checkinService;
-        this.studentService = studentService;
-        this.classroomService = classroomService;
+    constructor(public checkinService: CheckinProvider, public studentService: StudentProvider, public classroomService: ClassRoomProvider){
     }
 
     transform(value: any, args?: any[]): Object[] {
