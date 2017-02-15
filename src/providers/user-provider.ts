@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import {UserModel} from '../models/db-models';
 
+var crypto = require('crypto');
+
 @Injectable()
 export class UserProvider {
   data: Map<String, UserModel>;
@@ -292,6 +294,25 @@ export class UserProvider {
       this.data.delete(change.doc._id);
     } else {
       this.data.set(change.doc._id, change.doc);
+    }
+  }
+
+  generateSALT(length: number){
+    var s = "";
+    var choices = "ABCDEF0123456789"
+    for(var i = 0; i < length; i++){
+      var index = Math.floor(Math.random()*choices.length);
+      s+= choices.charAt(index);
+    }
+    return s;
+  }
+
+  sha256(password, salt){
+    var hash = crypto.createHmac('sha256', salt).update(password);
+    var value = hash.digest('hex');
+    return {
+      salt:salt,
+      passwordHash: value
     }
   }
 }
