@@ -23,34 +23,58 @@ export class AdminReportingPage {
               {name: "Will Smith", hours:18}];
   map: Map<Number, ClassroomWeek>;
 
+  interval: any;
+
   constructor(public navCtrl: NavController, public studentService: StudentProvider, public classroomService: ClassRoomProvider, public checkinService: CheckinProvider){
     var date = new Date();
     while(date.getDay() !== 1){
       date.setDate(date.getDate()-1);
     }
+    this.setup(date)
+    
+  }
+
+  setup(date: Date){
+
+    //if this gets called and the interval is still waiting, reset it to the new one
+    if(this.interval){
+      clearInterval(this.interval);
+      this.interval = undefined;
+    }
+   
 
     this.setMap(date);
-   
-    setTimeout(()=> {
-      this.map = new Map(this.map);
-      console.log(this.map);
-      console.log(this.map.get(101).weeks[0].students[0]);
-      var test = this.map.get(101).weeks[0].students[0].student_days.reduce((prev, curr, index, array) => {
-        if(curr.gross_hours < 0){
-          return prev;
-        }
-        var ret = new BillingDay();
-        ret.OT_therapy_hours = prev.OT_therapy_hours + curr.OT_therapy_hours;
-        ret.PT_therapy_hours = prev.PT_therapy_hours + curr.PT_therapy_hours;
-        ret.SP_therapy_hours = prev.SP_therapy_hours + curr.SP_therapy_hours;
-        ret.billable_hours = prev.billable_hours + curr.billable_hours;
-        ret.gross_hours = prev.gross_hours + curr.gross_hours;
-        ret.net_hours = prev.net_hours + curr.net_hours;
-        ret.nap_hours = prev.nap_hours + curr.nap_hours;
-        return ret;
-      })
-      console.log(test);
-    }, 3000);
+
+    //Checking every 1/4 second to see if all results are back
+    this.interval = setInterval(()=> {
+      if(this.map.size === this.rooms.length){
+        //all the maps have come back
+        //reassigning so the ngfor refreshes
+        this.map = new Map(this.map);
+
+        console.log(this.map);
+        clearInterval(this.interval);
+        this.interval = undefined;
+        console.log(this.map.get(101).weeks[0].students[0]);
+        var test = this.map.get(101).weeks[0].students[0].student_days.reduce(this.reducer);
+        console.log(test);
+      }
+    }, 250);
+  }
+
+  reducer(prev, curr){
+      if(curr.gross_hours < 0){
+        return prev;
+      }
+      var ret = new BillingDay();
+      ret.OT_therapy_hours = prev.OT_therapy_hours + curr.OT_therapy_hours;
+      ret.PT_therapy_hours = prev.PT_therapy_hours + curr.PT_therapy_hours;
+      ret.SP_therapy_hours = prev.SP_therapy_hours + curr.SP_therapy_hours;
+      ret.billable_hours = prev.billable_hours + curr.billable_hours;
+      ret.gross_hours = prev.gross_hours + curr.gross_hours;
+      ret.net_hours = prev.net_hours + curr.net_hours;
+      ret.nap_hours = prev.nap_hours + curr.nap_hours;
+      return ret;
   }
 
   setMap(date: Date){
@@ -58,6 +82,7 @@ export class AdminReportingPage {
     this.rooms.forEach(room => {
       this.getClassroomBilling(room.number + "", date).then((cw : ClassroomWeek) => {    
         this.map.set(room.number, cw);
+        console.log(this.map.size + " " + this.map.keys.length);
       })
     })
 
