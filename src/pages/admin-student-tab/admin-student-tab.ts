@@ -36,7 +36,11 @@ export class AdminStudentTabPage {
     this.navCtrl.push(AdminStudentModalPage, {key: "-1"});
   }
   setFilter(event){
-    this.filter = event.target.value;
+    if(event.target.value){
+      this.filter = event.target.value;
+    } else {
+      this.filter = ' ';
+    }
     if(this.filter === ''){
       this.filter = ' ';
     }
