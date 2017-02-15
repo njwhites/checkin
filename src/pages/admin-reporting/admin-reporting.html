@@ -39,7 +39,7 @@
     <ion-row>
       <ion-col>
         <ion-list>
-          <ion-card *ngFor="let room of this.map | mapValues">
+          <ion-card *ngFor="let room of this.map | mapValues" (click)="toggleRoom(room.key)">
             <ion-card-header style="background-color:rgba(0, 0, 0, 0.13)">
               <ion-row>
                 <ion-col width-20>
@@ -55,7 +55,7 @@
               </ion-row>
             </ion-card-header>
             <!--TODO: Add if room.on back in-->
-            <div *ngIf="room.val.weeks.length > 0">
+            <div *ngIf="room.val.weeks.length > 0 && isRoomOn(room.key)">
               <div *ngFor="let student of room.val.weeks[0].students" class="container" (click)="showDetails(student)">
                 <div class="nameContainer">{{this.studentService.data.get(student.student_id).fName}} {{this.studentService.data.get(student.student_id).lName}}</div>
                 <div class="errorsContainer">

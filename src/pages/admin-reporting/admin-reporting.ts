@@ -30,7 +30,7 @@ export class AdminReportingPage {
     while(date.getDay() !== 1){
       date.setDate(date.getDate()-1);
     }
-    this.setup(date)
+    this.setup(date);
     
   }
 
@@ -121,11 +121,18 @@ export class AdminReportingPage {
   toggleRoom(number:number){
     //WORKS
     var thisRoom = this.rooms.filter(room => {
-      return room.number = number;
+      return room.number === number;
     })[0];
 
     thisRoom.on = !thisRoom.on;
 
+  }
+
+  isRoomOn(number: number){
+    console.log(this.rooms);
+    return this.rooms.filter(room => {
+      return room.number === number;
+    })[0].on;
   }
 
   showDetails(student_id){
