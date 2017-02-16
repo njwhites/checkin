@@ -29,11 +29,12 @@ export class AdminDrillTabPage {
   ionViewDidLoad() {
   }
 
-  cardTapped(event, room) {
+  cardTapped(room, count) {
     this.navCtrl.push(ListPage, {
       parentPage: 'presentStudents',
       userID: this.id,
-      roomNumber: room
+      roomNumber: room,
+      count: count
     })
   }
 

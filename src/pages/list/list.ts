@@ -16,6 +16,7 @@ import {GenericCheckinConfirmModalPage} from "../generic-checkin-confirm-modal/g
 export class ListPage {
   toastTrigger: boolean;
   studentID: string;
+  count: number;
   selectedStudent: any;
   signoutStudents: Array<string> = new Array<string>();
   napStudents: Map<string, string> = new Map<string, string>();
@@ -33,6 +34,11 @@ export class ListPage {
     this.parentPage = navParams.get('parentPage');
     this.userID = navParams.get('userID');
     this.roomNumber = navParams.get('roomNumber');
+    if (navParams.get('count')){
+      this.count = navParams.get('count');
+    } else {
+      this.count = -1;
+    }
     this.studentID = '';
     this.toastTrigger = false;
   }

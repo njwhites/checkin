@@ -9,7 +9,7 @@
 
 <div class="fixed-content" class="fill" padding>
 	<div class="card-container">
-        <ion-card class="flex-element" *ngFor="let class of this.classroomService.data | kitchenPipe"  (click)="cardTapped($event, class.roomNum)">
+        <ion-card class="flex-element" *ngFor="let class of this.classroomService.data | kitchenPipe"  (click)="cardTapped(class.roomNum, class.presentCount)">
           <ion-grid class="cardGrid">
             <ion-row class="roomNumber">
               <ion-col>

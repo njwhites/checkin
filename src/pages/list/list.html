@@ -227,7 +227,12 @@
               Total Students Present:
             </span>
             <span class="presentCount" item-right>
-              {{this.studentService.data|presentCount}}
+              <div *ngIf="this.count >= 0">
+                {{this.count}}
+              </div>
+              <div *ngIf="this.count === -1">
+                {{this.studentService.data|presentCount}}
+              </div>
             </span>
           </ion-item>
         </ion-row>
