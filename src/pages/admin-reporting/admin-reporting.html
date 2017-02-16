@@ -53,11 +53,13 @@
                 </ion-col>
                 <ion-col width-50>
                 </ion-col>
-                 <!--    <div class="errorsContainer" *ngIf="room.number===0">
-                      <div class="attendanceWarning"></div>
-                      <div class="billedWarning"></div>
-                      <div class="therapyWarning"></div>
-                    </div> -->
+                    <div class="errorsContainer" *ngIf="true">
+                      <div *ngIf="this.roomBillingWeekTotals.get(room.val.room_number + '').attendanceWarning" class="attendanceWarning"></div>
+                      <div *ngIf="!this.roomBillingWeekTotals.get(room.val.room_number + '').attendanceWarning" class="blank"></div>
+                      <div *ngIf="this.roomBillingWeekTotals.get(room.val.room_number + '').billingWarning" class="billedWarning"></div><div *ngIf="!this.roomBillingWeekTotals.get(room.val.room_number + '').billingWarning" class="billedWarning"></div>
+                      <div *ngIf="this.roomBillingWeekTotals.get(room.val.room_number + '').therapyWarning" class="therapyWarning"></div>
+                      <div *ngIf="!this.roomBillingWeekTotals.get(room.val.room_number + '').therapyWarning" class="blank"></div>
+                    </div>
               </ion-row>
             </ion-card-header>
             <!--TODO: Add if room.on back in-->
