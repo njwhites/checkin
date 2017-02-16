@@ -22,6 +22,8 @@ export class AdminReportingPage {
 
   weekStart: Date;
 
+  displayInfo: boolean = false;
+
   daysInSession: number = 5;
   interval: any;
 
@@ -31,8 +33,9 @@ export class AdminReportingPage {
       date.setDate(date.getDate()-1);
     }
 
-    this.setup(date);
-    this.weekStart = date;
+    this.weekStart = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+
   }
 
   setup(date: Date){
@@ -158,9 +161,33 @@ export class AdminReportingPage {
     this.navCtrl.push(AdminReportingDetailsPage, {student : student, reducer: this.reducer}, {});
   }
 
+  writeBillingWeeks(){
+    return new Promise(resolve=>{
+      this.rooms.forEach(room => {
+        this.checkinService.writeBillingWeek(this.weekStart, room.number + "");
+      });
+      resolve();
+    })
+  }
+
+  fillWeek(){
+    this.writeBillingWeeks().then(()=>{
+      this.setup(new Date(this.weekStart));
+    })
+    this.displayInfo = !this.displayInfo;
+  }
+
+  dateInputChanged(){
+    console.log(this.weekStart);
+    console.log(new Date(this.weekStart));
+    if(this.displayInfo){
+      this.displayInfo = !this.displayInfo;
+    }
+  }
+
   toCSV(){
     var out = "data:text/csv;charset=utf-8,";
-    out += "Date,Servicetype,BeginTime,EndTime,Hours,staff_1,clients_1"
+    out += "\nDate,Servicetype,BeginTime,EndTime,Hours,staff_1,clients_1\n"
     this.map.forEach((value:ClassroomWeek, key) =>{
       var week = value.weeks[0];
       week.students.forEach((student:StudentBillingWeek) => {
@@ -173,7 +200,7 @@ export class AdminReportingPage {
           out += ",";
           out += ",";
           out += day.billable_hours + ",";
-          out += "000001,"
+          out += "\'000001,"
           out += "NAMEJOE\n";
         })
       })

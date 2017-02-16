@@ -16,7 +16,7 @@
           <ion-row style="height:100%">
             <ion-col>
               <ion-item>
-                <ion-input type="date"></ion-input>
+                <ion-input type="date" [(ngModel)]="this.weekStart" (change)="dateInputChanged()"></ion-input>
                <!--    -->
               </ion-item>
             </ion-col>
@@ -44,7 +44,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-list *ngIf="this.weekStart">
+        <ion-list *ngIf="displayInfo">
           <ion-card *ngFor="let room of this.map | mapValues" (click)="toggleRoom(room.key)">
             <ion-card-header style="background-color:rgba(0, 0, 0, 0.13)">
               <ion-row>
@@ -126,11 +126,11 @@
                 </ion-col>
                 <ion-col class="totaledItem">
                     <ion-label   stacked>Net Hours</ion-label>
-                    <div>{{this.roomBillingWeekTotals.get(room.key+"").net_hours.toFixed(2)}}</div>                
+                    <div>{{this.roomBillingWeekTotals.get(room.key+"").net_hours.toFixed(2)}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
                     <ion-label   stacked>Billed Hours</ion-label>
-                    <div>{{this.roomBillingWeekTotals.get(room.key+"").billable_hours.toFixed(2)}}</div>     
+                    <div>{{this.roomBillingWeekTotals.get(room.key+"").billable_hours.toFixed(2)}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
                     <ion-label   stacked>Rate</ion-label>
@@ -148,7 +148,7 @@
             </div>
           </ion-card>
         </ion-list>
-        <button ion-button *ngIf="!this.weekStart" (click)="fillWeek()"></button>
+        <button ion-button *ngIf="!displayInfo" (click)="fillWeek()"></button>
       </ion-col>
     </ion-row>
   </ion-grid>
