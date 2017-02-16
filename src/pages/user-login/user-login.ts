@@ -44,7 +44,7 @@ export class UserLoginPage {
       } else if(this.parentPage == 'admin') {
         this.studentService.getStudents().then(()=>{
           this.userService.getAllUsers().then(()=>{
-            this.navCtrl.push(this.adminPage);
+            this.navCtrl.push(this.adminPage, idCheck);
           });
         });
       }

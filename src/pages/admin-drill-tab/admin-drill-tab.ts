@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams} from 'ionic-angular';
 import { ClassRoomProvider } from '../../providers/class-room-provider'
 import { ClassRoomModel } from '../../models/db-models';
 import {ListPage} from '../list/list';
@@ -19,8 +19,12 @@ export class AdminDrillTabPage {
   allClassrooms: Array<ClassRoomModel> = [];
   roomMap : any;
   refresh: any;
+  id: number;
 
-  constructor(public navCtrl: NavController, public classroomService: ClassRoomProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public classroomService: ClassRoomProvider) {
+    this.id = navParams.data;
+    console.log(this.id);
+  }
 
   ionViewDidLoad() {
   }
@@ -28,7 +32,7 @@ export class AdminDrillTabPage {
   cardTapped(event, room) {
     this.navCtrl.push(ListPage, {
       parentPage: 'presentStudents',
-      userID: '1000',
+      userID: this.id,
       roomNumber: room
     })
   }

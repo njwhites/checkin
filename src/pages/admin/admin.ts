@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController, NavParams} from 'ionic-angular';
 import {AdminReportingPage} from "../admin-reporting/admin-reporting";
 import {AdminStudentTabPage} from "../admin-student-tab/admin-student-tab";
 import {AdminUserTabPage} from "../admin-user-tab/admin-user-tab";
@@ -12,6 +12,7 @@ import {AdminClassroomTabPage} from "../admin-classroom-tab/admin-classroom-tab"
   templateUrl: 'admin.html'
 })
 export class AdminPage {
+  id: number;
   adminReportingTab = AdminReportingPage;
   adminReportingTabParams = {
 
@@ -39,10 +40,12 @@ export class AdminPage {
 
   adminDrillTab = AdminDrillTabPage;
   admingDrillTabParams = {
-
+    id: this.id
   };
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.id = navParams.data;
+  }
 
 
 
