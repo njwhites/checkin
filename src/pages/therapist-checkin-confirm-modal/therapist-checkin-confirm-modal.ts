@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, ViewController, NavParams} from 'ionic-angular';
-import {CheckinProvider} from '../../providers/checkin-provider'
+import {CheckinProvider} from '../../providers/checkin-provider';
 
 @Component({
   selector: 'page-therapist-checkin-confirm-modal',

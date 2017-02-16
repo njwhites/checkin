@@ -6,6 +6,7 @@ import {UserProvider} from '../../providers/user-provider';
 import {ClassRoomProvider} from '../../providers/class-room-provider';
 import {StudentDetailsPage} from '../student-details/student-details';
 import {TherapistCheckinConfirmModalPage} from "../therapist-checkin-confirm-modal/therapist-checkin-confirm-modal"
+import {GenericCheckinConfirmModalPage} from "../generic-checkin-confirm-modal/generic-checkin-confirm-modal";
 
 
 @Component({
@@ -109,9 +110,11 @@ export class ListPage {
           //Checkin student to classroom from generic
           //////////////////////////////////////////////////////////////////////
           returnedStudent = studentID.slice(0, search);
+          console.log(String(returnedStudent));
           this.checkinService.nurseCheckin(String(returnedStudent), String(this.userID));
-          clearInterval(this.interval);
-          this.navCtrl.pop();
+          this.genericFollowUpModal(String(returnedStudent));
+          //clearInterval(this.interval);
+          //this.navCtrl.pop();
         }
       }
       this.listCheckedOut.emit(studentID);
@@ -265,6 +268,22 @@ export class ListPage {
       student: student
     })
   }
+
+/*******************************************************************************
+* genericFollowUpModal
+*
+*
+**/
+  genericFollowUpModal(student) {
+    let modal = this.modalCtrl.create(GenericCheckinConfirmModalPage, {
+      student: student
+    }, {enableBackdropDismiss: false});
+    modal.onDidDismiss(data => {
+      this.navCtrl.pop();
+    });
+    modal.present(modal);
+  }
+
 
 /*******************************************************************************
 * followUpModal

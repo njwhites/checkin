@@ -1,0 +1,30 @@
+<div class="modal-wrapper-height-shrink">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        Check In Confirmation
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content scrollbar-y="false" overflow-scroll="false">
+    <div>
+      <ion-list-header>
+        Did Therapy Overlap Nap Time?
+        <ion-badge item-right>{{napTime}}</ion-badge>
+      </ion-list-header>
+      <ion-item style="padding-left: 0px">
+        <ion-range min="0" max="60" step="15" pin="true" snaps="true" [(ngModel)]="nap_subtract">
+          <ion-label range-left class="small-text">0</ion-label>
+          <ion-label range-right>60</ion-label>
+        </ion-range>
+      </ion-item>
+    </div>
+    <ion-footer style="padding-top: 5px;">
+      <div style="padding-left: 2px; padding-right: 2px">
+        <button ion-button block (click)='submit()'>
+          Submit
+        </button>
+      </div>
+    </ion-footer>
+  </ion-content>
+</div>
