@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { ClassRoomProvider } from '../../providers/class-room-provider'
+import { ClassRoomModel } from '../../models/db-models';
+import {ListPage} from '../list/list';
 
 /*
   Generated class for the AdminDrillTab page.
@@ -13,10 +16,21 @@ import { NavController } from 'ionic-angular';
 })
 export class AdminDrillTabPage {
 
-  constructor(public navCtrl: NavController) {}
+  allClassrooms: Array<ClassRoomModel> = [];
+  roomMap : any;
+  refresh: any;
+
+  constructor(public navCtrl: NavController, public classroomService: ClassRoomProvider) {}
 
   ionViewDidLoad() {
-    console.log('Hello AdminDrillTabPage Page');
+  }
+
+  cardTapped(event, room) {
+    this.navCtrl.push(ListPage, {
+      parentPage: 'presentStudents',
+      userID: '1000',
+      roomNumber: room
+    })
   }
 
 }

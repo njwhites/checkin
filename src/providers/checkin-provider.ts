@@ -866,6 +866,8 @@ export class CheckinProvider {
             day.gross_hours = (day.end_time - day.start_time) / (1000 * 60 * 60);
           }
 
+          day.attendanceWarning = day.gross_hours < 7;
+
           //therapy info
           var totalTherapy = 0;
           if(student.therapies){
@@ -887,8 +889,11 @@ export class CheckinProvider {
               if(therapy.nap_subtract){
                 day.nap_hours -= therapy.nap_subtract.valueOf() / 60;
               }
-            })
 
+
+            })
+            
+            day.therapyWarning = totalTherapy > 1
 
           }
           //net hours = gross - nap - therapy
@@ -904,6 +909,9 @@ export class CheckinProvider {
           }else{
             day.billable_hours = -1;
           }
+          
+          day.billingWarning = day.billable_hours < 5;
+          
           resolve(day);
         })
       })
