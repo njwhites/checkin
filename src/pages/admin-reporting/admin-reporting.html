@@ -68,7 +68,7 @@
 
                 <!-- contains the gross hours -->
                 <div *ngIf="studentBillingDayTotals.get(student.student_id).attendanceWarning" class="attendanceWarning">{{ ( studentBillingDayTotals.get(student.student_id).gross_hours ).toFixed(2) }}</div>
-                <div *ngIf="studentBillingDayTotals.get(student.student_id).attendanceWarning" class="blank">{{ ( studentBillingDayTotals.get(student.student_id).gross_hours ).toFixed(2) }}</div>
+                <div *ngIf="!studentBillingDayTotals.get(student.student_id).attendanceWarning" class="blank">{{ ( studentBillingDayTotals.get(student.student_id).gross_hours ).toFixed(2) }}</div>
 
                 <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).nap_hours).toFixed(2) }}</div>
 

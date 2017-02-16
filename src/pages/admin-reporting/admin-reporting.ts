@@ -154,7 +154,7 @@ export class AdminReportingPage {
   }
 
   showDetails(student){
-    this.navCtrl.push(AdminReportingDetailsPage, {student : student}, {});
+    this.navCtrl.push(AdminReportingDetailsPage, {student : student, reducer: this.reducer}, {});
   }
 
 }
