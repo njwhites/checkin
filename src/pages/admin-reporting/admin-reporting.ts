@@ -5,7 +5,7 @@ import {ClassRoomProvider} from '../../providers/class-room-provider';
 import {StudentProvider} from '../../providers/student-provider';
 import {AdminReportingDetailsPage} from '../admin-reporting-details/admin-reporting-details';
 
-import {ClassroomWeek, BillingWeekModel, BillingDay} from '../../models/db-models';
+import {ClassroomWeek, BillingWeekModel, BillingDay, StudentBillingWeek} from '../../models/db-models';
 
 @Component({
   selector: 'page-admin-reporting',
@@ -53,6 +53,7 @@ export class AdminReportingPage {
         //reassigning so the ngfor refreshes
         this.map = new Map(this.map);
 
+
         console.log(this.map);
         clearInterval(this.interval);
         this.interval = undefined;
@@ -75,8 +76,8 @@ export class AdminReportingPage {
           })
           this.roomBillingWeekTotals.set(room.room_number, tempArray.reduce(this.reducer));
         });
-        console.log(this.roomBillingWeekTotals);
-        console.log(this.studentBillingDayTotals);
+
+    this.toCSV();
       }
     }, 250);
   }
@@ -155,6 +156,30 @@ export class AdminReportingPage {
 
   showDetails(student){
     this.navCtrl.push(AdminReportingDetailsPage, {student : student, reducer: this.reducer}, {});
+  }
+
+  toCSV(){
+    var out = "data:text/csv;charset=utf-8,";
+    out += "Date,Servicetype,BeginTime,EndTime,Hours,staff_1,clients_1"
+    this.map.forEach((value:ClassroomWeek, key) =>{
+      var week = value.weeks[0];
+      week.students.forEach((student:StudentBillingWeek) => {
+        student.student_days.forEach((day:BillingDay, index) => {
+          var today = new Date(week.start_date);
+          today.setDate(today.getDate() + index);
+          var str = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`
+          out += `${str},`;
+          out += "PS,";
+          out += ",";
+          out += ",";
+          out += day.billable_hours + ",";
+          out += "000001,"
+          out += "NAMEJOE\n";
+        })
+      })
+    })
+    console.log(out);
+    return out;
   }
 
 }
