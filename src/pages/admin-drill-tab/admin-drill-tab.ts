@@ -23,7 +23,6 @@ export class AdminDrillTabPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public classroomService: ClassRoomProvider) {
     this.id = navParams.data;
-    console.log(this.id);
   }
 
   ionViewDidLoad() {
