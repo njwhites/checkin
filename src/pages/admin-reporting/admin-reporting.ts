@@ -16,13 +16,12 @@ export class AdminReportingPage {
            {number: 102, on: false},
            {number: 103, on: false},
            {number: 104, on: false}];
-  students = [{name: "John Deere", hours:17},
-              {name: "Jane Deere", hours:20},
-              {name: "Fred Jones", hours:25},
-              {name: "James Dean", hours:25},
-              {name: "Will Smith", hours:18}];
+  studentBillingDayTotals : Map<String, BillingDay>;
   map: Map<Number, ClassroomWeek>;
 
+  weekStart: Date;
+
+  daysInSession: number = 5;
   interval: any;
 
   constructor(public navCtrl: NavController, public studentService: StudentProvider, public classroomService: ClassRoomProvider, public checkinService: CheckinProvider){
@@ -30,8 +29,9 @@ export class AdminReportingPage {
     while(date.getDay() !== 1){
       date.setDate(date.getDate()-1);
     }
+
     this.setup(date);
-    
+    this.weekStart = date;
   }
 
   setup(date: Date){
@@ -41,7 +41,7 @@ export class AdminReportingPage {
       clearInterval(this.interval);
       this.interval = undefined;
     }
-   
+
 
     this.setMap(date);
 
@@ -58,6 +58,18 @@ export class AdminReportingPage {
         console.log(this.map.get(101).weeks[0].students[0]);
         var test = this.map.get(101).weeks[0].students[0].student_days.reduce(this.reducer);
         console.log(test);
+
+        //set the studentBillingDayTotals to the values for each student_id
+        //for each room in the map
+        this.studentBillingDayTotals = new Map<String, BillingDay>();
+
+        this.map.forEach((room)=>{
+          //for each student in the room
+          room.weeks[0].students.forEach((student)=>{
+            this.studentBillingDayTotals.set(student.student_id,student.student_days.reduce(this.reducer));
+          })
+        });
+        console.log(this.studentBillingDayTotals);
       }
     }, 250);
   }
@@ -80,7 +92,7 @@ export class AdminReportingPage {
   setMap(date: Date){
     this.map = new Map<Number, ClassroomWeek>();
     this.rooms.forEach(room => {
-      this.getClassroomBilling(room.number + "", date).then((cw : ClassroomWeek) => {    
+      this.getClassroomBilling(room.number + "", date).then((cw : ClassroomWeek) => {
         this.map.set(room.number, cw);
         console.log(this.map.size + " " + this.map.keys.length);
       })
@@ -129,13 +141,13 @@ export class AdminReportingPage {
   }
 
   isRoomOn(number: number){
-    console.log(this.rooms);
+    //console.log(this.rooms);
     return this.rooms.filter(room => {
       return room.number === number;
     })[0].on;
   }
 
-  showDetails(student_id){
-    this.navCtrl.push(AdminReportingDetailsPage, {s_id : student_id}, {});
+  showDetails(student){
+    this.navCtrl.push(AdminReportingDetailsPage, {student : student}, {});
   }
 }

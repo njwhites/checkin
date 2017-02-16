@@ -20,7 +20,8 @@ export class AdminReportingDetailsPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams) {
-    this.student = navParams.get("SID");
+    this.student = navParams.get("student");
+    console.log(this.student);
   }
 
   ionViewDidLoad() {

@@ -13,21 +13,26 @@
     <ion-row>
       <ion-col width-33>
         <ion-card class="weekText">
-            <ion-row style="height:100%">
-              <ion-col width-10 no-padding>
-                <button class="arrowButton">
-                  <ion-icon name="arrow-back"></ion-icon>
-                </button>
-              </ion-col>
-              <ion-col width-80 text-center style="font-size:100%">
-                12/12/12-17/12/12
-              </ion-col>
-              <ion-col width-10 no-padding>
-                <button class="arrowButton">
-                  <ion-icon name="arrow-forward"></ion-icon>
-                </button>
-              </ion-col>
-            </ion-row>
+          <ion-row style="height:100%">
+            <ion-col>
+              <ion-item>
+                <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" min="2016" max="2020-10-31" [(ngModel)]="weekStart"></ion-datetime>
+              </ion-item>
+            </ion-col>
+            <!-- <ion-col width-10 no-padding>
+              <button class="arrowButton" (click)="changeWeek(-1)">
+                <ion-icon name="arrow-back" ></ion-icon>
+              </button>
+            </ion-col>
+            <ion-col width-80 text-center style="font-size:100%">
+              12/12/12-17/12/12
+            </ion-col>
+            <ion-col width-10 no-padding>
+              <button class="arrowButton">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </button>
+            </ion-col> -->
+          </ion-row>
         </ion-card>
       </ion-col>
       <ion-col width-33>
@@ -38,7 +43,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-list>
+        <ion-list *ngIf="this.weekStart">
           <ion-card *ngFor="let room of this.map | mapValues" (click)="toggleRoom(room.key)">
             <ion-card-header style="background-color:rgba(0, 0, 0, 0.13)">
               <ion-row>
@@ -57,60 +62,82 @@
             <!--TODO: Add if room.on back in-->
             <div *ngIf="room.val.weeks.length > 0 && isRoomOn(room.key)">
               <div *ngFor="let student of room.val.weeks[0].students" class="container" (click)="showDetails(student)">
+
                 <div class="nameContainer">{{this.studentService.data.get(student.student_id).fName}} {{this.studentService.data.get(student.student_id).lName}}</div>
-                <div class="errorsContainer">
-                  <div *ngIf="student.hours < 25" class="attendanceWarning"></div>
-                  <div *ngIf="!(student.hours < 25)" class="blanckError"></div>
-                  <div *ngIf="student.hours < 20" class="billedWarning"></div>
-                  <div *ngIf="!(student.hours < 20)" class="blanckError"></div>
-                  <div *ngIf="students.indexOf(student) % 2" class="therapyWarning"></div>
-                  <div *ngIf="!(students.indexOf(student) % 2)" class="blanckError"></div>
-                </div>
-                <div class="hoursContainer">{{student.hours}}</div>
+
+                <!-- contains the gross hours -->
+                <div *ngIf="student.hours < 25" class="attendanceWarning">{{ ( studentBillingDayTotals.get(student.student_id).gross_hours ).toFixed(2) }}</div>
+                <div *ngIf="!(student.hours < 25)" class="blank">{{ ( studentBillingDayTotals.get(student.student_id).gross_hours ).toFixed(2) }}</div>
+
+                <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).nap_hours).toFixed(2) }}</div>
+
+                <!-- contains the therapy hours -->
+                <div *ngIf="room.val.weeks[0].students.indexOf(student) % 2" class="therapyWarning">{{ (studentBillingDayTotals.get(student.student_id).SP_therapy_hours).toFixed(2) }}</div>
+                <div *ngIf="!(room.val.weeks[0].students.indexOf(student) % 2)" class="blank">{{ (studentBillingDayTotals.get(student.student_id).SP_therapy_hours).toFixed(2) }}</div>
+
+                <div *ngIf="room.val.weeks[0].students.indexOf(student) % 2" class="therapyWarning">{{ (studentBillingDayTotals.get(student.student_id).PT_therapy_hours).toFixed(2) }}</div>
+                <div *ngIf="!(room.val.weeks[0].students.indexOf(student) % 2)" class="blank">{{ (studentBillingDayTotals.get(student.student_id).PT_therapy_hours).toFixed(2) }}</div>
+
+                <div *ngIf="room.val.weeks[0].students.indexOf(student) % 2" class="therapyWarning">{{ (studentBillingDayTotals.get(student.student_id).OT_therapy_hours).toFixed(2) }}</div>
+                <div *ngIf="!(room.val.weeks[0].students.indexOf(student) % 2)" class="blank">{{ (studentBillingDayTotals.get(student.student_id).OT_therapy_hours).toFixed(2) }}</div>
+
+
+
+                <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).net_hours).toFixed(2) }}</div>
+
+                <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours).toFixed(2) }}</div>
+
+                <div class="blank">{{16.46}}</div>
+
+                <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours * 16.46).toFixed(2) }}</div>
+
+                <!-- contains the average/per day -->
+                <div *ngIf="student.hours < 20" class="billedWarning">{{ (studentBillingDayTotals.get(student.student_id).billable_hours / 5).toFixed(2) }}</div>
+                <div *ngIf="!(student.hours < 20)" class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours / 5).toFixed(2) }}</div>
               </div>
             </div>
             <div class="totalBar">
               <ion-row>
-                <ion-col>
+                <ion-col class="totaledItem" style="flex:2 1 40px;">
                   Total:
                 </ion-col>
-                <ion-col>
+                <ion-col class="totaledItem">
                     <ion-label   stacked>Gross Hours</ion-label>
                     <div >237.25</div>
                 </ion-col>
-                <ion-col>
+                <ion-col class="totaledItem">
                     <ion-label   stacked>Nap</ion-label>
                     <div >30.25</div>
                 </ion-col>
-                <ion-col>
+                <ion-col class="totaledItem">
                     <ion-label   stacked>Sp</ion-label>
                     <div >9.00</div>
                 </ion-col>
-                <ion-col>
+                <ion-col class="totaledItem">
                     <ion-label   stacked>PT</ion-label>
                     <div >7.50</div>
                 </ion-col>
-                <ion-col>
+                <ion-col class="totaledItem">
                     <ion-label   stacked>OT</ion-label>
                     <div >4.75</div>
                 </ion-col>
-                <ion-col>
+                <ion-col class="totaledItem">
                     <ion-label   stacked>Net Hours</ion-label>
                     <div >185.75</div>
                 </ion-col>
-                <ion-col>
+                <ion-col class="totaledItem">
                     <ion-label   stacked>Billed Hours</ion-label>
                     <div >156.00</div>
                 </ion-col>
-                <ion-col>
+                <ion-col class="totaledItem">
                     <ion-label   stacked>Rate</ion-label>
                     <div >16.46</div>
                 </ion-col>
-                <ion-col>
+                <ion-col class="totaledItem">
                     <ion-label   stacked>Total Billed</ion-label>
                     <div >2,567.76</div>
                 </ion-col>
-                <ion-col>
+                <ion-col class="totaledItem">
                     <ion-label   stacked>Average Day</ion-label>
                     <div >7.8</div>
                 </ion-col>
@@ -118,6 +145,7 @@
             </div>
           </ion-card>
         </ion-list>
+        <button ion-button *ngIf="!this.weekStart" (click)="fillWeek()"></button>
       </ion-col>
     </ion-row>
   </ion-grid>
