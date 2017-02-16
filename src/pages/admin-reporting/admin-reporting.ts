@@ -18,6 +18,7 @@ export class AdminReportingPage {
            {number: 104, on: false}];
   studentBillingDayTotals : Map<String, BillingDay>;
   map: Map<Number, ClassroomWeek>;
+  roomBillingWeekTotals: Map<String,any>;
 
   weekStart: Date;
 
@@ -62,30 +63,36 @@ export class AdminReportingPage {
         //set the studentBillingDayTotals to the values for each student_id
         //for each room in the map
         this.studentBillingDayTotals = new Map<String, BillingDay>();
+        this.roomBillingWeekTotals = new Map<String, BillingDay>();
 
         this.map.forEach((room)=>{
           //for each student in the room
+          var tempArray = [];
           room.weeks[0].students.forEach((student)=>{
-            this.studentBillingDayTotals.set(student.student_id,student.student_days.reduce(this.reducer));
+            var temp = student.student_days.reduce(this.reducer);
+            this.studentBillingDayTotals.set(student.student_id, temp);
+            tempArray.push(temp);
           })
+          this.roomBillingWeekTotals.set(room.room_number, tempArray.reduce(this.reducer));
         });
+        console.log(this.roomBillingWeekTotals);
         console.log(this.studentBillingDayTotals);
       }
     }, 250);
   }
 
-  reducer(prev, curr){
-      if(curr.gross_hours < 0){
-        return prev;
-      }
+  reducer(prev:BillingDay, curr:BillingDay){
       var ret = new BillingDay();
-      ret.OT_therapy_hours = prev.OT_therapy_hours + curr.OT_therapy_hours;
-      ret.PT_therapy_hours = prev.PT_therapy_hours + curr.PT_therapy_hours;
-      ret.SP_therapy_hours = prev.SP_therapy_hours + curr.SP_therapy_hours;
-      ret.billable_hours = prev.billable_hours + curr.billable_hours;
-      ret.gross_hours = prev.gross_hours + curr.gross_hours;
-      ret.net_hours = prev.net_hours + curr.net_hours;
-      ret.nap_hours = prev.nap_hours + curr.nap_hours;
+      ret.OT_therapy_hours = Math.max(0, prev.OT_therapy_hours) + Math.max(0, curr.OT_therapy_hours);
+      ret.PT_therapy_hours = Math.max(0, prev.PT_therapy_hours) + Math.max(0, curr.PT_therapy_hours);
+      ret.SP_therapy_hours = Math.max(0, prev.SP_therapy_hours) + Math.max(0, curr.SP_therapy_hours);
+      ret.billable_hours = Math.max(0, prev.billable_hours) + Math.max(0, curr.billable_hours);
+      ret.gross_hours = Math.max(0, prev.gross_hours) + Math.max(0, curr.gross_hours);
+      ret.net_hours = Math.max(0, prev.net_hours) + Math.max(0, curr.net_hours);
+      ret.nap_hours = Math.max(0, prev.nap_hours) + Math.max(0, curr.nap_hours);
+      ret.attendanceWarning = prev.attendanceWarning || curr.attendanceWarning;
+      ret.billingWarning = prev.billingWarning || curr.billingWarning;
+      ret.therapyWarning = prev.therapyWarning || curr.therapyWarning;
       return ret;
   }
 
@@ -94,7 +101,6 @@ export class AdminReportingPage {
     this.rooms.forEach(room => {
       this.getClassroomBilling(room.number + "", date).then((cw : ClassroomWeek) => {
         this.map.set(room.number, cw);
-        console.log(this.map.size + " " + this.map.keys.length);
       })
     })
 
@@ -150,4 +156,5 @@ export class AdminReportingPage {
   showDetails(student){
     this.navCtrl.push(AdminReportingDetailsPage, {student : student}, {});
   }
+
 }

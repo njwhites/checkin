@@ -162,6 +162,10 @@ export class BillingDay{
   public billable_hours: number;
   public total_billed: number;
 
+  public attendanceWarning: boolean;
+  public billingWarning: boolean;
+  public therapyWarning: boolean;
+
   public isLessThan7(){
     return this.gross_hours < 7;
   }
@@ -177,6 +181,9 @@ export class BillingDay{
     this.SP_therapy_hours = 0;
     this.PT_therapy_hours = 0;
     this.OT_therapy_hours = 0;
+    this.attendanceWarning = false;
+    this.billingWarning = false;
+    this.therapyWarning = false;
 
   }
 }
