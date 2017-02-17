@@ -214,13 +214,15 @@ export class AdminReportingPage {
       })
     })
 
+    //These are the lines that create the download and download it in the browser
     var encodedUri = encodeURI(out);
     var link = document.createElement("a");
     link.setAttribute("href", encodedUri);
     link.setAttribute("download", `billing${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}.csv`);
     document.body.appendChild(link); // Required for FF
-
     link.click(); 
+    //-----------------------------------
+
     return out;
   }
 
