@@ -80,7 +80,7 @@ export class AdminReportingPage {
           this.roomBillingWeekTotals.set(room.room_number, tempArray.reduce(this.reducer));
         });
 
-    this.toCSV();
+    //this.toCSV();
       }
     }, 250);
   }
@@ -128,7 +128,7 @@ export class AdminReportingPage {
     console.log('Hello AdminReportingPage Page');
   }
 
-  exportData(){
+  loadData(){
     console.log("gonna export here");
     var date = new Date();
     while(date.getDay() !== 1){
@@ -138,6 +138,11 @@ export class AdminReportingPage {
     this.rooms.forEach(room => {
       this.checkinService.writeBillingWeek(date, room.number + "");
     })
+  }
+
+  exportData(){
+
+    console.log(this.toCSV());
   }
 
   toggleRoom(number:number){
@@ -161,6 +166,7 @@ export class AdminReportingPage {
     this.navCtrl.push(AdminReportingDetailsPage, {student : student, reducer: this.reducer}, {});
   }
 
+  //this may not work as intended?
   writeBillingWeeks(){
     return new Promise(resolve=>{
       this.rooms.forEach(room => {
@@ -187,9 +193,11 @@ export class AdminReportingPage {
 
   toCSV(){
     var out = "data:text/csv;charset=utf-8,";
-    out += "\nDate,Servicetype,BeginTime,EndTime,Hours,staff_1,clients_1\n"
+    out += "Date,Servicetype,BeginTime,EndTime,Hours,staff_1,clients_1\n"
+    var date : Date;
     this.map.forEach((value:ClassroomWeek, key) =>{
       var week = value.weeks[0];
+      date = new Date(week.start_date);
       week.students.forEach((student:StudentBillingWeek) => {
         student.student_days.forEach((day:BillingDay, index) => {
           var today = new Date(week.start_date);
@@ -205,7 +213,14 @@ export class AdminReportingPage {
         })
       })
     })
-    console.log(out);
+
+    var encodedUri = encodeURI(out);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `billing${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}.csv`);
+    document.body.appendChild(link); // Required for FF
+
+    link.click(); 
     return out;
   }
 
