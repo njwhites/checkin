@@ -1,5 +1,8 @@
 page-admin-reporting-details {
   .headerRow{
+    height: 75px;
+    display: flex;
+    align-items: flex-end;
     background-color: rgba(0,0,0,0.10);
   }
   .evenRow{
@@ -27,31 +30,38 @@ page-admin-reporting-details {
     background-color:rgba(0,0,0,0.08);
   }
   .totaledItem{
-    flex-grow: 1;
+    padding: 3px;
+    flex: 1 0;
+    height: 50px;
   }
   .attendanceWarning{
-    flex-grow: 1;
+    padding: 3px;
+    flex: 1 0;
     height:100%;
     background-color:rgba(255,153,0,0.4);
     border: 3px;
     align-self: flex-end;
   }
   .billedWarning{
-    flex-grow: 1;
+    padding: 3px;
+    flex: 1 0;
     height:100%;
     background-color:rgba(255,0,0,0.4);
     border: 3px;
     align-self: flex-end;
   }
   .therapyWarning{
-    flex-grow: 1;
-    height:100%;
+    padding: 3px;
+    flex: 1 0;
+    height: 100%;
     background-color:rgba(255,0,255,0.4);
-    border: 3px;
+    border-bottom-width: medium;
+    border-bottom-style: ridge;
     align-self: flex-end;
   }
   .blank{
-    flex-grow: 1;
+    padding: 3px;
+    flex: 1 0;
     height: 100%;
     background-color:rgba(255,255,255,0.08);
     border: 3px;
@@ -83,5 +93,18 @@ page-admin-reporting-details {
     text-align: right;
     flex-grow: 1;
     flex-basis: 30px;
+  }
+
+  input{
+    min-width:0;
+  }
+  .flexInput{
+    padding: 3px;
+    flex: 1 0;
+    height: 100%;
+    background-color:rgba(0,0,0,0.15);
+    border-bottom-width: medium;
+    border-bottom-style: ridge;
+    align-self: flex-end;
   }
 }

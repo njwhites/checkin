@@ -6,89 +6,88 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="bgc">
   <ion-card>
-    <ion-grid no-padding>
-      <ion-row class="headerRow">
-        <ion-col> <strong>Days:</strong> </ion-col>
-        <ion-col *ngFor="let title of titles"> <strong>{{title}}</strong> </ion-col>
-      </ion-row>
-      <div *ngFor="let day of this.student.student_days" class="container">
-          <ion-col> <strong>{{days[this.student.student_days.indexOf(day)]}}</strong> </ion-col>
-   <!--      <ion-row *ngIf="!(days.indexOf(day)%2)" class="oddRow">
-          <ion-col>{{day}}</ion-col>
-          <ion-col *ngFor="let title of titles">{{data[days.indexOf(day)*12+titles.indexOf(title)]}}</ion-col>
-        </ion-row> -->
-        <div class="blank">{{this.checkinService.createReadableTime(day.start_time)}}</div>
-        <div class="blank">{{this.checkinService.createReadableTime(day.end_time)}}</div>
-
-        <!-- contains the gross hours -->
-        <div *ngIf="day.attendanceWarning" class="attendanceWarning">{{ ( day.gross_hours ).toFixed(2) }}</div>
-        <div *ngIf="!day.attendanceWarning" class="blank">{{ ( day.gross_hours ).toFixed(2) }}</div>
-
-        <div class="blank">{{ (day.nap_hours).toFixed(2) }}</div>
-
-        <!-- contains the therapy hours -->
-        <div *ngIf="day.therapyWarning" class="therapyWarning">{{ (day.SP_therapy_hours).toFixed(2) }}</div>
-        <div *ngIf="!day.therapyWarning" class="blank">{{ (day.SP_therapy_hours).toFixed(2) }}</div>
-
-        <div *ngIf="day.therapyWarning" class="therapyWarning">{{ (day.PT_therapy_hours).toFixed(2) }}</div>
-        <div *ngIf="!day.therapyWarning" class="blank">{{ (day.PT_therapy_hours).toFixed(2) }}</div>
-
-        <div *ngIf="day.therapyWarning" class="therapyWarning">{{ (day.OT_therapy_hours).toFixed(2) }}</div>
-        <div *ngIf="!day.therapyWarning" class="blank">{{ (day.OT_therapy_hours).toFixed(2) }}</div>
-
-
-
-        <div class="blank">{{ (day.net_hours).toFixed(2) }}</div>
-
-        <div class="blank">{{ (day.billable_hours).toFixed(2) }}</div>
-
-        <div class="blank">{{16.46}}</div>
-
-        <div class="blank">{{ (day.billable_hours * 16.46).toFixed(2) }}</div>
-
-        <!-- contains the average/per day -->
-        <div *ngIf="day.billingWarning" class="billedWarning">{{ (day.billable_hours / 5).toFixed(2) }}</div>
-        <div *ngIf="!day.billingWarning" class="blank">{{ (day.billable_hours / 5).toFixed(2) }}</div>
+      <div class="headerRow">
+        <div class="blank" style="font-weight:bold;"> Days:</div>
+        <div class="blank" style="font-weight:bold;" *ngFor="let title of titles">{{title}}</div>
       </div>
-<div class="totalBar">
-              <ion-row>
-                <ion-col class="totaledItem" style="flex:2 1 40px;">
-                  Total:
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.totals.gross_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.totals.nap_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.totals.SP_therapy_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.totals.PT_therapy_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.totals.OT_therapy_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.totals.net_hours.toFixed(2)}}</div>                
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.totals.billable_hours.toFixed(2)}}</div>     
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div >16.46</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{(this.totals.billable_hours * 16.46).toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{(this.totals.billable_hours /5).toFixed(2)}}</div>
-                </ion-col>
-              </ion-row>
-              </div>
-    </ion-grid>
+      <form [formGroup]="studentDataForm" (change)="formChanged($event)">
+        <div *ngFor="let day of this.student.student_days">
+          <div class="container" [ngClass]="{'evenRow': student.student_days.indexOf(day)%2 }">
+            <div class="blank" style="font-weight:bold">{{days[this.student.student_days.indexOf(day)]}}</div>
+
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}TimeIn" value="{{this.checkinService.createReadableTime(day.start_time)}}" class="flexInput" id="{{student.student_days.indexOf(day)}},0"/>
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}TimeOut" value="{{this.checkinService.createReadableTime(day.end_time)}}" class="flexInput" id="{{student.student_days.indexOf(day)}},1"/>
+
+            <!-- contains the gross hours -->
+            <div [ngClass]="{'attendanceWarning': day.attendanceWarning, 'blank': !day.attendanceWarning }">
+              {{ ( day.gross_hours ).toFixed(2) }}
+            </div>
+
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}NapHours" value="{{ (day.nap_hours) }}" class="flexInput" id="{{student.student_days.indexOf(day)}},2"/>
+
+            <!-- contains the therapy hours -->
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}SP" value="{{ (day.SP_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning}" id="{{student.student_days.indexOf(day)}},3"/>
+
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}PT" value="{{ (day.PT_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning}" id="{{student.student_days.indexOf(day)}},4"/>
+
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}OT" value="{{ (day.OT_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning}" id="{{student.student_days.indexOf(day)}},5"/>
+
+            <div class="blank">{{ (day.net_hours).toFixed(2) }}</div>
+
+            <div class="blank">{{ (day.billable_hours).toFixed(2) }}</div>
+
+            <div class="blank">{{16.46}}</div>
+
+            <div class="blank">{{ (day.billable_hours * 16.46).toFixed(2) }}</div>
+
+            <!-- contains the average/per day -->
+            <div [ngClass]="{'billedWarning': day.billingWarning, 'blank': !day.billingWarning }"></div>
+          </div>
+        </div>
+      </form>
+      <div class="totalBar">
+        <div class="totaledItem" style="flex:3 0;">
+          Total:
+        </div>
+        <div class="totaledItem">
+            <div>{{this.totals.gross_hours.toFixed(2)}}</div>
+        </div>
+        <div class="totaledItem">
+            <div>{{this.totals.nap_hours}}</div>
+        </div>
+        <div class="totaledItem">
+            <div>{{this.totals.SP_therapy_hours}}</div>
+        </div>
+        <div class="totaledItem">
+            <div>{{this.totals.PT_therapy_hours}}</div>
+        </div>
+        <div class="totaledItem">
+            <div>{{this.totals.OT_therapy_hours}}</div>
+        </div>
+        <div class="totaledItem">
+            <div>{{this.totals.net_hours.toFixed(2)}}</div>
+        </div>
+        <div class="totaledItem">
+            <div>{{this.totals.billable_hours.toFixed(2)}}</div>
+        </div>
+        <div class="totaledItem">
+            <div >16.46</div>
+        </div>
+        <div class="totaledItem">
+            <div>{{(this.totals.billable_hours * 16.46).toFixed(2)}}</div>
+        </div>
+        <div class="totaledItem">
+            <div>{{(this.totals.billable_hours /5).toFixed(2)}}</div>
+        </div>
+      </div>
+  </ion-card>
+
+  <ion-card [hidden]="this.studentDataForm.valid">
+    <ion-card-header>Invalid input</ion-card-header>
+    <ion-card-content *ngIf="this.studentDataForm.controls['MTimeIn'].hasError('required')">
+      ID is required.
+    </ion-card-content>
   </ion-card>
 </ion-content>
