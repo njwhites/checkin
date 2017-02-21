@@ -83,11 +83,13 @@ export class TransactionStudentModel{
   public id: String;
   public events: Array<TransactionEvent>;
   public nap: String;
+  public nap_subtract: number;
   public therapies: Array<TransactionTherapy>;
 
   constructor(){
     this.id = "";
     this.events = [];
+    this.nap_subtract = 0;
     this.nap = "";
     this.therapies = [];
   }
