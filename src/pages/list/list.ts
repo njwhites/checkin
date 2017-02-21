@@ -116,10 +116,8 @@ export class ListPage {
           //Checkin student to classroom from generic
           //////////////////////////////////////////////////////////////////////
           returnedStudent = studentID.slice(0, search);
-          console.log(String(returnedStudent));
           this.genericFollowUpModal(String(returnedStudent), String(this.userID));
           //clearInterval(this.interval);
-          //this.navCtrl.pop();
         }
       }
       this.listCheckedOut.emit(studentID);
