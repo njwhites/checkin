@@ -42,8 +42,13 @@
       </ion-item>
     </div>
     <ion-footer style="padding-top: 5px;">
-      <div style="padding-left: 2px; padding-right: 2px">
+      <div style="padding-left: 2px; padding-right: 2px" [hidden]="length === 0 || nap_subtract > length">
         <button ion-button block (click)='submit()'>
+          Submit
+        </button>
+      </div>
+      <div style="padding-left: 2px; padding-right: 2px" [hidden]="length > 0 && nap_subtract <= length">
+        <button ion-button block style="background-color: #8c8c8c;">
           Submit
         </button>
       </div>
