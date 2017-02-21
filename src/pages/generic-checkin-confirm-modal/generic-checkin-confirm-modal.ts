@@ -7,7 +7,7 @@ import {CheckinProvider} from '../../providers/checkin-provider';
   templateUrl: 'generic-checkin-confirm-modal.html'
 })
 export class GenericCheckinConfirmModalPage {
-  nap_subtract: Number;
+  nap_subtract: number;
   student: String;
   userID: String;
 
@@ -20,7 +20,8 @@ export class GenericCheckinConfirmModalPage {
   }
 
   submit() {
-    this.checkinService.nurseCheckin(this.student.toString(), this.userID.toString());
+    console.log(this.nap_subtract);
+    this.checkinService.nurseCheckin(this.student.toString(), this.userID.toString(), this.nap_subtract);
     let data = { 'returnValue': true };
     this.viewCtrl.dismiss(data);
   }

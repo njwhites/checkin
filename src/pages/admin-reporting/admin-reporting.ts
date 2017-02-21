@@ -193,7 +193,7 @@ export class AdminReportingPage {
           clearInterval(done);
           clearTimeout(timeout);
         }
-      }, 250);
+      }, 100);
     })
   }
 
@@ -230,7 +230,7 @@ export class AdminReportingPage {
           out += ",";
           out += ",";
           out += day.billable_hours + ",";
-          out += "\'000001,"
+          out += "'000001,"
           out += "NAMEJOE\n";
         })
       })

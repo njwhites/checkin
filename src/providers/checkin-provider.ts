@@ -141,6 +141,9 @@ export class CheckinProvider {
         student.events = me[0].events;
         student.nap = me[0].nap;
         student.therapies = me[0].therapies;
+        if(me[0].nap_subtract){
+          student.nap_subtract = me[0].nap_subtract;
+        }
         resolve(student);
       }
     })
@@ -150,7 +153,7 @@ export class CheckinProvider {
 
     let others = doc.students.filter(student => {
       return student.id + "" !== me.id + "";
-    })
+    });
     //copying info
     let i = {
         id: me.id,
@@ -162,6 +165,7 @@ export class CheckinProvider {
             by_id: event.by_id
           }
         }),
+        nap_subtract: me.nap_subtract,
         nap: me.nap,
         therapies: me.therapies
     }
@@ -174,6 +178,7 @@ export class CheckinProvider {
     return new Promise(resolve => {
       this.db.upsert(doc._id, delta).then(() => {
         //Success!
+        console.log(me);
         resolve(true);
 
       }).catch(err => {
@@ -184,7 +189,7 @@ export class CheckinProvider {
   }
 
   //Event is the constants from the top
-  performEvent(id: string, doc: any, by_id: string, event: string){
+  performEvent(id: string, doc: any, by_id: string, event: string, nap_subtract? : number){
 
     //If the student has not interacted yet with checkin today
     return new Promise((resolve, reject) => {
@@ -199,6 +204,11 @@ export class CheckinProvider {
         tEvent.time_readable = dateReadable;
         tEvent.by_id = by_id;
         student.events.push(tEvent);
+        if(nap_subtract){      
+          console.log(student.nap_subtract);
+          student.nap_subtract += nap_subtract;        
+          console.log(student.nap_subtract);
+        }
 
         //Get updated today's transaction incase _rev has changed, then push tEvent in
         this.getTodaysTransaction(doc._id).then(result => {
@@ -412,9 +422,9 @@ export class CheckinProvider {
     });
   }
 
-  nurseCheckin(id: string, by_id: string){
+  nurseCheckin(id: string, by_id: string, nap_subtract?: number){
     this.getTodaysTransaction(null).then(result => {
-      this.performEvent(id, result, by_id, this.NURSE_IN);
+      this.performEvent(id, result, by_id, this.NURSE_IN, nap_subtract);
       this.studentService.updateStudentLocation(id, this.CHECKED_IN);
     });
   }
@@ -655,46 +665,46 @@ export class CheckinProvider {
     return date.getTime();
   }
 
-    getClassroomBilling(room_number: String, callback){
-      this.billingdb.allDocs({include_docs: true}).then(result => {
+  getClassroomBilling(room_number: String, callback){
+    this.billingdb.allDocs({include_docs: true}).then(result => {
 
-          //get today's object, if it does not exist, create it
-          //console.log(result);
-          let trans = result.rows.filter((row) => {
-            return row.doc._id === room_number;
+        //get today's object, if it does not exist, create it
+        //console.log(result);
+        let trans = result.rows.filter((row) => {
+          return row.doc._id === room_number;
+        });
+        //console.log(trans);
+        //Day already exists in the db
+        if(trans.length > 0){
+          console.log(trans[0]);
+          let room = new ClassroomWeek();
+          room.room_number = trans[0].doc.room_number;
+          room.weeks = trans[0].doc.billingWeeks;
+          //console.log(room);
+          //console.log("resolving from getClassroomBilling")
+          callback(room);
+          return;
+        }else{
+          //Day did not exist, creates and puts it
+          this.billingdb.upsert(room_number, (doc) => {
+            return {
+              _id: room_number,
+              room_number: room_number,
+              billingWeeks: []
+            }
+          }).then(response => {
+            //unsure how to do this without recursion. basically since it has been added to the db,
+            //it will on recursion go into the other part of the if/else
+            console.log("Successfully added billing document for room: " + room_number)
+            console.log(`Recursing ${room_number}`)
+            this.getClassroomBilling(room_number, callback);
+          }).catch(function (err) {
+            console.log(err);
           });
-          //console.log(trans);
-          //Day already exists in the db
-          if(trans.length > 0){
-            console.log(trans[0]);
-            let room = new ClassroomWeek();
-            room.room_number = trans[0].doc.room_number;
-            room.weeks = trans[0].doc.billingWeeks;
-            //console.log(room);
-            //console.log("resolving from getClassroomBilling")
-            callback(room);
-            return;
-          }else{
-            //Day did not exist, creates and puts it
-            this.billingdb.upsert(room_number, (doc) => {
-              return {
-                _id: room_number,
-                room_number: room_number,
-                billingWeeks: []
-              }
-            }).then(response => {
-              //unsure how to do this without recursion. basically since it has been added to the db,
-              //it will on recursion go into the other part of the if/else
-              console.log("Successfully added billing document for room: " + room_number)
-              console.log(`Recursing ${room_number}`)
-              this.getClassroomBilling(room_number, callback);
-            }).catch(function (err) {
-              console.log(err);
-            });
-          }
-       }).catch(err =>{
-          console.log(err)
-      });
+        }
+     }).catch(err =>{
+        console.log(err)
+    });
   }
 
   getBillingWeek(start_date: Date, room_number: String){
