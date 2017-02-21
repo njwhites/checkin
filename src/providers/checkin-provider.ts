@@ -710,41 +710,44 @@ export class CheckinProvider {
 
   writeBillingWeek(start_date: Date, room_number: String){
    //these are metadata
-
+    return new Promise((resolve, reject) => {
     //this is the data
-    var ids = this.classroomService.data.get(room_number).students;
+      var ids = this.classroomService.data.get(room_number).students;
 
-    this.writeBillingWeekHelper(ids, start_date, [], (billing_week: BillingWeekModel) => {
-      billing_week.room_number = room_number;
-      
-      //upsert
-      var dateString = `${room_number}`;
-      this.getClassroomBilling(room_number, (doc: ClassroomWeek) => {
-        //console.log(doc);
-        let others = doc.weeks.filter((week: BillingWeekModel) => {
-          var sd = new Date(week.start_date);
-          return start_date.getDate() !== sd.getDate() ||
-            start_date.getMonth() !== sd.getMonth() ||
-            start_date.getFullYear() !== sd.getFullYear();
-        });
-        let me = billing_week;
-        this.billingdb.upsert(room_number, (document) => {
-          //console.log(me);
-          document.billingWeeks = [...others, me]
-          //console.log(document);
-          return document;
-        }).then(response => {
-          //unsure how to do this without recursion. basically since it has been added to the db,
-          //it will on recursion go into the other part of the if/else
-          console.log("Successfully added bills for week: " + dateString)
-          //resolve();
-        }).catch(function (err) {
-          console.log("UPSERT ERROR?")
-          console.log(err);
-        });
+      this.writeBillingWeekHelper(ids, start_date, [], (billing_week: BillingWeekModel) => {
+        billing_week.room_number = room_number;
+        
+        //upsert
+        var dateString = `${room_number}`;
+        this.getClassroomBilling(room_number, (doc: ClassroomWeek) => {
+          //console.log(doc);
+          let others = doc.weeks.filter((week: BillingWeekModel) => {
+            var sd = new Date(week.start_date);
+            return start_date.getDate() !== sd.getDate() ||
+              start_date.getMonth() !== sd.getMonth() ||
+              start_date.getFullYear() !== sd.getFullYear();
+          });
+          let me = billing_week;
+          this.billingdb.upsert(room_number, (document) => {
+            //console.log(me);
+            document.billingWeeks = [...others, me]
+            //console.log(document);
+            return document;
+          }).then(response => {
+            //unsure how to do this without recursion. basically since it has been added to the db,
+            //it will on recursion go into the other part of the if/else
+            console.log("Successfully added bills for week: " + dateString);
+            resolve();
+            //resolve();
+          }).catch(function (err) {
+            console.log("UPSERT ERROR?")
+            console.log(err);
+            reject();
+          });
+        })
+        //console.log(`theoretical end`);
+        //console.log(billing_week);
       })
-      //console.log(`theoretical end`);
-      //console.log(billing_week);
     })
 
 

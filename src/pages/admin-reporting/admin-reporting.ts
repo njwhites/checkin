@@ -34,6 +34,7 @@ export class AdminReportingPage {
     }
 
     this.weekStart = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    this.map = new Map<Number, ClassroomWeek>();
 
 
   }
@@ -169,15 +170,36 @@ export class AdminReportingPage {
   //this may not work as intended?
   writeBillingWeeks(){
     return new Promise(resolve=>{
+      var completeCount = 0;
+
       this.rooms.forEach(room => {
-        this.checkinService.writeBillingWeek(this.weekStart, room.number + "");
+        this.checkinService.writeBillingWeek(this.weekStart, room.number + "").then(() => {
+          completeCount++;
+        });
       });
-      resolve();
+      var done : NodeJS.Timer;
+
+      var timeout = setTimeout(() => {
+        clearInterval(done);
+        clearTimeout(timeout);
+        //like prompt or something that it failed ??
+      }, 8000);
+
+      //check every 1/4 second if all are done
+      var done = setInterval(() => {
+        if( completeCount === this.rooms.length)
+        {
+          resolve();
+          clearInterval(done);
+          clearTimeout(timeout);
+        }
+      }, 250);
     })
   }
 
   fillWeek(){
     this.writeBillingWeeks().then(()=>{
+      console.log("write billing then");
       this.setup(new Date(this.weekStart));
     })
     this.displayInfo = !this.displayInfo;
