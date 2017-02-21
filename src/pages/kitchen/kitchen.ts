@@ -15,7 +15,11 @@ export class KitchenPage {
   roomMap : any;
   refresh: any;
 
-  constructor(public navCtrl: NavController, public classroomService: ClassRoomProvider) {
+  constructor(public navCtrl: NavController, public classroomService: ClassRoomProvider, public studentService: StudentProvider) {
 
+  }
+
+  getName(id){
+    return this.studentService.data.get(id).fName + " " + this.studentService.data.get(id).lName;
   }
 }

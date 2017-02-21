@@ -19,7 +19,7 @@ export class KitchenPipe {
         var out = [];
         value.forEach(((classroom:ClassRoomModel, key) => {
             if(classroom.roomNumber.toLowerCase() !== 'unallocated'){
-                let present = classroom.students.filter(id => {      
+                let present = classroom.students.filter(id => {
                   return this.studentService.data.get(id).location !== this.checkinService.CHECKED_OUT;
                 });
                 let diet = present.filter(id => {
@@ -29,7 +29,8 @@ export class KitchenPipe {
                 out.push({
                     roomNum: key,
                     presentCount: present.length,
-                    dietCount: diet.length
+                    dietCount: diet.length,
+                    dietIds: diet
                 });
             }
         }));
