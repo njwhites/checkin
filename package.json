@@ -19,6 +19,7 @@
     "@angular/platform-server": "2.1.1",
     "@ionic/storage": "1.1.6",
     "@types/pouchdb": "5.4.28",
+    "bootstrap": "^4.0.0-alpha.6",
     "crypto": "0.0.3",
     "crypto-browserify": "^3.11.0",
     "express": "^4.14.1",

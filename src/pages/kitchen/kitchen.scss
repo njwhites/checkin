@@ -1,6 +1,11 @@
 page-kitchen {
+  @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
-	.card-container {
+  .bgc {
+    background-color: #eee5de;
+  }
+
+  .card-container {
 		display:flex;
 		width:100%;
 		height:100%;
