@@ -20,6 +20,7 @@
     "@ionic/storage": "1.1.6",
     "@types/pouchdb": "5.4.28",
     "crypto": "0.0.3",
+    "crypto-browserify": "^3.11.0",
     "express": "^4.14.1",
     "ionic-angular": "2.0.0-rc.3",
     "ionic-native": "2.2.3",
