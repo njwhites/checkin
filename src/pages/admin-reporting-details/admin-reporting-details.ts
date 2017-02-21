@@ -50,37 +50,179 @@ export class AdminReportingDetailsPage {
 
     //construct the form for all of the days data here
     this.studentDataForm = this.formBuilder.group({
-      MTimeIn: [,Validators.required],
-      MTimeOut: [, Validators.required],
-      MNapHours: [, Validators.required],
-      MSP: [, Validators.required],
-      MPT: [, Validators.required],
-      MOT: [, Validators.required],
-      TTimeIn: [,Validators.required],
-      TTimeOut: [, Validators.required],
-      TNapHours: [, Validators.required],
-      TSP: [, Validators.required],
-      TPT: [, Validators.required],
-      TOT: [, Validators.required],
-      WTimeIn: [,Validators.required],
-      WTimeOut: [, Validators.required],
-      WNapHours: [, Validators.required],
-      WSP: [, Validators.required],
-      WPT: [, Validators.required],
-      WOT: [, Validators.required],
-      THTimeIn: [,Validators.required],
-      THTimeOut: [, Validators.required],
-      THNapHours: [, Validators.required],
-      THSP: [, Validators.required],
-      THPT: [, Validators.required],
-      THOT: [, Validators.required],
-      FTimeIn: [,Validators.required],
-      FTimeOut: [, Validators.required],
-      FNapHours: [, Validators.required],
-      FSP: [, Validators.required],
-      FPT: [, Validators.required],
-      FOT: [, Validators.required]
+      MTimeIn: [this.student.student_days[0].start_time, Validators.required],
+      MTimeOut: [this.student.student_days[0].end_time, Validators.required],
+      MNapHours: [this.student.student_days[0].nap_hours,
+                   Validators.compose([Validators.required,  (control: FormControl)=>{
+                     if(!isNaN(Number(control.value))){
+                       return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+                     } else {
+                       return {notPositiveNumber:true}
+                     }
+                   } ])],
+      MSP: [this.student.student_days[0].SP_therapy_hours,
+            Validators.compose([Validators.required,  (control: FormControl)=>{
+              if(!isNaN(Number(control.value))){
+                return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+              } else {
+                return {notPositiveNumber:true}
+              }
+            } ])],
+      MPT: [this.student.student_days[0].PT_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      MOT: [this.student.student_days[0].OT_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      TTimeIn: [this.student.student_days[1].start_time, Validators.required],
+      TTimeOut: [this.student.student_days[1].end_time, Validators.required],
+      TNapHours: [this.student.student_days[1].nap_hours,
+                   Validators.compose([Validators.required,  (control: FormControl)=>{
+                     if(!isNaN(Number(control.value))){
+                       return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+                     } else {
+                       return {notPositiveNumber:true}
+                     }
+                   } ])],
+      TSP: [this.student.student_days[1].SP_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      TPT: [this.student.student_days[1].PT_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      TOT: [this.student.student_days[1].OT_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      WTimeIn: [this.student.student_days[2].start_time, Validators.required],
+      WTimeOut: [this.student.student_days[2].end_time, Validators.required],
+      WNapHours: [this.student.student_days[2].nap_hours,
+                   Validators.compose([Validators.required,  (control: FormControl)=>{
+                     if(!isNaN(Number(control.value))){
+                       return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+                     } else {
+                       return {notPositiveNumber:true}
+                     }
+                   } ])],
+      WSP: [this.student.student_days[2].SP_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      WPT: [this.student.student_days[2].PT_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      WOT: [this.student.student_days[2].OT_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      THTimeIn: [this.student.student_days[3].start_time, Validators.required],
+      THTimeOut: [this.student.student_days[3].end_time, Validators.required],
+      THNapHours: [this.student.student_days[3].nap_hours,
+                   Validators.compose([Validators.required,  (control: FormControl)=>{
+                     if(!isNaN(Number(control.value))){
+                       return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+                     } else {
+                       return {notPositiveNumber:true}
+                     }
+                   } ])],
+      THSP: [this.student.student_days[3].SP_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      THPT: [this.student.student_days[3].PT_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      THOT: [this.student.student_days[3].OT_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      FTimeIn: [this.student.student_days[4].start_time, Validators.required],
+      FTimeOut: [this.student.student_days[4].end_time, Validators.required],
+      FNapHours: [this.student.student_days[4].nap_hours,
+                   Validators.compose([Validators.required,  (control: FormControl)=>{
+                     if(!isNaN(Number(control.value))){
+                       return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+                     } else {
+                       return {notPositiveNumber:true}
+                     }
+                   } ])],
+      FSP: [this.student.student_days[4].SP_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      FPT: [this.student.student_days[4].PT_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])],
+      FOT: [this.student.student_days[4].OT_therapy_hours,
+             Validators.compose([Validators.required,  (control: FormControl)=>{
+               if(!isNaN(Number(control.value))){
+                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+               } else {
+                 return {notPositiveNumber:true}
+               }
+             } ])]
     });
+
+
   }
 
   ionViewDidLoad() {
@@ -163,4 +305,14 @@ export class AdminReportingDetailsPage {
 
   }
 
+
+  formHasError(error: string){
+    let hasError = false;
+    Object.keys(this.studentDataForm.controls).forEach((key, index)=>{
+      if(this.studentDataForm.controls[key].hasError(error)){
+        hasError = true;
+      }
+    })
+    return hasError;
+  }
 }

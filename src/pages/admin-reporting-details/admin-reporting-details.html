@@ -17,22 +17,22 @@
           <div class="container" [ngClass]="{'evenRow': student.student_days.indexOf(day)%2 }">
             <div class="blank" style="font-weight:bold">{{days[this.student.student_days.indexOf(day)]}}</div>
 
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}TimeIn" value="{{this.checkinService.createReadableTime(day.start_time)}}" class="flexInput" id="{{student.student_days.indexOf(day)}},0"/>
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}TimeOut" value="{{this.checkinService.createReadableTime(day.end_time)}}" class="flexInput" id="{{student.student_days.indexOf(day)}},1"/>
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}TimeIn" value="{{this.checkinService.createReadableTime(day.start_time)}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeIn']._errors }" id="{{student.student_days.indexOf(day)}},0"/>
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}TimeOut" value="{{this.checkinService.createReadableTime(day.end_time)}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeOut']._errors }" id="{{student.student_days.indexOf(day)}},1"/>
 
             <!-- contains the gross hours -->
             <div [ngClass]="{'attendanceWarning': day.attendanceWarning, 'blank': !day.attendanceWarning }">
               {{ ( day.gross_hours ).toFixed(2) }}
             </div>
 
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}NapHours" value="{{ (day.nap_hours) }}" class="flexInput" id="{{student.student_days.indexOf(day)}},2"/>
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}NapHours" value="{{ (day.nap_hours) }}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'NapHours']._errors }" id="{{student.student_days.indexOf(day)}},2"/>
 
             <!-- contains the therapy hours -->
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}SP" value="{{ (day.SP_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning}" id="{{student.student_days.indexOf(day)}},3"/>
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}SP" value="{{ (day.SP_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'SP']._errors }" id="{{student.student_days.indexOf(day)}},3"/>
 
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}PT" value="{{ (day.PT_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning}" id="{{student.student_days.indexOf(day)}},4"/>
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}PT" value="{{ (day.PT_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'PT']._errors }" id="{{student.student_days.indexOf(day)}},4"/>
 
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}OT" value="{{ (day.OT_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning}" id="{{student.student_days.indexOf(day)}},5"/>
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}OT" value="{{ (day.OT_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'OT']._errors }" id="{{student.student_days.indexOf(day)}},5"/>
 
             <div class="blank">{{ (day.net_hours).toFixed(2) }}</div>
 
@@ -86,8 +86,12 @@
 
   <ion-card [hidden]="this.studentDataForm.valid">
     <ion-card-header>Invalid input</ion-card-header>
-    <ion-card-content *ngIf="this.studentDataForm.controls['MTimeIn'].hasError('required')">
-      ID is required.
+    <ion-card-content *ngIf="formHasError('required')">
+      Input is required.
     </ion-card-content>
+    <ion-card-content *ngIf="formHasError('notPositiveNumber')">
+      Input needs to be a positive number.
+    </ion-card-content>
+
   </ion-card>
 </ion-content>
