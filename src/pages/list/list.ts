@@ -117,8 +117,7 @@ export class ListPage {
           //////////////////////////////////////////////////////////////////////
           returnedStudent = studentID.slice(0, search);
           console.log(String(returnedStudent));
-          this.checkinService.nurseCheckin(String(returnedStudent), String(this.userID));
-          this.genericFollowUpModal(String(returnedStudent));
+          this.genericFollowUpModal(String(returnedStudent), String(this.userID));
           //clearInterval(this.interval);
           //this.navCtrl.pop();
         }
@@ -280,9 +279,10 @@ export class ListPage {
 *
 *
 **/
-  genericFollowUpModal(student) {
+  genericFollowUpModal(student, userID) {
     let modal = this.modalCtrl.create(GenericCheckinConfirmModalPage, {
-      student: student
+      student: student,
+      userID: userID
     }, {enableBackdropDismiss: false});
     modal.onDidDismiss(data => {
       this.navCtrl.pop();
