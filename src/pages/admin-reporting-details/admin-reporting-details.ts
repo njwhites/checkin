@@ -291,10 +291,11 @@ export class AdminReportingDetailsPage {
       this.student.student_days[day].billingWarning = false;
     }
 
-
-    if( (this.student.student_days[day].SP_therapy_hours
-        + this.student.student_days[day].PT_therapy_hours
-        + this.student.student_days[day].OT_therapy_hours) > 1){
+    let total: number = 0;
+    total += Number(this.student.student_days[day].SP_therapy_hours);
+    total += Number(this.student.student_days[day].PT_therapy_hours);
+    total += Number(this.student.student_days[day].OT_therapy_hours);
+    if( (total) > 1){
       this.student.student_days[day].therapyWarning = true;
     } else {
       this.student.student_days[day].therapyWarning = false;

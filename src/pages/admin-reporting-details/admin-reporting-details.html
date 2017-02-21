@@ -17,8 +17,15 @@
           <div class="container" [ngClass]="{'evenRow': student.student_days.indexOf(day)%2 }">
             <div class="blank" style="font-weight:bold">{{days[this.student.student_days.indexOf(day)]}}</div>
 
+            <!--
+            for now we will assume they don't need to edit start and end time
             <input formControlName="{{days[student.student_days.indexOf(day)]}}TimeIn" value="{{this.checkinService.createReadableTime(day.start_time)}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeIn']._errors }" id="{{student.student_days.indexOf(day)}},0"/>
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}TimeOut" value="{{this.checkinService.createReadableTime(day.end_time)}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeOut']._errors }" id="{{student.student_days.indexOf(day)}},1"/>
+            <input formControlName="{{days[student.student_days.indexOf(day)]}}TimeOut" value="{{this.checkinService.createReadableTime(day.end_time)}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeOut']._errors }" id="{{student.student_days.indexOf(day)}},1"/> -->
+
+            <div class="blank">{{this.checkinService.createReadableTime(day.start_time)}}</div>
+            <div class="blank">{{this.checkinService.createReadableTime(day.end_time)}}</div>
+
+
 
             <!-- contains the gross hours -->
             <div [ngClass]="{'attendanceWarning': day.attendanceWarning, 'blank': !day.attendanceWarning }">
