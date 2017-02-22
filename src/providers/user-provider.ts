@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import {UserModel} from '../models/db-models';
 
-//var crypto = require('crypto');
+let crypto;
+try {
+  crypto = require('crypto');
+} catch (err) {
+  console.log('crypto support is disabled!');
+}
 
 @Injectable()
 export class UserProvider {
@@ -297,22 +302,22 @@ export class UserProvider {
     }
   }
 
-  // generateSALT(length: number){
-  //   var s = "";
-  //   var choices = "ABCDEF0123456789"
-  //   for(var i = 0; i < length; i++){
-  //     var index = Math.floor(Math.random()*choices.length);
-  //     s+= choices.charAt(index);
-  //   }
-  //   return s;
-  // }
+  generateSALT(length: number){
+    var s = "";
+    var choices = "ABCDEF0123456789"
+    for(var i = 0; i < length; i++){
+      var index = Math.floor(Math.random()*choices.length);
+      s+= choices.charAt(index);
+    }
+    return s;
+  }
 
-  // sha256(password, salt){
-  //   var hash = crypto.createHmac('sha256', salt).update(password);
-  //   var value = hash.digest('hex');
-  //   return {
-  //     salt:salt,
-  //     passwordHash: value
-  //   }
-  // }
+  sha256(password, salt){
+    var hash = crypto.createHmac('sha256', salt).update(password);
+    var value = hash.digest('hex');
+    return {
+      salt:salt,
+      passwordHash: value
+    }
+  }
 }
