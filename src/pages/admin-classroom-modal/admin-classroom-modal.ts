@@ -51,7 +51,7 @@ export class AdminClassroomModalPage {
     }
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
   }
 
   addClassroom(){
@@ -80,7 +80,6 @@ export class AdminClassroomModalPage {
   }
 
   deleteClassroom(){
-    console.log("tried to delete room " + this.classroom._id);
     this.dismiss();
     this.classroomService.deleteClassRoom(this.classroom);
   }

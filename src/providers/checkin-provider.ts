@@ -6,7 +6,7 @@ import { StudentProvider } from './student-provider';
 import { UserProvider } from './user-provider';
 import { ClassRoomProvider } from './class-room-provider';
 
-import { TransactionModel, TransactionStudentModel, TransactionEvent, TransactionTherapy, 
+import { TransactionModel, TransactionStudentModel, TransactionEvent, TransactionTherapy,
       BillingDay, BillingWeekModel, StudentBillingWeek, ClassroomWeek} from '../models/db-models';
 
 import PouchDB from 'pouchdb';
@@ -204,9 +204,9 @@ export class CheckinProvider {
         tEvent.time_readable = dateReadable;
         tEvent.by_id = by_id;
         student.events.push(tEvent);
-        if(nap_subtract){      
+        if(nap_subtract){
           console.log(student.nap_subtract);
-          student.nap_subtract += nap_subtract;        
+          student.nap_subtract += nap_subtract;
           console.log(student.nap_subtract);
         }
 
@@ -565,7 +565,7 @@ export class CheckinProvider {
                   }
                 }),
                 nap: me.nap,
-                therapies: [...otherTherapies, {start_time: t_model.start_time, length: t_model.length, 
+                therapies: [...otherTherapies, {start_time: t_model.start_time, length: t_model.length,
                   by_id: t_model.by_id, nap_subtract: t_model.nap_subtract}]
             }
             function delta(doc) {
@@ -573,7 +573,7 @@ export class CheckinProvider {
               //console.log(doc.students);
               return doc;
             }
-          
+
             this.db.upsert(doc._id, delta).then(() => {
               //Success!
               //console.log(`Successfully updated student with id:${me.id}`);
@@ -726,7 +726,7 @@ export class CheckinProvider {
 
       this.writeBillingWeekHelper(ids, start_date, [], (billing_week: BillingWeekModel) => {
         billing_week.room_number = room_number;
-        
+
         //upsert
         var dateString = `${room_number}`;
         this.getClassroomBilling(room_number, (doc: ClassroomWeek) => {
@@ -763,8 +763,8 @@ export class CheckinProvider {
 
   }
 
-  writeBillingWeekHelper(ids: Array<String>, start_date: Date, data: Array<StudentBillingWeek>, callback){
-
+  writeBillingWeekHelper(s_ids: Array<String>, start_date: Date, data: Array<StudentBillingWeek>, callback){
+    let ids = Array.from(s_ids);
     if(ids.length <= 0){
       const billing_week = new BillingWeekModel();
       billing_week.students = data;
@@ -842,7 +842,7 @@ export class CheckinProvider {
     })
 
   }
-  
+
   createBillingDay(s_id:string, date:Date){
     return new Promise((resolve, reject) => {
       const day = new BillingDay();
@@ -857,7 +857,7 @@ export class CheckinProvider {
             day.nap_hours = 0;
           }
 
-          //event info          
+          //event info
           student.events.forEach((event:TransactionEvent) => {
             if(day.start_time < 0 && event.type === this.CHECK_IN){
               day.start_time = Number(event.time);
@@ -892,8 +892,8 @@ export class CheckinProvider {
                 day.PT_therapy_hours += therapyLength;
                 totalTherapy += therapyLength;
               }else if(type === 'OT'){
-                day.OT_therapy_hours += therapyLength;   
-                totalTherapy += therapyLength;   
+                day.OT_therapy_hours += therapyLength;
+                totalTherapy += therapyLength;
               }else{
                 day.SP_therapy_hours += therapyLength;
                 totalTherapy += therapyLength;
@@ -905,7 +905,7 @@ export class CheckinProvider {
 
 
             })
-            
+
             day.therapyWarning = totalTherapy > 1
 
           }
@@ -922,9 +922,9 @@ export class CheckinProvider {
           }else{
             day.billable_hours = -1;
           }
-          
+
           day.billingWarning = day.billable_hours < 5;
-          
+
           resolve(day);
         })
       })

@@ -183,15 +183,16 @@ export class AdminReportingPage {
         clearInterval(done);
         clearTimeout(timeout);
         //like prompt or something that it failed ??
+        resolve(false);
       }, 8000);
 
       //check every 1/4 second if all are done
       var done = setInterval(() => {
         if( completeCount === this.rooms.length)
         {
-          resolve();
           clearInterval(done);
           clearTimeout(timeout);
+          resolve();
         }
       }, 100);
     })
@@ -242,7 +243,7 @@ export class AdminReportingPage {
     link.setAttribute("href", encodedUri);
     link.setAttribute("download", `billing${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}.csv`);
     document.body.appendChild(link); // Required for FF
-    link.click(); 
+    link.click();
     //-----------------------------------
 
     return out;
