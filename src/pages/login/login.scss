@@ -1,4 +1,5 @@
 page-login {
+
   .scroll-content {
     overflow-y: hidden;
   }
@@ -13,7 +14,7 @@ page-login {
   }
 
   .cardElement {
-    background-color: #387ef5!important;
+    //background-color: #387ef5!important;
     width: 90%;
     height: 30%;
 
@@ -22,22 +23,17 @@ page-login {
     align-items: center;
     margin: 0px;
 
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    //box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 
     //box-shadow: 5px 5px 5px #888888;
   }
 
-  .card-header {
-    width:100%;
-    font-size: 150%;
-    color: #EEE5DE;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  }
-
   .no-format-button {
-    width:100%;
-    height: 100%;
+    width:60%;
+    height: 25%;
+    font-size: 200%;
+    color: #FFFFFF;
     background-color: transparent;
   }
 
@@ -45,7 +41,14 @@ page-login {
     display: flex!important;
     align-content: center!important;
     padding: 5px;
-    background-color: #EEE5DE;
+    background: url(../assets/logo/Blurred_Background.jpg);
+    //background-color: #EEE5DE;
+  }
+
+  .cardIcon {
+    height:100%;
+    font-size: 400%;
+    color: #FFFFFF;
   }
 
   @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {

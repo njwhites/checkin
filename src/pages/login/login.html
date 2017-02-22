@@ -7,34 +7,30 @@
 </ion-header>
 <ion-content text-center class="vertical-align-content">
   <div id="buttonGrid" class="cardContainer">
-    <ion-card class="cardElement cardClassroom">
-      <button class="no-format-button" (click)="selectClassroom('classroom')">
-        <ion-card-header class="card-header">
+    <div class="cardElement cardClassroom" (click)="selectClassroom('classroom')">
+      <ion-icon class="cardIcon" name="body"></ion-icon>
+      <button ion-button outline block color="light" class="no-format-button">
           Classroom
-        </ion-card-header>
       </button>
-    </ion-card>
-    <ion-card class="cardElement cardKitchen">
-      <button class="no-format-button" (click)="toLogin('kitchen')">
-        <ion-card-header class="card-header">
+    </div>
+    <div class="cardElement cardKitchen" (click)="toLogin('kitchen')">
+      <ion-icon class="cardIcon" name="body"></ion-icon>
+      <button ion-button outline block color="light" class="no-format-button">
           Kitchen
-        </ion-card-header>
       </button>
-    </ion-card>
-    <ion-card class="cardElement cardTherapy">
-      <button class="no-format-button" (click)="toLogin('therapist')">
-        <ion-card-header class="card-header">
+    </div>
+    <div class="cardElement cardTherapy" (click)="toLogin('therapist')">
+      <ion-icon class="cardIcon" name="body"></ion-icon>
+      <button ion-button outline block color="light" class="no-format-button">
           Therapy
-        </ion-card-header>
       </button>
-    </ion-card>
-    <ion-card class="cardElement cardAdmin">
-      <button class="no-format-button" (click)="toLogin('admin')">
-        <ion-card-header class="card-header">
+    </div>
+    <div class="cardElement cardAdmin" (click)="toLogin('admin')">
+      <ion-icon class="cardIcon" name="body"></ion-icon>
+      <button ion-button outline block color="light" class="no-format-button">
           Admin
-        </ion-card-header>
       </button>
-    </ion-card>
+    </div>
   </div>
 </ion-content>
 
