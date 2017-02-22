@@ -16,7 +16,7 @@
           <ion-row style="height:100%">
             <ion-col>
               <ion-item>
-                <ion-input type="date" [(ngModel)]="this.weekStart" (change)="dateInputChanged()"></ion-input>
+                <ion-input type="date" [(ngModel)]="this.viewableDate" (change)="dateInputChanged()"></ion-input>
                <!--    -->
               </ion-item>
             </ion-col>
@@ -53,16 +53,15 @@
                 </ion-col>
                 <ion-col width-50>
                 </ion-col>
-                    <div class="errorsContainer" *ngIf="true">
-                      <div *ngIf="this.roomBillingWeekTotals.get(room.val.room_number + '').attendanceWarning" class="attendanceWarning"></div>
-                      <div *ngIf="!this.roomBillingWeekTotals.get(room.val.room_number + '').attendanceWarning" class="blank"></div>
-                      <div *ngIf="this.roomBillingWeekTotals.get(room.val.room_number + '').billingWarning" class="billedWarning"></div><div *ngIf="!this.roomBillingWeekTotals.get(room.val.room_number + '').billingWarning" class="billedWarning"></div>
-                      <div *ngIf="this.roomBillingWeekTotals.get(room.val.room_number + '').therapyWarning" class="therapyWarning"></div>
-                      <div *ngIf="!this.roomBillingWeekTotals.get(room.val.room_number + '').therapyWarning" class="blank"></div>
-                    </div>
+                <div class="errorsContainer" *ngIf="this.roomBillingWeekTotals.get(room.val.room_number+'')">
+                  <div *ngIf="this.roomBillingWeekTotals.get(room.val.room_number + '').attendanceWarning" class="attendanceWarning"></div>
+                  <div *ngIf="!this.roomBillingWeekTotals.get(room.val.room_number + '').attendanceWarning" class="blank"></div>
+                  <div *ngIf="this.roomBillingWeekTotals.get(room.val.room_number + '').billingWarning" class="billedWarning"></div><div *ngIf="!this.roomBillingWeekTotals.get(room.val.room_number + '').billingWarning" class="billedWarning"></div>
+                  <div *ngIf="this.roomBillingWeekTotals.get(room.val.room_number + '').therapyWarning" class="therapyWarning"></div>
+                  <div *ngIf="!this.roomBillingWeekTotals.get(room.val.room_number + '').therapyWarning" class="blank"></div>
+                </div>
               </ion-row>
             </ion-card-header>
-            <!--TODO: Add if room.on back in-->
             <div *ngIf="room.val.weeks.length > 0 && isRoomOn(room.key)">
               <div *ngFor="let student of room.val.weeks[0].students" class="container" (click)="showDetails(student)">
 
@@ -99,7 +98,9 @@
                 <div *ngIf="!studentBillingDayTotals.get(student.student_id).billingWarning" class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours / 5).toFixed(2) }}</div>
               </div>
             </div>
-            <div class="totalBar">
+            <!-- If there is no billing week temporarily then angular will be upsert
+                 So make sure that we don't display this info if there is not billing week -->
+            <div class="totalBar" *ngIf="room.val.weeks.length > 0">
               <ion-row>
                 <ion-col class="totaledItem" style="flex:2 1 40px;">
                   Total:
@@ -145,6 +146,9 @@
                     <div>{{(this.roomBillingWeekTotals.get(room.key+"").billable_hours /(5 * room.val.weeks[0].students.length)).toFixed(2)}}</div>
                 </ion-col>
               </ion-row>
+            </div>
+            <div class="totalBar" *ngIf="room.val.weeks.length <= 0">
+              There is no billing information for this week.
             </div>
           </ion-card>
         </ion-list>

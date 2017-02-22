@@ -20,7 +20,11 @@ export class AdminReportingPage {
   map: Map<Number, ClassroomWeek>;
   roomBillingWeekTotals: Map<String,any>;
 
+  //what we pass to the checkin service
   weekStart: Date;
+
+  //what we have the user interact with
+  viewableDate: any;
 
   displayInfo: boolean = false;
 
@@ -37,10 +41,17 @@ export class AdminReportingPage {
     this.map = new Map<Number, ClassroomWeek>();
 
 
+    let month = date.getMonth();
+    month++;
+    let stringMonth = (month).toString();
+    console.log(month);
+    if(month <10){
+      stringMonth = '0'+month;
+    }
+    this.viewableDate = date.getFullYear() +"-"+stringMonth+"-"+date.getDate();
   }
 
   setup(date: Date){
-
     //if this gets called and the interval is still waiting, reset it to the new one
     if(this.interval){
       clearInterval(this.interval);
@@ -58,12 +69,8 @@ export class AdminReportingPage {
         this.map = new Map(this.map);
 
 
-        console.log(this.map);
         clearInterval(this.interval);
         this.interval = undefined;
-        console.log(this.map.get(101).weeks[0].students[0]);
-        var test = this.map.get(101).weeks[0].students[0].student_days.reduce(this.reducer);
-        console.log(test);
 
         //set the studentBillingDayTotals to the values for each student_id
         //for each room in the map
@@ -73,12 +80,16 @@ export class AdminReportingPage {
         this.map.forEach((room)=>{
           //for each student in the room
           var tempArray = [];
-          room.weeks[0].students.forEach((student)=>{
-            var temp = student.student_days.reduce(this.reducer);
-            this.studentBillingDayTotals.set(student.student_id, temp);
-            tempArray.push(temp);
-          })
-          this.roomBillingWeekTotals.set(room.room_number, tempArray.reduce(this.reducer));
+          if(room.weeks.length < 1){
+            console.log("was about to fill the totals but this rooms weeks array is empty");
+          } else {
+            room.weeks[0].students.forEach((student)=>{
+              var temp = student.student_days.reduce(this.reducer);
+              this.studentBillingDayTotals.set(student.student_id, temp);
+              tempArray.push(temp);
+            })
+            this.roomBillingWeekTotals.set(room.room_number, tempArray.reduce(this.reducer));
+          }
         });
 
     //this.toCSV();
@@ -105,6 +116,11 @@ export class AdminReportingPage {
     this.map = new Map<Number, ClassroomWeek>();
     this.rooms.forEach(room => {
       this.getClassroomBilling(room.number + "", date).then((cw : ClassroomWeek) => {
+        if(cw === undefined){
+          console.log("cw was undefined for room: " + room.number + "    date: " + date);
+          console.log("setting this room to a blank classrom week ");
+          cw = new ClassroomWeek();
+        }
         this.map.set(room.number, cw);
       })
     })
@@ -199,6 +215,8 @@ export class AdminReportingPage {
   }
 
   fillWeek(){
+    this.map = new Map<Number, ClassroomWeek>();
+
     this.writeBillingWeeks().then(()=>{
       console.log("write billing then");
       this.setup(new Date(this.weekStart));
@@ -208,7 +226,23 @@ export class AdminReportingPage {
 
   dateInputChanged(){
     console.log(this.weekStart);
-    console.log(new Date(this.weekStart));
+    console.log(this.viewableDate);
+    let splitArray = this.viewableDate.split('-');
+    console.log(new Date(this.viewableDate));
+    console.log(new Date(splitArray[0],splitArray[1],splitArray[2]));
+    this.weekStart = new Date(new Date(splitArray[0],(splitArray[1] - 1),splitArray[2]));
+    console.log(this.weekStart);
+    console.log(this.weekStart.toString());
+    console.log(this.weekStart.toUTCString());
+
+    if(this.weekStart.getDay() < 1){
+      this.weekStart.setDate(this.weekStart.getDate()+1);
+    }
+    while(this.weekStart.getDay() !== 1){
+      this.weekStart.setDate(this.weekStart.getDate()-1);
+    }
+
+    console.log(this.weekStart);
     if(this.displayInfo){
       this.displayInfo = !this.displayInfo;
     }
@@ -248,5 +282,4 @@ export class AdminReportingPage {
 
     return out;
   }
-
 }
