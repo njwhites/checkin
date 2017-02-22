@@ -17,12 +17,6 @@ export class AdminReportingDetailsPage {
   days = ["M","T","W","TH","F"];
   titles = ["Time In", "Time Out", "Gross Hours", "Nap", "SP", "Pt", "OT", "Net Hours", "Billed Hours",
             "Rate", "Total Billed", "Avg Hours/ Day"]
-  data = [7.50, 15.00, 7.50, 1.00, 0.50, 0.00, 0.00, 6.00, 5.00, 16.46, 82.30, 0.00,
-          7.50, 15.00, 7.50, 0.50, 0.00, 0.50, 0.00, 6.50, 5.00, 16.46, 82.30, 0.00,
-          7.50, 15.00, 7.50, 1.00, 0.50, 0.00, 0.00, 6.00, 5.00, 16.46, 82.30, 0.00,
-          7.50, 13.00, 5.50, 0.75, 0.00, 0.00, 0.00, 4.75, 4.00, 16.46, 65.84, 0.00,
-          7.50, 15.00, 7.50, 1.00, 0.50, 0.50, 0.00, 5.50, 5.00, 16.46, 82.30, 0.00
-        ];
 
   reducer: any;
   totals: BillingDay;
@@ -34,7 +28,9 @@ export class AdminReportingDetailsPage {
               public formBuilder: FormBuilder,
               public checkinService: CheckinProvider,
               public studentService: StudentProvider) {
+    //the student of interest is passed in here, these are pass by reference so this student is the same memory location as the room.week.student that was clicked from the previous page
     this.student = navParams.get("student");
+    //make sure that any negatives we use to indicate not touched are not displayed as -1, rather zero
     this.student.student_days.forEach(day => {
       day.OT_therapy_hours = Math.max(day.OT_therapy_hours, 0);
       day.PT_therapy_hours = Math.max(day.PT_therapy_hours, 0);
@@ -44,11 +40,15 @@ export class AdminReportingDetailsPage {
       day.nap_hours = Math.max(day.nap_hours, 0);
       day.net_hours = Math.max(day.net_hours, 0);
     })
+    //get the reducer function for summing
     this.reducer = navParams.get("reducer");
+    //calculate the sum from the week, this should be the same info as the previous page and the student list item that was clicked
+    //but we recalculate to be sure
     this.totals = this.student.student_days.reduce(this.reducer);
-    console.log(this.student);
 
     //construct the form for all of the days data here
+    //time in and out are no longer editable but for now are left in the form incase we need to use them later 2/22/2017
+    //the validators make sure that each field is not empty and each field is a positive number
     this.studentDataForm = this.formBuilder.group({
       MTimeIn: [this.student.student_days[0].start_time, Validators.required],
       MTimeOut: [this.student.student_days[0].end_time, Validators.required],
@@ -291,6 +291,8 @@ export class AdminReportingDetailsPage {
       this.student.student_days[day].billingWarning = false;
     }
 
+    //due to some strangeness with typing this.student...SP_therapy_hours was acting like a string
+    //the cleanest solution I had was to create a new Number object. It is unclear why the number primitive wasn't working but this does 2/22/2017
     let total: number = 0;
     total += Number(this.student.student_days[day].SP_therapy_hours);
     total += Number(this.student.student_days[day].PT_therapy_hours);
@@ -306,9 +308,12 @@ export class AdminReportingDetailsPage {
 
   }
 
-
+  //I use this so that we can have one popup that tells the user the form has errors
+  //formgroups can check if any one form control has an error but that requires a popup for each form control
+  //I want it to check the whole formgroup, the input 'error' is a string that the form is checking to see, for example 'required'
   formHasError(error: string){
     let hasError = false;
+    //Object.keys gets each formcontrol as an array and then we foreach that so that we can check each control in a loop
     Object.keys(this.studentDataForm.controls).forEach((key, index)=>{
       if(this.studentDataForm.controls[key].hasError(error)){
         hasError = true;

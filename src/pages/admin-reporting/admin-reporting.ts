@@ -33,21 +33,32 @@ export class AdminReportingPage {
 
   constructor(public navCtrl: NavController, public studentService: StudentProvider, public classroomService: ClassRoomProvider, public checkinService: CheckinProvider){
     var date = new Date();
+    if(date.getDay() < 1){
+      date.setDate(date.getDate()+1);
+    }
     while(date.getDay() !== 1){
       date.setDate(date.getDate()-1);
     }
 
+    //this was from some previous testing where weekStart was going to be bound to the date picker, now we just set it to the monday of this week
     this.weekStart = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     this.map = new Map<Number, ClassroomWeek>();
 
-
+    //in order to let the user interact with the date picker and see their selection I am using two variables
+    //this.weekStart is the actual date object that we pass to our internal mehtods
+    //this.viewableDate is bound to the date picker so that the user can see the date they are on
+    //because months are indexed from 0 we have to do some silliness to get the correct format for our visible date
     let month = date.getMonth();
+    //increment the month number since january.getMonth() gives 0 and so on when we want to start at 1
     month++;
+    //set a string version that will be used becuase the viewable date wants MM and a number less than ten will only be one digit, not two
+    //and then if the month is less than 10 give it a leading zero
+    // this could probably also be done with .toPrecision(2)? if we want to change it 2/22/2017
     let stringMonth = (month).toString();
-    console.log(month);
     if(month <10){
       stringMonth = '0'+month;
     }
+    //finally put the information we have in the form yyyy-mm-dd
     this.viewableDate = date.getFullYear() +"-"+stringMonth+"-"+date.getDate();
   }
 
@@ -141,24 +152,30 @@ export class AdminReportingPage {
     })
   }
 
-  ionViewDidLoad() {
-    console.log('Hello AdminReportingPage Page');
+  ionViewDidEnter() {
+    //when we reenter the page from the reporting details page we should be recalculating the totals incase someone changed something while they were in details
+    // if need be we can gain a lot of performance increase by only updating the room and student that the user had clicked on and is now navigating back from
+    // we can also check if the data has been changed to skip over it in the event that the data hasn't been changed
+    if(this.displayInfo){
+      this.map.forEach((room)=>{
+        //for each student in the room
+        var tempArray = [];
+        if(room.weeks.length < 1){
+          console.log("was about to fill the totals but this rooms weeks array is empty");
+        } else {
+          room.weeks[0].students.forEach((student)=>{
+            var temp = student.student_days.reduce(this.reducer);
+            this.studentBillingDayTotals.set(student.student_id, temp);
+            tempArray.push(temp);
+          })
+          this.roomBillingWeekTotals.set(room.room_number, tempArray.reduce(this.reducer));
+        }
+      });
+    }
   }
 
-  loadData(){
-    console.log("gonna export here");
-    var date = new Date();
-    while(date.getDay() !== 1){
-      date.setDate(date.getDate()-1);
-    }
-    console.log(date);
-    this.rooms.forEach(room => {
-      this.checkinService.writeBillingWeek(date, room.number + "");
-    })
-  }
 
   exportData(){
-
     console.log(this.toCSV());
   }
 
@@ -225,24 +242,23 @@ export class AdminReportingPage {
   }
 
   dateInputChanged(){
-    console.log(this.weekStart);
-    console.log(this.viewableDate);
+    //split the viewable date into its components, new Date() seems to work better if we pass it in a series of values for year, month, date, so on
+    // rather than passing it a date string
     let splitArray = this.viewableDate.split('-');
-    console.log(new Date(this.viewableDate));
-    console.log(new Date(splitArray[0],splitArray[1],splitArray[2]));
+    //because month indexing is zero based and not january = 1 etc we need to remove one  from the viewable version of month
     this.weekStart = new Date(new Date(splitArray[0],(splitArray[1] - 1),splitArray[2]));
-    console.log(this.weekStart);
-    console.log(this.weekStart.toString());
-    console.log(this.weekStart.toUTCString());
 
+    //if the day is a sunday, then we want to go forward to the monday
     if(this.weekStart.getDay() < 1){
       this.weekStart.setDate(this.weekStart.getDate()+1);
     }
+
+    //if the day is not sunday and not monday we want to go back to the monday at the start of the week
     while(this.weekStart.getDay() !== 1){
       this.weekStart.setDate(this.weekStart.getDate()-1);
     }
 
-    console.log(this.weekStart);
+    //toggle the display so that the user has to regenerate the data
     if(this.displayInfo){
       this.displayInfo = !this.displayInfo;
     }

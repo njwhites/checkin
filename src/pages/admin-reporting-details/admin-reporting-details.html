@@ -8,10 +8,12 @@
 
 <ion-content padding class="bgc">
   <ion-card>
+    <!-- header row shows each field's name -->
       <div class="headerRow">
         <div class="blank" style="font-weight:bold;"> Days:</div>
         <div class="blank" style="font-weight:bold;" *ngFor="let title of titles">{{title}}</div>
       </div>
+      <!-- the data needs to be in a form element so that I can do a formGroup on the inputs the user might change -->
       <form [formGroup]="studentDataForm" (change)="formChanged($event)">
         <div *ngFor="let day of this.student.student_days">
           <div class="container" [ngClass]="{'evenRow': student.student_days.indexOf(day)%2 }">
@@ -91,6 +93,7 @@
       </div>
   </ion-card>
 
+  <!-- if the form has errors this is one of the ways we let the user know what is wrong -->
   <ion-card [hidden]="this.studentDataForm.valid">
     <ion-card-header>Invalid input</ion-card-header>
     <ion-card-content *ngIf="formHasError('required')">

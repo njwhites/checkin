@@ -16,8 +16,8 @@
           <ion-row style="height:100%">
             <ion-col>
               <ion-item>
+                <!-- the date picker -->
                 <ion-input type="date" [(ngModel)]="this.viewableDate" (change)="dateInputChanged()"></ion-input>
-               <!--    -->
               </ion-item>
             </ion-col>
             <!-- <ion-col width-10 no-padding>
@@ -39,11 +39,17 @@
       <ion-col width-33>
       </ion-col>
       <ion-col width-33>
+        <!-- the export button to get a csv of the info -->
         <button class="arrowButton" (click)="exportData()">Export Attendance Data</button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
+        <!-- Each room has its own card
+             Each card has a header that says the room number and has an error container that uses flex box to format the individual warnings that may or may not exist on this rooms data
+             Each card has a list of the student information that is only displayed on a toggle of clicking the room_number
+             The students have their week totals displayed and warning flags on the fields that have a problem for that week
+             Each card finishes with a total for the whole classroom -->
         <ion-list *ngIf="displayInfo">
           <ion-card *ngFor="let room of this.map | mapValues" (click)="toggleRoom(room.key)">
             <ion-card-header style="background-color:rgba(0, 0, 0, 0.13)">
@@ -152,6 +158,7 @@
             </div>
           </ion-card>
         </ion-list>
+        <!-- button to generate the billing info if it is the first time the user enters the tab or if they change the week -->
         <button ion-button *ngIf="!displayInfo" (click)="fillWeek()">Load this page</button>
       </ion-col>
     </ion-row>
