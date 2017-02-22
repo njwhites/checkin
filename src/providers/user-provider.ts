@@ -24,6 +24,7 @@ export class UserProvider {
     this.db = new PouchDB('users');
 
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/users';
+
     //this.remote = 'http://localhost:5984/users';
     let options = {
       live: true,
@@ -135,37 +136,6 @@ export class UserProvider {
       })
     }
   }
-
-  //Chris 1/27/17 this will probably not be used, refer to createUserByDoc(:UserModel)
-  //Commenting out to avoid any accidental usage
-  // createUserByInfo(fName: String, lName: String, phone: String, role: String){
-  //   let newID: String = "-1";
-  //
-  //   //find the next available id number
-  //   return new Promise(resolve =>{
-  //     this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
-  //
-  //       result.rows.map(row => {
-  //         if(Number(newID) <= Number(row.id)){
-  //            newID = String((Number(row.id) + 1));
-  //          }
-  //       });
-  //
-  //       //create an object and send it to the db
-  //       let user = new UserModel();
-  //       user._id = newID;
-  //       user.fName = fName;
-  //       user.lName = lName;
-  //       user.phone = phone;
-  //       user.role = role;
-  //
-  //       this.db.upsert(user._id, (()=>{return user}));
-  //
-  //       //return the generated id so that we can let the user know their id
-  //       resolve(newID);
-  //     });
-  //   });
-  // }
 
   updateUser(user: UserModel){
     this.db.upsert(user._id, (()=>{return user}));
@@ -302,22 +272,5 @@ export class UserProvider {
     }
   }
 
-  generateSALT(length: number){
-    var s = "";
-    var choices = "ABCDEF0123456789"
-    for(var i = 0; i < length; i++){
-      var index = Math.floor(Math.random()*choices.length);
-      s+= choices.charAt(index);
-    }
-    return s;
-  }
 
-  sha256(password, salt){
-    var hash = crypto.createHmac('sha256', salt).update(password);
-    var value = hash.digest('hex');
-    return {
-      salt:salt,
-      passwordHash: value
-    }
-  }
 }
