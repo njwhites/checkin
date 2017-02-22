@@ -36,10 +36,10 @@ export class AuthProvider {
   checkPassword(id: string, password:string){
     return new Promise((resolve, reject) => {
       this.hashdb.get(id).then((result) => {
-        console.log("HASH: " + result);
+        console.log(result);
         //what happens if there is no entry for this id?
         let salt = result.salt;
-        let sha = result.sha;
+        let sha = result.passwordHash;
 
         let created = this.sha256(password, salt);
         if(created.passwordHash === sha){
@@ -59,7 +59,10 @@ export class AuthProvider {
   setPassword(id: string, password: string){
     return new Promise((resolve, reject) => {
       this.hashdb.upsert(id, (doc) => {
-        return this.sha256(password, this.generateSALT(16));
+        console.log(doc);
+        let out =  this.sha256(password, this.generateSALT(16));
+        console.log(out);
+        return out;
       }).then((result) => {
         resolve();
       }).catch(err => {
