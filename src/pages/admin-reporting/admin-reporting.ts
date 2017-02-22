@@ -95,6 +95,10 @@ export class AdminReportingPage {
             console.log("was about to fill the totals but this rooms weeks array is empty");
           } else {
             room.weeks[0].students.forEach((student)=>{
+              //clear out any of the old -1's for billable_hours
+              student.student_days.forEach((day:BillingDay, index) => {
+                day.billable_hours = Math.max(0,day.billable_hours);
+              });
               var temp = student.student_days.reduce(this.reducer);
               this.studentBillingDayTotals.set(student.student_id, temp);
               tempArray.push(temp);

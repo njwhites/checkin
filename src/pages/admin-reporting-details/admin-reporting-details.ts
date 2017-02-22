@@ -276,6 +276,7 @@ export class AdminReportingDetailsPage {
                                                - this.student.student_days[day].PT_therapy_hours
                                                - this.student.student_days[day].OT_therapy_hours;
 
+    //billable hours is a maximum of 5 or the hour rounded down i.e. 6.3 -> 5, 3.7-> 3
     this.student.student_days[day].billable_hours = Math.min(5, Math.trunc(this.student.student_days[day].net_hours));
 
     //reevaluate the conditions for warnings
