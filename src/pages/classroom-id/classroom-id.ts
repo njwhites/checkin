@@ -38,7 +38,7 @@ export class ClassroomIdPage {
       if(user._id === 'missing'){
 
         let toast = this.toastCtrl.create({
-          message: 'Invalid User ID',
+          message: 'Incorrect ID',
           duration: 2000,
           position: 'bottom'
         });

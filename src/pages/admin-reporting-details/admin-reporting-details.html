@@ -19,13 +19,13 @@
           <div class="container" [ngClass]="{'evenRow': student.student_days.indexOf(day)%2 }">
             <div class="blank" style="font-weight:bold">{{days[this.student.student_days.indexOf(day)]}}</div>
 
-            <!--
-            for now we will assume they don't need to edit start and end time
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}TimeIn" value="{{this.checkinService.createReadableTime(day.start_time)}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeIn']._errors }" id="{{student.student_days.indexOf(day)}},0"/>
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}TimeOut" value="{{this.checkinService.createReadableTime(day.end_time)}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeOut']._errors }" id="{{student.student_days.indexOf(day)}},1"/> -->
 
-            <div class="blank">{{this.checkinService.createReadableTime(day.start_time)}}</div>
-            <div class="blank">{{this.checkinService.createReadableTime(day.end_time)}}</div>
+            <!-- for now we will assume they don't need to edit start and end time -->
+            <input type="time" formControlName="{{days[student.student_days.indexOf(day)]}}TimeIn" value="{{this.visibleTimeIn[student.student_days.indexOf(day)]}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeIn']._errors }" id="{{student.student_days.indexOf(day)}},0"/>
+            <input type="time" formControlName="{{days[student.student_days.indexOf(day)]}}TimeOut" value="{{this.visibleTimeOut[student.student_days.indexOf(day)]}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeOut']._errors }" id="{{student.student_days.indexOf(day)}},1"/>
+
+            <!-- <div class="blank">{{this.checkinService.createReadableTime(day.start_time)}}</div>
+            <div class="blank">{{this.checkinService.createReadableTime(day.end_time)}}</div> -->
 
 
 
@@ -96,6 +96,9 @@
   <!-- if the form has errors this is one of the ways we let the user know what is wrong -->
   <ion-card [hidden]="this.studentDataForm.valid">
     <ion-card-header>Invalid input</ion-card-header>
+    <ion-card-content *ngIf="formHasError('startAfterEnd')">
+      Time in must be before Time Out.
+    </ion-card-content>
     <ion-card-content *ngIf="formHasError('required')">
       Input is required.
     </ion-card-content>
