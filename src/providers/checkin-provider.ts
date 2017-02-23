@@ -334,16 +334,38 @@ export class CheckinProvider {
     })
   }
 
+  checkLimbo(id: string, doc: TransactionModel){
+    return new Promise((resolve, reject) => {
+      this.getStudent(id, doc).then((student: TransactionStudentModel) => {
+        var isInLimbo = true;
+        console.log(student);
+        student.events.forEach((event: TransactionEvent) => {
+          console.log(event);
+          if(event.type === this.CHECK_IN){
+            isInLimbo = false;
+          }
+        });
+        console.log(isInLimbo);
+        resolve(isInLimbo);
+      }).catch(err => {
+        //TODO
+        console.log(err);
+      });
+    })
+  }
+
   //Uses performEvent to check in student and update student location in students table
   checkinStudent(id: string, by_id: string){
     return new Promise(resolve => {
-      this.getTodaysTransaction(null).then(result => {
+      this.getTodaysTransaction(null).then((result: TransactionModel) => {
         this.performEvent(id, result, by_id, this.CHECK_IN).then(result => {
           this.studentService.updateStudentLocation(id, this.CHECKED_IN);
           resolve(true);
         });
-      });
-    })
+
+      })
+    });
+    
   }
 
   //Promise that resolves as true or false
@@ -377,11 +399,19 @@ export class CheckinProvider {
   //checkout of school
   checkoutStudent(id: string, by_id: string){
     return new Promise(resolve => {
-      this.getTodaysTransaction(null).then(result => {
-        this.performEvent(id, result, by_id, this.CHECK_OUT).then(result => {
-          this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
-          resolve(true);
-        });
+      this.getTodaysTransaction(null).then((result: TransactionModel) => {
+        this.checkLimbo(id, result).then((isInLimbo) =>{
+          if(!isInLimbo){
+            this.performEvent(id, result, by_id, this.CHECK_OUT).then(result => {
+              this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
+              resolve(true);
+            });
+          }else{
+            console.log("Limbo resolved");
+            this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
+            resolve(true)
+          }
+        })
       });
     });
   }
