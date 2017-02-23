@@ -30,8 +30,6 @@ page-login {
   }
 
   .no-format-button {
-    width:60%;
-    height: 25%;
     font-size: 200%;
     color: #FFFFFF;
     background-color: transparent;
@@ -41,50 +39,60 @@ page-login {
     display: flex!important;
     align-content: center!important;
     padding: 5px;
-    background: url(../assets/logo/Blurred_Background.jpg);
+    background: url(../assets/logo/Dark_Background.jpg);
     //background-color: #EEE5DE;
+  }
+
+  .centerGrid {
+    align-content: center!important;
+  }
+
+  .centerRow {
+    width: auto;
+    min-width: 35%;
+    align-self: center;
   }
 
   .cardIcon {
     height:100%;
-    font-size: 400%;
+    font-size: 600%;
     color: #FFFFFF;
   }
 
   @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     .cardKitchen {
-      visibility: hidden;
+      display: none;
       height: 0%;
     }
   }
 
   @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
     .cardKitchen {
-      visibility: hidden;
+      display: none;
       height: 0%;
     }
   }
 
   @media (min-width: 1025px) {
     .cardClassroom {
-      visibility: hidden;
+      display: none;
       height: 0%;
     }
   }
 
   @media (max-width: 767px) {
     .cardClassroom {
-      visibility: hidden;
+      display: none;
       height: 0%;
     }
 
     .cardTherapy {
-      visibility: hidden;
+      display: none;
       height: 0%;
     }
 
     .cardKitchen {
-      visibility: hidden;
+      display: none;
       height: 0%;
     }
   }

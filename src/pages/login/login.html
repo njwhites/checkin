@@ -8,28 +8,68 @@
 <ion-content text-center class="vertical-align-content">
   <div id="buttonGrid" class="cardContainer">
     <div class="cardElement cardClassroom" (click)="selectClassroom('classroom')">
-      <ion-icon class="cardIcon" name="body"></ion-icon>
-      <button ion-button outline block color="light" class="no-format-button">
-          Classroom
-      </button>
+      <ion-grid class="centerGrid">
+        <ion-row class="centerRow">
+          <ion-col>
+            <ion-icon class="cardIcon" name="school"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row class="centerRow">
+          <ion-col>
+            <button ion-button outline block color="light" class="no-format-button">
+              Classroom
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
     <div class="cardElement cardKitchen" (click)="toLogin('kitchen')">
-      <ion-icon class="cardIcon" name="body"></ion-icon>
-      <button ion-button outline block color="light" class="no-format-button">
-          Kitchen
-      </button>
+      <ion-grid class="centerGrid">
+        <ion-row class="centerRow">
+          <ion-col>
+            <ion-icon class="cardIcon" name="restaurant"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row class="centerRow">
+          <ion-col>
+            <button ion-button outline block color="light" class="no-format-button">
+                Kitchen
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
     <div class="cardElement cardTherapy" (click)="toLogin('therapist')">
-      <ion-icon class="cardIcon" name="body"></ion-icon>
-      <button ion-button outline block color="light" class="no-format-button">
-          Therapy
-      </button>
+      <ion-grid class="centerGrid">
+        <ion-row class="centerRow">
+          <ion-col>
+            <ion-icon class="cardIcon" name="clipboard"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row class="centerRow">
+          <ion-col>
+            <button ion-button outline block color="light" class="no-format-button">
+                Therapy
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
     <div class="cardElement cardAdmin" (click)="toLogin('admin')">
-      <ion-icon class="cardIcon" name="body"></ion-icon>
-      <button ion-button outline block color="light" class="no-format-button">
-          Admin
-      </button>
+      <ion-grid class="centerGrid">
+        <ion-row class="centerRow">
+          <ion-col>
+            <ion-icon class="cardIcon" name="stats"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row class="centerRow">
+          <ion-col>
+            <button ion-button outline block color="light" class="no-format-button">
+                Admin
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
   </div>
 </ion-content>
