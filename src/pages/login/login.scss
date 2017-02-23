@@ -15,7 +15,8 @@ page-login {
 
   .cardElement {
     //background-color: #387ef5!important;
-    width: 90%;
+    background: transparent;
+    width: 65%;
     height: 30%;
 
     display:flex;
@@ -29,6 +30,7 @@ page-login {
     font-size: 200%;
     color: #FFFFFF;
     background-color: transparent;
+    text-align: center;
   }
 
   .vertical-align-content {
@@ -44,9 +46,10 @@ page-login {
   }
 
   .centerRow {
-    width: auto;
+    width: 75%;
     min-width: 35%;
     align-self: center;
+    text-align: center;
   }
 
   .cardIcon {
@@ -76,6 +79,10 @@ page-login {
     .cardClassroom {
       display: none;
       height: 0%;
+    }
+
+    .cardElement {
+      width: 51;
     }
   }
 

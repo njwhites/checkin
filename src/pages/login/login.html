@@ -1,13 +1,6 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Login
-    </ion-title>
-  </ion-navbar>
-</ion-header>
 <ion-content text-center class="vertical-align-content">
   <div id="buttonGrid" class="cardContainer">
-    <div class="cardElement cardClassroom" (click)="selectClassroom('classroom')">
+    <ion-item class="cardElement cardClassroom" (click)="selectClassroom('classroom')">
       <ion-grid class="centerGrid">
         <ion-row class="centerRow">
           <ion-col>
@@ -16,14 +9,14 @@
         </ion-row>
         <ion-row class="centerRow">
           <ion-col>
-            <button ion-button outline block color="light" class="no-format-button">
+            <div class="no-format-button">
               Classroom
-            </button>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </div>
-    <div class="cardElement cardKitchen" (click)="toLogin('kitchen')">
+    </ion-item>
+    <ion-item class="cardElement cardKitchen" (click)="toLogin('kitchen')">
       <ion-grid class="centerGrid">
         <ion-row class="centerRow">
           <ion-col>
@@ -32,14 +25,14 @@
         </ion-row>
         <ion-row class="centerRow">
           <ion-col>
-            <button ion-button outline block color="light" class="no-format-button">
+            <div class="no-format-button">
                 Kitchen
-            </button>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </div>
-    <div class="cardElement cardTherapy" (click)="toLogin('therapist')">
+    </ion-item>
+    <ion-item class="cardElement cardTherapy" (click)="toLogin('therapist')">
       <ion-grid class="centerGrid">
         <ion-row class="centerRow">
           <ion-col>
@@ -48,13 +41,13 @@
         </ion-row>
         <ion-row class="centerRow">
           <ion-col>
-            <button ion-button outline block color="light" class="no-format-button">
+            <div class="no-format-button">
                 Therapy
-            </button>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </div>
+    </ion-item>
     <div class="cardElement cardAdmin" (click)="toLogin('admin')">
       <ion-grid class="centerGrid">
         <ion-row class="centerRow">
@@ -64,9 +57,9 @@
         </ion-row>
         <ion-row class="centerRow">
           <ion-col>
-            <button ion-button outline block color="light" class="no-format-button">
+            <div class="no-format-button">
                 Admin
-            </button>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
