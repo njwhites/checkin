@@ -6,6 +6,7 @@ import { UserModel } from "../../models/db-models";
 import { StudentProvider } from "../../providers/student-provider";
 import { UserAddModalPage } from "../user-add-modal/user-add-modal";
 import { ClassRoomProvider } from "../../providers/class-room-provider";
+import { AuthProvider } from "../../providers/auth-provider";
 
 @Component({
   selector: 'page-admin-user-modal',
@@ -24,6 +25,7 @@ export class AdminUserModalPage {
               public userService: UserProvider,
               public studentService: StudentProvider,
               public classroomService: ClassRoomProvider,
+              public authService: AuthProvider,
               public navController: NavController,
               public alertController: AlertController,
               public toastController: ToastController,
@@ -93,6 +95,9 @@ export class AdminUserModalPage {
       role: [this.user.role, Validators.required],
       phoneNumber: [this.user.phone],
       therapistType: [this.user.therapy_type],
+      email: [this.user.email],
+      password: [""],
+      passwordConfirm: [""]
     });
   }
 
@@ -106,15 +111,17 @@ export class AdminUserModalPage {
     //We check each form control and see if it is equal to the original value
     //if any of them aren't equal we can go ahead and update
     let hasChanged = false;
-    if(this.user.fName != this.userForm.value.fName){
+    if(this.user.fName !== this.userForm.value.fName){
       hasChanged = true;
-    } else if(this.user.lName != this.userForm.value.lName){
+    } else if(this.user.lName !== this.userForm.value.lName){
       hasChanged = true;
-    } else if(this.user.role != this.userForm.value.role){
+    } else if(this.user.role !== this.userForm.value.role){
       hasChanged = true;
-    } else if(this.user.phone != this.userForm.value.phoneNumber){
+    } else if(this.user.phone !== this.userForm.value.phoneNumber){
       hasChanged = true;
-    } else if(this.user.therapy_type != this.userForm.value.therapistType){
+    } else if(this.user.therapy_type !== this.userForm.value.therapistType){
+      hasChanged = true;
+    } else if(this.user.email !== this.userForm.value.email){
       hasChanged = true;
     }
     if(hasChanged){
@@ -124,11 +131,16 @@ export class AdminUserModalPage {
       this.user.role = this.userForm.value.role;
       this.user.phone = this.userForm.value.phoneNumber;
       this.user.therapy_type = this.userForm.value.therapistType;
+      this.user.email = this.userForm.value.email;
 
       //if the user isn't a therapist we want to make sure that their therapy type is null
       //only therapist's have a therapy type and other code might rely on that assumption
-      if(this.user.role != "therapist" && this.user.therapy_type){
+      if(this.user.role !== "therapist" && this.user.therapy_type){
         this.user.therapy_type = "";
+      }
+
+      if(this.user.role.toLowerCase() !== 'admin'){
+        this.user.email = "";
       }
 
       //if the user id is -1 we are adding a new user
@@ -141,6 +153,11 @@ export class AdminUserModalPage {
         this.user._id = this.userForm.value.ID;
         this.userService.createUserByDoc(this.user).then((returnedID: String)=>{
           this.user._id = returnedID;
+
+          if(this.user.role.toLowerCase() === 'admin'){
+            //write to authservice
+            this.authService.setPassword(this.user._id + "", this.userForm.value.password);
+          }
         });
 
         //the map object in the user provider has some new data for value -1
@@ -159,6 +176,8 @@ export class AdminUserModalPage {
           duration: 3000,
           position: "bottom"
         }).present();
+
+
 
         //if they aren't an add then we just update the existing doc, and similarly give the admin feedback
       } else {
