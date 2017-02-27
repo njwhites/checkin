@@ -1,8 +1,7 @@
 <ion-tabs tabsHighlight="true">
+  <ion-tab [root]="adminDrillTab" tabIcon="flame" [rootParams]="this.id" tabTitle="Drill"></ion-tab>
   <ion-tab [root]="adminStudentTab" tabIcon="body" [rootParams]="adminStudentTabParams" tabTitle="Students"></ion-tab>
   <ion-tab [root]="adminUserTab" tabIcon="people" [rootParams]="adminUserTabParams" tabTitle="Users"></ion-tab>
   <ion-tab [root]="adminClassroomTab" tabIcon="school" [rootParams]="adminClassroomTabParams" tabTitle="Classrooms"></ion-tab>
   <ion-tab [root]="adminReportingTab" tabIcon="clipboard" [rootParams]="adminReportingTabParams" tabTitle="Reporting"></ion-tab>
-  <ion-tab [root]="adminDrillTab" tabIcon="flame" [rootParams]="this.id" tabTitle="Drill"></ion-tab>
-  <ion-tab [root]="adminDebugTab" tabIcon="bug" [rootParams]="adminDebugTabParams" tabTitle="Debug"></ion-tab>
 </ion-tabs>

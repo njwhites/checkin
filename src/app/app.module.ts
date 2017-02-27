@@ -29,7 +29,6 @@ import {AdminReportingPage} from "../pages/admin-reporting/admin-reporting";
 import {AdminReportingDetailsPage} from "../pages/admin-reporting-details/admin-reporting-details";
 import {AdminStudentTabPage} from "../pages/admin-student-tab/admin-student-tab";
 import {AdminUserTabPage} from "../pages/admin-user-tab/admin-user-tab";
-import {AdminDebugTabPage} from "../pages/admin-debug-tab/admin-debug-tab";
 import {AdminClassroomTabPage} from "../pages/admin-classroom-tab/admin-classroom-tab";
 import {AdminDrillTabPage} from "../pages/admin-drill-tab/admin-drill-tab";
 import {AdminStudentModalPage} from "../pages/admin-student-modal/admin-student-modal";
@@ -86,7 +85,6 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     AdminReportingDetailsPage,
     AdminStudentTabPage,
     AdminUserTabPage,
-    AdminDebugTabPage,
     AdminClassroomTabPage,
     AdminDrillTabPage,
     AdminStudentModalPage,
@@ -128,7 +126,6 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     AdminReportingDetailsPage,
     AdminStudentTabPage,
     AdminUserTabPage,
-    AdminDebugTabPage,
     AdminDrillTabPage,
     AdminClassroomTabPage,
     AdminStudentModalPage,

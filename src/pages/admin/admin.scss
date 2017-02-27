@@ -1,3 +1,47 @@
 page-admin {
+  .tabbar {
+    opacity: 1;
+  }
 
+  //iPad landscape
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    #tab-t0-4 {
+      display: none;
+    }
+  }
+
+  //iPad portrait or iPad pro portrait
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    #tab-t0-4 {
+      display: none;
+    }
+  }
+
+  //computer and iPad pro Landscape
+  @media (min-width: 1025px) {
+
+  }
+
+  //phone
+  @media (max-width: 767px) {
+    #tab-t0-1 {
+      display: none;
+    }
+
+    #tab-t0-2 {
+      display: none;
+    }
+
+    #tab-t0-3 {
+      display: none;
+    }
+
+    #tab-t0-4 {
+      display: none;
+    }
+
+    .tabbar {
+      opacity: 0;
+    }
+  }
 }
