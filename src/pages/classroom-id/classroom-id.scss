@@ -116,11 +116,6 @@ page-classroom-id {
     padding-bottom: 5vh;
   }
 
-
-  // ::-webkit-input-placeholder {
-  //  text-align:center;
-  // }
-
   .ion-item-wrapper {
     border:1px solid #000000;
     border-top: 0;
@@ -150,6 +145,25 @@ page-classroom-id {
   .titleRoom{
     text-align: center;
     color: #FFFFFF;
+  }
+
+  //phone
+  @media (max-width: 767px) {
+    .centerGrid {
+      width: 95%;
+    }
+    .buttonRow {
+      width: 95%;
+    }
+    .input-style {
+      font-size: 100%;
+    }
+    .submit-button{
+      font-size: 150%;
+    }
+    .titleRoom {
+      font-size: 150%;
+    }
   }
 
   @media only screen and (min-width: 1024px){
@@ -189,15 +203,6 @@ page-classroom-id {
     }
   }
 
-  @media only screen and (orientation: portrait) {
-    // .outer-flex-element.room-title-element{
-    //   height:15%;
-    // }
-
-    // .card-element{
-    //   height:40%;
-    // }
-  }
 
 
 }
