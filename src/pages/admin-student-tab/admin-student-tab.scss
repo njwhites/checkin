@@ -46,4 +46,18 @@ page-admin-student-tab {
   .toolBar {
     background-color: #eee5de;
   }
+
+  //computer and iPad pro Landscape
+  @media (min-width: 1025px) {
+    .scroll-content {
+      padding-top: 4% !important;
+    }
+
+    .push-to-bottom {
+      background-color: #eee5de;
+      position: absolute;
+      bottom: 11vh;
+      width: 100%;
+    }
+  }
 }
