@@ -29,9 +29,8 @@
   </ion-row>
   <ion-row class="buttonRow">
     <ion-col>
-      <ion-card class="buttonOutline">
-      <ion-grid class="centerGrid">
-        <ion-item class="centerGrid">
+      <ion-grid class="buttonOutline" class="centerGrid">
+        <ion-item class="centerItem">
           <ion-row class="cardTitleRow">
             <ion-col class="card-row-child card-title">
               <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'generic' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
@@ -47,7 +46,7 @@
             </ion-col>
           </ion-row>
         </ion-item>
-        <ion-item class="centerGrid">
+        <ion-item class="centerItem">
           <ion-input #userId class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder='Enter ID'></ion-input>
         </ion-item>
         <ion-row id='login-input' class= 'buttonRowCard'>
@@ -56,7 +55,6 @@
           </ion-col>
         </ion-row>
     </ion-grid>
-    </ion-card>
     </ion-col>
   </ion-row>
 </ion-grid>
