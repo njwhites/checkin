@@ -8,21 +8,38 @@
 </ion-header>
 
 
-<div class="fixed-content" class="fill" padding>
-	<div class="card-container">
-        <ion-card class="flex-element" *ngFor="let class of this.classroomService.data | kitchenPipe"  (click)="cardTapped(class.roomNum, class.presentCount)">
-          <ion-grid class="cardGrid">
-            <ion-row class="roomNumber">
-              <ion-col>
-                {{class.roomNum}}
-              </ion-col>
-            </ion-row>
-            <ion-row class="roomCount">
-              <ion-col>
-                {{class.presentCount}}
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-card>
-      </div>
+<div class="fill notPhone" padding>
+  <div class="card-container">
+    <ion-card class="flex-element" *ngFor="let class of this.classroomService.data | kitchenPipe"  (click)="cardTapped(class.roomNum, class.presentCount)">
+      <ion-grid class="cardGrid">
+        <ion-row class="roomNumber">
+          <ion-col>
+            {{class.roomNum}}
+          </ion-col>
+        </ion-row>
+        <ion-row class="roomCount">
+          <ion-col>
+            {{class.presentCount}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
 </div>
+<ion-content class="phoneView">
+  <div>
+    <ion-card *ngFor="let class of this.classroomService.data | kitchenPipe"  (click)="cardTapped(class.roomNum, class.presentCount)">
+      <ion-grid>
+        <ion-row>
+          <ion-item>
+            Room: {{class.roomNum}}
+            <div item-right>
+              {{class.presentCount}}
+              <ion-icon class="arrowIcon" name="arrow-forward" style="padding-left: 4px;"></ion-icon>
+            </div>
+          </ion-item>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+</ion-content>

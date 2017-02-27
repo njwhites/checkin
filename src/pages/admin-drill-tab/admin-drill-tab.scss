@@ -44,4 +44,20 @@ page-admin-drill-tab {
     align-items: center;
   }
 
+  .phoneView {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .phoneView {
+      display: block;
+      background-color: #eee5de;
+      padding-top: 5%;
+    }
+
+    .notPhone {
+      display: none;
+    }
+  }
+
 }
