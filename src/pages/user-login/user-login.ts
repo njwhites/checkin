@@ -45,12 +45,9 @@ export class UserLoginPage {
         });
       } else if(this.parentPage === 'admin') {
 
-        console.log("thisID: " + idCheck)
         let password = data.password;
-        console.log(password);
 
         if(idCheck !== "-1" && password){
-          console.log("inside")
           this.authService.checkPassword(idCheck, password).then((success) => {
             if(success){
               this.studentService.getStudents().then(()=>{
@@ -68,7 +65,12 @@ export class UserLoginPage {
             }
           });
         }else{
-          console.log("No password or id");
+          let toast = this.toastCtrl.create({
+            message: 'Invalid email/password',
+            duration: 2000,
+            position: 'bottom'
+          });
+          toast.present(toast);
         }
       }
     } else {

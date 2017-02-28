@@ -88,7 +88,6 @@ export class UserProvider {
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
         let stuff = result.rows.filter((doc)=>{
                       if(doc.doc.email){
-                        console.log(doc.doc.email.toLowerCase() + " " + email.toLowerCase())
                         return doc.doc.email.toLowerCase() === email.toLowerCase();
                       } else {
                         return false;
