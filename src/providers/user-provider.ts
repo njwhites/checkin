@@ -82,6 +82,30 @@ export class UserProvider {
     });
   }
 
+  //mainly for admin requests, we will now be able ot get the user by their email field
+  getUserByEmail(email: String){
+    return new Promise((resolve, reject)=>{
+      this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
+        let stuff = result.rows.filter((doc)=>{
+                      if(doc.email){
+                        return doc.email.toLowerCase() === email.toLowerCase();
+                      } else {
+                        return false;
+                      }
+                    });
+        
+        if(stuff.length > 0){
+          resolve(stuff[0]);
+        } else {
+          reject('email not found');
+        }
+      }).catch(err =>{
+        console.log(err);
+        reject(err);
+      });
+    })
+  }
+
   getTherapistTypeByID(ID: string){
 //promise for async
   ID = String(ID);
