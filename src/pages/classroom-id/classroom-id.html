@@ -46,12 +46,23 @@
             </ion-col>
           </ion-row>
         </ion-item>
-        <ion-item class="centerItem">
+        <ion-item class="centerItem" *ngIf="parentPage !== 'admin'">
           <ion-input #userId class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder='Enter ID'></ion-input>
         </ion-item>
-        <ion-row id='login-input' class= 'buttonRowCard'>
+        <ion-item class="centerItem" *ngIf="parentPage === 'admin'">
+          <ion-input #userEmail class="input-style" type="tel" (keyup.enter)='checkAdmin(userEmail, password)' placeholder='Email'></ion-input>
+        </ion-item>
+        <ion-item class="centerItem" *ngIf="parentPage === 'admin'">
+          <ion-input #password class="input-style" type="password" (keyup.enter)='checkAdmin(userEmail, password)' placeholder='Password'></ion-input>
+        </ion-item>
+        <ion-row id='login-input' class= 'buttonRowCard' *ngIf="parentPage !== 'admin'">
           <ion-col class="card-row-child">
             <button ion-button block outline color="light" class="submit-button" (click)='checkUser(userId)'>Submit</button>
+          </ion-col>
+        </ion-row>
+        <ion-row id='login-input' class= 'buttonRowCard' *ngIf="parentPage === 'admin'">
+          <ion-col class="card-row-child">
+            <button ion-button block outline color="light" class="submit-button" (click)='checkAdmin(userEmail, password)'>Submit</button>
           </ion-col>
         </ion-row>
     </ion-grid>
