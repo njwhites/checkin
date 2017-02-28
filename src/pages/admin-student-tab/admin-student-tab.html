@@ -1,7 +1,15 @@
 <ion-header>
   <ion-navbar>
-    <ion-title center-text>Admin: Student Information</ion-title>
-    <page-home-button></page-home-button>
+    <ion-grid>
+      <ion-row>
+        <ion-col width-50>
+          <ion-title center-text>Admin: Student Information</ion-title>
+        </ion-col>
+        <ion-col width-50>
+          <page-home-button></page-home-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-navbar>
   <ion-toolbar no-border-top class="toolBar">
     <ion-searchbar (ionInput)="setFilter($event)" debounce="00"></ion-searchbar>
