@@ -46,7 +46,7 @@
             </ion-col>
           </ion-row>
         </ion-item>
-        <div *ngIf="parentPage !== 'admin'">
+        <ion-grid class="innerGrid" *ngIf="parentPage !== 'admin'">
           <ion-item class="centerItem" >
             <ion-input #userId class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder='Enter ID'></ion-input>
           </ion-item>
@@ -56,9 +56,9 @@
               <button ion-button block outline color="light" class="submit-button" (click)='checkUser(userId)'>Submit</button>
             </ion-col>
           </ion-row>
-        </div>
+        </ion-grid>
 
-        <div *ngIf="parentPage === 'admin'">
+        <ion-grid class="innerGrid" *ngIf="parentPage === 'admin'">
           <ion-item class="centerItem">
             <ion-input #userEmail class="input-style" type="text" placeholder='Email'></ion-input>
           </ion-item>
@@ -71,7 +71,7 @@
               <button ion-button block outline color="light" class="submit-button" (click)='checkAdmin(userEmail, password)'>Submit</button>
             </ion-col>
           </ion-row>
-        </div>
+        </ion-grid>
     </ion-grid>
     </ion-col>
   </ion-row>
