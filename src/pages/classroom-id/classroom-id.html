@@ -29,36 +29,52 @@
   </ion-row>
   <ion-row class="buttonRow">
     <ion-col>
-    <ion-card class="outer-flex-element card-element">
-      <ion-grid>
-      <ion-row class="cardTitleRow">
-        <ion-col class="card-row-child card-title">
-          <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'generic' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
-            <div class="titleRoom">
-              {{parentPage|parentReadable|firstUpper}}
-            </div>
-          </div>
-          <div *ngIf="parentPage === 'kitchen' || parentPage === 'admin' || parentPage === 'therapist'">
-            <div class="titleRoom">
-              Login
-            </div>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row id='login-input' class= 'inputRowCard'>
-        <ion-col class="card-row-child">
-              <ion-input #userId class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder='Enter ID'></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row id='login-input' class= 'buttonRowCard'>
-        <ion-col class="card-row-child">
-              <button ion-button block class="submit-button" (click)='checkUser(userId)'>Submit</button>
-        </ion-col>
-      </ion-row>
+      <ion-grid class="buttonOutline" class="centerGrid">
+        <ion-item class="centerItem">
+          <ion-row class="cardTitleRow">
+            <ion-col class="card-row-child card-title">
+              <div *ngIf="parentPage === 'checkin' || parentPage === 'signout' || parentPage === 'therapy' || parentPage === 'generic' || parentPage === 'napStudents' || parentPage === 'presentStudents'">
+                <div class="titleRoom">
+                  {{parentPage|parentReadable|firstUpper}}
+                </div>
+              </div>
+              <div *ngIf="parentPage === 'kitchen' || parentPage === 'admin' || parentPage === 'therapist'">
+                <div class="titleRoom">
+                  Login
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-grid class="innerGrid" *ngIf="parentPage !== 'admin'">
+          <ion-item class="centerItem" >
+            <ion-input #userId class="input-style" type="tel" (keyup.enter)='checkUser(userId)' placeholder='Enter ID'></ion-input>
+          </ion-item>
+
+          <ion-row class= 'buttonRowCard'>
+            <ion-col class="card-row-child">
+              <button ion-button block outline color="light" class="submit-button" (click)='checkUser(userId)'>Submit</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-grid class="innerGrid" *ngIf="parentPage === 'admin'">
+          <ion-item class="centerItem">
+            <ion-input #userEmail class="input-style" type="text" placeholder='Email'></ion-input>
+          </ion-item>
+          <ion-item class="centerItem">
+            <ion-input #password class="input-style" type="password" (keyup.enter)='checkAdmin(userEmail, password)' placeholder='Password'></ion-input>
+          </ion-item>
+
+          <ion-row class= 'buttonRowCard'>
+            <ion-col class="card-row-child">
+              <button ion-button block outline color="light" class="submit-button" (click)='checkAdmin(userEmail, password)'>Submit</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
     </ion-grid>
-    </ion-card>
-</ion-col>
-</ion-row>
+    </ion-col>
+  </ion-row>
 </ion-grid>
 </div>
 </div>

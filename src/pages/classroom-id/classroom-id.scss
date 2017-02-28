@@ -7,7 +7,8 @@ page-classroom-id {
   }
 
   .fixed-content {
-    background-color: #eee5de;
+    background: url(../assets/logo/Dark_Background.jpg);
+    background-size: 100% 100%;
   }
 
   .blockGrid {
@@ -20,15 +21,41 @@ page-classroom-id {
   }
 
   .titleRow {
-    padding-top: 2vh;
+    padding-top: 3vh;
     align-self: center;
+    text-align: center;
     width: 55%;
     padding-bottom: 5vh;
+    color: #FFFFFF;
+  }
+  .centerGrid {
+    align-content: center!important;
+    align-self: center;
+    background: transparent;
+    width: 85%;
+    margin: auto;
+    box-shadow: 0px 0px 0px 2px #FFFFFF
+  }
+  .innerGrid {
+    align-content: center!important;
+    align-self: center;
+    background: transparent;
+    margin: auto;
+  }
+  .centerItem {
+    align-content: center!important;
+    align-self: center;
+    background: transparent;
+    width: 85%;
+    margin: auto;
+  }
+  .buttonOutline {
+    height: auto;
+    background: transparent;
+    align-items: center;
   }
   .cardTitleRow {
     padding-top: 4vh;
-    align-self: center;
-    width: 55%;
     padding-bottom: 2vh;
   }
 
@@ -40,12 +67,9 @@ page-classroom-id {
 
   .login-flex-container{
     align-items:center;
-
     width:100%;
     height:100%;
-
     display:block;
-
   }
 
   .outer-flex-element{
@@ -76,7 +100,7 @@ page-classroom-id {
   }
 
   .card-row{
-    width: 95%;
+    width: 75%;
     height: 50%;
     justify-content: center;
     align-items:center;
@@ -93,14 +117,10 @@ page-classroom-id {
 
   .buttonRowCard {
     align-self: center;
-    width: 50%;
+    width: auto;
+    padding-top: 2vh;
     padding-bottom: 5vh;
   }
-
-
-  // ::-webkit-input-placeholder {
-  //  text-align:center;
-  // }
 
   .ion-item-wrapper {
     border:1px solid #000000;
@@ -120,11 +140,36 @@ page-classroom-id {
 
   .input-style{
     padding: 4px;
+    color: #FFFFFF;
+    font-size: 150%;
     //padding-left: 30px;
   }
 
   .submit-button{
-    padding-bottom:2%;
+    font-size: 200%;
+  }
+  .titleRoom{
+    text-align: center;
+    color: #FFFFFF;
+  }
+
+  //phone
+  @media (max-width: 767px) {
+    .centerGrid {
+      width: 95%;
+    }
+    .buttonRow {
+      width: 95%;
+    }
+    .input-style {
+      font-size: 100%;
+    }
+    .submit-button{
+      font-size: 150%;
+    }
+    .titleRoom {
+      font-size: 150%;
+    }
   }
 
   @media only screen and (min-width: 1024px){
@@ -164,15 +209,6 @@ page-classroom-id {
     }
   }
 
-  @media only screen and (orientation: portrait) {
-    // .outer-flex-element.room-title-element{
-    //   height:15%;
-    // }
-
-    // .card-element{
-    //   height:40%;
-    // }
-  }
 
 
 }

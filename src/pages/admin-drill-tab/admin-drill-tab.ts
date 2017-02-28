@@ -4,12 +4,6 @@ import { ClassRoomProvider } from '../../providers/class-room-provider'
 import { ClassRoomModel } from '../../models/db-models';
 import {ListPage} from '../list/list';
 
-/*
-  Generated class for the AdminDrillTab page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-admin-drill-tab',
   templateUrl: 'admin-drill-tab.html'

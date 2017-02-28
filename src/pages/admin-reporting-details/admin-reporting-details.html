@@ -1,7 +1,15 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{this.studentService.data.get(this.student.student_id).fName}} {{this.studentService.data.get(this.student.student_id).lName}}'s Billing Data</ion-title>
-    <page-home-button></page-home-button>
+    <ion-grid>
+      <ion-row>
+        <ion-col width-50>
+          <ion-title>{{this.studentService.data.get(this.student.student_id).fName}} {{this.studentService.data.get(this.student.student_id).lName}}'s Billing Data</ion-title>
+        </ion-col>
+        <ion-col width-50>
+          <page-home-button></page-home-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-navbar>
 </ion-header>
 

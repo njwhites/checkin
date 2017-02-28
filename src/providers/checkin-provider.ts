@@ -396,6 +396,11 @@ export class CheckinProvider {
     })
   }
 
+  isInTherapyLimbo(id: string) {
+    return this.studentService.data.get(id).location.includes(this.CHECKED_OUT_THERAPY);
+
+  }
+
   //checkout of school
   checkoutStudent(id: string, by_id: string){
     return new Promise(resolve => {
@@ -403,8 +408,22 @@ export class CheckinProvider {
         this.checkLimbo(id, result).then((isInLimbo) =>{
           if(!isInLimbo){
             this.performEvent(id, result, by_id, this.CHECK_OUT).then(result => {
-              this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
-              resolve(true);
+              if(this.isInTherapyLimbo(id)){
+                console.log("is in therapy limbo");
+                this.therapistCheckin(id, by_id).then((therapy : TransactionTherapy) => {
+                  let length = (new Date().getTime() - Number(therapy.start_time))/(1000*60);
+                  console.log("therapy check back in: " + length);
+                  this.therapistCheckinFollowUp(id, by_id, therapy.start_time +"", length, 0).then(() => {
+                    console.log("therapy back from follow up");
+                    this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
+                    resolve(true);  
+                  });
+                })
+              }else{
+                console.log("else");
+                this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
+                resolve(true);
+              }
             });
           }else{
             console.log("Limbo resolved");

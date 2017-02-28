@@ -75,6 +75,21 @@
         <ion-input type="tel" formControlName="phoneNumber" value="{{this.userService.data.get(this.user._id).phone}}"></ion-input>
       </ion-item>
 
+      <div *ngIf="this.userForm.value.role === this.userService.ROLES[0]">
+        <ion-item>
+          <ion-label>Email:</ion-label>
+          <ion-input type="email" formControlName="email" value="{{this.userService.data.get(this.user._id).email}}"></ion-input>
+        </ion-item>      
+        <ion-item>
+          <ion-label>Password:</ion-label>
+          <ion-input type="password" formControlName="password" value=""></ion-input>
+        </ion-item>      
+        <ion-item>
+          <ion-label>Confirm Password:</ion-label>
+          <ion-input type="password" formControlName="passwordConfirm" value=""></ion-input>
+        </ion-item>
+      </div>
+
       <ion-card [hidden]="this.userForm.valid">
         <ion-card-header>Invalid input</ion-card-header>
         <ion-card-content *ngIf="this.userForm.controls['ID'].hasError('required')">

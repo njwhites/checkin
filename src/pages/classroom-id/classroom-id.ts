@@ -64,9 +64,64 @@ export class ClassroomIdPage {
         userID.value = '';
       }
     });
-
-
   }
+
+/*******************************************************************************
+* checkAdmin
+*
+* Takes in the user ID and casts it at a number before checking to see if the
+* user exists. If they do it checks if they have the appropriate role for the
+* page they are trying to log into.
+*
+* @param userEmail, password
+**/
+checkAdmin(userEmail, password) {
+  let id;
+  let pass;
+  if(userEmail && password){
+    id = userEmail.value;
+    pass = password.value;
+    console.log(id + pass);
+  }
+  else {
+    console.log("poop");
+    return 0;
+  }
+
+  //for async all the code needs to be in the .then() of this function
+  //getUserByID takes a string and the input to .then() is a single java object that matches that id
+  this.userService.getUserByID(id).then((user: UserModel) => {
+
+    if(user._id === 'missing'){
+
+      let toast = this.toastCtrl.create({
+        message: 'Incorrect ID',
+        duration: 2000,
+        position: 'bottom'
+      });
+      toast.present(toast);
+    } else {
+      //I split up inputs so we can eventually look to see if each userId is authorized for the transaction
+      //user.role can be used to identify permissions
+      if(user.role === 'admin' && this.parentPage !== 'therapist' && this.parentPage !== 'therapy'){
+        this.notify.emit(id);
+      } else if(user.role !== 'driver' && this.parentPage !== 'therapy' && this.parentPage !== 'therapist' && this.parentPage !== 'admin'){
+        this.notify.emit(id);
+      }else if(user.role === 'therapist' && this.parentPage === 'therapist') {
+        this.notify.emit(id);
+      }else if(user.role === 'therapist' && this.parentPage === 'therapy') {
+        this.notify.emit(id);
+      } else if(user.role === 'driver' && this.parentPage === 'signout') {
+        this.notify.emit(id);
+      } else if(user.role === 'driver' && this.parentPage === 'checkin') {
+        this.notify.emit(id);
+      } else {
+        this.notify.emit(-1);
+      }
+      id = '';
+    }
+  });
+}
 
 /*******************************************************************************
  * back
