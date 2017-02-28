@@ -35,7 +35,8 @@ export class AuthProvider {
 
   checkPassword(id: string, password:string){
     return new Promise((resolve, reject) => {
-      this.hashdb.get(id).then((result) => {
+      console.log("Checking: " + id + " " + password);
+      this.hashdb.get(id+"").then((result) => {
         console.log(result);
         //what happens if there is no entry for this id?
         let salt = result.salt;

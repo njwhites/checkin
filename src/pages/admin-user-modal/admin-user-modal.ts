@@ -182,6 +182,11 @@ export class AdminUserModalPage {
         //if they aren't an add then we just update the existing doc, and similarly give the admin feedback
       } else {
         this.userService.updateUser(this.user);
+        
+        if(this.user.role.toLowerCase() === 'admin'){
+          //write to authservice
+          this.authService.setPassword(this.user._id + "", this.userForm.value.password);
+        }
 
         this.toastController.create({
           message: this.user.fName+ " " + this.user.lName + " has been updated.",

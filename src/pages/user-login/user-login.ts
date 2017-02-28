@@ -5,6 +5,7 @@ import {TherapistPage} from "../therapist/therapist";
 import {AdminPage} from "../admin/admin";
 import {StudentProvider} from "../../providers/student-provider";
 import {UserProvider} from "../../providers/user-provider";
+import {AuthProvider} from "../../providers/auth-provider";
 
 @Component({
   selector: 'page-user-login',
@@ -16,7 +17,7 @@ export class UserLoginPage {
   therapistPage = TherapistPage;
   adminPage = AdminPage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public studentService: StudentProvider, public userService: UserProvider, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authService:AuthProvider, public studentService: StudentProvider, public userService: UserProvider, public toastCtrl: ToastController) {
     this.parentPage = this.navParams.get('parentPage');
   }
 
@@ -29,29 +30,51 @@ export class UserLoginPage {
    *
    * @param idCheck
    **/
-  onNotify(idCheck:number):void {
+  onNotify(data:any):void {
+    let idCheck = data.id;
     if(idCheck >= 0) {
       if(this.parentPage === 'kitchen') {
         this.studentService.getStudents().then(()=>{
           this.navCtrl.push(this.kitchenPage);
         });
-      } else if(this.parentPage == 'therapist') {
+      } else if(this.parentPage === 'therapist') {
         this.studentService.getStudents().then(()=>{
           this.userService.getAllUsers().then(()=>{
             this.navCtrl.push(this.therapistPage, idCheck);
           });
         });
-      } else if(this.parentPage == 'admin') {
-        this.studentService.getStudents().then(()=>{
-          this.userService.getAllUsers().then(()=>{
-            this.navCtrl.push(this.adminPage, idCheck);
+      } else if(this.parentPage === 'admin') {
+
+        console.log("thisID: " + idCheck)
+        let password = data.password;
+        console.log(password);
+
+        if(idCheck !== "-1" && password){
+          console.log("inside")
+          this.authService.checkPassword(idCheck, password).then((success) => {
+            if(success){
+              this.studentService.getStudents().then(()=>{
+                this.userService.getAllUsers().then(()=>{
+                  this.navCtrl.push(this.adminPage, idCheck);
+                });
+              });
+            }else{
+              let toast = this.toastCtrl.create({
+                message: 'Invalid email/password',
+                duration: 2000,
+                position: 'bottom'
+              });
+              toast.present(toast);
+            }
           });
-        });
+        }else{
+          console.log("No password or id");
+        }
       }
     } else {
       let toast = this.toastCtrl.create({
-        message: 'Invalid ID',
-        duration: 1500,
+        message: 'Incorrect ID',
+        duration: 2000,
         position: 'bottom'
       });
       toast.present(toast);
