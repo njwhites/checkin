@@ -185,7 +185,7 @@ export class AdminUserModalPage {
         
         if(this.user.role.toLowerCase() === 'admin'){
           //write to authservice
-          this.authService.setPassword(this.user._id + "", this.userForm.value.password);
+          //this.authService.setPassword(this.user._id + "", this.userForm.value.password);
         }
 
         this.toastController.create({
