@@ -1,6 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController, NavParams, ToastController} from 'ionic-angular';
-import {ForgotPasswordPage} from '../forgot-password-page/forgot-password-page';
 import {UserProvider} from '../../providers/user-provider';
 import {UserModel} from '../../models/db-models';
 
@@ -11,7 +10,7 @@ import {UserModel} from '../../models/db-models';
 export class ClassroomIdPage {
   @Input() parentPage: string;
   @Input() roomNumber: string;
-  @Output() notify: EventEmitter<number> = new EventEmitter<number>();
+  @Output() notify: EventEmitter<any> = new EventEmitter<any>();
   @Output() goBack: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(public navCtrl: NavController, public userService: UserProvider, public toastCtrl: ToastController, public navParams: NavParams) {
@@ -48,19 +47,19 @@ export class ClassroomIdPage {
         //I split up inputs so we can eventually look to see if each userId is authorized for the transaction
         //user.role can be used to identify permissions
         if(user.role === 'admin' && this.parentPage !== 'therapist' && this.parentPage !== 'therapy'){
-          this.notify.emit(id);
+          this.notify.emit({id: id});
         } else if(user.role !== 'driver' && this.parentPage !== 'therapy' && this.parentPage !== 'therapist' && this.parentPage !== 'admin'){
-          this.notify.emit(id);
+          this.notify.emit({id: id});
         }else if(user.role === 'therapist' && this.parentPage === 'therapist') {
-          this.notify.emit(id);
+          this.notify.emit({id: id});
         }else if(user.role === 'therapist' && this.parentPage === 'therapy') {
-          this.notify.emit(id);
+          this.notify.emit({id: id});
         } else if(user.role === 'driver' && this.parentPage === 'signout') {
-          this.notify.emit(id);
+          this.notify.emit({id: id});
         } else if(user.role === 'driver' && this.parentPage === 'checkin') {
-          this.notify.emit(id);
+          this.notify.emit({id: id});
         } else {
-          this.notify.emit(-1);
+          this.notify.emit({id: -1});
         }
         userID.value = '';
       }
@@ -77,21 +76,23 @@ export class ClassroomIdPage {
 * @param userEmail, password
 **/
 checkAdmin(userEmail, password) {
-  let id;
+  let email;
   let pass;
   if(userEmail && password){
-    id = userEmail.value;
+    email = userEmail.value;
     pass = password.value;
-    console.log(id + pass);
+    console.log(email + pass);
   }
   else {
     console.log("poop");
     return 0;
   }
 
+
+  
   //for async all the code needs to be in the .then() of this function
   //getUserByID takes a string and the input to .then() is a single java object that matches that id
-  this.userService.getUserByID(id).then((user: UserModel) => {
+  this.userService.getUserByEmail(email).then((user: any) => {
 
     if(user._id === 'missing'){
 
@@ -104,23 +105,15 @@ checkAdmin(userEmail, password) {
     } else {
       //I split up inputs so we can eventually look to see if each userId is authorized for the transaction
       //user.role can be used to identify permissions
-      if(user.role === 'admin' && this.parentPage !== 'therapist' && this.parentPage !== 'therapy'){
-        this.notify.emit(id);
-      } else if(user.role !== 'driver' && this.parentPage !== 'therapy' && this.parentPage !== 'therapist' && this.parentPage !== 'admin'){
-        this.notify.emit(id);
-      }else if(user.role === 'therapist' && this.parentPage === 'therapist') {
-        this.notify.emit(id);
-      }else if(user.role === 'therapist' && this.parentPage === 'therapy') {
-        this.notify.emit(id);
-      } else if(user.role === 'driver' && this.parentPage === 'signout') {
-        this.notify.emit(id);
-      } else if(user.role === 'driver' && this.parentPage === 'checkin') {
-        this.notify.emit(id);
-      } else {
-        this.notify.emit(-1);
+      console.log("else");
+      console.log(user);
+      if(user.doc.role === 'admin'){
+        console.log("is admin");
+        this.notify.emit({id: Number(user.doc._id), password: pass});
       }
-      id = '';
     }
+  }).catch(err => {
+    console.log(err);
   });
 }
 
@@ -132,10 +125,6 @@ checkAdmin(userEmail, password) {
  **/
   back(){
     this.goBack.emit('back');
-  }
-
-  sendToForgot(){
-    this.navCtrl.push(ForgotPasswordPage);
   }
 
 }
