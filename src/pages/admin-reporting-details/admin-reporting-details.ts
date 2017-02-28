@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Validators, FormBuilder, FormControl } from '@angular/forms';
+import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { CheckinProvider } from '../../providers/checkin-provider'
 import { StudentProvider } from '../../providers/student-provider'
@@ -38,7 +38,10 @@ export class AdminReportingDetailsPage {
     this.visibleTimeIn = new Array<string>();
     this.visibleTimeOut = new Array<string>();
 
+
+
     //make sure that any negatives we use to indicate not touched are not displayed as -1, rather zero
+    //set the initial visible Time in and out as well
     this.student.student_days.forEach((day, index) => {
       this.visibleTimeIn.push(this.toReadableTime(day.start_time));
       this.visibleTimeOut.push(this.toReadableTime(day.end_time));
@@ -50,6 +53,7 @@ export class AdminReportingDetailsPage {
       day.nap_hours = Math.max(day.nap_hours, 0);
       day.net_hours = Math.max(day.net_hours, 0);
     })
+
     //get the reducer function for summing
     this.reducer = navParams.get("reducer");
     //calculate the sum from the week, this should be the same info as the previous page and the student list item that was clicked
@@ -57,252 +61,150 @@ export class AdminReportingDetailsPage {
     this.totals = this.student.student_days.reduce(this.reducer);
 
     //construct the form for all of the days data here
-    //time in and out are no longer editable but for now are left in the form incase we need to use them later 2/22/2017
     //the validators make sure that each field is not empty and each field is a positive number
-    this.studentDataForm = this.formBuilder.group({
-      MTimeIn: [(this.student.student_days[0].start_time >= 0) ? this.visibleTimeIn[0] : null,
-                 Validators.compose([Validators.required, (control:FormControl)=>{
-                   if(this.student.student_days[0].start_time > this.student.student_days[0].end_time){
-                     return {startAfterEnd: true};
-                   } else {
-                     return null;
-                   }
-                 }])],
-      MTimeOut: [(this.student.student_days[0].end_time >= 0) ? this.visibleTimeOut[0] : null ,
-           Validators.compose([Validators.required, (control:FormControl)=>{
-             if(this.student.student_days[0].start_time > this.student.student_days[0].end_time){
-               return {startAfterEnd: true};
-             } else {
-               return null;
-             }
-           }])],
-      MNapHours: [this.student.student_days[0].nap_hours,
-                   Validators.compose([Validators.required,  (control: FormControl)=>{
-                     if(!isNaN(Number(control.value))){
-                       return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-                     } else {
-                       return {notPositiveNumber:true}
-                     }
-                   } ])],
-      MSP: [this.student.student_days[0].SP_therapy_hours,
-            Validators.compose([Validators.required,  (control: FormControl)=>{
-              if(!isNaN(Number(control.value))){
-                return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-              } else {
-                return {notPositiveNumber:true}
-              }
-            } ])],
-      MPT: [this.student.student_days[0].PT_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      MOT: [this.student.student_days[0].OT_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      TTimeIn: [(this.student.student_days[1].start_time >= 0) ? this.visibleTimeIn[1] : null ,
-           Validators.compose([Validators.required, (control:FormControl)=>{
-             if(this.student.student_days[1].start_time > this.student.student_days[1].end_time){
-               return {startAfterEnd: true};
-             } else {
-               return null;
-             }
-           }])],
-      TTimeOut: [(this.student.student_days[1].end_time >= 0) ? this.visibleTimeOut[1] : null ,
-           Validators.compose([Validators.required, (control:FormControl)=>{
-             if(this.student.student_days[1].start_time > this.student.student_days[1].end_time){
-               return {startAfterEnd: true};
-             } else {
-               return null;
-             }
-           }])],
-      TNapHours: [this.student.student_days[1].nap_hours,
-                   Validators.compose([Validators.required,  (control: FormControl)=>{
-                     if(!isNaN(Number(control.value))){
-                       return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-                     } else {
-                       return {notPositiveNumber:true}
-                     }
-                   } ])],
-      TSP: [this.student.student_days[1].SP_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      TPT: [this.student.student_days[1].PT_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      TOT: [this.student.student_days[1].OT_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      WTimeIn: [(this.student.student_days[2].start_time >= 0) ? this.visibleTimeIn[2] : null ,
-           Validators.compose([Validators.required, (control:FormControl)=>{
-             if(this.student.student_days[2].start_time > this.student.student_days[2].end_time){
-               return {startAfterEnd: true};
-             } else {
-               return null;
-             }
-           }])],
-      WTimeOut: [(this.student.student_days[2].end_time >= 0) ? this.visibleTimeOut[2] : null ,
-           Validators.compose([Validators.required, (control:FormControl)=>{
-             if(this.student.student_days[2].start_time > this.student.student_days[2].end_time){
-               return {startAfterEnd: true};
-             } else {
-               return null;
-             }
-           }])],
-      WNapHours: [this.student.student_days[2].nap_hours,
-                   Validators.compose([Validators.required,  (control: FormControl)=>{
-                     if(!isNaN(Number(control.value))){
-                       return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-                     } else {
-                       return {notPositiveNumber:true}
-                     }
-                   } ])],
-      WSP: [this.student.student_days[2].SP_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      WPT: [this.student.student_days[2].PT_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      WOT: [this.student.student_days[2].OT_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      THTimeIn: [(this.student.student_days[3].start_time >= 0) ? this.visibleTimeIn[3] : null ,
-           Validators.compose([Validators.required, (control:FormControl)=>{
-             if(this.student.student_days[3].start_time > this.student.student_days[3].end_time){
-               return {startAfterEnd: true};
-             } else {
-               return null;
-             }
-           }])],
-      THTimeOut: [(this.student.student_days[3].end_time >= 0) ? this.visibleTimeOut[3] : null ,
-           Validators.compose([Validators.required, (control:FormControl)=>{
-             if(this.student.student_days[3].start_time > this.student.student_days[3].end_time){
-               return {startAfterEnd: true};
-             } else {
-               return null;
-             }
-           }])],
-      THNapHours: [this.student.student_days[3].nap_hours,
-                   Validators.compose([Validators.required,  (control: FormControl)=>{
-                     if(!isNaN(Number(control.value))){
-                       return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-                     } else {
-                       return {notPositiveNumber:true}
-                     }
-                   } ])],
-      THSP: [this.student.student_days[3].SP_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      THPT: [this.student.student_days[3].PT_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      THOT: [this.student.student_days[3].OT_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      FTimeIn: [(this.student.student_days[4].start_time >= 0) ? this.visibleTimeIn[4] : null ,
-           Validators.compose([Validators.required, (control:FormControl)=>{
-             if(this.student.student_days[4].start_time > this.student.student_days[4].end_time){
-               return {startAfterEnd: true};
-             } else {
-               return null;
-             }
-           }])],
-      FTimeOut: [(this.student.student_days[4].end_time >= 0) ? this.visibleTimeOut[4] : null ,
-           Validators.compose([Validators.required, (control:FormControl)=>{
-             if(this.student.student_days[4].start_time > this.student.student_days[4].end_time){
-               return {startAfterEnd: true};
-             } else {
-               return null;
-             }
-           }])],
-      FNapHours: [this.student.student_days[4].nap_hours,
-                   Validators.compose([Validators.required,  (control: FormControl)=>{
-                     if(!isNaN(Number(control.value))){
-                       return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-                     } else {
-                       return {notPositiveNumber:true}
-                     }
-                   } ])],
-      FSP: [this.student.student_days[4].SP_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      FPT: [this.student.student_days[4].PT_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])],
-      FOT: [this.student.student_days[4].OT_therapy_hours,
-             Validators.compose([Validators.required,  (control: FormControl)=>{
-               if(!isNaN(Number(control.value))){
-                 return (control.value < 0 ) ? {notPositiveNumber:true}: null;
-               } else {
-                 return {notPositiveNumber:true}
-               }
-             } ])]
+    // additionally time in are enforced to be time in before time out in time order
+
+    //test object is an object to hold the key:string and formcontrol combinations
+    //this object is used to create the form group
+    let testObject = {};
+
+    //form group needs to be initialzed for some of the self referencing validators
+    //we initialize the form group to have a bunch of empty form controls
+    //for each day we do TimeIn, TimeOut, NapHours, OT, PT, and SP
+    this.days.forEach((day, index)=>{
+      testObject[day+'TimeIn'] = new FormControl();
+      testObject[day+'TimeOut'] = new FormControl();
+      testObject[day+'NapHours'] = new FormControl();
+      testObject[day+'OT'] = new FormControl();
+      testObject[day+'PT'] = new FormControl();
+      testObject[day+'SP'] = new FormControl();
+    });
+    //here we create the new Form Group from the initialzed object of formControls
+    this.studentDataForm = new FormGroup(testObject);
+
+    //now we update the form group to have the correct form controls
+    this.days.forEach((day, index)=>{
+
+      //time in and time out are similar in that they perform the same funcionality back and forth
+      //the first paramater is the key the second is the formControl to use
+      //the first paramater of the form creation is the value to initialze the form to
+      //it is either null if the start_time is "-1" or the visible time version
+      this.studentDataForm.setControl(day+'TimeIn', new FormControl(
+        (this.student.student_days[index].start_time >= 0) ? this.visibleTimeIn[index] : null,
+
+        //to use multiple validators we have to compose them
+        //we are going to throw warnings when a field is empty and when time in isn't before time out
+         Validators.compose([Validators.required, (control:FormControl)=>{
+           // if either time in or time out are null then don't say anything about time in being after time out
+           if(control.value === null || this.studentDataForm.controls[day+'TimeOut'].value === null){
+             return null;
+           }
+
+           //make the readable times numbers to be compared
+           let splitIn = control.value.split(':');
+           let splitOut = this.studentDataForm.controls[day+'TimeOut'].value.split(':');
+
+           let hhIn = splitIn[0];
+           let mmIn = splitIn[1];
+
+           let hhOut = splitOut[0];
+           let mmOut = splitOut[1];
+
+           let timeIn = Number(hhIn * 60 + mmIn);
+           let timeOut = Number(hhOut * 60 + mmOut);
+
+           //if timein is not before timeout we will warn the user
+           return (timeIn >= timeOut) ? {startAfterEnd: true} : null;
+         }])
+      ));
+      this.studentDataForm.setControl(day+'TimeOut', new FormControl(
+        (this.student.student_days[index].end_time >= 0) ? this.visibleTimeOut[index] : null,
+         Validators.compose([Validators.required, (control:FormControl)=>{
+           if(control.value === null || this.studentDataForm.controls[day+'TimeIn'].value === null){
+             return null;
+           }
+           let splitOut = control.value.split(':');
+           let splitIn = this.studentDataForm.controls[day+'TimeIn'].value.split(':');
+
+           let hhIn = splitIn[0];
+           let mmIn = splitIn[1];
+
+           let hhOut = splitOut[0];
+           let mmOut = splitOut[1];
+
+           let timeIn = Number(hhIn * 60 + mmIn);
+           let timeOut = Number(hhOut * 60 + mmOut);
+           console.log("\tIN:\t"+splitIn);
+           console.log(timeIn);
+           console.log("\tOut:\t"+splitOut);
+           console.log(timeOut);
+
+           return (timeIn >= timeOut) ? {startAfterEnd: true} : null;
+         }])
+      ));
+      //nap and therapy times are enforced to be positive numbers
+      // so if they aren't tell the user
+      this.studentDataForm.setControl(day+'NapHours', new FormControl(
+        this.student.student_days[index].nap_hours,
+         Validators.compose([Validators.required,  (control: FormControl)=>{
+           if(!isNaN(Number(control.value))){
+             return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+           } else {
+             return {notPositiveNumber:true}
+           }
+         }])
+     ));
+     this.studentDataForm.setControl(day+'SP', new FormControl(
+       this.student.student_days[index].SP_therapy_hours,
+        Validators.compose([Validators.required,  (control: FormControl)=>{
+          if(!isNaN(Number(control.value))){
+            return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+          } else {
+            return {notPositiveNumber:true}
+          }
+        }])
+      ));
+      this.studentDataForm.setControl(day+'PT', new FormControl(
+        this.student.student_days[index].PT_therapy_hours,
+         Validators.compose([Validators.required,  (control: FormControl)=>{
+           if(!isNaN(Number(control.value))){
+             return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+           } else {
+             return {notPositiveNumber:true}
+           }
+         }])
+      ));
+      this.studentDataForm.setControl(day+'OT', new FormControl(
+        this.student.student_days[index].OT_therapy_hours,
+         Validators.compose([Validators.required,  (control: FormControl)=>{
+           if(!isNaN(Number(control.value))){
+             return (control.value < 0 ) ? {notPositiveNumber:true}: null;
+           } else {
+             return {notPositiveNumber:true}
+           }
+         }])
+      ));
     });
 
-
+    //now for each day we want to make sure that the time in and out are checking eachother
+    this.days.forEach((day, index)=>{
+      //time in is similar to timeout so reference this for both
+      //when the time in value changes we will tell it to check the validity of time out
+      this.studentDataForm.controls[day+'TimeIn'].valueChanges.subscribe((value)=>{
+        //in order to avoid an infinite loop we will check the that the new value is actually different than the old value
+        if(value !== this.visibleTimeIn[index]){
+          //since the value is different we will update the old value
+          this.visibleTimeIn[index] = value;
+          this.studentDataForm.controls[day+'TimeOut'].updateValueAndValidity();
+        }
+      });
+      this.studentDataForm.controls[day+'TimeOut'].valueChanges.subscribe((value)=>{
+        if(value !== this.visibleTimeOut[index]){
+          this.visibleTimeOut[index] = value;
+          this.studentDataForm.controls[day+'TimeIn'].updateValueAndValidity();
+        }
+      });
+    });
   }
 
   ionViewDidLoad() {
@@ -318,6 +220,9 @@ export class AdminReportingDetailsPage {
     //second number in id = the field that was modified
     let field = temp[1];
 
+
+    let isInOutNull = false;
+
     //switch on the field so that we only compute the field we need
     //all cases are set the student field equal to the changed value, casting as a number incase we need that to do .toFixed or anything similar
     switch(field){
@@ -326,7 +231,6 @@ export class AdminReportingDetailsPage {
       //The main purpose of this is if an admin accidentally adds a checkin time to a day the student was absent
       // then they would be stuck with that time value even if the input field is cleared
         if(event.target.value === ''){
-          this.student.student_days[day].start_time = -1;
         } else{
           this.student.student_days[day].start_time = this.toEpochMS(event.target.value, new Date(this.student.student_days[day].start_time));
         }
@@ -334,7 +238,6 @@ export class AdminReportingDetailsPage {
       case("1"):
       //see case "0" for an explanation
         if(event.target.value === ''){
-          this.student.student_days[day].end_time = -1;
         } else{
           this.student.student_days[day].end_time = this.toEpochMS(event.target.value, new Date(this.student.student_days[day].end_time));
         }
@@ -358,7 +261,13 @@ export class AdminReportingDetailsPage {
     //recompte the derived fields since one of the fields they were derived from possibly changed
 
     //gross hours and the way end and begin time are stored has some design decisions to be made
-    this.student.student_days[day].gross_hours = (this.student.student_days[day].end_time - this.student.student_days[day].start_time) / 3600000;
+    //double check that the output isn't negative
+    if(this.student.student_days[day].end_time >= this.student.student_days[day].start_time){
+      this.student.student_days[day].gross_hours = (this.student.student_days[day].end_time - this.student.student_days[day].start_time) / 3600000;
+    } else {
+      this.student.student_days[day].gross_hours = 0;
+    }
+
 
     this.student.student_days[day].net_hours = this.student.student_days[day].gross_hours
                                                - this.student.student_days[day].nap_hours
@@ -415,6 +324,9 @@ export class AdminReportingDetailsPage {
 
   //takes in the readable time and that days date and returns the milliseconds for the supplied date at that hour and minute
   toEpochMS(time: string, date: Date): number{
+    if(time === null){
+      return date.getTime();
+    }
     let splitTime = time.split(':');
     let hh = splitTime[0];
     let mm = splitTime[1];
