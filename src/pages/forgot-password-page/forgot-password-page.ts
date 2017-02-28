@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import {ResetTokenPage} from '../reset-token/reset-token';
 
-/*
-  Generated class for the ForgotPasswordPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-forgot-password-page',
   templateUrl: 'forgot-password-page.html'
@@ -17,6 +12,12 @@ export class ForgotPasswordPage {
 
   ionViewDidLoad() {
     console.log('Hello ForgotPasswordPagePage Page');
+  }
+
+  sendToken(userEmail){
+    this.navCtrl.push(ResetTokenPage, {
+      email: userEmail
+    })
   }
 
 }

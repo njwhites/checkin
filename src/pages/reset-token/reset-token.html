@@ -1,5 +1,5 @@
 <!--
-  Generated template for the ForgotPasswordPage page.
+  Generated template for the ResetToken page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,10 +7,11 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>forgot-password-page</ion-title>
+    <ion-title>reset-token</ion-title>
   </ion-navbar>
 
 </ion-header>
+
 
 <div class="fixed-content">
   <div class="blockGrid">
@@ -28,11 +29,17 @@
               </ion-row>
             </ion-item>
             <ion-item class="centerItem">
-              <ion-input #userEmail class="input-style" type="text"  (keyup.enter)='sendToken(userEmail)' placeholder='Email'></ion-input>
+              <div class="input-style">{{this.userEmail}}</div>
+            </ion-item>
+            <ion-item class="centerItem">
+              <ion-input #password class="input-style" type="text" (keyup.enter)='updatePassword(password, repassword)' placeholder='Password'></ion-input>
+            </ion-item>
+            <ion-item class="centerItem">
+              <ion-input #repassword class="input-style" type="text" (keyup.enter)='updatePassword(password, repassword)' placeholder='Re-enter Password'></ion-input>
             </ion-item>
             <ion-row class= 'buttonRowCard'>
               <ion-col class="card-row-child">
-                <button ion-button block outline color="light" class="submit-button" (click)='sendToken(userEmail)'>Submit</button>
+                <button ion-button block outline color="light" class="submit-button" (click)='updatePassword(password, repassword)'>Submit</button>
               </ion-col>
             </ion-row>
         </ion-grid>
