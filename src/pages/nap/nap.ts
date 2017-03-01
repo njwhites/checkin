@@ -24,7 +24,8 @@ export class NapPage {
  *
  * @param idCheck
  **/
-  onNotify(idCheck:number):void {
+  onNotify(data):void {
+    let idCheck = data.id;
     if(idCheck >= 0) {
       this.userID = idCheck;
       this.navCtrl.push(ListPage, {
