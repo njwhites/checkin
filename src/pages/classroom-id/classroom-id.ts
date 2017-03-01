@@ -1,6 +1,7 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NavController, NavParams, ToastController} from 'ionic-angular';
 import {UserProvider} from '../../providers/user-provider';
+import {ForgotPasswordPage} from '../forgot-password-page/forgot-password-page';
 import {UserModel} from '../../models/db-models';
 
 @Component({
@@ -89,7 +90,7 @@ checkAdmin(userEmail, password) {
   }
 
 
-  
+
   //for async all the code needs to be in the .then() of this function
   //getUserByID takes a string and the input to .then() is a single java object that matches that id
   this.userService.getUserByEmail(email).then((user: any) => {
@@ -125,6 +126,10 @@ checkAdmin(userEmail, password) {
  **/
   back(){
     this.goBack.emit('back');
+  }
+
+  sendToForgot(){
+    this.navCtrl.push(ForgotPasswordPage);
   }
 
 }

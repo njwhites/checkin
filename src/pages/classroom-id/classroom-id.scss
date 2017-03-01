@@ -15,9 +15,13 @@ page-classroom-id {
     display: block;
   }
 
-  .buttonRow {
+  .cardRow {
     align-self: center;
     width: 55%;
+  }
+  .buttonRow {
+    align-self: center;
+    width: auto;
   }
 
   .titleRow {
@@ -147,6 +151,9 @@ page-classroom-id {
 
   .submit-button{
     font-size: 200%;
+  }
+  .forgot-button{
+    font-size: 150%;
   }
   .titleRoom{
     text-align: center;

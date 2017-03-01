@@ -27,7 +27,7 @@
       </div>
     </ion-col>
   </ion-row>
-  <ion-row class="buttonRow">
+  <ion-row class="cardRow">
     <ion-col>
       <ion-grid class="buttonOutline" class="centerGrid">
         <ion-item class="centerItem">
@@ -75,9 +75,9 @@
     </ion-grid>
     </ion-col>
   </ion-row>
-  <ion-row class="buttonRow">
+  <ion-row class="buttonRow" *ngIf="parentPage === 'admin'">
     <ion-col>
-      <button ion-button block outline color="light" class="submit-button" (click)='sendToForgot()'>Forgot Password</button>
+      <button ion-button block outline color="light" class="forgot-button" (click)='sendToForgot()'>Forgot Password</button>
     </ion-col>
   </ion-row>
 </ion-grid>
