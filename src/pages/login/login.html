@@ -1,7 +1,7 @@
 <ion-content text-center class="vertical-align-content">
   <div id="buttonGrid" class="cardContainer">
-    <ion-item class="cardElement cardClassroom" (click)="selectClassroom('classroom')">
-      <ion-grid class="centerGrid">
+    <ion-item class="cardElement cardClassroom">
+      <ion-grid class="centerGrid" (click)="selectClassroom('classroom')">
         <ion-row class="centerRow">
           <ion-col>
             <ion-icon class="cardIcon" name="school"></ion-icon>
@@ -16,8 +16,8 @@
         </ion-row>
       </ion-grid>
     </ion-item>
-    <ion-item class="cardElement cardKitchen" (click)="toLogin('kitchen')">
-      <ion-grid class="centerGrid">
+    <ion-item class="cardElement cardKitchen">
+      <ion-grid class="centerGrid" (click)="toLogin('kitchen')">
         <ion-row class="centerRow">
           <ion-col>
             <ion-icon class="cardIcon" name="restaurant"></ion-icon>
@@ -32,8 +32,8 @@
         </ion-row>
       </ion-grid>
     </ion-item>
-    <ion-item class="cardElement cardTherapy" (click)="toLogin('therapist')">
-      <ion-grid class="centerGrid">
+    <ion-item class="cardElement cardTherapy">
+      <ion-grid class="centerGrid" (click)="toLogin('therapist')">
         <ion-row class="centerRow">
           <ion-col>
             <ion-icon class="cardIcon" name="clipboard"></ion-icon>
