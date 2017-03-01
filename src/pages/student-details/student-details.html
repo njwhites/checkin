@@ -21,7 +21,7 @@
           <ion-card *ngIf="transaction.type === 'checkin'">
             <ion-card-content>
               <ion-icon name="person-add" item-left></ion-icon>
-              Checked In For the Day by {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
+              Checked In For the Day By {{getUserName(transaction.by_id)}} at {{transaction.time_readable}}
             </ion-card-content>
           </ion-card>
           <ion-card *ngIf="transaction.type === 'checkout'">

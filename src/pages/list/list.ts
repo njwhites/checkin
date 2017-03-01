@@ -34,11 +34,16 @@ export class ListPage {
     this.parentPage = navParams.get('parentPage');
     this.userID = navParams.get('userID');
     this.roomNumber = navParams.get('roomNumber');
-    if (navParams.get('count')){
+    console.log(navParams.get('count'))
+    if ( navParams.get('count') === -1){
+      this.count = 0;
+    } else if (navParams.get('count')){
       this.count = navParams.get('count');
-    } else {
+    }
+    else {
       this.count = -1;
     }
+    console.log(this.count);
     this.studentID = '';
     this.toastTrigger = false;
   }

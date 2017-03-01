@@ -23,6 +23,9 @@ export class AdminDrillTabPage {
   }
 
   cardTapped(room, count) {
+    if(count === 0){
+      count = -1;
+    }
     this.navCtrl.push(ListPage, {
       parentPage: 'presentStudents',
       userID: this.id,
