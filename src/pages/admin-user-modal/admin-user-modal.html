@@ -79,15 +79,17 @@
         <ion-item>
           <ion-label>Email:</ion-label>
           <ion-input type="email" formControlName="email" value="{{this.userService.data.get(this.user._id).email}}"></ion-input>
-        </ion-item>      
-        <ion-item>
-          <ion-label>Password:</ion-label>
-          <ion-input type="password" formControlName="password" value=""></ion-input>
-        </ion-item>      
-        <ion-item>
-          <ion-label>Confirm Password:</ion-label>
-          <ion-input type="password" formControlName="passwordConfirm" value=""></ion-input>
         </ion-item>
+        <div *ngIf="this.user._id < 0">
+          <ion-item>
+            <ion-label>Password:</ion-label>
+            <ion-input type="password" formControlName="password" value=""></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Confirm Password:</ion-label>
+            <ion-input type="password" formControlName="confirmPassword" value=""></ion-input>
+          </ion-item>
+        </div>
       </div>
 
       <ion-card [hidden]="this.userForm.valid">
@@ -110,6 +112,26 @@
         <ion-card-content *ngIf="this.userForm.controls['role'].hasError('required')">
           Role is required.
         </ion-card-content>
+        <div *ngIf="this.userForm.controls['role'].value === this.userService.ROLES[0]">
+          <ion-card-content *ngIf="this.userForm.controls['email'].hasError('required')">
+            Email is required.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['email'].hasError('pattern')">
+            Email must be a valid email.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['email'].hasError('emailTaken')">
+            Email already taken.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['password'].hasError('required')">
+            Password is required.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['confirmPassword'].hasError('required')">
+            Confirm Password is required.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.hasError('notMatching')">
+            Password and Confirm password are not equal.
+          </ion-card-content>
+        </div>
       </ion-card>
 
       <button ion-button block type="submit" [disabled]="!this.userForm.valid" (click)="updateUser()">{{buttonText}}</button>

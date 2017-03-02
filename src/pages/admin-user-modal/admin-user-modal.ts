@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder, FormControl } from '@angular/forms';
+import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NavController, NavParams, AlertController, ToastController, ModalController } from 'ionic-angular';
 import { UserProvider } from "../../providers/user-provider";
 import { UserModel } from "../../models/db-models";
@@ -17,7 +17,7 @@ export class AdminUserModalPage {
   //userForm is the formGroup for input
   //button text is used to update the text on the "update" button according to whether the update would be an add or edit
   user: UserModel;
-  userForm;
+  userForm: FormGroup = new FormGroup({});
   buttonText = "Update User Info";
 
   constructor(public navParams: NavParams,
@@ -53,6 +53,9 @@ export class AdminUserModalPage {
     //set the form group to have all of the inputs that a user might need
     //require a full name and role, therapist type theroretically should be required
     //but that hasn't been strictly enforced due to the counter requirement that non-therapists have a null therapist role
+    this.userForm = new FormGroup({
+      role: new FormControl(),
+    });
     this.userForm = this.formBuilder.group({
       ID: [this.user._id,
         //3 validators composed together, the first is to make sure that the id exists
@@ -95,10 +98,50 @@ export class AdminUserModalPage {
       role: [this.user.role, Validators.required],
       phoneNumber: [this.user.phone],
       therapistType: [this.user.therapy_type],
-      email: [this.user.email],
-      password: [""],
-      passwordConfirm: [""]
-    });
+      email: [this.user.email,
+        Validators.compose([
+          (control: FormControl)=>{
+            if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
+              return (control.value === "") ? {required: true} : null;
+            }
+            return null;
+          },Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'),
+          (control: FormControl)=>{
+            let returnObject = null;
+            this.userService.data.forEach((doc)=>{
+              if(Number(doc._id) >= 0){
+                if(doc.email === control.value){
+                  returnObject = { emailTaken: true};
+                }
+              }
+            })
+            return returnObject;
+          }
+        ])
+      ],
+      password: ['', (control: FormControl)=>{
+        if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
+          return (control.value === "") ? {required: true} : null;
+        }
+        return null;
+      }],
+      confirmPassword: ['', (control: FormControl)=>{
+        if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
+          return (control.value === "") ? {required: true} : null;
+        }
+        return null;
+      }]
+    }, {validator: this.passwordMatchValidator('password','confirmPassword')});
+  }
+
+  passwordMatchValidator(field1: string, field2: string){
+    return (group: FormGroup): {[key: string]: any} => {
+      let field1Control = group.controls[field1];
+      let field2Control = group.controls[field2];
+
+      return (field1Control.value !== field2Control.value) ?
+        {notMatching: true} : null;
+    }
   }
 
   ionViewDidLoad() {
@@ -182,7 +225,7 @@ export class AdminUserModalPage {
         //if they aren't an add then we just update the existing doc, and similarly give the admin feedback
       } else {
         this.userService.updateUser(this.user);
-        
+
         if(this.user.role.toLowerCase() === 'admin'){
           //write to authservice
           //this.authService.setPassword(this.user._id + "", this.userForm.value.password);
@@ -259,15 +302,14 @@ export class AdminUserModalPage {
   }
 
   addApprovedStudent(){
-    console.log("add");
     this.user.fName = this.userForm.value.fName;
     this.user.lName = this.userForm.value.lName;
     this.modalController.create(UserAddModalPage,{user: this.user}).present();
   }
 
   removeApprovedStudent(SID: String){
-    console.log("remove");
     this.userService.removeVisibleStudent(this.user, SID);
     this.user.visible_students.splice(this.user.visible_students.indexOf(SID),1);
   }
+
 }
