@@ -249,10 +249,16 @@ export class StudentProvider {
 
 
   handleChange(change){
+    console.log(this.data);
+    console.log(change);
+
     //if roomRoster is set then we need to make sure that people who are not part of roomRoster aren't added to the data object
     //otherwise the data object should have everyone
-    if(this.roomRoster){
+    console.log(this.roomRoster);
+    if(this.roomRoster.length > 0){
       //if the changed student id is not in the roomRoster then proceed with the updates
+      console.log("\troster.indexOf:\t"+this.roomRoster.indexOf(change.doc._id));
+
       if(~this.roomRoster.indexOf(change.doc._id)){
         if(change.deleted){
           this.data.delete(change.doc._id);
@@ -261,11 +267,13 @@ export class StudentProvider {
         }
       }
     } else {
+      console.log("else");
       if(change.deleted){
         this.data.delete(change.doc._id);
       } else {
         this.data.set(change.doc._id, change.doc);
       }
     }
+    console.log(this.data);
   }
 }
