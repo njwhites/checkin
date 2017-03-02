@@ -4,6 +4,7 @@ import {AdminReportingPage} from "../admin-reporting/admin-reporting";
 import {AdminStudentTabPage} from "../admin-student-tab/admin-student-tab";
 import {AdminUserTabPage} from "../admin-user-tab/admin-user-tab";
 import {AdminDrillTabPage} from "../admin-drill-tab/admin-drill-tab";
+import {AdminSettingsTabPage} from "../admin-settings-tab/admin-settings-tab";
 import {AdminClassroomTabPage} from "../admin-classroom-tab/admin-classroom-tab";
 
 @Component({
@@ -28,13 +29,18 @@ export class AdminPage {
   };
 
   adminClassroomTab = AdminClassroomTabPage;
-  admingClassroomTabParams = {
+  adminClassroomTabParams = {
 
   };
 
   adminDrillTab = AdminDrillTabPage;
-  admingDrillTabParams = {
+  adminDrillTabParams = {
     id: this.id
+  };
+
+  adminSettingsTab = AdminSettingsTabPage;
+  adminSettingsParams = {
+
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
