@@ -22,4 +22,12 @@ export class AdminSettingsTabPage {
     });
   }
 
+  toGlobalVariables(){
+    
+  }
+
+  normalize(){
+
+  }
+
 }

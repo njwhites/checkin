@@ -6,7 +6,55 @@
 
 </ion-header>
 
-
-<ion-content padding>
-  <button ion-button block outline color="light" class="submit-button" (click)='sendToChangePassword()'>Submit</button>
+<ion-content text-center class="vertical-align-content">
+  <div id="buttonGrid" class="cardContainer">
+    <ion-item class="cardElement">
+      <ion-grid class="centerGrid" (click)='sendToChangePassword()'>
+        <ion-row class="centerRow">
+          <ion-col>
+            <ion-icon class="cardIcon" name="key"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row class="centerRow">
+          <ion-col>
+            <div class="no-format-button">
+              Change Password
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item class="cardElement">
+      <ion-grid class="centerGrid" (click)="toGlobalVariables()">
+        <ion-row class="centerRow">
+          <ion-col>
+            <ion-icon class="cardIcon" name="options"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row class="centerRow">
+          <ion-col>
+            <div class="no-format-button">
+                Global Variables
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <div class="cardElement" (click)="normalize()">
+      <ion-grid class="centerGrid">
+        <ion-row class="centerRow">
+          <ion-col>
+            <ion-icon class="cardIcon" name="nuclear"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row class="centerRow">
+          <ion-col>
+            <div class="no-format-button">
+                Normalize
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
 </ion-content>
