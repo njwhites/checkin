@@ -113,7 +113,9 @@ export class AdminUserModalPage {
             }
             this.userService.data.forEach((doc)=>{
               if(Number(doc._id) >= 0){
-                if(doc.email === control.value){
+                //March 2, 2017
+                //Added to lower case because the check on login is also on lowercase
+                if(control.value && doc.email && doc.email.toLowerCase() === control.value.toLowerCase()){
                   returnObject = { emailTaken: true};
                 }
               }
