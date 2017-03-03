@@ -108,6 +108,9 @@ export class AdminUserModalPage {
           },Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'),
           (control: FormControl)=>{
             let returnObject = null;
+            if(this.user.email === control.value){
+              return returnObject;
+            }
             this.userService.data.forEach((doc)=>{
               if(Number(doc._id) >= 0){
                 if(doc.email === control.value){
@@ -120,12 +123,18 @@ export class AdminUserModalPage {
         ])
       ],
       password: ['', (control: FormControl)=>{
+        if(Number(this.user._id) >= 0){
+          return null;
+        }
         if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
           return (control.value === "") ? {required: true} : null;
         }
         return null;
       }],
       confirmPassword: ['', (control: FormControl)=>{
+        if(Number(this.user._id) >= 0){
+          return null;
+        }
         if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
           return (control.value === "") ? {required: true} : null;
         }
@@ -136,6 +145,9 @@ export class AdminUserModalPage {
 
   passwordMatchValidator(field1: string, field2: string){
     return (group: FormGroup): {[key: string]: any} => {
+      if(Number(this.user._id) >= 0){
+        return null;
+      }
       let field1Control = group.controls[field1];
       let field2Control = group.controls[field2];
 
