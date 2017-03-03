@@ -293,6 +293,9 @@ export class AdminUserModalPage {
 
           //delete the user and then pop this page away
           this.userService.deleteUserByDoc(tempUser).then(() => {
+            if(tempUser.role === 'admin'){
+              this.authService.deletePasswordByID(tempUser._id);
+            }
             // once the async operation has completed
             // then run the next nav transition after the
             // first transition has finished animating out
