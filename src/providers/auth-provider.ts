@@ -29,7 +29,7 @@ export class AuthProvider {
     this.hashdb.sync(this.hashRemote, options);
   }
 
-  forceInit(){
+  forceInit(){ 
 
   }
 
@@ -74,7 +74,21 @@ export class AuthProvider {
     });    
   }
 
-  //DELETE FUNCTION?
+  //DELETE FUNCTION?  
+  deletePasswordByDoc(user: UserModel){
+    return new Promise(resolve =>{
+      this.hashdb.upsert(user._id, ((doc)=>{doc._deleted=true; return doc}));
+      resolve();
+    })
+  }
+
+  deletePasswordByID(ID: String){
+    this.hashdb.get(ID).then(doc => {
+      this.deletePasswordByDoc(doc);
+    }).catch(err => {
+      console.log(err)
+    });
+  }
 
   //basically a random hex string of length
   generateSALT(length: number){
