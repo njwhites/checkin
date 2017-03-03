@@ -19,6 +19,7 @@ export class AdminUserModalPage {
   user: UserModel;
   userForm: FormGroup = new FormGroup({});
   buttonText = "Update User Info";
+  logged_in_id;
 
   constructor(public navParams: NavParams,
               public formBuilder: FormBuilder,
@@ -33,6 +34,7 @@ export class AdminUserModalPage {
     //For convenience set the ID to what the previous page supplied
     //this is the id corresponding to the user that was clicked
     //if it was add a new user then the ID is -1 and we will use isNewUser for logic later
+    this.logged_in_id = navParams.get("admin_id");
     let ID = navParams.get("key");
     let isNewUser = false;
 
@@ -264,57 +266,63 @@ export class AdminUserModalPage {
   deleteUser(){
 
     //present the user with an alert so that they don't accidently delete someone
-    let deleteConfirmAlert = this.alertController.create({
-      title: 'Confirm Delete',
-      message: "Are you sure you want to delete " + this.user.fName + " " + this.user.lName,
-      buttons: [{
-        text: 'Cancel',
-        role: 'Cancel',
-        handler: ()=>{
+    console.log(this.logged_in_id + " " + this.user._id)
+    if(this.logged_in_id + "" === this.user._id + ""){
+      //Alert that you can't delete youself
+      console.log("thou can'st'd've delete thine self");
+    }else{
+      let deleteConfirmAlert = this.alertController.create({
+        title: 'Confirm Delete',
+        message: "Are you sure you want to delete " + this.user.fName + " " + this.user.lName,
+        buttons: [{
+          text: 'Cancel',
+          role: 'Cancel',
+          handler: ()=>{
 
+          }
+        },{
+          text: 'Ok',
+          handler: () => {
+            // user has clicked the alert button
+            // begin the alert's dismiss transition
+
+            //this would be used for a modal version instead of a page version
+            //this navTransition gives us some control over the order in which pages transition
+            //said control is important for the asynchronous nature and page removal
+            //let navTransition =
+            deleteConfirmAlert.dismiss();
+
+
+            //use a tempUser for deletion, and then set the user data object as the empty user
+            //this is so the two way binding doesn't get angry when we delete their expected user from the Map object
+            let tempUser = this.user;
+            this.user = this.userService.data.get("-1");
+
+            //delete the user and then pop this page away
+            this.userService.deleteUserByDoc(tempUser).then(() => {
+              if(tempUser.role === 'admin'){
+                this.authService.deletePasswordByID(tempUser._id);
+              }
+              // once the async operation has completed
+              // then run the next nav transition after the
+              // first transition has finished animating out
+
+              //remove the aide from any classes
+              this.classroomService.removeAide(<string>(tempUser._id));
+
+              this.navController.popToRoot();
+              // navTransition.then(() => {
+              //   this.dismiss();
+              // });
+            });
+            return false;
+          }
         }
-      },{
-        text: 'Ok',
-        handler: () => {
-          // user has clicked the alert button
-          // begin the alert's dismiss transition
+      ]
+      });
 
-          //this would be used for a modal version instead of a page version
-          //this navTransition gives us some control over the order in which pages transition
-          //said control is important for the asynchronous nature and page removal
-          //let navTransition =
-          deleteConfirmAlert.dismiss();
-
-
-          //use a tempUser for deletion, and then set the user data object as the empty user
-          //this is so the two way binding doesn't get angry when we delete their expected user from the Map object
-          let tempUser = this.user;
-          this.user = this.userService.data.get("-1");
-
-          //delete the user and then pop this page away
-          this.userService.deleteUserByDoc(tempUser).then(() => {
-            if(tempUser.role === 'admin'){
-              this.authService.deletePasswordByID(tempUser._id);
-            }
-            // once the async operation has completed
-            // then run the next nav transition after the
-            // first transition has finished animating out
-
-            //remove the aide from any classes
-            this.classroomService.removeAide(<string>(tempUser._id));
-
-            this.navController.popToRoot();
-            // navTransition.then(() => {
-            //   this.dismiss();
-            // });
-          });
-          return false;
-        }
-      }
-    ]
-    });
-
-    deleteConfirmAlert.present();
+      deleteConfirmAlert.present();
+    }
 
   }
 

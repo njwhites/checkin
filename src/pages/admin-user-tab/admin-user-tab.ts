@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { UserProvider } from '../../providers/user-provider'
 import { AdminUserModalPage } from '../admin-user-modal/admin-user-modal';
 
@@ -10,9 +10,12 @@ import { AdminUserModalPage } from '../admin-user-modal/admin-user-modal';
 export class AdminUserTabPage {
 
   roleSelection;
+  id: string;
 
   constructor(public navCtrl: NavController,
-              public userService: UserProvider) {
+              public userService: UserProvider,
+              public navParams: NavParams) {
+    this.id = navParams.data;
     this.roleSelection = this.userService.ROLES[1];
   }
 
@@ -28,10 +31,10 @@ export class AdminUserTabPage {
   }
 
   userClicked(ID: String){
-    this.navCtrl.push(AdminUserModalPage, {key: ID});
+    this.navCtrl.push(AdminUserModalPage, {key: ID, admin_id: this.id});
   }
 
   addUser(){
-    this.navCtrl.push(AdminUserModalPage, {key: "-1"});
+    this.navCtrl.push(AdminUserModalPage, {key: "-1", admin_id: this.id});
   }
 }
