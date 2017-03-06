@@ -21787,7 +21787,6 @@ page-admin .tabbar {
   }
 }
 
-<<<<<<< HEAD
 page-admin-change-password .vertical-align-content {
   -webkit-align-content: center !important;
   -ms-flex-line-pack: center !important;
@@ -21949,8 +21948,6 @@ page-admin-change-password .titleRoom {
   }
 }
 
-=======
->>>>>>> refs/remotes/heroku/master
 page-admin-classroom-tab .bgc {
   background-color: #eee5de;
 }
@@ -22392,7 +22389,6 @@ page-admin-reporting-details .flexInput {
   align-self: flex-end;
 }
 
-<<<<<<< HEAD
 page-admin-settings-tab .scroll-content {
   overflow-y: hidden;
 }
@@ -22510,8 +22506,6 @@ page-admin-settings-tab .cardIcon {
   }
 }
 
-=======
->>>>>>> refs/remotes/heroku/master
 page-admin-student-tab .bgc {
   background-color: #eee5de !important;
 }
@@ -22632,7 +22626,6 @@ page-classroom-id .blockGrid {
   display: block;
 }
 
-<<<<<<< HEAD
 page-classroom-id .cardRow {
   -webkit-align-self: center;
   -ms-flex-item-align: center;
@@ -22640,17 +22633,11 @@ page-classroom-id .cardRow {
   width: 55%;
 }
 
-=======
->>>>>>> refs/remotes/heroku/master
 page-classroom-id .buttonRow {
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
-<<<<<<< HEAD
   width: auto;
-=======
-  width: 55%;
->>>>>>> refs/remotes/heroku/master
 }
 
 page-classroom-id .titleRow {
@@ -22822,13 +22809,10 @@ page-classroom-id .submit-button {
   font-size: 200%;
 }
 
-<<<<<<< HEAD
 page-classroom-id .forgot-button {
   font-size: 150%;
 }
 
-=======
->>>>>>> refs/remotes/heroku/master
 page-classroom-id .titleRoom {
   text-align: center;
   color: #FFFFFF;
@@ -22838,21 +22822,12 @@ page-classroom-id .titleRoom {
   page-classroom-id .centerGrid {
     width: 95%;
   }
-<<<<<<< HEAD
   page-classroom-id .input-style {
     font-size: 75%;
-=======
-  page-classroom-id .buttonRow {
-    width: 95%;
-  }
-  page-classroom-id .input-style {
-    font-size: 100%;
->>>>>>> refs/remotes/heroku/master
   }
   page-classroom-id .submit-button {
     font-size: 150%;
   }
-<<<<<<< HEAD
   page-classroom-id .forgot-button {
     font-size: 100%;
   }
@@ -22862,11 +22837,6 @@ page-classroom-id .titleRoom {
   page-classroom-id .cardRow {
     width: 80%;
   }
-=======
-  page-classroom-id .titleRoom {
-    font-size: 150%;
-  }
->>>>>>> refs/remotes/heroku/master
 }
 
 @media only screen and (min-width: 1024px) {
@@ -23006,10 +22976,7 @@ page-forgot-password-page .submit-button {
 page-forgot-password-page .titleRoom {
   text-align: center;
   color: #FFFFFF;
-<<<<<<< HEAD
   white-space: normal;
-=======
->>>>>>> refs/remotes/heroku/master
 }
 
 @media (max-width: 767px) {
@@ -23026,11 +22993,7 @@ page-forgot-password-page .titleRoom {
     font-size: 150%;
   }
   page-forgot-password-page .titleRoom {
-<<<<<<< HEAD
     font-size: 100%;
-=======
-    font-size: 150%;
->>>>>>> refs/remotes/heroku/master
   }
 }
 
@@ -23038,12 +23001,9 @@ page-forgot-password-page .titleRoom {
   page-forgot-password-page .room-title {
     font-size: 325%;
   }
-<<<<<<< HEAD
   page-forgot-password-page .titleRoom {
     font-size: 100%;
   }
-=======
->>>>>>> refs/remotes/heroku/master
   page-forgot-password-page .card-title {
     font-size: 375%;
   }
@@ -32497,10 +32457,7 @@ page-reset-token .submit-button {
 page-reset-token .titleRoom {
   text-align: center;
   color: #FFFFFF;
-<<<<<<< HEAD
   white-space: normal;
-=======
->>>>>>> refs/remotes/heroku/master
 }
 
 @media (max-width: 767px) {
