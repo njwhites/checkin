@@ -359,8 +359,9 @@ export class CheckinProvider {
     return new Promise(resolve => {
       this.getTodaysTransaction(null).then((result: TransactionModel) => {
         this.performEvent(id, result, by_id, this.CHECK_IN).then(result => {
-          this.studentService.updateStudentLocation(id, this.CHECKED_IN);
-          resolve(true);
+          this.studentService.updateStudentLocation(id, this.CHECKED_IN).then(() => {
+            resolve(true);
+          });
         });
 
       })
@@ -415,20 +416,23 @@ export class CheckinProvider {
                   console.log("therapy check back in: " + length);
                   this.therapistCheckinFollowUp(id, by_id, therapy.start_time +"", length, 0).then(() => {
                     console.log("therapy back from follow up");
-                    this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
-                    resolve(true);  
+                    this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
+                      resolve(true);  
+                    });
                   });
                 })
               }else{
                 console.log("else");
-                this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
-                resolve(true);
+                this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
+                  resolve(true);
+                });
               }
             });
           }else{
             console.log("Limbo resolved");
-            this.studentService.updateStudentLocation(id, this.CHECKED_OUT);
-            resolve(true)
+            this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() => {
+              resolve(true);
+            });
           }
         })
       });
@@ -466,15 +470,17 @@ export class CheckinProvider {
   //i/o nurse
   nurseCheckout(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
-      this.performEvent(id, result, by_id, this.NURSE_OUT);
-      this.studentService.updateStudentLocation(id, this.CHECKED_OUT_NURSE);
+      this.performEvent(id, result, by_id, this.NURSE_OUT).then(() => {
+        this.studentService.updateStudentLocation(id, this.CHECKED_OUT_NURSE);
+      });
     });
   }
 
   nurseCheckin(id: string, by_id: string, nap_subtract?: number){
     this.getTodaysTransaction(null).then(result => {
-      this.performEvent(id, result, by_id, this.NURSE_IN, nap_subtract);
-      this.studentService.updateStudentLocation(id, this.CHECKED_IN);
+      this.performEvent(id, result, by_id, this.NURSE_IN, nap_subtract).then(() => {
+        this.studentService.updateStudentLocation(id, this.CHECKED_IN);
+      })
     });
   }
 
@@ -502,9 +508,10 @@ export class CheckinProvider {
 
       }
       this.performEvent(id, result, by_id, event_type).then(response => {
-        this.addTherapyStart(id, by_id, Date.now(), result);
+        this.addTherapyStart(id, by_id, Date.now(), result).then(() => {
+          this.studentService.updateStudentLocation(id, location);
+        });
       });
-      this.studentService.updateStudentLocation(id, location);
     });
   }
 

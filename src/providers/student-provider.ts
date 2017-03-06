@@ -183,11 +183,13 @@ export class StudentProvider {
       this.db.get(ID).then(doc => {
         doc.location = Location;
         //update the db with the modified student document
-        this.db.put(doc).catch(err =>{
+        this.db.put(doc).then(() => {
+          resolve(doc);
+        }).catch(err =>{
           console.log(err);
+          resolve("False")
         });
         //return the document incase we need any kind of error checking or resolution
-        resolve(doc);
       }).catch(err => {
         console.log(err);
         let errMessage = new StudentModel();
