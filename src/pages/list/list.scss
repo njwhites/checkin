@@ -1,6 +1,6 @@
 page-list {
   .bgc {
-    background-color: #eee5de;
+    background: transparent;
     height: 100%;
     width: 100%;
   }
@@ -12,7 +12,7 @@ page-list {
   }
 
   .bg {
-    background-color: #eee5de;
+    background: transparent;
   }
 
   .countRow{
@@ -28,10 +28,12 @@ page-list {
 
   .countHeader{
     font-size: 2em;
+    color: #FFFFFF;
   }
 
   .presentCount{
     font-size: 5em;
+    color: #FFFFFF;
   }
 
   .buttonRow {
@@ -40,7 +42,7 @@ page-list {
   }
 
   .push-to-bottom {
-    background-color: #eee5de;
+    background: transparent;
     position: absolute;
     bottom: 10vh;
     width: 100%;
@@ -81,14 +83,14 @@ page-list {
   }
 
   .presentScrollable {
-    background-color: #eee5de;
+    background: transparent;
     align-self: center;
     height: 1000px;
     max-height: 66vh;
   }
 
   .scrollable {
-    background-color: #eee5de;
+    background: transparent;
     align-self: center;
     height: 1000px;
     max-height: 86vh;
@@ -104,14 +106,14 @@ page-list {
   }
 
   .emptyRow {
-    background-color: #eee5de;
+    background: transparent;
     padding-top: 15vh;
     align-self: center;
     width: 80%;
   }
 
   .emptyItem {
-    background-color: #eee5de;
+    background: transparent;
     align-self: center;
     text-align: center;
   }
@@ -124,11 +126,21 @@ page-list {
   }
 
   .emptyText {
-    background-color: #eee5de;
+    background: transparent;
     align-self: center;
     text-align: center;
     color: gray;
     font-size: 200%;
+  }
+
+  .fixedBackground {
+    background: url(../assets/logo/Dark_Background.jpg);
+    background-size: 100% 100%;
+    height: 100vh;
+  }
+
+  .scroll-content {
+    background: transparent;
   }
 
   .infoCol{
