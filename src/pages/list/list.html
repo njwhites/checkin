@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{parentPage | parentReadable | firstUpper}}</ion-title>
+    <ion-title>Room {{roomNumber}}: {{parentPage | parentReadable | firstUpper}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -275,13 +275,13 @@
       <ion-row class="buttonRow">
         <ion-col>
           <div *ngIf="parentPage === 'signout' && !isListEmpty()">
-            <button ion-button block (click)="removeStudents()">Checkout</button>
+            <button ion-button block outline color="light" class="submit-button" (click)="removeStudents()">Checkout</button>
           </div>
           <div *ngIf="parentPage === 'checkin' && !isListEmpty()">
-            <button ion-button block (click)="addStudents()">Check In</button>
+            <button ion-button block outline color="light" class="submit-button" (click)="addStudents()">Check In</button>
           </div>
           <div *ngIf="parentPage === 'napStudents' && !isListEmpty()">
-            <button ion-button block (click)="updateAll(this.studentService)">Update</button>
+            <button ion-button block outline color="light" class="submit-button" (click)="updateAll(this.studentService)">Update</button>
           </div>
         </ion-col>
       </ion-row>

@@ -31,6 +31,10 @@ page-list {
     color: #FFFFFF;
   }
 
+  .submit-button{
+    font-size: 150%;
+  }
+
   .presentCount{
     font-size: 5em;
     color: #FFFFFF;
@@ -38,13 +42,14 @@ page-list {
 
   .buttonRow {
     align-self: center;
-    width: 50%;
+    width: auto;
+    min-width: 30%;
   }
 
   .push-to-bottom {
     background: transparent;
     position: absolute;
-    bottom: 10vh;
+    bottom: 8vh;
     width: 100%;
   }
 
