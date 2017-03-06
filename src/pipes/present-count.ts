@@ -2,7 +2,7 @@ import {Pipe} from '@angular/core';
 
 @Pipe({
   name: 'presentCount',
-  pure: true
+  pure: false
 })
 export class PresentCountPipe {
     transform(value: any, args?: any[]) {
