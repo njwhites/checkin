@@ -38,6 +38,7 @@ import {AdminClassroomModalPage} from "../pages/admin-classroom-modal/admin-clas
 import {ClassroomAddModalPage} from "../pages/classroom-add-modal/classroom-add-modal";
 import {ForgotPasswordPage} from '../pages/forgot-password-page/forgot-password-page';
 import {AdminChangePasswordPage} from '../pages/admin-change-password/admin-change-password';
+import {AdminChangeQuestionPage} from '../pages/admin-change-question/admin-change-question';
 import {ResetTokenPage} from '../pages/reset-token/reset-token';
 import {UserAddModalPage} from "../pages/user-add-modal/user-add-modal";
 import {MapValuesPipe} from "../pipes/map-values";
@@ -78,6 +79,7 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     AdminPage,
     ForgotPasswordPage,
     AdminChangePasswordPage,
+    AdminChangeQuestionPage,
     ResetTokenPage,
     MapValuesPipe,
     ImpureMapValuesPipe,
@@ -145,6 +147,7 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     TherapistAddPage,
     ForgotPasswordPage,
     AdminChangePasswordPage,
+    AdminChangeQuestionPage,
     ResetTokenPage,
     TherapistStudentDetailsPage,
     TherapistCheckinConfirmModalPage,
