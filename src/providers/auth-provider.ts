@@ -111,7 +111,7 @@ export class AuthProvider {
     }
   }
 
-  setPasswordHelp(id: string, question: string, answer: string){
+  setPasswordQuestion(id: string, question: string, answer: string){
     return new Promise((resolve, reject) => {
       this.hashdb.upsert(id, (doc) => {
         console.log(doc);
@@ -119,6 +119,7 @@ export class AuthProvider {
         doc.question = question;
         doc.questionSalt = out.salt;
         doc.answerHash = out.passwordHash;
+        console.log(doc);
         return doc;
       }).then((result) => {
         resolve();
