@@ -20,7 +20,15 @@ export class StudentProvider {
     let options = {
       live: true,
       retry: true,
-      continuous: true
+      continuous: true,
+      back_off_function: function (delay) {
+        if (delay === 0){
+          console.log("something failed retrying");
+        } else {
+          console.log("Doing the 2000");
+        }
+        return 2000;
+      }
     };
 
     this.db.sync(this.remote, options);
