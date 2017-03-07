@@ -143,11 +143,45 @@ export class AdminUserModalPage {
           return (control.value === "") ? {required: true} : null;
         }
         return null;
-      }]
-    }, {validator: this.passwordMatchValidator('password','confirmPassword')});
+      }],
+      question: ['', (control: FormControl)=>{
+        if(Number(this.user._id) >= 0){
+          return null;
+        }
+        if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
+          return (control.value === "") ? {required: true} : null;
+        }
+        return null;
+      }],
+      answer: ['', (control: FormControl)=>{
+        if(Number(this.user._id) >= 0){
+          return null;
+        }
+        if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
+          return (control.value === "") ? {required: true} : null;
+        }
+        return null;
+      }],
+    }, {validator: Validators.compose([
+      this.notMatchingValidator('password','confirmPassword'),
+      this.matchingValidator('password','question')
+    ])
+  });
   }
 
-  passwordMatchValidator(field1: string, field2: string){
+  matchingValidator(field1: string, field2: string){
+    return(group: FormGroup): {[key: string]: any} =>{
+      if(Number(this.user._id) >= 0){
+        return null;
+      }
+      let field1Control = group.controls[field1];
+      let field2Control = group.controls[field2];
+      return (field1Control.value === field2Control.value) ?
+        {matching: true} : null;
+    }
+  }
+
+  notMatchingValidator(field1: string, field2: string){
     return (group: FormGroup): {[key: string]: any} => {
       if(Number(this.user._id) >= 0){
         return null;

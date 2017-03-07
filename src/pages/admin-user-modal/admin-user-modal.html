@@ -89,6 +89,14 @@
             <ion-label>Confirm Password:</ion-label>
             <ion-input type="password" formControlName="confirmPassword" value=""></ion-input>
           </ion-item>
+          <ion-item>
+            <ion-label>Security Question:</ion-label>
+            <ion-input type="text" formControlName="question" value=""></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Security Answer:</ion-label>
+            <ion-input type="text" formControlName="answer" value=""></ion-input>
+          </ion-item>
         </div>
       </div>
 
@@ -130,6 +138,15 @@
           </ion-card-content>
           <ion-card-content *ngIf="this.userForm.hasError('notMatching')">
             Password and Confirm password are not equal.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['question'].hasError('required')">
+            Question is required.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.hasError('matching')">
+            Question should not be your password.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['answer'].hasError('required')">
+            Answer is required.
           </ion-card-content>
         </div>
       </ion-card>
