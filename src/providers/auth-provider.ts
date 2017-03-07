@@ -60,10 +60,11 @@ export class AuthProvider {
   setPassword(id: string, password: string){
     return new Promise((resolve, reject) => {
       this.hashdb.upsert(id, (doc) => {
-        console.log(doc);
         let out =  this.sha256(password, this.generateSALT(16));
-        console.log(out);
-        return out;
+        doc.salt = out.salt;
+        doc.passwordHash = out.passwordHash;
+        console.log(doc);
+        return doc;
       }).then((result) => {
         resolve();
       }).catch(err => {
@@ -108,5 +109,60 @@ export class AuthProvider {
       salt:salt,
       passwordHash: value
     }
+  }
+
+  setPasswordHelp(id: string, question: string, answer: string){
+    return new Promise((resolve, reject) => {
+      this.hashdb.upsert(id, (doc) => {
+        console.log(doc);
+        let out =  this.sha256(answer, this.generateSALT(16));
+        doc.question = question;
+        doc.questionSalt = out.salt;
+        doc.answerHash = out.passwordHash;
+        return doc;
+      }).then((result) => {
+        resolve();
+      }).catch(err => {
+        console.log(err);
+        reject();
+      });
+
+    });    
+  }
+
+  getPasswordQuestion(id: string){
+    return new Promise((resolve, reject) => {
+      this.hashdb.get(id + "").then((result) => {
+        if(result.question){
+          resolve(result.question);
+        }else{
+          reject("Question not set");
+        }
+      });
+    })
+  }
+
+  checkPasswordQuestion(id: string, answer: string){
+    return new Promise((resolve, reject) => {
+      console.log("Checking: " + id + " " + answer);
+      this.hashdb.get(id+"").then((result) => {
+        console.log(result);
+        //what happens if there is no entry for this id?
+        let salt = result.questionSalt;
+        let sha = result.answerHash;
+
+        let created = this.sha256(answer, salt);
+        if(created.passwordHash === sha){
+          //accept
+          resolve(true);
+        }else{
+          resolve(false);
+        }
+      }).catch(err => {
+        console.log(err);
+        reject();
+      });
+
+    });
   }
 }
