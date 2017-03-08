@@ -144,15 +144,21 @@ export class AdminUserModalPage {
         }
         return null;
       }],
-      question: ['', (control: FormControl)=>{
-        if(Number(this.user._id) >= 0){
+      question: ['', Validators.compose([
+        (control: FormControl)=>{
+          if(Number(this.user._id) >= 0){
+            return null;
+          }
+          if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
+            return (control.value === "") ? {required: true} : null;
+          }
           return null;
+        },
+        (control: FormControl)=>{
+          return (control.value.length >= 40) ?
+            {fortyCharacters: true} : null;
         }
-        if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
-          return (control.value === "") ? {required: true} : null;
-        }
-        return null;
-      }],
+      ])],
       answer: ['', (control: FormControl)=>{
         if(Number(this.user._id) >= 0){
           return null;

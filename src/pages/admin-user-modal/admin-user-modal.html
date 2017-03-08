@@ -142,6 +142,9 @@
           <ion-card-content *ngIf="this.userForm.controls['question'].hasError('required')">
             Question is required.
           </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['question'].hasError('fortyCharacters')">
+            Question should be less than 40 characters.
+          </ion-card-content>
           <ion-card-content *ngIf="this.userForm.hasError('matching')">
             Question should not be your password.
           </ion-card-content>

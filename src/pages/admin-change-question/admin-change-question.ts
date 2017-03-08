@@ -20,18 +20,24 @@ export class AdminChangeQuestionPage {
               public authService: AuthProvider) {
 
     this.id = navParams.get('userID');
-    let question:string;
+    let question:string = '';
     this.authService.getPasswordQuestion(this.id+"").then((result: any)=>{
       question = result.question;
     }).catch((error)=>{
       console.log(error);
       question = '';
     })
+    console.log(question);
     this.questionForm = formBuilder.group({
       question: [
         question,
         Validators.compose([
           Validators.required,
+          (control: FormControl)=>{
+            console.log(control);
+            return ((control.value || '').length >= 40) ?
+              {fortyCharacters: true} : null;
+          }
           //this is to check that the question is not their password but I'm not certain on how to return this
           // (control: FormControl):{[key: string]: any}=>{
           //   this.authService.checkPassword(this.id, control.value).then((result)=>{

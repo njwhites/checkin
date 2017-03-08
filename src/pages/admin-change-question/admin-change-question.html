@@ -36,6 +36,18 @@
                 <button ion-button block outline color="light" class="submit-button" [disabled]="!this.questionForm.valid" (click)="updateQuestion()">Submit</button>
               </ion-col>
             </ion-row>
+            <ion-card [hidden]="this.questionForm.valid">
+              <ion-card-header>Invalid input</ion-card-header>
+              <ion-card-content *ngIf="this.questionForm.controls['question'].hasError('required')">
+                Question is required.
+              </ion-card-content>
+              <ion-card-content *ngIf="this.questionForm.controls['question'].hasError('fortyCharacters')">
+                Question should be less than 40 characters.
+              </ion-card-content>
+              <ion-card-content *ngIf="this.questionForm.controls['answer'].hasError('required')">
+                Answer is required.
+              </ion-card-content>
+            </ion-card>
         </ion-grid>
         </ion-col>
       </ion-row>
