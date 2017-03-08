@@ -58,14 +58,21 @@ export class ForgotPasswordPage {
   checkAnswer(answer){
     this.authService.checkPasswordQuestion(this.id, answer.value).then((result) => {
       if(result){
-        console.log("Correct answer");
         this.sendToChangePage(this.email, this.id);
       }else{
-        console.log("Incorrect answer");
-      }
+        let toast = this.toastCtrl.create({
+          message: 'Incorrect Answer.',
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present(toast);      }
     }).catch(err => {
-      console.log("No idea why but authorization service didn't work");
-    })
+      let toast = this.toastCtrl.create({
+        message: 'Database Connection Error. Try Restarting The Application',
+        duration: 3000,
+        position: 'bottom'
+      });
+      toast.present(toast);    })
   }
 
   sendToChangePage(userEmail, id){

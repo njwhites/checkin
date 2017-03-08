@@ -13,18 +13,14 @@ export class ResetTokenPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthProvider) {
     this.userEmail = navParams.get('email');
     this.id = navParams.get('id');
-    console.log(this.userEmail + " " + this.id);
   }
 
   ionViewDidLoad() {
-    console.log(this.userEmail);
   }
 
   updatePassword(password, repassword){
-    console.log(password.value + repassword.value);
     if(password.value === repassword.value){
       this.authService.setPassword(this.id, password.value).then(() => {
-        console.log("Password successfully changed");
         this.navCtrl.popToRoot();
       })
     }
