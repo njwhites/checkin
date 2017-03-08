@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import {ResetTokenPage} from '../reset-token/reset-token';
 import { AuthProvider } from '../../providers/auth-provider';
 import { UserProvider } from '../../providers/user-provider';
@@ -15,13 +15,12 @@ export class ForgotPasswordPage {
   id: string;
   email:string;
 
-  constructor(public navCtrl: NavController, public authService: AuthProvider, public userService: UserProvider) {
+  constructor(public navCtrl: NavController, public authService: AuthProvider, public userService: UserProvider, public toastCtrl: ToastController) {
     this.showQuestion = false;
     this.question = "";
   }
 
   ionViewDidLoad() {
-    console.log('Hello ForgotPasswordPagePage Page');
   }
 
   checkEmail(email){
@@ -38,12 +37,21 @@ export class ForgotPasswordPage {
         this.showQuestion = true;
       }).catch((err) => {
         //password question not set
-        console.log("Question not set");
+        let toast = this.toastCtrl.create({
+          message: 'Your Security Question Is Not Set',
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present(toast);
       });
     }).catch((err) => {
-      console.log(err);
       //user email doesnt exist
-      //TOAST
+      let toast = this.toastCtrl.create({
+        message: 'Invalid Email Entered',
+        duration: 3000,
+        position: 'bottom'
+      });
+      toast.present(toast);
     })
   }
 
