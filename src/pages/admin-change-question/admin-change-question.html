@@ -22,18 +22,18 @@
               </ion-row>
             </ion-item>
             <form [formGroup]="questionForm" >
-              <ion-item>
-                <ion-label>Security Question:</ion-label>
-                <ion-input type="text" formControlName="question" value=""></ion-input>
+              <ion-item class="centerItem">
+                <ion-label class="label">Security Question:</ion-label>
+                <ion-input class="input-style" type="text" formControlName="question" value=""></ion-input>
               </ion-item>
-              <ion-item>
-                <ion-label>Security Answer</ion-label>
-                <ion-input type="text" formControlName="answer" value=""></ion-input>
+              <ion-item class="centerItem">
+                <ion-label class="label">Security Answer</ion-label>
+                <ion-input class="input-style" type="text" formControlName="answer" value=""></ion-input>
               </ion-item>
             </form>
             <ion-row class= 'buttonRowCard'>
               <ion-col class="card-row-child">
-                <button ion-button block type="submit" [disabled]="!this.questionForm.valid" (click)="updateQuestion()">Submit</button>
+                <button ion-button block outline color="light" class="submit-button" [disabled]="!this.questionForm.valid" (click)="updateQuestion()">Submit</button>
               </ion-col>
             </ion-row>
         </ion-grid>
