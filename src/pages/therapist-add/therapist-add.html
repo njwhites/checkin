@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="fixedBackground">
 <ion-item-group>
   <div *ngFor="let class of this.classRoomService.data | mapValues">
     <ion-card *ngIf="class.key >= 0">

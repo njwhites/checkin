@@ -1,11 +1,17 @@
 page-therapist-add {
 
   .scroll-content {
-    background-color: #eee5de;
+    background: transparent;
   }
 
   .emptyItem {
     color: gray;
+  }
+
+  .fixedBackground {
+    background: url(../assets/logo/Dark_Background.jpg);
+    background-size: 100% 100%;
+    height: 100vh;
   }
 
 }
