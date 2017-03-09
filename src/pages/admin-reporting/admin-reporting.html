@@ -58,6 +58,9 @@
              Each card has a list of the student information that is only displayed on a toggle of clicking the room_number
              The students have their week totals displayed and warning flags on the fields that have a problem for that week
              Each card finishes with a total for the whole classroom -->
+        <ion-item *ngIf="isLoading">
+          {{loadingText}}
+        </ion-item>
         <ion-list *ngIf="displayInfo">
           <ion-card *ngFor="let room of this.map | mapValues" (click)="toggleRoom(room.key)">
             <ion-card-header style="background-color:rgba(0, 0, 0, 0.13)">

@@ -31,6 +31,13 @@ export class AdminReportingPage {
   daysInSession: number = 5;
   interval: any;
 
+  isLoading: boolean = false;
+
+  loadingTextStart: string = "Your data is loading";
+  loadingText: string;
+  countDots: number = 0;
+  loadingTextInterval: any;
+
   constructor(public navCtrl: NavController, public studentService: StudentProvider, public classroomService: ClassRoomProvider, public checkinService: CheckinProvider){
     var date = new Date();
     if(date.getDay() < 1){
@@ -104,6 +111,13 @@ export class AdminReportingPage {
               tempArray.push(temp);
             })
             this.roomBillingWeekTotals.set(room.room_number, tempArray.reduce(this.reducer));
+
+
+            //Turning off the loading text
+            this.isLoading = false;
+            clearInterval(this.loadingTextInterval);
+            this.loadingTextInterval = undefined;
+            this.countDots = 0;
           }
         });
 
@@ -237,6 +251,17 @@ export class AdminReportingPage {
 
   fillWeek(){
     this.map = new Map<Number, ClassroomWeek>();
+
+    this.isLoading = true;
+    this.loadingText = this.loadingTextStart;
+    this.loadingTextInterval = setInterval(() => {
+      this.loadingText = this.loadingTextStart;
+
+      this.countDots = (this.countDots + 1) % 4
+      for(var i = 0; i < this.countDots; i++){
+        this.loadingText += ".";
+      }
+    }, 500);
 
     this.writeBillingWeeks().then(()=>{
       console.log("write billing then");
