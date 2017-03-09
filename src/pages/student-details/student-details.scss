@@ -1,9 +1,15 @@
 page-student-details {
 
   .bgc {
-    background-color: #eee5de;
+    background: transparent;
     height: 100%;
     width: 100%;
+  }
+
+  .fixedBackground {
+    background: url(../assets/logo/Dark_Background.jpg);
+    background-size: 100% 100%;
+    height: 100vh;
   }
 
   .vertical-align-content
@@ -14,6 +20,7 @@ page-student-details {
 
   .titleRow {
     padding-top: 5%;
+    color: white;
   }
 
   .transactionList {
@@ -21,31 +28,31 @@ page-student-details {
   }
 
   .emptyRow {
-    background-color: #eee5de;
+    background: transparent;
     padding-top: 15vh;
     align-self: center;
-    width: 80%;
+    width: auto;
   }
 
   .emptyItem {
-    background-color: #eee5de;
+    background: transparent;
     align-self: center;
     text-align: center;
   }
 
   .emptyIcon {
-    background-color: #eee5de;
+    background: transparent;
     width: 75px;
     height: 75px;
-    color: gray;
+    color: white;
     font-size: 800%
   }
 
   .emptyText {
-    background-color: #eee5de;
+    background: transparent;
     align-self: center;
     text-align: center;
-    color: gray;
+    color: white;
     font-size: 150%;
   }
 
