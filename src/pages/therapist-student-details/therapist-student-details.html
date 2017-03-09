@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="fixedBackground">
   <ion-content inset class="therapyList" class="scrollView">
     <div *ngFor="let transaction of this.transactions">
       <ion-card *ngIf="transaction.length !== -1">
@@ -42,10 +42,10 @@
     <ion-row class="buttonRow">
       <ion-col>
         <div *ngIf="this.location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
-          <button ion-button block (click)="checkinStudent()">Check In</button>
+          <button ion-button block outline color="light" class="submit-button" (click)="checkinStudent()">Check In</button>
         </div>
         <div *ngIf="!this.location.includes(this.checkinService.CHECKED_OUT_THERAPY)">
-          <button ion-button block (click)="checkoutStudent()">Check Out</button>
+          <button ion-button block outline color="light" class="submit-button" (click)="checkoutStudent()">Check Out</button>
         </div>
       </ion-col>
     </ion-row>

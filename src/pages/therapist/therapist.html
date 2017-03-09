@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content *ngIf="!isEmpty()">
+<ion-content class="fixedBackground" *ngIf="!isEmpty()">
   <ion-grid class="horizontal-align-center">
     <ion-row class="titleRow">
       <ion-col>
@@ -70,7 +70,7 @@
   <ion-grid class="push-to-bottom">
     <ion-row class="buttonRow">
       <ion-col>
-        <button class="addButton" ion-button block (click)="add()"> + Add Favorite</button>
+        <button ion-button block outline color="light" class="submit-button" (click)="add()"> + Add Favorite</button>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -93,7 +93,7 @@
   <ion-grid class="push-to-bottom">
     <ion-row class="buttonRow">
       <ion-col>
-        <button class="addButton" ion-button block (click)="add()"> + Add Favorite</button>
+        <button ion-button block outline color="light" class="submit-button" (click)="add()"> + Add Favorite</button>
       </ion-col>
     </ion-row>
   </ion-grid>
