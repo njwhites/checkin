@@ -178,7 +178,6 @@ export class CheckinProvider {
     return new Promise(resolve => {
       this.db.upsert(doc._id, delta).then(() => {
         //Success!
-        console.log(me);
         resolve(true);
 
       }).catch(err => {
@@ -338,14 +337,11 @@ export class CheckinProvider {
     return new Promise((resolve, reject) => {
       this.getStudent(id, doc).then((student: TransactionStudentModel) => {
         var isInLimbo = true;
-        console.log(student);
         student.events.forEach((event: TransactionEvent) => {
-          console.log(event);
           if(event.type === this.CHECK_IN){
             isInLimbo = false;
           }
         });
-        console.log(isInLimbo);
         resolve(isInLimbo);
       }).catch(err => {
         //TODO
@@ -366,7 +362,7 @@ export class CheckinProvider {
 
       })
     });
-    
+
   }
 
   //Promise that resolves as true or false
@@ -410,26 +406,21 @@ export class CheckinProvider {
           if(!isInLimbo){
             this.performEvent(id, result, by_id, this.CHECK_OUT).then(result => {
               if(this.isInTherapyLimbo(id)){
-                console.log("is in therapy limbo");
                 this.therapistCheckin(id, by_id).then((therapy : TransactionTherapy) => {
                   let length = (new Date().getTime() - Number(therapy.start_time))/(1000*60);
-                  console.log("therapy check back in: " + length);
                   this.therapistCheckinFollowUp(id, by_id, therapy.start_time +"", length, 0).then(() => {
-                    console.log("therapy back from follow up");
                     this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
-                      resolve(true);  
+                      resolve(true);
                     });
                   });
                 })
               }else{
-                console.log("else");
                 this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
                   resolve(true);
                 });
               }
             });
           }else{
-            console.log("Limbo resolved");
             this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() => {
               resolve(true);
             });
