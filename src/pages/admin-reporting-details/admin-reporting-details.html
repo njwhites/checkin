@@ -55,9 +55,9 @@
 
             <div class="blank">{{ (day.billable_hours).toFixed(2) }}</div>
 
-            <div class="blank">{{16.46}}</div>
+            <div class="blank">{{rate}}</div>
 
-            <div class="blank">{{ (day.billable_hours * 16.46).toFixed(2) }}</div>
+            <div class="blank">{{ (day.billable_hours * rate).toFixed(2) }}</div>
 
             <!-- contains the average/per day -->
             <div [ngClass]="{'billedWarning': day.billingWarning, 'blank': !day.billingWarning }"></div>
@@ -90,10 +90,10 @@
             <div>{{this.totals.billable_hours.toFixed(2)}}</div>
         </div>
         <div class="totaledItem">
-            <div >16.46</div>
+            <div >{{rate}}</div>
         </div>
         <div class="totaledItem">
-            <div>{{(this.totals.billable_hours * 16.46).toFixed(2)}}</div>
+            <div>{{(this.totals.billable_hours * rate).toFixed(2)}}</div>
         </div>
         <div class="totaledItem">
             <div>{{(this.totals.billable_hours /5).toFixed(2)}}</div>

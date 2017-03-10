@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 
 import { CheckinProvider } from '../../providers/checkin-provider'
 import { StudentProvider } from '../../providers/student-provider'
+import { ConstantsProvider } from '../../providers/constants-provider'
 
 import {ClassroomWeek, StudentBillingWeek, BillingDay} from '../../models/db-models';
 
@@ -26,10 +27,13 @@ export class AdminReportingDetailsPage {
   visibleTimeIn: Array<string>;
   visibleTimeOut: Array<string>;
 
+  rate: number;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public formBuilder: FormBuilder,
               public checkinService: CheckinProvider,
+              public constantsService: ConstantsProvider,
               public studentService: StudentProvider) {
     //the student of interest is passed in here, these are pass by reference so this student is the same memory location as the room.week.student that was clicked from the previous page
     this.student = navParams.get("student");
@@ -38,7 +42,12 @@ export class AdminReportingDetailsPage {
     this.visibleTimeIn = new Array<string>();
     this.visibleTimeOut = new Array<string>();
 
-
+    //set the rate
+    this.constantsService.returnRate().then((doc:any)=>{
+      this.rate = doc.rate;
+    }).catch((err)=>{
+      console.log(err);
+    });
 
     //make sure that any negatives we use to indicate not touched are not displayed as -1, rather zero
     //set the initial visible Time in and out as well
@@ -207,7 +216,13 @@ export class AdminReportingDetailsPage {
     });
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
+    //refresh the rate incase they changed it
+    this.constantsService.returnRate().then((doc:any)=>{
+      this.rate = doc.rate;
+    }).catch((err)=>{
+      console.log(err);
+    });
   }
 
 //method to be called whenever the student data form is changed

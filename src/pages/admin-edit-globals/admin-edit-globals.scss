@@ -1,0 +1,151 @@
+page-admin-edit-globals {
+  .vertical-align-content
+  {
+    //display: flex!important;
+    align-content: center!important;
+  }
+
+  .fixed-content {
+    background: url(../assets/logo/Dark_Background.jpg);
+    background-size: 100% 100%;
+  }
+
+  .blockGrid {
+    padding-top: 15vh;
+    display: block;
+  }
+  .label{
+    color: #FFFFFF!important;
+  }
+
+  .buttonRow {
+    align-self: center;
+    width: 85%;
+  }
+
+  .text-input {
+    text-align: center;
+    padding-right: 0px !important;
+  }
+
+  .centerGrid {
+    align-content: center!important;
+    align-self: center;
+    background: transparent;
+    width: 85%;
+    margin: auto;
+    box-shadow: 0px 0px 0px 2px #FFFFFF
+  }
+
+  .centerItem {
+    align-content: center!important;
+    align-self: center;
+    background: transparent;
+    width: 85%;
+    margin: auto;
+  }
+  .buttonOutline {
+    height: auto;
+    background: transparent;
+    align-items: center;
+  }
+  .cardTitleRow {
+    padding-top: 4vh;
+    padding-bottom: 2vh;
+  }
+
+  .card-title{
+    font-size: 150%;
+  }
+
+
+  .card-row-child{
+    width:100%;
+  }
+
+  .inputRowCard {
+    align-items: center;
+  }
+
+  .buttonRowCard {
+    align-self: center;
+    width: auto;
+    padding-top: 2vh;
+    padding-bottom: 5vh;
+  }
+
+  .input-style{
+    padding: 4px;
+    color: #FFFFFF;
+    font-size: 150%;
+    //padding-left: 30px;
+  }
+
+  .submit-button{
+    font-size: 200%;
+  }
+  .titleRoom{
+    text-align: center;
+    color: #FFFFFF;
+    white-space: normal;
+  }
+
+  //phone
+  @media (max-width: 767px) {
+    .centerGrid {
+      width: 95%;
+    }
+    .buttonRow {
+      width: 95%;
+    }
+    .input-style {
+      font-size: 100%;
+    }
+    .submit-button{
+      font-size: 150%;
+    }
+    .titleRoom {
+      font-size: 100%;
+    }
+  }
+
+  @media only screen and (min-width: 1024px){
+    .room-title {
+      font-size: 325%;
+    }
+    .titleRoom {
+      font-size: 100%;
+    }
+
+    .card-title{
+      font-size: 375%;
+    }
+    .card-row{
+      width:50%
+    }
+  }
+
+  //For bigger than mobile
+  @media only screen and (min-width: 768px) and (max-width: 1023px){
+    .room-title {
+      font-size: 250%;
+    }
+
+    .card-title{
+      font-size: 300%;
+    }
+    .card-row{
+      width:60%
+    }
+  }
+
+  @media only screen and (min-width: 425px) and (max-width:767px){
+    .room-title {
+      font-size: 170%;
+    }
+
+    .card-title{
+      font-size: 220%;
+    }
+  }
+}

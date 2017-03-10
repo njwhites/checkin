@@ -1,0 +1,37 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Security Question Update</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<div class="fixed-content">
+  <div class="blockGrid">
+    <ion-grid>
+      <ion-row class="buttonRow">
+        <ion-col>
+          <ion-grid class="buttonOutline" class="centerGrid">
+            <form [formGroup]="globalsForm" >
+              <ion-item class="centerItem">
+                <ion-label class="label">Rate:</ion-label>
+                <ion-input class="input-style" type="text" formControlName="rate" value=""></ion-input>
+              </ion-item>
+            </form>
+            <ion-row class= 'buttonRowCard'>
+              <ion-col class="card-row-child">
+                <button ion-button block outline color="light" class="submit-button" [disabled]="!this.globalsForm.valid" (click)="updateGlobals()">Update</button>
+              </ion-col>
+            </ion-row>
+            <ion-card [hidden]="this.globalsForm.valid">
+              <ion-card-header>Invalid input</ion-card-header>
+              <ion-card-content *ngIf="this.globalsForm.controls['rate'].hasError('required')">
+                Rate is required.
+              </ion-card-content>
+            </ion-card>
+          </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>

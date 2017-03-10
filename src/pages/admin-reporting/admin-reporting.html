@@ -106,9 +106,9 @@
 
                 <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours).toFixed(2) }}</div>
 
-                <div class="blank">{{16.46}}</div>
+                <div class="blank">{{rate}}</div>
 
-                <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours * 16.46).toFixed(2) }}</div>
+                <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours * rate).toFixed(2) }}</div>
 
                 <!-- contains the average/per day -->
                 <div *ngIf="studentBillingDayTotals.get(student.student_id).billingWarning" class="billedWarning">{{ (studentBillingDayTotals.get(student.student_id).billable_hours / 5).toFixed(2) }}</div>
@@ -152,11 +152,11 @@
                 </ion-col>
                 <ion-col class="totaledItem">
                     <ion-label   stacked>Rate</ion-label>
-                    <div >16.46</div>
+                    <div >{{rate}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
                     <ion-label   stacked>Total Billed</ion-label>
-                    <div>{{(this.roomBillingWeekTotals.get(room.key+"").billable_hours * 16.46).toFixed(2)}}</div>
+                    <div>{{(this.roomBillingWeekTotals.get(room.key+"").billable_hours * rate).toFixed(2)}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
                     <ion-label   stacked>Average Day</ion-label>

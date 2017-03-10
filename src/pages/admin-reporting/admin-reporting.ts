@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import {CheckinProvider} from '../../providers/checkin-provider';
 import {ClassRoomProvider} from '../../providers/class-room-provider';
 import {StudentProvider} from '../../providers/student-provider';
+import {ConstantsProvider} from '../../providers/constants-provider';
 import {AdminReportingDetailsPage} from '../admin-reporting-details/admin-reporting-details';
 
 import {ClassroomWeek, BillingWeekModel, BillingDay, StudentBillingWeek} from '../../models/db-models';
@@ -26,6 +27,9 @@ export class AdminReportingPage {
   //what we have the user interact with
   viewableDate: any;
 
+  //variable to hold the rate, since this variable will likely only be chnaged by one person it is not going to be "live updated"
+  rate : number;
+
   displayInfo: boolean = false;
 
   daysInSession: number = 5;
@@ -38,7 +42,16 @@ export class AdminReportingPage {
   countDots: number = 0;
   loadingTextInterval: any;
 
-  constructor(public navCtrl: NavController, public studentService: StudentProvider, public classroomService: ClassRoomProvider, public checkinService: CheckinProvider){
+  constructor(public navCtrl: NavController,
+              public studentService: StudentProvider,
+              public classroomService: ClassRoomProvider,
+              public constantsService: ConstantsProvider,
+              public checkinService: CheckinProvider){
+    constantsService.returnRate().then((doc:any)=>{
+      this.rate = doc.rate;
+    }).catch((err)=>{
+      console.log(err);
+    });
     var date = new Date();
     if(date.getDay() < 1){
       date.setDate(date.getDate()+1);
@@ -174,6 +187,14 @@ export class AdminReportingPage {
     //when we reenter the page from the reporting details page we should be recalculating the totals incase someone changed something while they were in details
     // if need be we can gain a lot of performance increase by only updating the room and student that the user had clicked on and is now navigating back from
     // we can also check if the data has been changed to skip over it in the event that the data hasn't been changed
+
+    //reset rate when we enter this screen just incase it was changed
+    this.constantsService.returnRate().then((doc:any)=>{
+      this.rate = doc.rate;
+    }).catch((err)=>{
+      console.log(err);
+    });
+
     if(this.displayInfo){
       this.map.forEach((room)=>{
         //for each student in the room

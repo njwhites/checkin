@@ -20,6 +20,7 @@ import {UserProvider} from "../providers/user-provider";
 import {ClassRoomProvider} from "../providers/class-room-provider";
 import {CheckinProvider} from "../providers/checkin-provider";
 import {UtilityProvider} from "../providers/utility-provider";
+import {ConstantsProvider} from "../providers/constants-provider";
 import {AuthProvider} from "../providers/auth-provider";
 import {KitchenPage} from "../pages/kitchen/kitchen";
 import {TherapistPage} from "../pages/therapist/therapist";
@@ -39,6 +40,7 @@ import {ClassroomAddModalPage} from "../pages/classroom-add-modal/classroom-add-
 import {ForgotPasswordPage} from '../pages/forgot-password-page/forgot-password-page';
 import {AdminChangePasswordPage} from '../pages/admin-change-password/admin-change-password';
 import {AdminChangeQuestionPage} from '../pages/admin-change-question/admin-change-question';
+import {AdminEditGlobalsPage} from '../pages/admin-edit-globals/admin-edit-globals';
 import {ResetTokenPage} from '../pages/reset-token/reset-token';
 import {UserAddModalPage} from "../pages/user-add-modal/user-add-modal";
 import {MapValuesPipe} from "../pipes/map-values";
@@ -80,6 +82,7 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     ForgotPasswordPage,
     AdminChangePasswordPage,
     AdminChangeQuestionPage,
+    AdminEditGlobalsPage,
     ResetTokenPage,
     MapValuesPipe,
     ImpureMapValuesPipe,
@@ -148,6 +151,7 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     ForgotPasswordPage,
     AdminChangePasswordPage,
     AdminChangeQuestionPage,
+    AdminEditGlobalsPage,
     ResetTokenPage,
     TherapistStudentDetailsPage,
     TherapistCheckinConfirmModalPage,
@@ -155,6 +159,6 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     GenericCheckinConfirmModalPage
 
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider, AuthProvider]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider, AuthProvider, ConstantsProvider]
 })
 export class AppModule {}
