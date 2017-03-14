@@ -14,9 +14,14 @@ page-admin-reporting {
     align-items: flex-end;
     background-color:rgba(0,0,0,0.08);
   }
+  .titleBar{
+    display: flex;
+    align-items: flex-end;
+    height: 1vh;
+    background-color:rgba(0, 0, 0, 0.13);
+  }
   .totaledItem{
     flex-grow: 1;
-    height: 100%;
     border: 3px;
     align-self: flex-end;
     text-align: center;
@@ -36,6 +41,9 @@ page-admin-reporting {
     border: 3px;
     align-self: flex-end;
     text-align: center;
+  }
+  .loading{
+    background-color:lightgray;
   }
   .therapyWarning{
     flex-grow: 1;
@@ -60,6 +68,16 @@ page-admin-reporting {
     height: 30px;
     display: flex;
     align-items: flex-end;
+  }
+  p:hover {
+    background-color: #6e7684;
+  }
+  .highlightRow{
+    margin: 0 0 0px;
+    height: 30px;
+    display: flex;
+    align-items: flex-end;
+    color: black;
   }
   .nameContainer{
     font-size: 120%;
