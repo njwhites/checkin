@@ -41,7 +41,7 @@
              Each card has a list of the student information that is only displayed on a toggle of clicking the room_number
              The students have their week totals displayed and warning flags on the fields that have a problem for that week
              Each card finishes with a total for the whole classroom -->
-        <ion-item *ngIf="isLoading">
+        <ion-item *ngIf="isLoading" class="bgc">
           {{loadingText}}
         </ion-item>
         <ion-list *ngIf="displayInfo">
