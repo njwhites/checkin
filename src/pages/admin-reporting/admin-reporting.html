@@ -41,11 +41,9 @@
              Each card has a list of the student information that is only displayed on a toggle of clicking the room_number
              The students have their week totals displayed and warning flags on the fields that have a problem for that week
              Each card finishes with a total for the whole classroom -->
-        <ion-card *ngIf="isLoading" class="loading">
-          <ion-card-content>
-            {{loadingText}}
-          </ion-card-content>
-        </ion-card>
+        <ion-item *ngIf="isLoading" class="bgc">
+          {{loadingText}}
+        </ion-item>
         <ion-list *ngIf="displayInfo">
           <ion-card *ngFor="let room of this.map | mapValues" (click)="toggleRoom(room.key)">
             <ion-card-header style="background-color:rgba(0, 0, 0, 0.13)">
@@ -64,42 +62,8 @@
                 </div>
               </ion-row>
             </ion-card-header>
-            <ion-row class="titleBar" *ngIf="room.val.weeks.length > 0">
-                <ion-col col-2 class="nameContainer">
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <ion-label   stacked>Gross Hours</ion-label>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <ion-label   stacked>Nap</ion-label>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <ion-label   stacked>SP</ion-label>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <ion-label   stacked>PT</ion-label>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <ion-label   stacked>OT</ion-label>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <ion-label   stacked>Net Hours</ion-label>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <ion-label   stacked>Billed Hours</ion-label>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <ion-label   stacked>Rate</ion-label>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <ion-label   stacked>Total Billed</ion-label>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <ion-label   stacked>Average Day</ion-label>
-                </ion-col>
-            </ion-row>
             <div *ngIf="room.val.weeks.length > 0 && isRoomOn(room.key)">
-              <p *ngFor="let student of room.val.weeks[0].students" class="highlightRow" (click)="showDetails(student)">
+              <div *ngFor="let student of room.val.weeks[0].students" class="container" (click)="showDetails(student)">
 
                 <ion-col class="nameContainer">{{this.studentService.data.get(student.student_id).fName}} {{this.studentService.data.get(student.student_id).lName}}</ion-col>
 
@@ -132,7 +96,7 @@
                 <!-- contains the average/per day -->
                 <ion-col *ngIf="studentBillingDayTotals.get(student.student_id).billingWarning" class="billedWarning">{{ (studentBillingDayTotals.get(student.student_id).billable_hours / 5).toFixed(2) }}</ion-col>
                 <ion-col *ngIf="!studentBillingDayTotals.get(student.student_id).billingWarning" class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours / 5).toFixed(2) }}</ion-col>
-              </p>
+              </div>
             </div>
             <!-- If there is no billing week temporarily then angular will be upset
                  So make sure that we don't display this info if there is not billing week -->
@@ -141,33 +105,43 @@
                   Total:
                 </ion-col>
                 <ion-col class="totaledItem">
+                    <ion-label   stacked>Gross Hours</ion-label>
                     <div>{{this.roomBillingWeekTotals.get(room.key+"").gross_hours.toFixed(2)}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
+                    <ion-label   stacked>Nap</ion-label>
                     <div>{{this.roomBillingWeekTotals.get(room.key+"").nap_hours.toFixed(2)}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
+                    <ion-label   stacked>SP</ion-label>
                     <div>{{this.roomBillingWeekTotals.get(room.key+"").SP_therapy_hours.toFixed(2)}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
+                    <ion-label   stacked>PT</ion-label>
                     <div>{{this.roomBillingWeekTotals.get(room.key+"").PT_therapy_hours.toFixed(2)}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
+                    <ion-label   stacked>OT</ion-label>
                     <div>{{this.roomBillingWeekTotals.get(room.key+"").OT_therapy_hours.toFixed(2)}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
+                    <ion-label   stacked>Net Hours</ion-label>
                     <div>{{this.roomBillingWeekTotals.get(room.key+"").net_hours.toFixed(2)}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
+                    <ion-label   stacked>Billed Hours</ion-label>
                     <div>{{this.roomBillingWeekTotals.get(room.key+"").billable_hours.toFixed(2)}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
+                    <ion-label   stacked>Rate</ion-label>
                     <div >{{rate}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
+                    <ion-label   stacked>Total Billed</ion-label>
                     <div>{{(this.roomBillingWeekTotals.get(room.key+"").billable_hours * rate).toFixed(2)}}</div>
                 </ion-col>
                 <ion-col class="totaledItem">
+                    <ion-label   stacked>Average Day</ion-label>
                     <div>{{(this.roomBillingWeekTotals.get(room.key+"").billable_hours /(5 * room.val.weeks[0].students.length)).toFixed(2)}}</div>
                 </ion-col>
             </ion-row>
