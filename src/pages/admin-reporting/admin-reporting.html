@@ -22,25 +22,8 @@
       <ion-col width-33>
         <ion-card class="weekText">
           <ion-row style="height:100%">
-            <ion-col>
-              <ion-item>
-                <!-- the date picker -->
-                <ion-input type="date" [(ngModel)]="this.viewableDate" (change)="dateInputChanged()"></ion-input>
-              </ion-item>
-            </ion-col>
-            <!-- <ion-col width-10 no-padding>
-              <button class="arrowButton" (click)="changeWeek(-1)">
-                <ion-icon name="arrow-back" ></ion-icon>
-              </button>
-            </ion-col>
-            <ion-col width-80 text-center style="font-size:100%">
-              12/12/12-17/12/12
-            </ion-col>
-            <ion-col width-10 no-padding>
-              <button class="arrowButton">
-                <ion-icon name="arrow-forward"></ion-icon>
-              </button>
-            </ion-col> -->
+            <!-- the date picker -->
+            <ion-input type="date" [(ngModel)]="this.viewableDate" (change)="dateInputChanged()"></ion-input>
           </ion-row>
         </ion-card>
       </ion-col>
@@ -82,44 +65,43 @@
             <div *ngIf="room.val.weeks.length > 0 && isRoomOn(room.key)">
               <div *ngFor="let student of room.val.weeks[0].students" class="container" (click)="showDetails(student)">
 
-                <div class="nameContainer">{{this.studentService.data.get(student.student_id).fName}} {{this.studentService.data.get(student.student_id).lName}}</div>
+                <ion-col class="nameContainer">{{this.studentService.data.get(student.student_id).fName}} {{this.studentService.data.get(student.student_id).lName}}</ion-col>
 
                 <!-- contains the gross hours -->
-                <div *ngIf="studentBillingDayTotals.get(student.student_id).attendanceWarning" class="attendanceWarning">{{ ( studentBillingDayTotals.get(student.student_id).gross_hours ).toFixed(2) }}</div>
-                <div *ngIf="!studentBillingDayTotals.get(student.student_id).attendanceWarning" class="blank">{{ ( studentBillingDayTotals.get(student.student_id).gross_hours ).toFixed(2) }}</div>
+                <ion-col *ngIf="studentBillingDayTotals.get(student.student_id).attendanceWarning" class="attendanceWarning">{{ ( studentBillingDayTotals.get(student.student_id).gross_hours ).toFixed(2) }}</ion-col>
+                <ion-col *ngIf="!studentBillingDayTotals.get(student.student_id).attendanceWarning" class="blank">{{ ( studentBillingDayTotals.get(student.student_id).gross_hours ).toFixed(2) }}</ion-col>
 
-                <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).nap_hours).toFixed(2) }}</div>
+                <ion-col class="blank">{{ (studentBillingDayTotals.get(student.student_id).nap_hours).toFixed(2) }}</ion-col>
 
                 <!-- contains the therapy hours -->
-                <div *ngIf="studentBillingDayTotals.get(student.student_id).therapyWarning" class="therapyWarning">{{ (studentBillingDayTotals.get(student.student_id).SP_therapy_hours).toFixed(2) }}</div>
-                <div *ngIf="!studentBillingDayTotals.get(student.student_id).therapyWarning" class="blank">{{ (studentBillingDayTotals.get(student.student_id).SP_therapy_hours).toFixed(2) }}</div>
+                <ion-col *ngIf="studentBillingDayTotals.get(student.student_id).therapyWarning" class="therapyWarning">{{ (studentBillingDayTotals.get(student.student_id).SP_therapy_hours).toFixed(2) }}</ion-col>
+                <ion-col *ngIf="!studentBillingDayTotals.get(student.student_id).therapyWarning" class="blank">{{ (studentBillingDayTotals.get(student.student_id).SP_therapy_hours).toFixed(2) }}</ion-col>
 
-                <div *ngIf="studentBillingDayTotals.get(student.student_id).therapyWarning" class="therapyWarning">{{ (studentBillingDayTotals.get(student.student_id).PT_therapy_hours).toFixed(2) }}</div>
-                <div *ngIf="!studentBillingDayTotals.get(student.student_id).therapyWarning" class="blank">{{ (studentBillingDayTotals.get(student.student_id).PT_therapy_hours).toFixed(2) }}</div>
+                <ion-col *ngIf="studentBillingDayTotals.get(student.student_id).therapyWarning" class="therapyWarning">{{ (studentBillingDayTotals.get(student.student_id).PT_therapy_hours).toFixed(2) }}</ion-col>
+                <ion-col *ngIf="!studentBillingDayTotals.get(student.student_id).therapyWarning" class="blank">{{ (studentBillingDayTotals.get(student.student_id).PT_therapy_hours).toFixed(2) }}</ion-col>
 
-                <div *ngIf="studentBillingDayTotals.get(student.student_id).therapyWarning" class="therapyWarning">{{ (studentBillingDayTotals.get(student.student_id).OT_therapy_hours).toFixed(2) }}</div>
-                <div *ngIf="!studentBillingDayTotals.get(student.student_id).therapyWarning" class="blank">{{ (studentBillingDayTotals.get(student.student_id).OT_therapy_hours).toFixed(2) }}</div>
+                <ion-col *ngIf="studentBillingDayTotals.get(student.student_id).therapyWarning" class="therapyWarning">{{ (studentBillingDayTotals.get(student.student_id).OT_therapy_hours).toFixed(2) }}</ion-col>
+                <ion-col *ngIf="!studentBillingDayTotals.get(student.student_id).therapyWarning" class="blank">{{ (studentBillingDayTotals.get(student.student_id).OT_therapy_hours).toFixed(2) }}</ion-col>
 
 
 
-                <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).net_hours).toFixed(2) }}</div>
+                <ion-col class="blank">{{ (studentBillingDayTotals.get(student.student_id).net_hours).toFixed(2) }}</ion-col>
 
-                <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours).toFixed(2) }}</div>
+                <ion-col class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours).toFixed(2) }}</ion-col>
 
-                <div class="blank">{{rate}}</div>
+                <ion-col class="blank">{{rate}}</ion-col>
 
-                <div class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours * rate).toFixed(2) }}</div>
+                <ion-col class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours * rate).toFixed(2) }}</ion-col>
 
                 <!-- contains the average/per day -->
-                <div *ngIf="studentBillingDayTotals.get(student.student_id).billingWarning" class="billedWarning">{{ (studentBillingDayTotals.get(student.student_id).billable_hours / 5).toFixed(2) }}</div>
-                <div *ngIf="!studentBillingDayTotals.get(student.student_id).billingWarning" class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours / 5).toFixed(2) }}</div>
+                <ion-col *ngIf="studentBillingDayTotals.get(student.student_id).billingWarning" class="billedWarning">{{ (studentBillingDayTotals.get(student.student_id).billable_hours / 5).toFixed(2) }}</ion-col>
+                <ion-col *ngIf="!studentBillingDayTotals.get(student.student_id).billingWarning" class="blank">{{ (studentBillingDayTotals.get(student.student_id).billable_hours / 5).toFixed(2) }}</ion-col>
               </div>
             </div>
-            <!-- If there is no billing week temporarily then angular will be upsert
+            <!-- If there is no billing week temporarily then angular will be upset
                  So make sure that we don't display this info if there is not billing week -->
-            <div class="totalBar" *ngIf="room.val.weeks.length > 0">
-              <ion-row>
-                <ion-col class="totaledItem" style="flex:2 1 40px;">
+            <ion-row class="totalBar" *ngIf="room.val.weeks.length > 0">
+                <ion-col col-2 class="nameContainer">
                   Total:
                 </ion-col>
                 <ion-col class="totaledItem">
@@ -162,8 +144,7 @@
                     <ion-label   stacked>Average Day</ion-label>
                     <div>{{(this.roomBillingWeekTotals.get(room.key+"").billable_hours /(5 * room.val.weeks[0].students.length)).toFixed(2)}}</div>
                 </ion-col>
-              </ion-row>
-            </div>
+            </ion-row>
             <div class="totalBar" *ngIf="room.val.weeks.length <= 0">
               There is no billing information for this week.
             </div>
