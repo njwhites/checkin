@@ -103,15 +103,15 @@
 
   <!-- if the form has errors this is one of the ways we let the user know what is wrong -->
   <ion-card [hidden]="this.studentDataForm.valid">
-    <ion-card-header>Invalid input</ion-card-header>
+    <ion-card-header>Warning: Invalid Input</ion-card-header>
     <ion-card-content *ngIf="formHasError('startAfterEnd')">
-      Time in must be before Time Out.
+      Time In Must Be Before Time Out.
     </ion-card-content>
     <ion-card-content *ngIf="formHasError('required')">
-      Input is required.
+      Empty Input Fields.
     </ion-card-content>
     <ion-card-content *ngIf="formHasError('notPositiveNumber')">
-      Input needs to be a positive number.
+      Input Needs To Be A Positive Number.
     </ion-card-content>
 
   </ion-card>
