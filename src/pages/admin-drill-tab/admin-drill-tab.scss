@@ -2,7 +2,8 @@ page-admin-drill-tab {
 
   .fill {
     padding-top: 8vh;
-    background-color: #eee5de;
+    background: url(../assets/logo/Dark_Background.jpg);
+    background-size: 100% 100%;
     height: 100%;
   }
 
@@ -51,7 +52,8 @@ page-admin-drill-tab {
   @media (max-width: 768px) {
     .phoneView {
       display: block;
-      background-color: #eee5de;
+      background: url(../assets/logo/Dark_Background.jpg);
+      background-size: 100% 100%;
       padding-top: 5%;
     }
 
