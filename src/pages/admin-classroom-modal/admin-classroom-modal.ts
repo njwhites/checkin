@@ -30,8 +30,10 @@ export class AdminClassroomModalPage {
 
     if(!this.isAddNewClassroom){
       this.classroom=this.classroomService.data.get(navParams.get("classroom")._id);
+      console.log(this.classroom);
       this.classroomForm = this.formBuilder.group({
-        teacher: [this.classroom.teacher, Validators.required]
+        teacher: [this.classroom.teacher, Validators.required],
+        isBillable: [this.classroom.isBilled],
       });
     } else {
       this.classroomForm = this.formBuilder.group({
@@ -61,14 +63,17 @@ export class AdminClassroomModalPage {
     newRoom.teacher = this.classroomForm.value.teacher;
     newRoom.aides = new Array<string>();
     newRoom.students = new Array<string>();
+    newRoom.isBilled = true;
 
     this.classroomService.createClassroom(newRoom);
     this.dismiss();
   }
 
   updateClassroom(){
-    if(this.classroom.teacher != this.classroomForm.value.teacher){
+    if(this.classroom.teacher !== this.classroomForm.value.teacher || this.classroom.isBilled !== this.classroomForm.controls['isBillable'].value){
       this.classroom.teacher = this.classroomForm.value.teacher;
+      this.classroom.isBilled = this.classroomForm.controls['isBillable'].value;
+      console.log(this.classroom.teacher + " " + this.classroom.isBilled);
       this.classroomService.updateClassRoom(this.classroom);
     }
     this.toastController.create({

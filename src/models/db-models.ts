@@ -63,6 +63,7 @@ export class ClassRoomModel{
   public teacher: string;
   public aides: Array<string>;
   public roomNumber: String;
+  public isBilled: boolean;
   public students: Array<String>;
 
   constructor(){
