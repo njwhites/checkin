@@ -323,19 +323,21 @@ export class AdminReportingPage {
       date = new Date(week.start_date);
       week.students.forEach((student:StudentBillingWeek) => {
         student.student_days.forEach((day:BillingDay, index) => {
-          var today = new Date(week.start_date);
-          today.setDate(today.getDate() + index);
-          var str = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`
-          out += `${str},`;
-          out += "PS,";
-          out += ",";
-          out += ",";
-          out += day.billable_hours + ",";
-          out += "'000001,"
-          out += "NAMEJOE\n";
-        })
-      })
-    })
+          if(day.billable_hours !== 0) {
+            var today = new Date(week.start_date);
+            today.setDate(today.getDate() + index);
+            var str = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`
+            out += `${str},`;
+            out += "PS,";
+            out += ",";
+            out += ",";
+            out += day.billable_hours + ",";
+            out += "'000001,"
+            out += "NAMEJOE\n";
+          }
+        });
+      });
+    });
 
     //These are the lines that create the download and download it in the browser
     var encodedUri = encodeURI(out);
