@@ -16,7 +16,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="bgc">
   <ion-content class="scrollView">
     <ion-list inset>
       <ion-card *ngFor="let student of this.studentService.data | impureMapValues | studentFilter:this.filter" (click)="studentClicked(student.key)">
@@ -30,7 +30,7 @@
   <ion-grid class="push-to-bottom">
     <ion-row class="buttonRow">
       <ion-col>
-        <button ion-button block (click)="addStudent()">Add A New Student</button>
+        <button ion-button block outline color="light" class="submit-button" (click)="addStudent()">Add A New Student</button>
       </ion-col>
     </ion-row>
   </ion-grid>

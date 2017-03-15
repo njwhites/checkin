@@ -1,6 +1,7 @@
 page-admin-student-tab {
   .bgc{
-    background-color: #eee5de !important;
+    background: url(../assets/logo/Dark_Background.jpg);
+    background-size: 100% 100%;
   }
 
   .fixedSearchbar{
@@ -24,40 +25,48 @@ page-admin-student-tab {
     right: 20px;
   }
   .scroll-content {
-    padding-top: 6% !important;
-    background-color: #eee5de;
+    padding-top: 4% !important;
+    background: transparent;
   }
   .scrollView {
-    background-color: #eee5de;
+    background: transparent;
     align-items: center;
     max-height: 80vh;
   }
   .push-to-bottom {
-    background-color: #eee5de;
+    background: transparent;
     position: absolute;
-    bottom: 7vh;
+    bottom: 10vh;
     width: 100%;
   }
+  .submit-button{
+    font-size: 150%;
+  }
   .buttonRow {
-    background-color: #eee5de;
+    background: transparent;
     align-self: center;
     width: auto;
   }
   .toolBar {
-    background-color: #eee5de;
+    background: transparent;
+  }
+  //iPad portrait or iPad pro portrait
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .scroll-content {
+      padding-top: 7% !important;
+    }
+    .scrollView {
+      max-height: 80vh;
+    }
   }
 
-  //computer and iPad pro Landscape
-  @media (min-width: 1025px) {
+  //iPad landscape
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     .scroll-content {
-      padding-top: 4% !important;
+      padding-top: 5% !important;
     }
-
-    .push-to-bottom {
-      background-color: #eee5de;
-      position: absolute;
-      bottom: 11vh;
-      width: 100%;
+    .scrollView {
+      max-height: 77vh;
     }
   }
 }

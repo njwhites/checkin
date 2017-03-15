@@ -1,25 +1,48 @@
 page-admin-user-tab {
   .bgc {
-    background-color: #eee5de;
+    background: url(../assets/logo/Dark_Background.jpg);
+    background-size: 100% 100%;
   }
   .scroll-content {
-    padding-top: 5.5% !important;
-    background-color: #eee5de;
+    padding-top: 3.5% !important;
+    background: transparent;
   }
   .scrollView {
-    background-color: #eee5de;
+    background: transparent;
     align-items: center;
-    max-height: 80vh;
+    max-height: 82vh;
+  }
+  .submit-button{
+    font-size: 150%;
   }
   .push-to-bottom {
-    background-color: #eee5de;
+    background: transparent;
     position: absolute;
-    bottom: 7vh;
+    bottom: 10vh;
     width: 100%;
   }
   .buttonRow {
-    background-color: #eee5de;
+    background: transparent;
     align-self: center;
     width: auto;
+  }
+  //iPad portrait or iPad pro portrait
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .scroll-content {
+      padding-top: 7% !important;
+    }
+    .scrollView {
+      max-height: 80vh;
+    }
+  }
+
+  //iPad landscape
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .scroll-content {
+      padding-top: 5% !important;
+    }
+    .scrollView {
+      max-height: 77vh;
+    }
   }
 }
