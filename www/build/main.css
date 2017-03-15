@@ -21782,6 +21782,9 @@ page-admin .tabbar {
   page-admin #tab-t0-4 {
     display: none;
   }
+  page-admin #tab-t0-5 {
+    display: none;
+  }
   page-admin .tabbar {
     opacity: 0;
   }
@@ -21948,6 +21951,171 @@ page-admin-change-password .titleRoom {
   }
 }
 
+page-admin-change-question .vertical-align-content {
+  -webkit-align-content: center !important;
+  -ms-flex-line-pack: center !important;
+  align-content: center !important;
+}
+
+page-admin-change-question .fixed-content {
+  background: url(../assets/logo/Dark_Background.jpg);
+  background-size: 100% 100%;
+}
+
+page-admin-change-question .blockGrid {
+  padding-top: 15vh;
+  display: block;
+}
+
+page-admin-change-question .label {
+  color: #FFFFFF !important;
+}
+
+page-admin-change-question .buttonRow {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: 85%;
+}
+
+page-admin-change-question .text-input {
+  text-align: center;
+  padding-right: 0px !important;
+}
+
+page-admin-change-question .centerGrid {
+  -webkit-align-content: center !important;
+  -ms-flex-line-pack: center !important;
+  align-content: center !important;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  background: transparent;
+  width: 85%;
+  margin: auto;
+  box-shadow: 0px 0px 0px 2px #FFFFFF;
+}
+
+page-admin-change-question .centerItem {
+  -webkit-align-content: center !important;
+  -ms-flex-line-pack: center !important;
+  align-content: center !important;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  background: transparent;
+  width: 85%;
+  margin: auto;
+}
+
+page-admin-change-question .buttonOutline {
+  height: auto;
+  background: transparent;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+}
+
+page-admin-change-question .cardTitleRow {
+  padding-top: 4vh;
+  padding-bottom: 2vh;
+}
+
+page-admin-change-question .card-title {
+  font-size: 150%;
+}
+
+page-admin-change-question .card-row-child {
+  width: 100%;
+}
+
+page-admin-change-question .inputRowCard {
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+}
+
+page-admin-change-question .buttonRowCard {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: auto;
+  padding-top: 2vh;
+  padding-bottom: 5vh;
+}
+
+page-admin-change-question .input-style {
+  padding: 4px;
+  color: #FFFFFF;
+  font-size: 150%;
+}
+
+page-admin-change-question .submit-button {
+  font-size: 200%;
+}
+
+page-admin-change-question .titleRoom {
+  text-align: center;
+  color: #FFFFFF;
+  white-space: normal;
+}
+
+@media (max-width: 767px) {
+  page-admin-change-question .centerGrid {
+    width: 95%;
+  }
+  page-admin-change-question .buttonRow {
+    width: 95%;
+  }
+  page-admin-change-question .input-style {
+    font-size: 100%;
+  }
+  page-admin-change-question .submit-button {
+    font-size: 150%;
+  }
+  page-admin-change-question .titleRoom {
+    font-size: 100%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  page-admin-change-question .room-title {
+    font-size: 325%;
+  }
+  page-admin-change-question .titleRoom {
+    font-size: 100%;
+  }
+  page-admin-change-question .card-title {
+    font-size: 375%;
+  }
+  page-admin-change-question .card-row {
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  page-admin-change-question .room-title {
+    font-size: 250%;
+  }
+  page-admin-change-question .card-title {
+    font-size: 300%;
+  }
+  page-admin-change-question .card-row {
+    width: 60%;
+  }
+}
+
+@media only screen and (min-width: 425px) and (max-width: 767px) {
+  page-admin-change-question .room-title {
+    font-size: 170%;
+  }
+  page-admin-change-question .card-title {
+    font-size: 220%;
+  }
+}
+
 page-admin-classroom-tab .bgc {
   background-color: #eee5de;
 }
@@ -22083,8 +22251,172 @@ page-admin-drill-tab .phoneView {
   }
 }
 
+page-admin-edit-globals .vertical-align-content {
+  -webkit-align-content: center !important;
+  -ms-flex-line-pack: center !important;
+  align-content: center !important;
+}
+
+page-admin-edit-globals .fixed-content {
+  background: url(../assets/logo/Dark_Background.jpg);
+  background-size: 100% 100%;
+}
+
+page-admin-edit-globals .blockGrid {
+  padding-top: 15vh;
+  display: block;
+}
+
+page-admin-edit-globals .label {
+  color: #FFFFFF !important;
+}
+
+page-admin-edit-globals .buttonRow {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: 85%;
+}
+
+page-admin-edit-globals .text-input {
+  text-align: center;
+  padding-right: 0px !important;
+}
+
+page-admin-edit-globals .centerGrid {
+  -webkit-align-content: center !important;
+  -ms-flex-line-pack: center !important;
+  align-content: center !important;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  background: transparent;
+  width: 85%;
+  margin: auto;
+  box-shadow: 0px 0px 0px 2px #FFFFFF;
+}
+
+page-admin-edit-globals .centerItem {
+  -webkit-align-content: center !important;
+  -ms-flex-line-pack: center !important;
+  align-content: center !important;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  background: transparent;
+  width: 85%;
+  margin: auto;
+}
+
+page-admin-edit-globals .buttonOutline {
+  height: auto;
+  background: transparent;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+}
+
+page-admin-edit-globals .cardTitleRow {
+  padding-top: 4vh;
+  padding-bottom: 2vh;
+}
+
+page-admin-edit-globals .card-title {
+  font-size: 150%;
+}
+
+page-admin-edit-globals .card-row-child {
+  width: 100%;
+}
+
+page-admin-edit-globals .inputRowCard {
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+}
+
+page-admin-edit-globals .buttonRowCard {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: auto;
+  padding-top: 2vh;
+  padding-bottom: 5vh;
+}
+
+page-admin-edit-globals .input-style {
+  padding: 4px;
+  color: #FFFFFF;
+  font-size: 150%;
+}
+
+page-admin-edit-globals .submit-button {
+  font-size: 200%;
+}
+
+page-admin-edit-globals .titleRoom {
+  text-align: center;
+  color: #FFFFFF;
+  white-space: normal;
+}
+
+@media (max-width: 767px) {
+  page-admin-edit-globals .centerGrid {
+    width: 95%;
+  }
+  page-admin-edit-globals .buttonRow {
+    width: 95%;
+  }
+  page-admin-edit-globals .input-style {
+    font-size: 100%;
+  }
+  page-admin-edit-globals .submit-button {
+    font-size: 150%;
+  }
+  page-admin-edit-globals .titleRoom {
+    font-size: 100%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  page-admin-edit-globals .room-title {
+    font-size: 325%;
+  }
+  page-admin-edit-globals .titleRoom {
+    font-size: 100%;
+  }
+  page-admin-edit-globals .card-title {
+    font-size: 375%;
+  }
+  page-admin-edit-globals .card-row {
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  page-admin-edit-globals .room-title {
+    font-size: 250%;
+  }
+  page-admin-edit-globals .card-title {
+    font-size: 300%;
+  }
+  page-admin-edit-globals .card-row {
+    width: 60%;
+  }
+}
+
+@media only screen and (min-width: 425px) and (max-width: 767px) {
+  page-admin-edit-globals .room-title {
+    font-size: 170%;
+  }
+  page-admin-edit-globals .card-title {
+    font-size: 220%;
+  }
+}
+
 page-admin-reporting .weekText {
-  height: 5vh;
   margin-top: 0px;
   margin-bottom: 0px;
   margin-left: 12px;
@@ -22100,13 +22432,32 @@ page-admin-reporting .totalBar {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
   background-color: rgba(0, 0, 0, 0.08);
+}
+
+page-admin-reporting .titleBar {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  height: 1vh;
+  background-color: rgba(0, 0, 0, 0.13);
 }
 
 page-admin-reporting .totaledItem {
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
+  border: 3px;
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  text-align: center;
 }
 
 page-admin-reporting .attendanceWarning {
@@ -22119,6 +22470,7 @@ page-admin-reporting .attendanceWarning {
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end;
+  text-align: center;
 }
 
 page-admin-reporting .billedWarning {
@@ -22131,6 +22483,11 @@ page-admin-reporting .billedWarning {
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end;
+  text-align: center;
+}
+
+page-admin-reporting .loading {
+  background-color: lightgray;
 }
 
 page-admin-reporting .therapyWarning {
@@ -22143,6 +22500,7 @@ page-admin-reporting .therapyWarning {
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end;
+  text-align: center;
 }
 
 page-admin-reporting .blank {
@@ -22155,6 +22513,7 @@ page-admin-reporting .blank {
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end;
+  text-align: center;
 }
 
 page-admin-reporting .bgc {
@@ -22171,6 +22530,22 @@ page-admin-reporting .container {
   align-items: flex-end;
 }
 
+page-admin-reporting p:hover {
+  background-color: #6e7684;
+}
+
+page-admin-reporting .highlightRow {
+  margin: 0 0 0px;
+  height: 30px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  color: black;
+}
+
 page-admin-reporting .nameContainer {
   font-size: 120%;
   font-weight: bold;
@@ -22181,6 +22556,12 @@ page-admin-reporting .nameContainer {
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end;
+}
+
+page-admin-reporting .totalNameContainer {
+  font-size: 120%;
+  font-weight: bold;
+  text-align: left;
 }
 
 page-admin-reporting .errorsContainer {
@@ -22208,7 +22589,6 @@ page-admin-reporting .hoursContainer {
 }
 
 page-admin-reporting-details .headerRow {
-  height: 75px;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -22647,6 +23027,7 @@ page-classroom-id .titleRow {
   align-self: center;
   text-align: center;
   width: 55%;
+  padding-top: 10vh;
   padding-bottom: 5vh;
   color: #FFFFFF;
 }
@@ -22895,6 +23276,13 @@ page-forgot-password-page .buttonRow {
   width: 55%;
 }
 
+page-forgot-password-page .answerCardRow {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: 80%;
+}
+
 page-forgot-password-page .text-input {
   text-align: center;
   padding-right: 0px !important;
@@ -22909,6 +23297,19 @@ page-forgot-password-page .centerGrid {
   align-self: center;
   background: transparent;
   width: 85%;
+  margin: auto;
+  box-shadow: 0px 0px 0px 2px #FFFFFF;
+}
+
+page-forgot-password-page .answerGrid {
+  -webkit-align-content: center !important;
+  -ms-flex-line-pack: center !important;
+  align-content: center !important;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  background: transparent;
+  width: 100%;
   margin: auto;
   box-shadow: 0px 0px 0px 2px #FFFFFF;
 }
@@ -22967,6 +23368,7 @@ page-forgot-password-page .input-style {
   padding: 4px;
   color: #FFFFFF;
   font-size: 150%;
+  text-align: center;
 }
 
 page-forgot-password-page .submit-button {
@@ -32195,7 +32597,7 @@ page-list .emptyItem {
 page-list .emptyIcon {
   width: 75px;
   height: 75px;
-  color: gray;
+  color: white;
   font-size: 900%;
 }
 
@@ -32205,7 +32607,7 @@ page-list .emptyText {
   -ms-flex-item-align: center;
   align-self: center;
   text-align: center;
-  color: gray;
+  color: white;
   font-size: 200%;
 }
 
@@ -32224,7 +32626,7 @@ page-list .infoCol {
   font-size: 150%;
 }
 
-page-login .scroll-content {
+page-login .fixed-content {
   overflow-y: hidden;
 }
 
@@ -32529,9 +32931,15 @@ page-reset-token .titleRoom {
 }
 
 page-student-details .bgc {
-  background-color: #eee5de;
+  background: transparent;
   height: 100%;
   width: 100%;
+}
+
+page-student-details .fixedBackground {
+  background: url(../assets/logo/Dark_Background.jpg);
+  background-size: 100% 100%;
+  height: 100vh;
 }
 
 page-student-details .vertical-align-content {
@@ -32542,6 +32950,7 @@ page-student-details .vertical-align-content {
 
 page-student-details .titleRow {
   padding-top: 5%;
+  color: white;
 }
 
 page-student-details .transactionList {
@@ -32549,16 +32958,16 @@ page-student-details .transactionList {
 }
 
 page-student-details .emptyRow {
-  background-color: #eee5de;
+  background: transparent;
   padding-top: 15vh;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
-  width: 80%;
+  width: auto;
 }
 
 page-student-details .emptyItem {
-  background-color: #eee5de;
+  background: transparent;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
@@ -32566,20 +32975,20 @@ page-student-details .emptyItem {
 }
 
 page-student-details .emptyIcon {
-  background-color: #eee5de;
+  background: transparent;
   width: 75px;
   height: 75px;
-  color: gray;
+  color: white;
   font-size: 800%;
 }
 
 page-student-details .emptyText {
-  background-color: #eee5de;
+  background: transparent;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
   text-align: center;
-  color: gray;
+  color: white;
   font-size: 150%;
 }
 
@@ -32597,11 +33006,11 @@ page-student-info-button .location {
 }
 
 page-therapist .scroll-content {
-  background-color: #eee5de;
+  background: transparent;
 }
 
 page-therapist .horizontal-align-center {
-  background-color: #eee5de;
+  background: transparent;
   -webkit-align-items: center;
   -ms-flex-align: center;
   -ms-grid-row-align: center;
@@ -32609,15 +33018,21 @@ page-therapist .horizontal-align-center {
   padding-top: 3%;
 }
 
+page-therapist .fixedBackground {
+  background: url(../assets/logo/Dark_Background.jpg);
+  background-size: 100% 100%;
+  height: 100vh;
+}
+
 page-therapist .vertical-align-content {
-  background-color: #eee5de;
+  background: transparent;
   -webkit-align-content: center !important;
   -ms-flex-line-pack: center !important;
   align-content: center !important;
 }
 
 page-therapist .scrollView {
-  background-color: #eee5de;
+  background: transparent;
   -webkit-align-items: center;
   -ms-flex-align: center;
   -ms-grid-row-align: center;
@@ -32626,14 +33041,14 @@ page-therapist .scrollView {
 }
 
 page-therapist .push-to-bottom {
-  background-color: #eee5de;
+  background: transparent;
   position: absolute;
   bottom: 5vh;
   width: 100%;
 }
 
 page-therapist .buttonRow {
-  background-color: #eee5de;
+  background: transparent;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
@@ -32641,7 +33056,7 @@ page-therapist .buttonRow {
 }
 
 page-therapist .titleRow {
-  background-color: #eee5de;
+  background: transparent;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
@@ -32649,10 +33064,8 @@ page-therapist .titleRow {
   padding-top: 3%;
 }
 
-page-therapist .addButton {
-  -webkit-align-self: center;
-  -ms-flex-item-align: center;
-  align-self: center;
+page-therapist .submit-button {
+  font-size: 150%;
   width: auto;
 }
 
@@ -32667,10 +33080,11 @@ page-therapist .titleRoom {
   padding-bottom: 20px;
   padding-top: 20px;
   font-size: 200%;
+  color: white;
 }
 
 page-therapist .emptyRow {
-  background-color: #eee5de;
+  background: transparent;
   padding-top: 25vh;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
@@ -32679,7 +33093,7 @@ page-therapist .emptyRow {
 }
 
 page-therapist .emptyItem {
-  background-color: #eee5de;
+  background: transparent;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
@@ -32687,7 +33101,7 @@ page-therapist .emptyItem {
 }
 
 page-therapist .emptyIcon {
-  background-color: #eee5de;
+  background: transparent;
   width: 75px;
   height: 75px;
   color: gray;
@@ -32695,7 +33109,7 @@ page-therapist .emptyIcon {
 }
 
 page-therapist .emptyText {
-  background-color: #eee5de;
+  background: transparent;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
@@ -32705,11 +33119,17 @@ page-therapist .emptyText {
 }
 
 page-therapist-add .scroll-content {
-  background-color: #eee5de;
+  background: transparent;
 }
 
 page-therapist-add .emptyItem {
   color: gray;
+}
+
+page-therapist-add .fixedBackground {
+  background: url(../assets/logo/Dark_Background.jpg);
+  background-size: 100% 100%;
+  height: 100vh;
 }
 
 page-therapist-checkin-confirm-modal .modal-wrapper-height-shrink {
@@ -32717,11 +33137,10 @@ page-therapist-checkin-confirm-modal .modal-wrapper-height-shrink {
 }
 
 page-therapist-student-details .scroll-content {
-  background-color: #eee5de;
+  background: transparent;
 }
 
 page-therapist-student-details .vertical-align-content {
-  background-color: #eee5de;
   -webkit-align-content: center !important;
   -ms-flex-line-pack: center !important;
   align-content: center !important;
@@ -32738,12 +33157,18 @@ page-therapist-student-details .buttonRow {
 }
 
 page-therapist-student-details .therapyList {
-  background-color: #eee5de;
+  background: transparent;
   padding-top: 5%;
 }
 
+page-therapist-student-details .fixedBackground {
+  background: url(../assets/logo/Dark_Background.jpg);
+  background-size: 100% 100%;
+  height: 100vh;
+}
+
 page-therapist-student-details .emptyRow {
-  background-color: #eee5de;
+  background: transparent;
   padding-top: 25vh;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
@@ -32752,7 +33177,7 @@ page-therapist-student-details .emptyRow {
 }
 
 page-therapist-student-details .emptyItem {
-  background-color: #eee5de;
+  background: transparent;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
@@ -32760,20 +33185,20 @@ page-therapist-student-details .emptyItem {
 }
 
 page-therapist-student-details .emptyIcon {
-  background-color: #eee5de;
+  background: transparent;
   width: 75px;
   height: 75px;
-  color: gray;
+  color: white;
   font-size: 900%;
 }
 
 page-therapist-student-details .emptyText {
-  background-color: #eee5de;
+  background: transparent;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
   text-align: center;
-  color: gray;
+  color: white;
   font-size: 200%;
 }
 
@@ -32786,6 +33211,11 @@ page-therapist-student-details .scrollView {
   align-items: center;
   height: 75%;
   max-height: 63vh;
+  background: transparent;
+}
+
+page-therapist-student-details .submit-button {
+  font-size: 150%;
 }
 
 page-therapist-student-details .push-to-bottom {
