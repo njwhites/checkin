@@ -9,6 +9,10 @@ page-admin-reporting {
     height:100%;
     width:100%;
   }
+  .submit-button{
+    font-size: 150%;
+    width: auto;
+  }
   .paddedCard {
     margin: 12px 12px 20px 12px !important;
   }
@@ -65,7 +69,13 @@ page-admin-reporting {
     text-align: center;
   }
   .bgc {
-    background-color: #eee5de;
+    background: url(../assets/logo/Dark_Background.jpg);
+    background-size: 100% 100%;
+  }
+  .loading {
+    background: transparent;
+    color: white;
+    width: auto;
   }
   .container{
     height: 30px;

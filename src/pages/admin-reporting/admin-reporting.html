@@ -31,7 +31,7 @@
       </ion-col>
       <ion-col width-33>
         <!-- the export button to get a csv of the info -->
-        <button class="arrowButton" (click)="exportData()">Export Attendance Data</button>
+        <button  ion-button block outline color="light" class="arrowButton" (click)="exportData()">Export Attendance Data</button>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -41,7 +41,7 @@
              Each card has a list of the student information that is only displayed on a toggle of clicking the room_number
              The students have their week totals displayed and warning flags on the fields that have a problem for that week
              Each card finishes with a total for the whole classroom -->
-        <ion-item *ngIf="isLoading" class="bgc">
+        <ion-item *ngIf="isLoading" class="loading">
           {{loadingText}}
         </ion-item>
         <ion-list *ngIf="displayInfo">
@@ -175,7 +175,7 @@
           </ion-card>
         </ion-list>
         <!-- button to generate the billing info if it is the first time the user enters the tab or if they change the week -->
-        <button ion-button *ngIf="!displayInfo" (click)="fillWeek()">Load this page</button>
+        <button ion-button block outline color="light" class="submit-button" *ngIf="!displayInfo" (click)="fillWeek()">Load this page</button>
       </ion-col>
     </ion-row>
   </ion-grid>
