@@ -16,89 +16,91 @@
 
 <ion-content padding class="bgc">
   <ion-card>
+    <ion-grid>
     <!-- header row shows each field's name -->
-      <div class="headerRow">
-        <div class="blank" style="font-weight:bold;"> Days:</div>
-        <div class="blank" style="font-weight:bold;" *ngFor="let title of titles">{{title}}</div>
-      </div>
+      <ion-row class="headerRow">
+        <ion-col class="blank" style="font-weight:bold;"> Days:</ion-col>
+        <ion-col class="blank" style="font-weight:bold;" *ngFor="let title of titles">{{title}}</ion-col>
+      </ion-row>
       <!-- the data needs to be in a form element so that I can do a formGroup on the inputs the user might change -->
       <form [formGroup]="studentDataForm" (change)="formChanged($event)">
         <div *ngFor="let day of this.student.student_days">
           <div class="container" [ngClass]="{'evenRow': student.student_days.indexOf(day)%2 }">
-            <div class="blank" style="font-weight:bold">{{days[this.student.student_days.indexOf(day)]}}</div>
-
-
+            <ion-col class="blank">
+              <div style="font-weight:bold">{{days[this.student.student_days.indexOf(day)]}}</div>
+            </ion-col>
             <!-- for now we will assume they don't need to edit start and end time -->
-            <input type="time" formControlName="{{days[student.student_days.indexOf(day)]}}TimeIn" value="{{this.visibleTimeIn[student.student_days.indexOf(day)]}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeIn']._errors }" id="{{student.student_days.indexOf(day)}},0"/>
-            <input type="time" formControlName="{{days[student.student_days.indexOf(day)]}}TimeOut" value="{{this.visibleTimeOut[student.student_days.indexOf(day)]}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeOut']._errors }" id="{{student.student_days.indexOf(day)}},1"/>
-
+            <ion-col class="blank">
+              <input type="time" formControlName="{{days[student.student_days.indexOf(day)]}}TimeIn" value="{{this.visibleTimeIn[student.student_days.indexOf(day)]}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeIn']._errors }" id="{{student.student_days.indexOf(day)}},0"/>
+            </ion-col>
+            <ion-col class="blank">
+              <input type="time" formControlName="{{days[student.student_days.indexOf(day)]}}TimeOut" value="{{this.visibleTimeOut[student.student_days.indexOf(day)]}}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'TimeOut']._errors }" id="{{student.student_days.indexOf(day)}},1"/>
+            </ion-col>
             <!-- <div class="blank">{{this.checkinService.createReadableTime(day.start_time)}}</div>
             <div class="blank">{{this.checkinService.createReadableTime(day.end_time)}}</div> -->
 
 
 
             <!-- contains the gross hours -->
-            <div [ngClass]="{'attendanceWarning': day.attendanceWarning, 'blank': !day.attendanceWarning }">
+            <ion-col class="blank" [ngClass]="{'attendanceWarning': day.attendanceWarning, 'blank': !day.attendanceWarning }">
               {{ ( day.gross_hours ).toFixed(2) }}
-            </div>
-
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}NapHours" value="{{ (day.nap_hours) }}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'NapHours']._errors }" id="{{student.student_days.indexOf(day)}},2"/>
-
+            </ion-col>
+            <ion-col class="blank">
+              <input formControlName="{{days[student.student_days.indexOf(day)]}}NapHours" value="{{ (day.nap_hours) }}" [ngClass]="{'flexInput': true, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'NapHours']._errors }" id="{{student.student_days.indexOf(day)}},2"/>
+            </ion-col>
             <!-- contains the therapy hours -->
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}SP" value="{{ (day.SP_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'SP']._errors }" id="{{student.student_days.indexOf(day)}},3"/>
-
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}PT" value="{{ (day.PT_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'PT']._errors }" id="{{student.student_days.indexOf(day)}},4"/>
-
-            <input formControlName="{{days[student.student_days.indexOf(day)]}}OT" value="{{ (day.OT_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'OT']._errors }" id="{{student.student_days.indexOf(day)}},5"/>
-
-            <div class="blank">{{ (day.net_hours).toFixed(2) }}</div>
-
-            <div class="blank">{{ (day.billable_hours).toFixed(2) }}</div>
-
-            <div class="blank">{{rate}}</div>
-
-            <div class="blank">{{ (day.billable_hours * rate).toFixed(2) }}</div>
-
+            <ion-col class="blank">
+              <input formControlName="{{days[student.student_days.indexOf(day)]}}SP" value="{{ (day.SP_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'SP']._errors }" id="{{student.student_days.indexOf(day)}},3"/>
+            </ion-col>
+            <ion-col class="blank">
+              <input formControlName="{{days[student.student_days.indexOf(day)]}}PT" value="{{ (day.PT_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'PT']._errors }" id="{{student.student_days.indexOf(day)}},4"/>
+            </ion-col>
+            <ion-col class="blank">
+              <input formControlName="{{days[student.student_days.indexOf(day)]}}OT" value="{{ (day.OT_therapy_hours) }}" [ngClass]="{'therapyWarning': day.therapyWarning, 'flexInput': !day.therapyWarning, 'inputError': this.studentDataForm.controls[days[student.student_days.indexOf(day)]+'OT']._errors }" id="{{student.student_days.indexOf(day)}},5"/>
+            </ion-col>
+            <ion-col class="blank">{{ (day.net_hours).toFixed(2) }}</ion-col>
+            <ion-col class="blank">{{ (day.billable_hours).toFixed(2) }}</ion-col>
+            <ion-col class="blank">{{rate}}</ion-col>
+            <ion-col class="blank">{{ (day.billable_hours * rate).toFixed(2) }}</ion-col>
             <!-- contains the average/per day -->
-            <div [ngClass]="{'billedWarning': day.billingWarning, 'blank': !day.billingWarning }"></div>
+            <ion-col [ngClass]="{'billedWarning': day.billingWarning, 'blank': !day.billingWarning }"></ion-col>
           </div>
         </div>
       </form>
-      <div class="totalBar">
-        <div class="totaledItem" style="flex:3 0;">
+      <ion-row class="totalBar">
+        <ion-col class="blank">
           Total:
-        </div>
-        <div class="totaledItem">
-            <div>{{this.totals.gross_hours.toFixed(2)}}</div>
-        </div>
-        <div class="totaledItem">
-            <div>{{this.totals.nap_hours}}</div>
-        </div>
-        <div class="totaledItem">
-            <div>{{this.totals.SP_therapy_hours}}</div>
-        </div>
-        <div class="totaledItem">
-            <div>{{this.totals.PT_therapy_hours}}</div>
-        </div>
-        <div class="totaledItem">
-            <div>{{this.totals.OT_therapy_hours}}</div>
-        </div>
-        <div class="totaledItem">
-            <div>{{this.totals.net_hours.toFixed(2)}}</div>
-        </div>
-        <div class="totaledItem">
-            <div>{{this.totals.billable_hours.toFixed(2)}}</div>
-        </div>
-        <div class="totaledItem">
-            <div >{{rate}}</div>
-        </div>
-        <div class="totaledItem">
-            <div>{{(this.totals.billable_hours * rate).toFixed(2)}}</div>
-        </div>
-        <div class="totaledItem">
-            <div>{{(this.totals.billable_hours /5).toFixed(2)}}</div>
-        </div>
-      </div>
+        </ion-col>
+        <ion-col class="blank">
+        </ion-col>
+        <ion-col class="blank">
+        </ion-col>
+        <ion-col class="blank">
+            {{this.totals.gross_hours.toFixed(2)}}
+        </ion-col>
+        <ion-col class="blank">
+            {{this.totals.nap_hours}}
+        </ion-col>
+        <ion-col class="blank">
+            {{this.totals.SP_therapy_hours}}
+        </ion-col>
+        <ion-col class="blank">
+            {{this.totals.PT_therapy_hours}}
+        </ion-col>
+        <ion-col class="blank">
+            {{this.totals.OT_therapy_hours}}
+        </ion-col>
+        <ion-col class="blank">
+            {{this.totals.net_hours.toFixed(2)}}
+        </ion-col>
+        <ion-col class="blank">
+            {{this.totals.billable_hours.toFixed(2)}}
+        </ion-col>
+        <ion-col class="blank">{{rate}}</ion-col>
+        <ion-col class="blank">{{(this.totals.billable_hours * rate).toFixed(2)}}</ion-col>
+        <ion-col class="blank">{{(this.totals.billable_hours /5).toFixed(2)}}</ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-card>
 
   <!-- if the form has errors this is one of the ways we let the user know what is wrong -->

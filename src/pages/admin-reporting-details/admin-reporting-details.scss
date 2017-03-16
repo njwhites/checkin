@@ -10,6 +10,9 @@ page-admin-reporting-details {
   .oddRow{
 
   }
+  .unPad{
+    padding:0px!important;
+  }
   .totalRow{
     background-color: rgba(0,0,0,0.08);
   }
@@ -31,7 +34,7 @@ page-admin-reporting-details {
   .totaledItem{
     padding: 3px;
     flex: 1 0;
-    height: 50px;
+    height: 30px;
   }
   .attendanceWarning{
     padding: 3px;
@@ -68,15 +71,15 @@ page-admin-reporting-details {
     align-self: flex-end;
   }
   .blank{
-    padding: 3px;
-    flex: 1 0;
-    height: 100%;
+    flex-grow: 1;
     background-color:rgba(255,255,255,0.08);
     border: 3px;
     align-self: flex-end;
+    text-align: center;
   }
   .bgc {
-    background-color: #eee5de;
+    background: url(../assets/logo/Dark_Background.jpg);
+    background-size: 100% 100%;
   }
   .container{
     height: 30px;
@@ -112,7 +115,8 @@ page-admin-reporting-details {
   .flexInput{
     padding: 3px;
     flex: 1 0;
-    height: 100%;
+    height: inherit;
+    width: inherit;
     align-self: flex-end;
   }
 }

@@ -135,39 +135,39 @@
             <!-- If there is no billing week temporarily then angular will be upset
                  So make sure that we don't display this info if there is not billing week -->
             <ion-row class="totalBar" *ngIf="room.val.weeks.length > 0">
-                <ion-col col-2 class="nameContainer">
-                  Total:
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.roomBillingWeekTotals.get(room.key+"").gross_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.roomBillingWeekTotals.get(room.key+"").nap_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.roomBillingWeekTotals.get(room.key+"").SP_therapy_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.roomBillingWeekTotals.get(room.key+"").PT_therapy_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.roomBillingWeekTotals.get(room.key+"").OT_therapy_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.roomBillingWeekTotals.get(room.key+"").net_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{this.roomBillingWeekTotals.get(room.key+"").billable_hours.toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div >{{rate}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{(this.roomBillingWeekTotals.get(room.key+"").billable_hours * rate).toFixed(2)}}</div>
-                </ion-col>
-                <ion-col class="totaledItem">
-                    <div>{{(this.roomBillingWeekTotals.get(room.key+"").billable_hours /(5 * room.val.weeks[0].students.length)).toFixed(2)}}</div>
-                </ion-col>
+              <ion-col col-2 class="nameContainer">
+                Total:
+              </ion-col>
+              <ion-col class="totaledItem">
+                  <div>{{this.roomBillingWeekTotals.get(room.key+"").gross_hours.toFixed(2)}}</div>
+              </ion-col>
+              <ion-col class="totaledItem">
+                  <div>{{this.roomBillingWeekTotals.get(room.key+"").nap_hours.toFixed(2)}}</div>
+              </ion-col>
+              <ion-col class="totaledItem">
+                  <div>{{this.roomBillingWeekTotals.get(room.key+"").SP_therapy_hours.toFixed(2)}}</div>
+              </ion-col>
+              <ion-col class="totaledItem">
+                  <div>{{this.roomBillingWeekTotals.get(room.key+"").PT_therapy_hours.toFixed(2)}}</div>
+              </ion-col>
+              <ion-col class="totaledItem">
+                  <div>{{this.roomBillingWeekTotals.get(room.key+"").OT_therapy_hours.toFixed(2)}}</div>
+              </ion-col>
+              <ion-col class="totaledItem">
+                  <div>{{this.roomBillingWeekTotals.get(room.key+"").net_hours.toFixed(2)}}</div>
+              </ion-col>
+              <ion-col class="totaledItem">
+                  <div>{{this.roomBillingWeekTotals.get(room.key+"").billable_hours.toFixed(2)}}</div>
+              </ion-col>
+              <ion-col class="totaledItem">
+                  <div >{{rate}}</div>
+              </ion-col>
+              <ion-col class="totaledItem">
+                  <div>{{(this.roomBillingWeekTotals.get(room.key+"").billable_hours * rate).toFixed(2)}}</div>
+              </ion-col>
+              <ion-col class="totaledItem">
+                  <div>{{(this.roomBillingWeekTotals.get(room.key+"").billable_hours /(5 * room.val.weeks[0].students.length)).toFixed(2)}}</div>
+              </ion-col>
             </ion-row>
             <div class="totalBar" *ngIf="room.val.weeks.length <= 0">
               There is no billing information for this week.
