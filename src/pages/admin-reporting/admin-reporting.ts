@@ -157,14 +157,16 @@ export class AdminReportingPage {
   setMap(date: Date){
     this.map = new Map<Number, ClassroomWeek>();
     this.rooms.forEach(room => {
-      this.getClassroomBilling(room.number + "", date).then((cw : ClassroomWeek) => {
-        if(cw === undefined){
-          console.log("cw was undefined for room: " + room.number + "    date: " + date);
-          console.log("setting this room to a blank classrom week ");
-          cw = new ClassroomWeek();
-        }
-        this.map.set(room.number, cw);
-      })
+      
+        this.getClassroomBilling(room.number + "", date).then((cw : ClassroomWeek) => {
+          console.log(this.classroomService.data.get(room.number + ""));
+          if(cw === undefined || !this.classroomService.data.get(room.number + "").isBilled){
+            console.log("cw was undefined for room: " + room.number + "    date: " + date);
+            console.log("setting this room to a blank classrom week ");
+            cw = new ClassroomWeek();
+          }
+          this.map.set(room.number, cw);
+        })
     })
 
   }
