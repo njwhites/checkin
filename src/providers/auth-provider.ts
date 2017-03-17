@@ -18,9 +18,9 @@ export class AuthProvider {
   constructor() {
 
     this.hashdb = new PouchDB('hashes');
-    this.hashRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/authentication';
-    //this.hashRemote = 'http://localhost:5984/authentication';
-    //this.hashRemote = 'http://chris:couchdbadmin5@173.255.113.61:5984/authentication';
+    // this.hashRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/authentication';
+    // this.hashRemote = 'http://localhost:5984/authentication';
+    this.hashRemote = 'http://chris:couchdbadmin5@104.197.130.97:5984/authentication';
     let options = {
       live: true,
       retry: true,

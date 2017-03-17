@@ -14,9 +14,9 @@ export class ConstantsProvider {
 
     //the url to the remote db
     //this.remote = 'https://menteredgenciestrangtona:6577a9908eeee7e8cc07bbd350982d063fea0fe8@christrogers.cloudant.com/constants'
-    this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/constants';
+    // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/constants';
     // this.remote = 'http://localhost:5984/constants';
-    // this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/constants';
+    this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/constants';
     //options for the syncing
     this.options = {
       live: true,
