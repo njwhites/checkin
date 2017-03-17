@@ -16,6 +16,7 @@ export class ConstantsProvider {
     //this.remote = 'https://menteredgenciestrangtona:6577a9908eeee7e8cc07bbd350982d063fea0fe8@christrogers.cloudant.com/constants'
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/constants';
     // this.remote = 'http://localhost:5984/constants';
+    // this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/constants';
     //options for the syncing
     this.options = {
       live: true,
@@ -46,24 +47,24 @@ export class ConstantsProvider {
       console.log('sync has been called');
       this.db.sync(this.remote, this.options)
       .on('change', function (info) {
-        console.log('change');
+        console.log('constants\tchange');
         // handle change
       }).on('paused', function (err) {
-        console.log('paused');
+        console.log('constants\tpaused');
         // replication paused (e.g. replication up to date, user went offline)
       }).on('active', function () {
-        console.log('active');
+        console.log('constants\tactive');
         // replicate resumed (e.g. new changes replicating, user went back online)
       }).on('denied', function (err) {
-        console.log("denied:");
+        console.log("constants\tdenied:");
         console.log(err);
         // a document failed to replicate (e.g. due to permissions)
       }).on('complete', function (info) {
-        console.log("sync complete\tinfo:");
+        console.log("constants\tsync complete\tinfo:");
         console.log(info);
         // handle complete
       }).on('error', function (err) {
-        console.log("sync error");
+        console.log("constants\tsync error");
         console.log(err);
         // handle error
       });

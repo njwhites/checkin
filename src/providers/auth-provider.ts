@@ -19,7 +19,8 @@ export class AuthProvider {
 
     this.hashdb = new PouchDB('hashes');
     this.hashRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/authentication';
-    //this.remote = 'http://localhost:5984/users';
+    //this.hashRemote = 'http://localhost:5984/authentication';
+    //this.hashRemote = 'http://chris:couchdbadmin5@173.255.113.61:5984/authentication';
     let options = {
       live: true,
       retry: true,
@@ -29,7 +30,7 @@ export class AuthProvider {
     this.hashdb.sync(this.hashRemote, options);
   }
 
-  forceInit(){ 
+  forceInit(){
 
   }
 
@@ -72,10 +73,10 @@ export class AuthProvider {
         reject();
       });
 
-    });    
+    });
   }
 
-  //DELETE FUNCTION?  
+  //DELETE FUNCTION?
   deletePasswordByDoc(user: UserModel){
     return new Promise(resolve =>{
       this.hashdb.upsert(user._id, ((doc)=>{doc._deleted=true; return doc}));
@@ -128,7 +129,7 @@ export class AuthProvider {
         reject();
       });
 
-    });    
+    });
   }
 
   getPasswordQuestion(id: string){

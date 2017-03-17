@@ -54,17 +54,64 @@ export class CheckinProvider {
     PouchDB.plugin(require('pouchdb-upsert'));
 
     this.billingRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/billing';
+    // this.billingRemote = 'http://chris:couchdbadmin5@104.197.130.97:5984/billing';
+    // this.billingRemote = 'http://localhost:5984/billing';
 
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/transactions';
-    //this.remote = 'http://localhost:5984/classrooms';
+    // this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/transactions';
+    // this.remote = 'http://localhost:5984/transactions';
     let options = {
       live: true,
       retry: true,
       continuous: true
     };
 
-    this.db.sync(this.remote, options);
-    this.billingdb.sync(this.billingRemote, options);
+    this.db.sync(this.remote, options)
+    .on('change', function (info) {
+      console.log('transactions\tchange');
+      // handle change
+    }).on('paused', function (err) {
+      console.log('transactions\tpaused');
+      // replication paused (e.g. replication up to date, user went offline)
+    }).on('active', function () {
+      console.log('transactions\tactive');
+      // replicate resumed (e.g. new changes replicating, user went back online)
+    }).on('denied', function (err) {
+      console.log("transactions\tdenied:");
+      console.log(err);
+      // a document failed to replicate (e.g. due to permissions)
+    }).on('complete', function (info) {
+      console.log("transactions\tsync complete\tinfo:");
+      console.log(info);
+      // handle complete
+    }).on('error', function (err) {
+      console.log("transactions\tsync error");
+      console.log(err);
+      // handle error
+    });
+    this.billingdb.sync(this.billingRemote, options)
+    .on('change', function (info) {
+      console.log('billing\tchange');
+      // handle change
+    }).on('paused', function (err) {
+      console.log('billing\tpaused');
+      // replication paused (e.g. replication up to date, user went offline)
+    }).on('active', function () {
+      console.log('billing\tactive');
+      // replicate resumed (e.g. new changes replicating, user went back online)
+    }).on('denied', function (err) {
+      console.log("billing\tdenied:");
+      console.log(err);
+      // a document failed to replicate (e.g. due to permissions)
+    }).on('complete', function (info) {
+      console.log("billing\tsync complete\tinfo:");
+      console.log(info);
+      // handle complete
+    }).on('error', function (err) {
+      console.log("billing\tsync error");
+      console.log(err);
+      // handle error
+    });
   }
 
   getTodaysTransaction(dateString: string){

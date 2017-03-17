@@ -21,14 +21,36 @@ export class ClassRoomProvider {
 
 
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/classrooms';
-    //this.remote = 'http://localhost:5984/classrooms';
+    // this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/classrooms';
+    // this.remote = 'http://localhost:5984/classrooms';
     let options = {
       live: true,
       retry: true,
       continuous: true
     };
 
-    this.db.sync(this.remote, options);
+    this.db.sync(this.remote, options).on('change', function (info) {
+      console.log('classroom\tchange');
+      // handle change
+    }).on('paused', function (err) {
+      console.log('classroom\tpaused');
+      // replication paused (e.g. replication up to date, user went offline)
+    }).on('active', function () {
+      console.log('classroom\tactive');
+      // replicate resumed (e.g. new changes replicating, user went back online)
+    }).on('denied', function (err) {
+      console.log("classroom\tdenied:");
+      console.log(err);
+      // a document failed to replicate (e.g. due to permissions)
+    }).on('complete', function (info) {
+      console.log("classroom\tsync complete\tinfo:");
+      console.log(info);
+      // handle complete
+    }).on('error', function (err) {
+      console.log("classroom\tsync error");
+      console.log(err);
+      // handle error
+    });
 
     //tell the db wha to do when it detects a change
     this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change=>{
@@ -40,7 +62,6 @@ export class ClassRoomProvider {
 //I believe this might be unnecessary Chris 2/3/17
   forceInit(){
     console.log("classroom provider force init");
-
   }
 
   //this will set the data object to one classroom and return the data object

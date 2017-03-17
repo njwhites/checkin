@@ -17,6 +17,7 @@ export class StudentProvider {
 
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/students';
     // this.remote = 'http://localhost:5984/students';
+    // this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/students';
     let options = {
       live: true,
       retry: true,
@@ -30,7 +31,29 @@ export class StudentProvider {
       }
     };
 
-    this.db.sync(this.remote, options);
+    this.db.sync(this.remote, options)
+    .on('change', function (info) {
+      console.log('students\tchange');
+      // handle change
+    }).on('paused', function (err) {
+      console.log('students\tpaused');
+      // replication paused (e.g. replication up to date, user went offline)
+    }).on('active', function () {
+      console.log('students\tactive');
+      // replicate resumed (e.g. new changes replicating, user went back online)
+    }).on('denied', function (err) {
+      console.log("students\tdenied:");
+      console.log(err);
+      // a document failed to replicate (e.g. due to permissions)
+    }).on('complete', function (info) {
+      console.log("students\tsync complete\tinfo:");
+      console.log(info);
+      // handle complete
+    }).on('error', function (err) {
+      console.log("students\tsync error");
+      console.log(err);
+      // handle error
+    });
   }
 
   forceInit(){

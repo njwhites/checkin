@@ -24,15 +24,37 @@ export class UserProvider {
     this.db = new PouchDB('users');
 
     this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/users';
+    // this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/users';
 
-    //this.remote = 'http://localhost:5984/users';
+    // this.remote = 'http://localhost:5984/users';
     let options = {
       live: true,
       retry: true,
       continuous: true
     };
 
-    this.db.sync(this.remote, options);
+    this.db.sync(this.remote, options).on('change', function (info) {
+      console.log('user\tchange');
+      // handle change
+    }).on('paused', function (err) {
+      console.log('user\tpaused');
+      // replication paused (e.g. replication up to date, user went offline)
+    }).on('active', function () {
+      console.log('user\tactive');
+      // replicate resumed (e.g. new changes replicating, user went back online)
+    }).on('denied', function (err) {
+      console.log("user\tdenied:");
+      console.log(err);
+      // a document failed to replicate (e.g. due to permissions)
+    }).on('complete', function (info) {
+      console.log("user\tsync complete\tinfo:");
+      console.log(info);
+      // handle complete
+    }).on('error', function (err) {
+      console.log("user\tsync error");
+      console.log(err);
+      // handle error
+    });
   }
 
   forceInit(){
@@ -93,7 +115,7 @@ export class UserProvider {
                         return false;
                       }
                     });
-        
+
         if(stuff.length > 0){
           resolve(stuff[0]);
         } else {
