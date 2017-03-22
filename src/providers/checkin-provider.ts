@@ -53,12 +53,12 @@ export class CheckinProvider {
 
     PouchDB.plugin(require('pouchdb-upsert'));
 
-    this.billingRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/billing';
-    // this.billingRemote = 'http://chris:couchdbadmin5@104.197.130.97:5984/billing';
+    // this.billingRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/billing';
+    this.billingRemote = 'http://chris:couchdbadmin5@104.197.130.97:5984/billing';
     // this.billingRemote = 'http://localhost:5984/billing';
 
-    this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/transactions';
-    // this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/transactions';
+    // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/transactions';
+    this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/transactions';
     // this.remote = 'http://localhost:5984/transactions';
     let options = {
       live: true,

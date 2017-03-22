@@ -20,8 +20,8 @@ export class ClassRoomProvider {
 
 
 
-    this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/classrooms';
-    // this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/classrooms';
+    // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/classrooms';
+    this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/classrooms';
     // this.remote = 'http://localhost:5984/classrooms';
     let options = {
       live: true,
