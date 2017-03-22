@@ -34,7 +34,6 @@ export class AdminChangeQuestionPage {
         Validators.compose([
           Validators.required,
           (control: FormControl)=>{
-            console.log(control);
             return ((control.value || '').length >= 40) ?
               {fortyCharacters: true} : null;
           }
