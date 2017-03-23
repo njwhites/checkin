@@ -407,7 +407,7 @@ export class CheckinProvider {
       this.getTodaysTransaction(null).then((result: TransactionModel) => {
         this.performEvent(id, result, by_id, this.CHECK_IN).then(result => {
           this.studentService.updateStudentLocation(id, this.CHECKED_IN).then(() => {
-            this.loggingService.writeLog("Student with id:${id} was checked in");
+            this.loggingService.writeLog(`Student with id:${id} was checked in`);
             resolve(true);
           });
         });
@@ -462,21 +462,21 @@ export class CheckinProvider {
                   let length = (new Date().getTime() - Number(therapy.start_time))/(1000*60);
                   this.therapistCheckinFollowUp(id, by_id, therapy.start_time +"", length, 0).then(() => {
                     this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
-                      this.loggingService.writeLog("Student with id:${id} was checked out");
+                      this.loggingService.writeLog(`Student with id:${id} was checked out`);
                       resolve(true);
                     });
                   });
                 })
               }else{
                 this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
-                  this.loggingService.writeLog("Student with id:${id} was checked out");
+                  this.loggingService.writeLog(`Student with id:${id} was checked out`);
                   resolve(true);
                 });
               }
             });
           }else{
             this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() => {
-              this.loggingService.writeLog("Student with id:${id} was checked out");
+              this.loggingService.writeLog(`Student with id:${id} was checked out`);
               resolve(true);
             });
           }
@@ -517,7 +517,7 @@ export class CheckinProvider {
   nurseCheckout(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.NURSE_OUT).then(() => {
-        this.loggingService.writeLog("Student with id:${id} was checked out of the classroom by id: ${by_id}");
+        this.loggingService.writeLog(`Student with id:${id} was checked out of the classroom by id: ${by_id}`);
         this.studentService.updateStudentLocation(id, this.CHECKED_OUT_NURSE);
       });
     });
@@ -526,7 +526,7 @@ export class CheckinProvider {
   nurseCheckin(id: string, by_id: string, nap_subtract?: number){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.NURSE_IN, nap_subtract).then(() => {
-        this.loggingService.writeLog("Student with id:${id} was checked into the classroom by id: ${by_id}");
+        this.loggingService.writeLog(`Student with id:${id} was checked into the classroom by id: ${by_id}`);
         this.studentService.updateStudentLocation(id, this.CHECKED_IN);
       })
     });
@@ -557,7 +557,7 @@ export class CheckinProvider {
       }
       this.performEvent(id, result, by_id, event_type).then(response => {
         this.addTherapyStart(id, by_id, Date.now(), result).then(() => {
-          this.loggingService.writeLog("Student with id:${id} was checked out by therapist with id: ${by_id}");
+          this.loggingService.writeLog(`Student with id:${id} was checked out by therapist with id: ${by_id}`);
           this.studentService.updateStudentLocation(id, location);
         });
       });
@@ -599,7 +599,7 @@ export class CheckinProvider {
     return new Promise((resolve, reject) => {
       this.getTodaysTransaction(null).then(result => {
         this.getIncompleteTherapy(id, result).then((therapy: TransactionTherapy) => {
-          this.loggingService.writeLog("Student with id:${id} was checked into the classroom from therapy");
+          this.loggingService.writeLog(`Student with id:${id} was checked into the classroom from therapy`);
           resolve(therapy);
         })
       }).catch(err => {
@@ -684,7 +684,7 @@ export class CheckinProvider {
               //Success!
               //console.log(`Successfully updated student with id:${me.id}`);
 
-              this.loggingService.writeLog("Student with id:${id} was checked in by therapist with id: ${by_id}");
+              this.loggingService.writeLog(`Student with id:${student_id} was checked in by therapist with id: ${by_id}`);
               resolve(true);
 
             }).catch(err => {
