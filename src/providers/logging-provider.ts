@@ -21,9 +21,24 @@ export class LoggingProvider {
 
   //writes to the db a log string with a key as timestamp
   writeLog(logString: string): boolean{
-    let now = Date.now();
+    let now = new Date();
+    let dateString = now.getFullYear()+"-"+(now.getMonth() + 1)+"-"+(now.getDate());
+    console.log(dateString);
+
+    this.db.upsert(dateString, (doc)=>{
+      doc[Date.now()] = logString;
+      return doc;
+    }).then(()=>{
+      //success!
+      return true;
+    }).catch((err)=>{
+      console.log(err);
+      //something went wrong
+      return false;
+    })
 
     return false;
+
   }
 
   //return the logging data
