@@ -34,31 +34,31 @@ export class UserProvider {
     };
 
     this.db.sync(this.remote, options).on('change', function (info) {
-      console.log('user\tchange');
+      // console.log('user\tchange');
       // handle change
     }).on('paused', function (err) {
-      console.log('user\tpaused');
+      // console.log('user\tpaused');
       // replication paused (e.g. replication up to date, user went offline)
     }).on('active', function () {
-      console.log('user\tactive');
+      // console.log('user\tactive');
       // replicate resumed (e.g. new changes replicating, user went back online)
     }).on('denied', function (err) {
-      console.log("user\tdenied:");
-      console.log(err);
+      // console.log("user\tdenied:");
+      // console.log(err);
       // a document failed to replicate (e.g. due to permissions)
     }).on('complete', function (info) {
-      console.log("user\tsync complete\tinfo:");
-      console.log(info);
+      //console.log("user\tsync complete\tinfo:");
+      //console.log(info);
       // handle complete
     }).on('error', function (err) {
-      console.log("user\tsync error");
+      //console.log("user\tsync error");
       console.log(err);
       // handle error
     });
   }
 
   forceInit(){
-    console.log("user provider force init");
+    // console.log("user provider force init");
     //tell the db what to do when it detects a change
     this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change => {
       this.handleChange(change);
@@ -66,33 +66,22 @@ export class UserProvider {
   }
 
   getAllUsers(){
-    //Chris 1/27/17 this would be used to reduce the number of db calls
-    // if(this.data) return Promise.resolve(this.data);
-
-    return new Promise(resolve =>{
+    return new Promise((resolve, reject) =>{
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
         this.data = new Map<String,UserModel>();
         result.rows.map(row => {
           this.data.set(row.doc._id, (row.doc));
         });
-
         resolve(this.data);
-
-
       }).catch(error =>{
         console.log(error);
+        reject(error);
       });
     });
   }
 
   getUserByID(id: String){
-
-    // Chris 1/27/17 used to reduce number of db calls
-    // if(this.data) {
-    //   return Promise.resolve(this.data[Number(id)]);
-    // }
     return new Promise(resolve => {
-
       this.db.get(id).then(doc => {
         resolve(doc);
       }).catch(err => {
@@ -104,7 +93,7 @@ export class UserProvider {
     });
   }
 
-  //mainly for admin requests, we will now be able ot get the user by their email field
+  //mainly for admin requests, we will now be able to get the user by their email field
   getUserByEmail(email: String){
     return new Promise((resolve, reject)=>{
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
@@ -129,12 +118,12 @@ export class UserProvider {
   }
 
   getTherapistTypeByID(ID: string){
-//promise for async
-  ID = String(ID);
+    //promise for async
+    ID = String(ID);
     return new Promise((resolve, reject) => {
-//get the user from the db
+      //get the user from the db
       this.db.get(ID).then(doc => {
-//if the therapist_type is set then it
+        //if the therapist_type is set then it
         if(doc.therapy_type !== null && doc.therapy_type !== undefined && doc.therapy_type.length > 0){
           resolve(doc.therapy_type);
         } else {
@@ -158,7 +147,7 @@ export class UserProvider {
       })
     } else {
 
-      return new Promise(resolve =>{
+      return new Promise((resolve, reject) =>{
         let newID: String = "-1";
 
         //find the next available id number
@@ -173,24 +162,33 @@ export class UserProvider {
           user._id = newID;
 
           this.data.set(user._id, user);
-          this.db.upsert(user._id,(()=>{return user}));
+          this.db.upsert(user._id,(()=>{return user})).catch((err)=>{
+            console.log(err);
+          });
 
 
           //return the generated id so that we can let the user know their id
           resolve(newID);
+        }).catch((err)=>{
+          console.log(err);
+          reject(err)
         });
       })
     }
   }
 
   updateUser(user: UserModel){
-    this.db.upsert(user._id, (()=>{return user}));
+    this.db.upsert(user._id, (()=>{return user})).catch((err)=>{
+      console.log(err);
+    });
   }
 
   deleteUserByDoc(user: UserModel){
     return new Promise(resolve =>{
-      this.db.upsert(user._id, ((doc)=>{doc._deleted=true; return doc}));
       this.data.delete(user._id);
+      this.db.upsert(user._id, ((doc)=>{doc._deleted=true; return doc;})).catch((err)=>{
+        console.log(err);
+      });
       resolve();
     })
   }
@@ -206,13 +204,15 @@ export class UserProvider {
   getTherapistFavoriteIDs(ID: String){
     return new Promise((resolve, reject) => {
       this.db.get(ID).then(result => {
-        console.log(result);
+        // console.log(result);
         if(result.role.toLowerCase() === 'therapist'){
           if(!result.therapy_fav_ids){
             //add it as a field with empty []
             this.db.upsert(ID, (doc) => {
               doc.therapy_fav_ids = [];
               return doc;
+            }).catch((err)=>{
+              console.log(err);
             })
             resolve([]);
           }else{
@@ -223,6 +223,7 @@ export class UserProvider {
           reject("Not therapist");
         }
       }).catch(err => {
+        console.log(err);
         reject("ERRORRRRR");
       })
     })
@@ -242,21 +243,21 @@ export class UserProvider {
         }
         else{
           this.db.upsert(t_id, (doc) => {
-              //theoretically should add the new student
-              doc.therapy_fav_ids = [...doc.therapy_fav_ids, s_id];
-              return doc;
-            }).then(result => {
-              resolve(true);
-            }).catch(err => {
-              console.log(err);
-              reject(false);
-            })
-          }
-        }).catch(err => {
-          console.log(err);
-          reject(false);
-        });
-          });
+            //theoretically should add the new student
+            doc.therapy_fav_ids = [...doc.therapy_fav_ids, s_id];
+            return doc;
+          }).then(result => {
+            resolve(true);
+          }).catch(err => {
+            console.log(err);
+            reject(false);
+          })
+        }
+      }).catch(err => {
+        console.log(err);
+        reject(false);
+      });
+    });
   }
 
   removeTherapistFavoriteID(t_id: String, s_id: String){
@@ -279,7 +280,6 @@ export class UserProvider {
         console.log(err);
         reject(err);
       });
-
     });
   }
 
@@ -292,20 +292,23 @@ export class UserProvider {
         doc.visible_students.push(SID);
       }
       return doc;
+    }).catch((err)=>{
+      console.log(err);
     })
   }
 
   removeVisibleStudent(user: UserModel, SID: String){
 
     let studentIndex = user.visible_students.indexOf(SID);
-    console.log(studentIndex);
     if(studentIndex === -1){
       console.log("error: user not found in the class");
     } else {
       this.db.upsert(user._id, ((doc: UserModel)=>{
         doc.visible_students.splice(studentIndex, 1);
         return doc;
-      }));
+      })).catch((err)=>{
+        console.log(err);
+      });
     }
   }
 
@@ -317,6 +320,4 @@ export class UserProvider {
       this.data.set(change.doc._id, change.doc);
     }
   }
-
-
 }

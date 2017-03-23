@@ -5,8 +5,6 @@ import PouchDB from 'pouchdb';
 export class ConstantsProvider {
 
   private db: any;
-  private remote: string;
-  private options: any;
 
   constructor() {
     //setup a local db

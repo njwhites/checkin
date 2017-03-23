@@ -33,24 +33,24 @@ export class StudentProvider {
 
     this.db.sync(this.remote, options)
     .on('change', function (info) {
-      console.log('students\tchange');
+      // console.log('students\tchange');
       // handle change
     }).on('paused', function (err) {
-      console.log('students\tpaused');
+      // console.log('students\tpaused');
       // replication paused (e.g. replication up to date, user went offline)
     }).on('active', function () {
-      console.log('students\tactive');
+      // console.log('students\tactive');
       // replicate resumed (e.g. new changes replicating, user went back online)
     }).on('denied', function (err) {
-      console.log("students\tdenied:");
+      // console.log("students\tdenied:");
       console.log(err);
       // a document failed to replicate (e.g. due to permissions)
     }).on('complete', function (info) {
-      console.log("students\tsync complete\tinfo:");
-      console.log(info);
+      // console.log("students\tsync complete\tinfo:");
+      // console.log(info);
       // handle complete
     }).on('error', function (err) {
-      console.log("students\tsync error");
+      // console.log("students\tsync error");
       console.log(err);
       // handle error
     });
@@ -64,30 +64,19 @@ export class StudentProvider {
   }
 
   getStudents(){
-    //if this provider already has the data, just return it
-    //future changes to db will be auto synchronized
-
-    //  this would be used to reduce the number of calls to the db
-    //  currently the setup is to only call the db once per room selection, therefore this isn't necessary
-    //  Chris 1/13/2017 commented this out so that there wouldn't be any weird bugs involving trying to get all the students and only getting students from a previously selected room
-    // if(this.data){
-    //   return Promise.resolve(this.data);
-    // }
-
-
-    //otherwise we should do an initial gathering of docs
-    return new Promise(resolve =>{
+    //we should do an initial gathering of docs
+    return new Promise((resolve, reject) =>{
       this.data = new Map<String, StudentModel>();
 
       //start with key 0 and end with any key starting with a 9, this is to dodge other database docs like _view type metadata
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
-
         result.rows.map(row => {
           this.data.set(row.doc._id, (row.doc));
         });
         resolve(this.data);
       }).catch(error =>{
         console.log(error);
+        reject(error);
       });
     });
   }
@@ -98,7 +87,7 @@ export class StudentProvider {
     //but probably only see speed up with huge docs
     this.roomRoster = IDs;
 
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       this.data = new Map<String, StudentModel>();
       //start with key 0 and end with any key starting with a 9, this is to dodge other database docs like _view type metadata
       this.db.allDocs({include_docs: true, startkey:'0', endkey: '9\uffff'}).then(result => {
@@ -108,28 +97,13 @@ export class StudentProvider {
             this.data.set(row.doc._id, row.doc);
           }
         });
-
         resolve(this.data);
-
       }).catch(error => {
         console.log(error)
+        reject(error);
       });
     });
   }
-
-  //work in progress, development tabled until use case arises
-  /*getStudentByFullName(name){
-    let found = false;
-
-    for(let row of this.data){
-      if(row.fName+" "+row.lName === name){
-        found = true;
-        return Promise.resolve(row);
-      }
-    }
-
-    if(!found){}
-  }*/
 
   createStudent(student: StudentModel){
     //if student._id is not -1 the user supplied an ID rather than getting an auto generated one
@@ -144,7 +118,7 @@ export class StudentProvider {
 
       let newID: String = "-1";
       //find the next available id number
-      return new Promise(resolve =>{
+      return new Promise((resolve, reject) =>{
         this.db.allDocs({include_docs: false, startkey:'0', endkey: '9\uffff'}).then(result => {
 
           result.rows.map(row => {
@@ -158,9 +132,14 @@ export class StudentProvider {
           //   console.log(err)
           // })
           this.data.set(student._id, student);
-          this.db.upsert(student._id, (() =>{return student}));
+          this.db.upsert(student._id, (() =>{return student})).catch((err)=>{
+            console.log(err);
+          });
           //return the generated id so that we can let the student know their id, may not be needed
           resolve(newID);
+        }).catch((err)=>{
+          console.log(err);
+          reject(err);
         });
       });
     }
@@ -201,14 +180,16 @@ export class StudentProvider {
   // }
 
   updateStudent(student: StudentModel){
-    this.db.upsert(student._id, (() => {return student}));
+    this.db.upsert(student._id, (() => {return student})).catch((err)=>{
+      console.log(err);
+    });
     // this.db.put(student).catch(err => {
     //   console.log(err);
     // });
   }
 
   updateStudentLocation(ID: String, Location: String){
-    return new Promise(resolve => {
+    return new Promise((resolve,reject) => {
       //retrieve the student document, we need this because we need revision history
       this.db.get(ID).then(doc => {
         doc.location = Location;
@@ -230,6 +211,8 @@ export class StudentProvider {
   }
 
   updateStudents(students: Array<StudentModel>){
+
+    //TODO might could be done better in a bulk doc if we see that we need speed up
     for(let student of students){
       this.updateStudent(student);
     }
@@ -245,7 +228,9 @@ export class StudentProvider {
     //this.db.upsert(student._id, ((doc)=>{doc._deleted = true; return doc}));
 
     return new Promise(resolve => {
-      this.db.upsert(student._id, ((doc)=>{doc._deleted = true; return doc}));
+      this.db.upsert(student._id, ((doc)=>{doc._deleted = true; return doc})).catch((err)=>{
+        console.log(err);
+      });
       if(Number(student._id) >= 0){
         this.data.delete(student._id);
       }
@@ -268,8 +253,6 @@ export class StudentProvider {
 
       this.db.bulkDocs(studentDocs).catch(err=>{
         console.log(err);
-      }).catch(err=>{
-        console.log(err);
       });
 
     }).catch(error =>{
@@ -281,15 +264,11 @@ export class StudentProvider {
 
 
   handleChange(change){
-    console.log(this.data);
-    console.log(change);
 
     //if roomRoster is set then we need to make sure that people who are not part of roomRoster aren't added to the data object
     //otherwise the data object should have everyone
-    console.log(this.roomRoster);
     if(this.roomRoster.length > 0){
       //if the changed student id is not in the roomRoster then proceed with the updates
-      console.log("\troster.indexOf:\t"+this.roomRoster.indexOf(change.doc._id));
 
       if(~this.roomRoster.indexOf(change.doc._id)){
         if(change.deleted){
@@ -299,13 +278,11 @@ export class StudentProvider {
         }
       }
     } else {
-      console.log("else");
       if(change.deleted){
         this.data.delete(change.doc._id);
       } else {
         this.data.set(change.doc._id, change.doc);
       }
     }
-    console.log(this.data);
   }
 }
