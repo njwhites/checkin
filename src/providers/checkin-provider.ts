@@ -6,6 +6,9 @@ import { StudentProvider } from './student-provider';
 import { UserProvider } from './user-provider';
 import { ClassRoomProvider } from './class-room-provider';
 
+
+import { LoggingProvider } from './logging-provider';
+
 import { TransactionModel, TransactionStudentModel, TransactionEvent, TransactionTherapy,
       BillingDay, BillingWeekModel, StudentBillingWeek, ClassroomWeek} from '../models/db-models';
 
@@ -45,7 +48,7 @@ export class CheckinProvider {
   remote: any;
   billingRemote: any;
 
-  constructor(public http: Http, public studentService: StudentProvider, public userService: UserProvider, public classroomService: ClassRoomProvider) {
+  constructor(public http: Http, public loggingService: LoggingProvider, public studentService: StudentProvider, public userService: UserProvider, public classroomService: ClassRoomProvider) {
     console.log('Hello CheckinProvider Provider');
 
     this.db = new PouchDB('transactions');
@@ -148,7 +151,7 @@ export class CheckinProvider {
           }).then(response => {
             //unsure how to do this without recursion. basically since it has been added to the db,
             //it will on recursion go into the other part of the if/else
-            console.log("Successfully added transaction for day: " + dateString)
+            this.loggingService.writeLog("Successfully added transaction table for day: " + dateString);
             resolve(this.getTodaysTransaction(dateString));
           }).catch(function (err) {
             console.log(err);
@@ -191,6 +194,7 @@ export class CheckinProvider {
         if(me[0].nap_subtract){
           student.nap_subtract = me[0].nap_subtract;
         }
+        this.loggingService.writeLog(`Successfully created student ${student.id} in transaction database`);
         resolve(student);
       }
     })
@@ -403,6 +407,7 @@ export class CheckinProvider {
       this.getTodaysTransaction(null).then((result: TransactionModel) => {
         this.performEvent(id, result, by_id, this.CHECK_IN).then(result => {
           this.studentService.updateStudentLocation(id, this.CHECKED_IN).then(() => {
+            this.loggingService.writeLog("Student with id:${id} was checked in");
             resolve(true);
           });
         });
@@ -457,18 +462,21 @@ export class CheckinProvider {
                   let length = (new Date().getTime() - Number(therapy.start_time))/(1000*60);
                   this.therapistCheckinFollowUp(id, by_id, therapy.start_time +"", length, 0).then(() => {
                     this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
+                      this.loggingService.writeLog("Student with id:${id} was checked out");
                       resolve(true);
                     });
                   });
                 })
               }else{
                 this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
+                  this.loggingService.writeLog("Student with id:${id} was checked out");
                   resolve(true);
                 });
               }
             });
           }else{
             this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() => {
+              this.loggingService.writeLog("Student with id:${id} was checked out");
               resolve(true);
             });
           }
@@ -509,6 +517,7 @@ export class CheckinProvider {
   nurseCheckout(id: string, by_id: string){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.NURSE_OUT).then(() => {
+        this.loggingService.writeLog("Student with id:${id} was checked out of the classroom by id: ${by_id}");
         this.studentService.updateStudentLocation(id, this.CHECKED_OUT_NURSE);
       });
     });
@@ -517,6 +526,7 @@ export class CheckinProvider {
   nurseCheckin(id: string, by_id: string, nap_subtract?: number){
     this.getTodaysTransaction(null).then(result => {
       this.performEvent(id, result, by_id, this.NURSE_IN, nap_subtract).then(() => {
+        this.loggingService.writeLog("Student with id:${id} was checked into the classroom by id: ${by_id}");
         this.studentService.updateStudentLocation(id, this.CHECKED_IN);
       })
     });
@@ -547,6 +557,7 @@ export class CheckinProvider {
       }
       this.performEvent(id, result, by_id, event_type).then(response => {
         this.addTherapyStart(id, by_id, Date.now(), result).then(() => {
+          this.loggingService.writeLog("Student with id:${id} was checked out by therapist with id: ${by_id}");
           this.studentService.updateStudentLocation(id, location);
         });
       });
@@ -588,6 +599,7 @@ export class CheckinProvider {
     return new Promise((resolve, reject) => {
       this.getTodaysTransaction(null).then(result => {
         this.getIncompleteTherapy(id, result).then((therapy: TransactionTherapy) => {
+          this.loggingService.writeLog("Student with id:${id} was checked into the classroom from therapy");
           resolve(therapy);
         })
       }).catch(err => {
@@ -671,6 +683,8 @@ export class CheckinProvider {
             this.db.upsert(doc._id, delta).then(() => {
               //Success!
               //console.log(`Successfully updated student with id:${me.id}`);
+
+              this.loggingService.writeLog("Student with id:${id} was checked in by therapist with id: ${by_id}");
               resolve(true);
 
             }).catch(err => {
