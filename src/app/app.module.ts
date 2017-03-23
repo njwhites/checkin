@@ -22,6 +22,7 @@ import {CheckinProvider} from "../providers/checkin-provider";
 import {UtilityProvider} from "../providers/utility-provider";
 import {ConstantsProvider} from "../providers/constants-provider";
 import {AuthProvider} from "../providers/auth-provider";
+import {LoggingProvider} from "../providers/logging-provider";
 import {KitchenPage} from "../pages/kitchen/kitchen";
 import {TherapistPage} from "../pages/therapist/therapist";
 import {HomeButtonPage} from "../pages/home-button/home-button";
@@ -159,6 +160,6 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     GenericCheckinConfirmModalPage
 
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider, AuthProvider, ConstantsProvider]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider, AuthProvider, ConstantsProvider, LoggingProvider]
 })
 export class AppModule {}
