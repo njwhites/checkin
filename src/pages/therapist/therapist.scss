@@ -22,7 +22,7 @@ page-therapist {
   .scrollView {
     background: transparent;
     align-items: center;
-    height: 65vh;
+    height: 60vh;
   }
   .push-to-bottom {
     background: transparent;
@@ -80,8 +80,30 @@ page-therapist {
     color: gray;
     font-size: 200%;
   }
-  .cardElement {
+  //iPad landscape
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .scrollView{
+      height: 65vh;
+    }
+    .push-to-bottom{
+      bottom: 3vh;
+    }
   }
-  .cardContent {
+
+  //iPad portrait or iPad pro portrait
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .scrollView{
+      height: 72vh;
+    }
+  }
+
+  //computer and iPad pro Landscape
+  @media (min-width: 1025px) {
+
+  }
+
+  //phone
+  @media (max-width: 767px) {
+
   }
 }
