@@ -22,7 +22,7 @@ export class LoggingProvider {
   //writes to the db a log string with a key as timestamp
   writeLog(logString: string): boolean{
     let now = Date.now();
-
+    console.log(logString);
     return false;
   }
 

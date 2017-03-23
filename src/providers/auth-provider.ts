@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import {UserModel} from '../models/db-models';
 
+import { LoggingProvider } from './logging-provider';
+
 let crypto;
 try {
   crypto = require('crypto');
@@ -15,7 +17,7 @@ export class AuthProvider {
   hashRemote: String;
 
 
-  constructor() {
+  constructor(public loggingService: LoggingProvider) {
 
     // this.hashdb = new PouchDB('hashes');
     // this.hashRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/authentication';
@@ -76,6 +78,7 @@ export class AuthProvider {
         console.log(doc);
         return doc;
       }).then((result) => {
+        this.loggingService.writeLog(`Password set for user with ID: ${id}`);  
         resolve();
       }).catch(err => {
         console.log(err);
@@ -86,10 +89,13 @@ export class AuthProvider {
   }
 
   //DELETE FUNCTION?
-  deletePasswordByDoc(user: UserModel){
+  deletePasswordByDoc(user: any){
     return new Promise(resolve =>{
-      this.hashdb.upsert(user._id, ((doc)=>{doc._deleted=true; return doc}));
-      resolve();
+      this.hashdb.upsert(user._id, ((doc)=>{doc._deleted=true; return doc})).then(() => {
+        //write to logging
+        this.loggingService.writeLog(`Password data deleted for user with ID: ${user._id}`);  
+        resolve();
+      })
     })
   }
 
@@ -132,6 +138,8 @@ export class AuthProvider {
         console.log(doc);
         return doc;
       }).then((result) => {
+
+        this.loggingService.writeLog(`Password question set for user with ID: ${id}`);  
         resolve();
       }).catch(err => {
         console.log(err);
