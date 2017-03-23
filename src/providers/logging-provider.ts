@@ -23,7 +23,6 @@ export class LoggingProvider {
   writeLog(logString: string): boolean{
     let now = new Date();
     let dateString = now.getFullYear()+"-"+(now.getMonth() + 1)+"-"+(now.getDate());
-    console.log(dateString);
 
     this.db.upsert(dateString, (doc)=>{
       doc[Date.now()] = logString;
@@ -47,7 +46,13 @@ export class LoggingProvider {
   // }
 
   //return the logging data for a specific day
-  loggingDataByDay(inputDay:Date):Map<string, string>{
-    return new Map<string,string>();
+  loggingDataByDay(inputDay:Date){
+    let searchDate = inputDay.getFullYear()+"-"+(inputDay.getMonth() + 1)+"-"+(inputDay.getDate());
+    this.db.get(searchDate).then((doc)=>{
+      return doc;
+    }).catch((err)=>{
+      console.log(err);
+      return {};
+    })
   }
 }
