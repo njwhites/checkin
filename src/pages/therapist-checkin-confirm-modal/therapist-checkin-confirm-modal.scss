@@ -1,5 +1,14 @@
 page-therapist-checkin-confirm-modal {
-  .modal-wrapper-height-shrink{
-    height: 80%;
+  @media (max-width: 1023px) {
+    .modal-wrapper-height-shrink{
+      height: 80%;
+    }
   }
+
+  @media (min-width: 1024px) {
+    .modal-wrapper-height-shrink{
+      height: 100%;
+    }
+  }
+
 }
