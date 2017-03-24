@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import {ClassRoomModel} from '../models/db-models';
 import {StudentProvider} from './student-provider';
+import {LoggingProvider} from './logging-provider';
+
 
 @Injectable()
 export class ClassRoomProvider {
@@ -12,7 +14,7 @@ export class ClassRoomProvider {
   remote: String;
   selectedClassroom: String;
 
-  constructor(public studentService: StudentProvider) {
+  constructor(public studentService: StudentProvider, public loggingService: LoggingProvider) {
     this.data = new Map<String,ClassRoomModel>();
 
     //setup a local db and then sync it to a backend db
@@ -156,7 +158,9 @@ export class ClassRoomProvider {
         doc.students.push(student);
       }
       return doc;
-    }));
+    })).then(() => {
+      this.loggingService.writeLog(`Student with id: ${student} has been added to room ${classroom.roomNumber}`);
+    });
 
     // classroom.students.push(student);
     // this.updateClassRoom(classroom);
@@ -174,7 +178,9 @@ export class ClassRoomProvider {
       this.db.upsert(classroom._id, ((doc)=>{
         doc.students.splice(studentIndex, 1);
         return doc;
-      }));
+      })).then(() => {
+        this.loggingService.writeLog(`Student with id: ${SID} has been removed from room ${classroom.roomNumber}`);
+      });
     }
   }
 
@@ -199,7 +205,9 @@ export class ClassRoomProvider {
         doc.aides.push(aide);
       }
       return doc;
-    }));
+    })).then(() => {
+      this.loggingService.writeLog(`Aide: ${aide} has been added to room ${classroom.roomNumber}`);
+    });
     classroom.aides.push(aide);
     this.data.set(classroom._id,classroom);
   }
@@ -217,7 +225,9 @@ export class ClassRoomProvider {
       this.db.upsert(classroom._id, ((doc)=>{
         doc.aides.splice(userIndex, 1);
         return doc;
-      }));
+      })).then(() => {  
+        this.loggingService.writeLog(`Aide: ${userID} has been added to room ${classroom.roomNumber}`);
+      });
     }
   }
 
