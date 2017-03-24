@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import {StudentModel} from '../models/db-models';
+import {LoggingProvider} from './logging-provider';
 
 @Injectable()
 export class StudentProvider {
@@ -9,7 +10,7 @@ export class StudentProvider {
   db: any;
   remote: String;
 
-  constructor() {
+  constructor(public loggingService: LoggingProvider) {
     this.data = new Map<String,StudentModel>();
     this.roomRoster = new Array<String>();
     //setup a local db and then sync it to a backend db
@@ -134,6 +135,9 @@ export class StudentProvider {
           this.data.set(student._id, student);
           this.db.upsert(student._id, (() =>{return student})).catch((err)=>{
             console.log(err);
+          }).then(() => {
+
+            this.loggingService.writeLog(`Student with id: ${student._id} has been created`);
           });
           //return the generated id so that we can let the student know their id, may not be needed
           resolve(newID);
@@ -180,7 +184,9 @@ export class StudentProvider {
   // }
 
   updateStudent(student: StudentModel){
-    this.db.upsert(student._id, (() => {return student})).catch((err)=>{
+    this.db.upsert(student._id, (() => {return student})).then(()=>{
+      this.loggingService.writeLog(`Student with id: ${student} has been updated`);
+    }).catch((err)=>{
       console.log(err);
     });
     // this.db.put(student).catch(err => {
@@ -195,6 +201,7 @@ export class StudentProvider {
         doc.location = Location;
         //update the db with the modified student document
         this.db.put(doc).then(() => {
+          this.loggingService.writeLog(`Student with id: ${ID} has been updated to location: ${Location }`);
           resolve(doc);
         }).catch(err =>{
           console.log(err);
@@ -228,7 +235,9 @@ export class StudentProvider {
     //this.db.upsert(student._id, ((doc)=>{doc._deleted = true; return doc}));
 
     return new Promise(resolve => {
-      this.db.upsert(student._id, ((doc)=>{doc._deleted = true; return doc})).catch((err)=>{
+      this.db.upsert(student._id, ((doc)=>{doc._deleted = true; return doc})).then(() => {
+        this.loggingService.writeLog(`Student with id: ${student} has been deleted`);
+      }).catch((err)=>{
         console.log(err);
       });
       if(Number(student._id) >= 0){
