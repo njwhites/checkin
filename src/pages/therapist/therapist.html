@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content class="fixedBackground" *ngIf="!isEmpty()">
+<div class="fixed-content fixedBackground" scroll=false *ngIf="!isEmpty()">
   <ion-grid class="horizontal-align-center">
     <ion-row class="titleRow">
       <ion-col>
@@ -74,7 +74,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-content>
+</div>
 <ion-content *ngIf="isEmpty()">
 <ion-list>
 <div class="vertical-align-content">
