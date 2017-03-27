@@ -14,12 +14,14 @@ export class TherapistPage {
   id: number;
   therapistStudents: Array<string>;
   studentList: any;
+  editDesktop: boolean;
 
   constructor(public studentService: StudentProvider,
               public navCtrl: NavController,
               public navParams: NavParams,
               public checkinService: CheckinProvider,
               public userService: UserProvider) {
+    this.editDesktop = false;
     this.studentList = this.studentService.data;
     this.id = navParams.data;
     this.userService.getTherapistFavoriteIDs(this.id.toString()).then((result:any) => {
@@ -90,6 +92,14 @@ export class TherapistPage {
     }).catch(err => {
       console.log(err);
     });
+  }
+
+  edit() {
+    if(this.editDesktop) {
+      this.editDesktop = false;
+    } else {
+      this.editDesktop = true;
+    }
   }
 
 }

@@ -95,15 +95,35 @@ page-therapist {
     .scrollView{
       height: 72vh;
     }
+
+    .desktopEdit {
+      display: none;
+    }
+
+    .notDesktop {
+      display: block;
+    }
   }
 
   //computer and iPad pro Landscape
   @media (min-width: 1025px) {
+    .desktopEdit {
+      display: block;
+    }
 
+    .notDesktop {
+      display: none;
+    }
   }
 
   //phone
   @media (max-width: 767px) {
+    .desktopEdit {
+      display: none;
+    }
 
+    .notDesktop {
+      display: block;
+    }
   }
 }

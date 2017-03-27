@@ -1,7 +1,21 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Therapist</ion-title>
+    <ion-title class="notDesktop">Therapist</ion-title>
+    <ion-grid class="desktopEdit">
+      <ion-row>
+        <ion-col width-50>
+          <ion-title>Therapist</ion-title>
+        </ion-col>
+        <ion-col width-50>
+          <ion-buttons end>
+            <button ion-button icon-only (click)="edit()">
+              edit
+            </button>
+          </ion-buttons>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-navbar>
 
 </ion-header>
@@ -26,7 +40,16 @@
               <ion-card class="cardElement" *ngIf="this.studentList.get(thisStudent).location !== this.checkinService.CHECKED_OUT" (click)="studentTapped(this.studentList.get(thisStudent)._id)">
                   <ion-item-sliding>
                     <ion-item>
-                      <ion-icon name="walk" item-left></ion-icon>
+                      <span [hidden]="editDesktop">
+                        <button ion-button color="default" (click)="removeStudent(thisStudent)">
+                          <ion-icon name="walk" item-left></ion-icon>
+                        </button>
+                      </span>
+                      <span [hidden]="!editDesktop">
+                        <button ion-button color="danger" (click)="removeStudent(thisStudent)">
+                          <ion-icon name="trash"></ion-icon>
+                        </button>
+                      </span>
                       {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
                       <div item-right>
                         <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
