@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import {UserModel} from '../models/db-models';
 
+import {LoggingProvider} from './logging-provider';
+
 let crypto;
 try {
   crypto = require('crypto');
@@ -18,7 +20,7 @@ export class UserProvider {
   public THERAPY_TYPES = ["OT","PT","SLP"];
 
 
-  constructor() {
+  constructor(public loggingService: LoggingProvider) {
     this.data = new Map<String, UserModel>();
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('users');
@@ -162,7 +164,10 @@ export class UserProvider {
           user._id = newID;
 
           this.data.set(user._id, user);
-          this.db.upsert(user._id,(()=>{return user})).catch((err)=>{
+          this.db.upsert(user._id,(()=>{return user})).then(() => {
+
+            this.loggingService.writeLog(`User with id: ${user._id} has been created`);
+          }).catch((err)=>{
             console.log(err);
           });
 
@@ -186,7 +191,9 @@ export class UserProvider {
   deleteUserByDoc(user: UserModel){
     return new Promise(resolve =>{
       this.data.delete(user._id);
-      this.db.upsert(user._id, ((doc)=>{doc._deleted=true; return doc;})).catch((err)=>{
+      this.db.upsert(user._id, ((doc)=>{doc._deleted=true; return doc;})).then(()=>{
+        this.loggingService.writeLog(`User with id: ${user._id} has been deleted`);
+      }).catch((err)=>{
         console.log(err);
       });
       resolve();
@@ -247,6 +254,7 @@ export class UserProvider {
             doc.therapy_fav_ids = [...doc.therapy_fav_ids, s_id];
             return doc;
           }).then(result => {
+            this.loggingService.writeLog(`Therapist with id: ${t_id} has had student with id: ${s_id} added to their favorites`);
             resolve(true);
           }).catch(err => {
             console.log(err);
@@ -270,6 +278,7 @@ export class UserProvider {
           doc.therapy_fav_ids = result;
           return doc;
         }).then(result => {
+          this.loggingService.writeLog(`Therapist with id: ${t_id} has had student with id: ${s_id} removed from their favorites`);  
           resolve(true);
         }).catch(err => {
           console.log(err);
@@ -292,6 +301,8 @@ export class UserProvider {
         doc.visible_students.push(SID);
       }
       return doc;
+    }).then(() => {
+      this.loggingService.writeLog(`User with id: ${user._id} added student with id: ${SID} to their visible students`);        
     }).catch((err)=>{
       console.log(err);
     })
@@ -306,7 +317,9 @@ export class UserProvider {
       this.db.upsert(user._id, ((doc: UserModel)=>{
         doc.visible_students.splice(studentIndex, 1);
         return doc;
-      })).catch((err)=>{
+      })).then(()=>{
+        this.loggingService.writeLog(`User with id: ${user._id} removed student with id: ${SID} from their visible students`);
+      }).catch((err)=>{
         console.log(err);
       });
     }

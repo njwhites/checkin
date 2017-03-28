@@ -166,7 +166,7 @@ export class CheckinProvider {
 
   getStudent(id: string, doc: any){
     function addStudent(doc){
-      doc.students = [...doc.students, {id:id, events: [], nap: -1, therapies: []}];
+      doc.students = [...doc.students, {id:id, events: [], nap: 60, therapies: []}];
       return doc;
     }
     //if the student searched for doesnt already exist
@@ -456,24 +456,26 @@ export class CheckinProvider {
       this.getTodaysTransaction(null).then((result: TransactionModel) => {
         this.checkLimbo(id, result).then((isInLimbo) =>{
           if(!isInLimbo){
-            this.performEvent(id, result, by_id, this.CHECK_OUT).then(result => {
               if(this.isInTherapyLimbo(id)){
                 this.therapistCheckin(id, by_id).then((therapy : TransactionTherapy) => {
                   let length = (new Date().getTime() - Number(therapy.start_time))/(1000*60);
                   this.therapistCheckinFollowUp(id, by_id, therapy.start_time +"", length, 0).then(() => {
-                    this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
-                      this.loggingService.writeLog(`Student with id:${id} was checked out`);
-                      resolve(true);
+                    this.performEvent(id, result, by_id, this.CHECK_OUT).then(result => {
+                      this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
+                        this.loggingService.writeLog(`Student with id:${id} was checked out`);
+                        resolve(true);
+                      });
                     });
                   });
                 })
               }else{
-                this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
-                  this.loggingService.writeLog(`Student with id:${id} was checked out`);
-                  resolve(true);
+                this.performEvent(id, result, by_id, this.CHECK_OUT).then(result => {
+                  this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
+                    this.loggingService.writeLog(`Student with id:${id} was checked out`);
+                    resolve(true);
+                  });
                 });
               }
-            });
           }else{
             this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() => {
               this.loggingService.writeLog(`Student with id:${id} was checked out`);
@@ -763,7 +765,9 @@ export class CheckinProvider {
     var hours = Number(dontCare[0]);
     var minutes = Number(rest[0]);
     var AMPM = rest[1];
-    if(AMPM.toLowerCase() === "pm") {
+    console.log(AMPM);
+    if(AMPM.toLowerCase() === "pm" && hours !== 12) {
+      console.log("HERE");
       hours += 12;
     }
     var date = new Date();
