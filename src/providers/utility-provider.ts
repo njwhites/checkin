@@ -31,11 +31,7 @@ export class UtilityProvider {
     // this.db.sync(this.remote, options);
   }
 
-<<<<<<< HEAD
-//updates to integrate the initial page
-=======
 
->>>>>>> cleaned utility provider
   getCredentials(username: string){
     return new Promise((resolve, reject)=>{
       if(username === ''){
