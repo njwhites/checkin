@@ -5,10 +5,8 @@ import {StudentDetailsPage} from "../pages/student-details/student-details";
 import {LoginPage} from "../pages/login/login";
 import {ListPage} from "../pages/list/list";
 import {ClassroomPage} from "../pages/classroom/classroom";
-import {NapPage} from "../pages/nap/nap";
 import {PresentStudentsPage} from "../pages/present-students/present-students";
 import {StudentInfoButtonPage} from "../pages/student-info-button/student-info-button";
-import {NapSliderPage} from "../pages/nap-slider/nap-slider";
 import {TherapyPage} from "../pages/therapy/therapy";
 import {ClassroomIdPage} from "../pages/classroom-id/classroom-id";
 import {ActionButtonPage} from "../pages/action-button/action-button";
@@ -66,10 +64,8 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     LoginPage,
     ListPage,
     ClassroomPage,
-    NapPage,
     PresentStudentsPage,
     StudentInfoButtonPage,
-    NapSliderPage,
     TherapyPage,
     ClassroomIdPage,
     ActionButtonPage,
@@ -123,10 +119,8 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     LoginPage,
     ListPage,
     ClassroomPage,
-    NapPage,
     PresentStudentsPage,
     StudentInfoButtonPage,
-    NapSliderPage,
     TherapyPage,
     ClassroomIdPage,
     ActionButtonPage,

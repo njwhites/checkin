@@ -765,15 +765,12 @@ export class CheckinProvider {
     var hours = Number(dontCare[0]);
     var minutes = Number(rest[0]);
     var AMPM = rest[1];
-    console.log(AMPM);
     if(AMPM.toLowerCase() === "pm" && hours !== 12) {
-      console.log("HERE");
       hours += 12;
     }
     var date = new Date();
     date.setHours(hours);
     date.setMinutes(minutes);
-    console.log(date.getTime());
     return date.getTime();
   }
 

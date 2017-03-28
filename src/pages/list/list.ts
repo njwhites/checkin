@@ -19,7 +19,6 @@ export class ListPage {
   count: number;
   selectedStudent: any;
   signoutStudents: Array<string> = new Array<string>();
-  napStudents: Map<string, string> = new Map<string, string>();
   @Input() parentPage: string;
   @Input() userID: string;
   @Input() roomNumber: string;
@@ -182,44 +181,6 @@ export class ListPage {
   }
 
 /*******************************************************************************
- * updateNap
- *
- * takes length of nap and a student id and adds them to the map that will be pushed
- * to the database when update button is pressed
- *
- **/
-  updateNap(napTime, studentId) {
-    this.napStudents.set(String(studentId), napTime);
-  }
-
-/*******************************************************************************
- * updateAll
- *
- * takes map of students that has been populated by updateNap and adds any students
- * that aren't in the map with the default nap value
- * (runs when the update button is pressed)
- *
- **/
-  updateAll(){
-    this.studentService.data.forEach(student => {
-      if(!this.napStudents.has(String(student._id)) && (student.location !== 'Checked out')){
-        this.napStudents.set(String(student._id), "60");
-      }
-    });
-
-    this.checkinService.setNaps(this.napStudents);
-    let toast = this.toastCtrl.create({
-      //message: this.napStudents.length + ' student(s) checked in!',
-      message: "Naps Updated",
-      duration: 2000,
-      position: 'bottom'
-    });
-    toast.present(toast);
-    console.log(this.napStudents);
-    this.navCtrl.pop();
-  }
-
-/*******************************************************************************
  * isListEmpty
  *
  * Checks to see if the list the page has populated is empty to conditionally format
@@ -229,7 +190,7 @@ export class ListPage {
   isListEmpty() {
     let isEmpty: boolean;
     isEmpty = true;
-    if (this.parentPage === 'signout' || this.parentPage === 'napStudents') {
+    if (this.parentPage === 'signout') {
       this.studentService.data.forEach(student => {
         if(student.location !== 'Checked out'){
           isEmpty = false;

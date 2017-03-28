@@ -48,39 +48,6 @@
       </ion-content>
     </ion-list>
   </div>
-    <div *ngIf="parentPage === 'napStudents'">
-      <ion-content class="scrollable">
-        <ion-grid class="horizontal-align-center">
-          <ion-row class="buttonRow">
-            <ion-col>
-              <div class="titleRoom">
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      <ion-list inset>
-        <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID">
-          <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
-            <ion-card>
-              <ion-card-content>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col width-33 class="infoCol">
-                      <ion-icon name="walk" item-left></ion-icon>
-                      {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
-                    </ion-col>
-                    <ion-col width-67>
-                      <page-nap-slider [thisStudent]="this.studentService.data.get(student.key)._id" (napTime)='updateNap($event, this.studentService.data.get(student.key)._id)'></page-nap-slider>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-card-content>
-            </ion-card>
-          </div>
-        </div>
-      </ion-list>
-      </ion-content>
-    </div>
 
     <div *ngIf="parentPage === 'therapy'">
       <ion-content class="scrollable">
