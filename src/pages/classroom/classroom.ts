@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
 import {PresentStudentsPage} from "../present-students/present-students";
-import {NapPage} from "../nap/nap";
 import {TherapyPage} from "../therapy/therapy";
 import {GenericPage} from "../generic/generic";
 import {SignoutPage} from "../signout/signout"
@@ -17,7 +16,6 @@ export class ClassroomPage {
 
   tab0 = SigninPage;
   tab1 = PresentStudentsPage;
-  tab2 = NapPage;
   tab3 = TherapyPage;
   tab4 = GenericPage;
   tab5 = SignoutPage;
