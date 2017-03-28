@@ -166,7 +166,7 @@ export class CheckinProvider {
 
   getStudent(id: string, doc: any){
     function addStudent(doc){
-      doc.students = [...doc.students, {id:id, events: [], nap: -1, therapies: []}];
+      doc.students = [...doc.students, {id:id, events: [], nap: 60, therapies: []}];
       return doc;
     }
     //if the student searched for doesnt already exist
