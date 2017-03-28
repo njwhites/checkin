@@ -1,17 +1,35 @@
 <ion-content text-center class="vertical-align-content">
   <div id="buttonGrid" class="cardContainer">
     <ion-item class="cardElement cardClassroom">
-      <ion-grid class="centerGrid" (click)="selectClassroom('classroom')">
-        <ion-row class="centerRow">
-          <ion-col>
-            <ion-icon class="cardIcon" name="school"></ion-icon>
+      <ion-grid class="centerGrid">
+        <ion-row>
+          <ion-col class="centerRow"  (click)="selectClassroom('classroom')">
+            <ion-row class="centerRow">
+              <ion-col>
+                <ion-icon class="cardIcon" name="school"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <ion-row class="centerRow">
+              <ion-col>
+                <div class="no-format-button">
+                  Classroom
+                </div>
+              </ion-col>
+            </ion-row>
           </ion-col>
-        </ion-row>
-        <ion-row class="centerRow">
-          <ion-col>
-            <div class="no-format-button">
-              Classroom
-            </div>
+          <ion-col class="centerRow" (click)="toDriver('classroom')">
+            <ion-row class="centerRow">
+              <ion-col>
+                <ion-icon class="cardIcon" name="bus"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <ion-row class="centerRow">
+              <ion-col>
+                <div class="no-format-button">
+                    Driver
+                </div>
+              </ion-col>
+            </ion-row>
           </ion-col>
         </ion-row>
       </ion-grid>

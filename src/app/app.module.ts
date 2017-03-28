@@ -5,6 +5,7 @@ import {InitialPage} from "../pages/initial/initial";
 import {StudentDetailsPage} from "../pages/student-details/student-details";
 import {LoginPage} from "../pages/login/login";
 import {ListPage} from "../pages/list/list";
+import {NapPage} from "../pages/nap/nap";
 import {ClassroomPage} from "../pages/classroom/classroom";
 import {PresentStudentsPage} from "../pages/present-students/present-students";
 import {StudentInfoButtonPage} from "../pages/student-info-button/student-info-button";
@@ -65,6 +66,7 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     StudentDetailsPage,
     LoginPage,
     ListPage,
+    NapPage,
     ClassroomPage,
     PresentStudentsPage,
     StudentInfoButtonPage,
@@ -121,6 +123,7 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     StudentDetailsPage,
     LoginPage,
     ListPage,
+    NapPage,
     ClassroomPage,
     PresentStudentsPage,
     StudentInfoButtonPage,

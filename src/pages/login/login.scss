@@ -46,7 +46,6 @@ page-login {
   }
 
   .centerRow {
-    width: 75%;
     min-width: 35%;
     align-self: center;
     text-align: center;
@@ -71,6 +70,9 @@ page-login {
     .cardKitchen {
       display: none;
       height: 0%;
+    }
+    .cardElement {
+      width: 75%;
     }
   }
 
