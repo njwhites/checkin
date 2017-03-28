@@ -9,6 +9,7 @@ import {StudentProvider} from "../../providers/student-provider";
 import {UserProvider} from "../../providers/user-provider";
 import {CheckinProvider} from "../../providers/checkin-provider";
 import {ConstantsProvider} from "../../providers/constants-provider";
+import {LoggingProvider} from "../../providers/logging-provider";
 import {ClassRoomModel} from "../../models/db-models";
 import {UserLoginPage} from "../user-login/user-login";
 
@@ -28,7 +29,8 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public loadingcontroller: LoadingController,
               public classRoomService: ClassRoomProvider, public studentService: StudentProvider, public userService: UserProvider,
-              public checkinService: CheckinProvider, public alertController: AlertController, constantsService: ConstantsProvider) {
+              public checkinService: CheckinProvider, public alertController: AlertController, constantsService: ConstantsProvider,
+              public loggingService: LoggingProvider) {
     this.room = navParams.get('room');
     //try to estabilish an initial connection to db's
     this.classRoomService.forceInit();

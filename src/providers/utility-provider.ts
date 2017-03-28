@@ -4,12 +4,6 @@ import { Http } from '@angular/http';
 import PouchDB from 'pouchdb';
 import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the UtilityProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class UtilityProvider {
 
@@ -19,7 +13,6 @@ export class UtilityProvider {
   private credentials;
 
   constructor(public http: Http) {
-    console.log('Hello UtilityProvider Provider');
 
     this.credentials = {};
 
@@ -38,7 +31,10 @@ export class UtilityProvider {
     // this.db.sync(this.remote, options);
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> updates to integrate the initial page
   getCredentials(username: string){
     return new Promise((resolve, reject)=>{
       if(username === ''){

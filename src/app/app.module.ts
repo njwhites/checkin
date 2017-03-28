@@ -1,6 +1,7 @@
 import {NgModule, ErrorHandler} from "@angular/core";
 import {IonicApp, IonicModule, IonicErrorHandler} from "ionic-angular";
 import {MyApp} from "./app.component";
+import {InitialPage} from "../pages/initial/initial";
 import {StudentDetailsPage} from "../pages/student-details/student-details";
 import {LoginPage} from "../pages/login/login";
 import {ListPage} from "../pages/list/list";
@@ -60,6 +61,7 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
 @NgModule({
   declarations: [
     MyApp,
+    InitialPage,
     StudentDetailsPage,
     LoginPage,
     ListPage,
@@ -115,6 +117,7 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    InitialPage,
     StudentDetailsPage,
     LoginPage,
     ListPage,
