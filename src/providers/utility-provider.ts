@@ -14,12 +14,16 @@ import 'rxjs/add/operator/map';
 export class UtilityProvider {
 
 
-  db: any;
-  remote: String;
+  private db: any;
+
+  private credentials;
 
   constructor(public http: Http) {
     console.log('Hello UtilityProvider Provider');
 
+    this.credentials = {};
+
+    this.db = new PouchDB('credentials');
     // this.db = new PouchDB('constants');
 
     // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/constants';
@@ -32,5 +36,81 @@ export class UtilityProvider {
     // };
 
     // this.db.sync(this.remote, options);
+  }
+
+
+  getCredentials(username: string){
+    return new Promise((resolve, reject)=>{
+      if(username === ''){
+        let thisThis = this;
+        this.db.allDocs({include_docs: true}).then((docs)=>{
+          console.log(docs);
+          if(docs.total_rows === 0){
+            resolve(false);
+            return;
+          }
+          thisThis.credentials.username = docs.rows[0].doc._id;
+          thisThis.credentials.password = docs.rows[0].doc.password;
+          resolve(true);
+        }).catch(err=>{
+          console.log(err);
+          reject(false);
+        })
+      } else {
+        this.db.get(username).then((result)=>{
+          console.log('user exists');
+          console.log(result);
+          resolve(true);
+        }).catch((err)=>{
+          if(err.message === "missing"){
+            console.log("that guy don't work here buddy");
+            reject(false);
+          }
+          console.log(err);
+          reject(false);
+        });
+      }
+    })
+  }
+
+  setCredentials(credentials){
+    // this.db.get(credentials.username).then((result)=>{
+    //   console.log('gotem');
+    //
+    // }).catch((err)=>{
+    //   if(err.message === "missing"){
+    //     console.log("that guy don't work here buddy2");
+    //     // let doc = {
+    //     //   _id: credentials.username,
+    //     //   password: credentials.password
+    //     // };
+    //     // this.db.put(doc).then((result)=>{
+    //     //   console.log(result);
+    //     // }).catch((err)=>{
+    //     //   console.log(err)
+    //     // });
+    //   }
+    //   console.log(err);
+    // }
+    this.credentials.username = credentials.username;
+    this.credentials.password = credentials.password;
+    this.db.get(credentials.username).then((result)=>{
+      console.log('user exists');
+      console.log(result);
+    }).catch((err)=>{
+      if(err.message === "missing"){
+        console.log("that guy don't work here buddy2");
+        let doc = {
+          _id: credentials.username,
+          password: credentials.password
+        };
+        this.db.put(doc).then((result)=>{
+          console.log(result);
+        }).catch((err)=>{
+          console.log(err);
+        })
+      }
+      console.log(err);
+    });
   }
 }
