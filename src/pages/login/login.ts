@@ -30,7 +30,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public loadingcontroller: LoadingController,
               public classRoomService: ClassRoomProvider, public studentService: StudentProvider, public userService: UserProvider,
               public checkinService: CheckinProvider, public alertController: AlertController, constantsService: ConstantsProvider,
-              public loggingService: LoggingProvider) {
+              ) {
     this.room = navParams.get('room');
     //try to estabilish an initial connection to db's
     this.classRoomService.forceInit();
@@ -41,7 +41,6 @@ export class LoginPage {
       duration: 3000
     });
     loader.onDidDismiss(()=>{
-
       this.classRoomService.getAllClassRooms().then((data: Map<String, ClassRoomModel>) =>{
         this.classrooms = Array.from(data.values());
       });

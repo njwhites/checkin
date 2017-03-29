@@ -8,6 +8,7 @@ import { ClassRoomProvider } from './class-room-provider';
 
 
 import { LoggingProvider } from './logging-provider';
+import { UtilityProvider } from './utility-provider';
 
 import { TransactionModel, TransactionStudentModel, TransactionEvent, TransactionTherapy,
       BillingDay, BillingWeekModel, StudentBillingWeek, ClassroomWeek} from '../models/db-models';
@@ -48,73 +49,78 @@ export class CheckinProvider {
   remote: any;
   billingRemote: any;
 
-  constructor(public http: Http, public loggingService: LoggingProvider, public studentService: StudentProvider, public userService: UserProvider, public classroomService: ClassRoomProvider) {
+  constructor(public http: Http, public loggingService: LoggingProvider, public studentService: StudentProvider, public userService: UserProvider, public classroomService: ClassRoomProvider,
+              public utilityService: UtilityProvider) {
     console.log('Hello CheckinProvider Provider');
+    let credentials = utilityService.returnCredentialObject();
+    if(credentials && credentials.username){
+      this.db = new PouchDB('transactions');
+      this.billingdb = new PouchDB('billing');
 
-    this.db = new PouchDB('transactions');
-    this.billingdb = new PouchDB('billing');
+      PouchDB.plugin(require('pouchdb-upsert'));
 
-    PouchDB.plugin(require('pouchdb-upsert'));
+      // this.billingRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/billing';
+      this.billingRemote = 'http://'+credentials.username+':'+credentials.password+'@104.197.130.97:5984/billing';
+      // this.billingRemote = 'http://localhost:5984/billing';
 
-    // this.billingRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/billing';
-    this.billingRemote = 'http://chris:couchdbadmin5@104.197.130.97:5984/billing';
-    // this.billingRemote = 'http://localhost:5984/billing';
+      // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/transactions';
+      this.remote = 'http://'+credentials.username+':'+credentials.password+'@104.197.130.97:5984/transactions';
+      // this.remote = 'http://localhost:5984/transactions';
+      let options = {
+        live: true,
+        retry: true,
+        continuous: true
+      };
 
-    // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/transactions';
-    this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/transactions';
-    // this.remote = 'http://localhost:5984/transactions';
-    let options = {
-      live: true,
-      retry: true,
-      continuous: true
-    };
-
-    this.db.sync(this.remote, options)
-    .on('change', function (info) {
-      console.log('transactions\tchange');
-      // handle change
-    }).on('paused', function (err) {
-      console.log('transactions\tpaused');
-      // replication paused (e.g. replication up to date, user went offline)
-    }).on('active', function () {
-      console.log('transactions\tactive');
-      // replicate resumed (e.g. new changes replicating, user went back online)
-    }).on('denied', function (err) {
-      console.log("transactions\tdenied:");
-      console.log(err);
-      // a document failed to replicate (e.g. due to permissions)
-    }).on('complete', function (info) {
-      console.log("transactions\tsync complete\tinfo:");
-      console.log(info);
-      // handle complete
-    }).on('error', function (err) {
-      console.log("transactions\tsync error");
-      console.log(err);
-      // handle error
-    });
-    this.billingdb.sync(this.billingRemote, options)
-    .on('change', function (info) {
-      console.log('billing\tchange');
-      // handle change
-    }).on('paused', function (err) {
-      console.log('billing\tpaused');
-      // replication paused (e.g. replication up to date, user went offline)
-    }).on('active', function () {
-      console.log('billing\tactive');
-      // replicate resumed (e.g. new changes replicating, user went back online)
-    }).on('denied', function (err) {
-      console.log("billing\tdenied:");
-      console.log(err);
-      // a document failed to replicate (e.g. due to permissions)
-    }).on('complete', function (info) {
-      console.log("billing\tsync complete\tinfo:");
-      console.log(info);
-      // handle complete
-    }).on('error', function (err) {
-      console.log("billing\tsync error");
-      console.log(err);
-      // handle error
-    });
+      this.db.sync(this.remote, options)
+      .on('change', function (info) {
+        console.log('transactions\tchange');
+        // handle change
+      }).on('paused', function (err) {
+        console.log('transactions\tpaused');
+        // replication paused (e.g. replication up to date, user went offline)
+      }).on('active', function () {
+        console.log('transactions\tactive');
+        // replicate resumed (e.g. new changes replicating, user went back online)
+      }).on('denied', function (err) {
+        console.log("transactions\tdenied:");
+        console.log(err);
+        // a document failed to replicate (e.g. due to permissions)
+      }).on('complete', function (info) {
+        console.log("transactions\tsync complete\tinfo:");
+        console.log(info);
+        // handle complete
+      }).on('error', function (err) {
+        console.log("transactions\tsync error");
+        console.log(err);
+        // handle error
+      });
+      this.billingdb.sync(this.billingRemote, options)
+      .on('change', function (info) {
+        console.log('billing\tchange');
+        // handle change
+      }).on('paused', function (err) {
+        console.log('billing\tpaused');
+        // replication paused (e.g. replication up to date, user went offline)
+      }).on('active', function () {
+        console.log('billing\tactive');
+        // replicate resumed (e.g. new changes replicating, user went back online)
+      }).on('denied', function (err) {
+        console.log("billing\tdenied:");
+        console.log(err);
+        // a document failed to replicate (e.g. due to permissions)
+      }).on('complete', function (info) {
+        console.log("billing\tsync complete\tinfo:");
+        console.log(info);
+        // handle complete
+      }).on('error', function (err) {
+        console.log("billing\tsync error");
+        console.log(err);
+        // handle error
+      });
+    } else {
+      alert('something went wrong, refresh your browser');
+    }
   }
 
   getTodaysTransaction(dateString: string){

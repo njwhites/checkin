@@ -3,7 +3,7 @@ import PouchDB from 'pouchdb';
 import {ClassRoomModel} from '../models/db-models';
 import {StudentProvider} from './student-provider';
 import {LoggingProvider} from './logging-provider';
-
+import {UtilityProvider} from './utility-provider';
 
 @Injectable()
 export class ClassRoomProvider {
@@ -14,50 +14,57 @@ export class ClassRoomProvider {
   remote: String;
   selectedClassroom: String;
 
-  constructor(public studentService: StudentProvider, public loggingService: LoggingProvider) {
+  constructor(public studentService: StudentProvider, public loggingService: LoggingProvider, public utilityService: UtilityProvider) {
     this.data = new Map<String,ClassRoomModel>();
+    let credentials = utilityService.returnCredentialObject();
+    if(credentials && credentials.username){
+      //setup a local db and then sync it to a backend db
+      this.db = new PouchDB('classrooms');
 
-    //setup a local db and then sync it to a backend db
-    this.db = new PouchDB('classrooms');
+
+
+      // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/classrooms';
+      this.remote = 'http://'+credentials.username+':'+credentials.password+'@104.197.130.97:5984/classrooms';
+      // this.remote = 'http://localhost:5984/classrooms';
+      let options = {
+        live: true,
+        retry: true,
+        continuous: true
+      };
 
 
 
-    // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/classrooms';
-    this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/classrooms';
-    // this.remote = 'http://localhost:5984/classrooms';
-    let options = {
-      live: true,
-      retry: true,
-      continuous: true
-    };
+      this.db.sync(this.remote, options).on('change', function (info) {
+        console.log('classroom\tchange');
+        // handle change
+      }).on('paused', function (err) {
+        console.log('classroom\tpaused');
+        // replication paused (e.g. replication up to date, user went offline)
+      }).on('active', function () {
+        console.log('classroom\tactive');
+        // replicate resumed (e.g. new changes replicating, user went back online)
+      }).on('denied', function (err) {
+        console.log("classroom\tdenied:");
+        console.log(err);
+        // a document failed to replicate (e.g. due to permissions)
+      }).on('complete', function (info) {
+        console.log("classroom\tsync complete\tinfo:");
+        console.log(info);
+        // handle complete
+      }).on('error', function (err) {
+        console.log("classroom\tsync error");
+        console.log(err);
+        // handle error
+      });
 
-    this.db.sync(this.remote, options).on('change', function (info) {
-      console.log('classroom\tchange');
-      // handle change
-    }).on('paused', function (err) {
-      console.log('classroom\tpaused');
-      // replication paused (e.g. replication up to date, user went offline)
-    }).on('active', function () {
-      console.log('classroom\tactive');
-      // replicate resumed (e.g. new changes replicating, user went back online)
-    }).on('denied', function (err) {
-      console.log("classroom\tdenied:");
-      console.log(err);
-      // a document failed to replicate (e.g. due to permissions)
-    }).on('complete', function (info) {
-      console.log("classroom\tsync complete\tinfo:");
-      console.log(info);
-      // handle complete
-    }).on('error', function (err) {
-      console.log("classroom\tsync error");
-      console.log(err);
-      // handle error
-    });
-
-    //tell the db wha to do when it detects a change
-    this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change=>{
-      this.handleChange(change);
-    })
+      //tell the db wha to do when it detects a change
+      this.db.changes({live: true, since: 'now', include_docs: true}).on('change', change=>{
+        this.handleChange(change);
+      })
+    } else {
+      console.log('didnt get past if');
+      alert('Something went wrong, please refresh your browser.');
+    }
   }
 
 //function originally to make sure the provider makes a connection
@@ -92,7 +99,8 @@ export class ClassRoomProvider {
       this.data = new Map<String, ClassRoomModel>();
 
       //get all the docs from classroom db
-      this.db.allDocs({include_docs: true}).then(result => {
+      this.db.allDocs({include_docs:true}).then(result => {
+
         //for each row in the set of rows from the result of .allDocs
         //set the doc._id and doc as key and value for the map
         result.rows.map(row => {
@@ -225,7 +233,7 @@ export class ClassRoomProvider {
       this.db.upsert(classroom._id, ((doc)=>{
         doc.aides.splice(userIndex, 1);
         return doc;
-      })).then(() => {  
+      })).then(() => {
         this.loggingService.writeLog(`Aide: ${userID} has been added to room ${classroom.roomNumber}`);
       });
     }
@@ -272,6 +280,7 @@ export class ClassRoomProvider {
 
   //function for what to do when the db detects a change
   handleChange(change){
+    console.log(change);
     if(this.data === undefined){
       this.data = new Map<String,ClassRoomModel>();
     }

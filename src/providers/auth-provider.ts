@@ -3,6 +3,7 @@ import PouchDB from 'pouchdb';
 import {UserModel} from '../models/db-models';
 
 import { LoggingProvider } from './logging-provider';
+import { UtilityProvider } from './utility-provider';
 
 let crypto;
 try {
@@ -17,7 +18,8 @@ export class AuthProvider {
   hashRemote: String;
 
 
-  constructor(public loggingService: LoggingProvider) {
+  constructor(public loggingService: LoggingProvider,
+              public utilityService: UtilityProvider) {
 
     // this.hashdb = new PouchDB('hashes');
     // this.hashRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/authentication';
@@ -31,15 +33,20 @@ export class AuthProvider {
     //
     // this.hashdb.sync(this.hashRemote, options);
     //pouchdb interface for a remote couchdb, no syncing involved, ?only uses http to directly get from the remote db?
-    this.hashdb = new PouchDB('http://104.197.130.97:5984/authentication', {
-      ajax: {
+    let credentials = utilityService.returnCredentialObject();
+    if(credentials && credentials.username){
+      this.hashdb = new PouchDB('http://104.197.130.97:5984/authentication', {
+        ajax: {
 
-      },
-      auth: {
-        username: 'chris',
-        password: 'couchdbadmin5'
-      }
-    });
+        },
+        auth: {
+          username: credentials.username,
+          password: credentials.password
+        }
+      });
+    } else {
+      alert('refresh this page, something went wrong');
+    }
   }
 
   forceInit(){
@@ -78,7 +85,7 @@ export class AuthProvider {
         console.log(doc);
         return doc;
       }).then((result) => {
-        this.loggingService.writeLog(`Password set for user with ID: ${id}`);  
+        this.loggingService.writeLog(`Password set for user with ID: ${id}`);
         resolve();
       }).catch(err => {
         console.log(err);
@@ -93,7 +100,7 @@ export class AuthProvider {
     return new Promise(resolve =>{
       this.hashdb.upsert(user._id, ((doc)=>{doc._deleted=true; return doc})).then(() => {
         //write to logging
-        this.loggingService.writeLog(`Password data deleted for user with ID: ${user._id}`);  
+        this.loggingService.writeLog(`Password data deleted for user with ID: ${user._id}`);
         resolve();
       })
     })
@@ -139,7 +146,7 @@ export class AuthProvider {
         return doc;
       }).then((result) => {
 
-        this.loggingService.writeLog(`Password question set for user with ID: ${id}`);  
+        this.loggingService.writeLog(`Password question set for user with ID: ${id}`);
         resolve();
       }).catch(err => {
         console.log(err);

@@ -28,9 +28,7 @@ export class InitialPage {
 
     utilityService.getCredentials('').then((result)=>{
       if(result){
-        console.log("before");
         navCtrl.setRoot(LoginPage, {}, {});
-        console.log("after");
       }
     })
     this.credentialsForm = this.formBuilder.group({
@@ -62,8 +60,11 @@ export class InitialPage {
     this.db.info().then(function (result) {
       console.log(result);
       thisThis.connectionStatus = 'success';
-      thisThis.utilityService.setCredentials(thisThis.credentials);
-      thisThis.navCtrl.setRoot(LoginPage, {}, {});
+      thisThis.utilityService.setCredentials(thisThis.credentials).then((result)=>{
+        thisThis.navCtrl.setRoot(LoginPage, {}, {});
+      }).catch((err)=>{
+        console.log(err);
+      })
     }).catch(function (err) {
       console.log(err);
       thisThis.connectionStatus = 'failure';

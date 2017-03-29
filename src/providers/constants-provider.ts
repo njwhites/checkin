@@ -1,23 +1,26 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import {LoggingProvider} from './logging-provider';
+import {UtilityProvider} from './utility-provider';
 
 @Injectable()
 export class ConstantsProvider {
 
   private db: any;
 
-  constructor(public loggingService: LoggingProvider) {
+  constructor(public loggingService: LoggingProvider, public utilityService: UtilityProvider) {
 
-    this.db = new PouchDB('http://104.197.130.97:5984/constants', {
-      ajax: {
+    let credentials = utilityService.returnCredentialObject();
+    if(credentials && credentials.username){
+      this.db = new PouchDB('http://104.197.130.97:5984/constants', {
+        ajax: {
 
-      },
-      auth: {
-        username: 'chris',
-        password: 'couchdbadmin5'
-      }
-    });
+        },
+        auth: credentials
+      });
+    } else {
+      alert('something went wrong, refresh your this web page');
+    }
   }
 
 

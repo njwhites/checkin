@@ -31,13 +31,15 @@ export class UtilityProvider {
     // this.db.sync(this.remote, options);
   }
 
+  returnCredentialObject(){
+    return this.credentials;
+  }
 
   getCredentials(username: string){
     return new Promise((resolve, reject)=>{
       if(username === ''){
         let thisThis = this;
         this.db.allDocs({include_docs: true}).then((docs)=>{
-          console.log(docs);
           if(docs.total_rows === 0){
             resolve(false);
             return;
@@ -51,12 +53,10 @@ export class UtilityProvider {
         })
       } else {
         this.db.get(username).then((result)=>{
-          console.log('user exists');
-          console.log(result);
+
           resolve(true);
         }).catch((err)=>{
           if(err.message === "missing"){
-            console.log("that guy don't work here buddy");
             reject(false);
           }
           console.log(err);
@@ -67,43 +67,35 @@ export class UtilityProvider {
   }
 
   setCredentials(credentials){
-    // this.db.get(credentials.username).then((result)=>{
-    //   console.log('gotem');
-    //
-    // }).catch((err)=>{
-    //   if(err.message === "missing"){
-    //     console.log("that guy don't work here buddy2");
-    //     // let doc = {
-    //     //   _id: credentials.username,
-    //     //   password: credentials.password
-    //     // };
-    //     // this.db.put(doc).then((result)=>{
-    //     //   console.log(result);
-    //     // }).catch((err)=>{
-    //     //   console.log(err)
-    //     // });
-    //   }
-    //   console.log(err);
-    // }
-    this.credentials.username = credentials.username;
-    this.credentials.password = credentials.password;
-    this.db.get(credentials.username).then((result)=>{
-      console.log('user exists');
-      console.log(result);
-    }).catch((err)=>{
-      if(err.message === "missing"){
-        console.log("that guy don't work here buddy2");
-        let doc = {
-          _id: credentials.username,
-          password: credentials.password
-        };
-        this.db.put(doc).then((result)=>{
-          console.log(result);
+    return new Promise((resolve,reject)=>{
+      this.credentials.username = credentials.username;
+      this.credentials.password = credentials.password;
+      this.db.get(credentials.username).then((result)=>{
+        //this should be unreachable but just incase lets update an existing user
+        result.password = credentials.password;
+        this.db.put(result).then((result2)=>{
+          resolve(true);
         }).catch((err)=>{
           console.log(err);
+          reject(err);
         })
-      }
-      console.log(err);
-    });
+      }).catch((err)=>{
+        if(err.message === "missing"){
+          let doc = {
+            _id: credentials.username,
+            password: credentials.password
+          };
+          this.db.put(doc).then((result)=>{
+            resolve(true);
+          }).catch((err)=>{
+            console.log(err);
+            reject(err);
+          })
+        } else {
+          reject(err);
+          console.log(err);
+        }
+      });
+    })
   }
 }

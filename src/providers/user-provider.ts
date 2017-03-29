@@ -3,6 +3,7 @@ import PouchDB from 'pouchdb';
 import {UserModel} from '../models/db-models';
 
 import {LoggingProvider} from './logging-provider';
+import {UtilityProvider} from './utility-provider';
 
 let crypto;
 try {
@@ -20,43 +21,49 @@ export class UserProvider {
   public THERAPY_TYPES = ["OT","PT","SLP"];
 
 
-  constructor(public loggingService: LoggingProvider) {
+  constructor(public loggingService: LoggingProvider, public utilityService: UtilityProvider) {
     this.data = new Map<String, UserModel>();
     //setup a local db and then sync it to a backend db
     this.db = new PouchDB('users');
+    let credentials = utilityService.returnCredentialObject();
 
-    // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/users';
-    this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/users';
+    if(credentials && credentials.username){
 
-    // this.remote = 'http://localhost:5984/users';
-    let options = {
-      live: true,
-      retry: true,
-      continuous: true
-    };
+      // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/users';
+      this.remote = 'http://'+credentials.username+':'+credentials.password+'@104.197.130.97:5984/users';
 
-    this.db.sync(this.remote, options).on('change', function (info) {
-      // console.log('user\tchange');
-      // handle change
-    }).on('paused', function (err) {
-      // console.log('user\tpaused');
-      // replication paused (e.g. replication up to date, user went offline)
-    }).on('active', function () {
-      // console.log('user\tactive');
-      // replicate resumed (e.g. new changes replicating, user went back online)
-    }).on('denied', function (err) {
-      // console.log("user\tdenied:");
-      // console.log(err);
-      // a document failed to replicate (e.g. due to permissions)
-    }).on('complete', function (info) {
-      //console.log("user\tsync complete\tinfo:");
-      //console.log(info);
-      // handle complete
-    }).on('error', function (err) {
-      //console.log("user\tsync error");
-      console.log(err);
-      // handle error
-    });
+      // this.remote = 'http://localhost:5984/users';
+      let options = {
+        live: true,
+        retry: true,
+        continuous: true
+      };
+
+      this.db.sync(this.remote, options).on('change', function (info) {
+        // console.log('user\tchange');
+        // handle change
+      }).on('paused', function (err) {
+        // console.log('user\tpaused');
+        // replication paused (e.g. replication up to date, user went offline)
+      }).on('active', function () {
+        // console.log('user\tactive');
+        // replicate resumed (e.g. new changes replicating, user went back online)
+      }).on('denied', function (err) {
+        // console.log("user\tdenied:");
+        // console.log(err);
+        // a document failed to replicate (e.g. due to permissions)
+      }).on('complete', function (info) {
+        //console.log("user\tsync complete\tinfo:");
+        //console.log(info);
+        // handle complete
+      }).on('error', function (err) {
+        //console.log("user\tsync error");
+        console.log(err);
+        // handle error
+      });
+    } else {
+      alert('Something went wrong, please refresh your browser');
+    }
   }
 
   forceInit(){
@@ -278,7 +285,7 @@ export class UserProvider {
           doc.therapy_fav_ids = result;
           return doc;
         }).then(result => {
-          this.loggingService.writeLog(`Therapist with id: ${t_id} has had student with id: ${s_id} removed from their favorites`);  
+          this.loggingService.writeLog(`Therapist with id: ${t_id} has had student with id: ${s_id} removed from their favorites`);
           resolve(true);
         }).catch(err => {
           console.log(err);
@@ -302,7 +309,7 @@ export class UserProvider {
       }
       return doc;
     }).then(() => {
-      this.loggingService.writeLog(`User with id: ${user._id} added student with id: ${SID} to their visible students`);        
+      this.loggingService.writeLog(`User with id: ${user._id} added student with id: ${SID} to their visible students`);
     }).catch((err)=>{
       console.log(err);
     })

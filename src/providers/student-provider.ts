@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import {StudentModel} from '../models/db-models';
 import {LoggingProvider} from './logging-provider';
+import {UtilityProvider} from './utility-provider';
 
 @Injectable()
 export class StudentProvider {
@@ -10,51 +11,59 @@ export class StudentProvider {
   db: any;
   remote: String;
 
-  constructor(public loggingService: LoggingProvider) {
+  constructor(public loggingService: LoggingProvider, public utilityService: UtilityProvider) {
     this.data = new Map<String,StudentModel>();
     this.roomRoster = new Array<String>();
-    //setup a local db and then sync it to a backend db
-    this.db = new PouchDB('students');
 
-    // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/students';
-    // this.remote = 'http://localhost:5984/students';
-    this.remote = 'http://chris:couchdbadmin5@104.197.130.97:5984/students';
-    let options = {
-      live: true,
-      retry: true,
-      back_off_function: function (delay) {
-        if (delay === 0){
-          console.log("something failed retrying");
-        } else {
-          console.log("Doing the 2000");
+    let credentials = utilityService.returnCredentialObject();
+
+    if(credentials && credentials.username){
+      //setup a local db and then sync it to a backend db
+      this.db = new PouchDB('students');
+
+      // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/students';
+      // this.remote = 'http://localhost:5984/students';
+      this.remote = 'http://'+credentials.username+':'+credentials.password+'@104.197.130.97:5984/students';
+
+      let options = {
+        live: true,
+        retry: true,
+        back_off_function: function (delay) {
+          if (delay === 0){
+            console.log("something failed retrying");
+          } else {
+            console.log("Doing the 2000");
+          }
+          return 2000;
         }
-        return 2000;
-      }
-    };
+      };
 
-    this.db.sync(this.remote, options)
-    .on('change', function (info) {
-      // console.log('students\tchange');
-      // handle change
-    }).on('paused', function (err) {
-      // console.log('students\tpaused');
-      // replication paused (e.g. replication up to date, user went offline)
-    }).on('active', function () {
-      // console.log('students\tactive');
-      // replicate resumed (e.g. new changes replicating, user went back online)
-    }).on('denied', function (err) {
-      // console.log("students\tdenied:");
-      console.log(err);
-      // a document failed to replicate (e.g. due to permissions)
-    }).on('complete', function (info) {
-      // console.log("students\tsync complete\tinfo:");
-      // console.log(info);
-      // handle complete
-    }).on('error', function (err) {
-      // console.log("students\tsync error");
-      console.log(err);
-      // handle error
-    });
+      this.db.sync(this.remote, options)
+      .on('change', function (info) {
+        // console.log('students\tchange');
+        // handle change
+      }).on('paused', function (err) {
+        // console.log('students\tpaused');
+        // replication paused (e.g. replication up to date, user went offline)
+      }).on('active', function () {
+        // console.log('students\tactive');
+        // replicate resumed (e.g. new changes replicating, user went back online)
+      }).on('denied', function (err) {
+        // console.log("students\tdenied:");
+        console.log(err);
+        // a document failed to replicate (e.g. due to permissions)
+      }).on('complete', function (info) {
+        // console.log("students\tsync complete\tinfo:");
+        // console.log(info);
+        // handle complete
+      }).on('error', function (err) {
+        // console.log("students\tsync error");
+        console.log(err);
+        // handle error
+      });
+    } else {
+      alert('Something went wrong, please refresh your browser');
+    }
   }
 
   forceInit(){

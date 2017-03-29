@@ -2,7 +2,7 @@ import {Component, ViewChild} from "@angular/core";
 import {Platform, MenuController, Nav} from "ionic-angular";
 import {StatusBar, Splashscreen} from "ionic-native";
 import {InitialPage} from "../pages/initial/initial";
-
+import {LoginPage} from "../pages/login/login";
 
 @Component({
   templateUrl: 'app.html'
