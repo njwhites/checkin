@@ -6,6 +6,7 @@ import {StudentDetailsPage} from "../pages/student-details/student-details";
 import {LoginPage} from "../pages/login/login";
 import {ListPage} from "../pages/list/list";
 import {NapPage} from "../pages/nap/nap";
+import {DriverPage} from "../pages/driver/driver";
 import {ClassroomPage} from "../pages/classroom/classroom";
 import {PresentStudentsPage} from "../pages/present-students/present-students";
 import {StudentInfoButtonPage} from "../pages/student-info-button/student-info-button";
@@ -77,6 +78,7 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     SignoutPage,
     SigninPage,
     KitchenPage,
+    DriverPage,
     TherapistPage,
     HomeButtonPage,
     AdminPage,
@@ -124,6 +126,7 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     LoginPage,
     ListPage,
     NapPage,
+    DriverPage,
     ClassroomPage,
     PresentStudentsPage,
     StudentInfoButtonPage,

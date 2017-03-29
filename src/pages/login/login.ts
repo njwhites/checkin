@@ -87,10 +87,6 @@ export class LoginPage {
     this.navCtrl.push(UserLoginPage, {parentPage: userRole});
   }
 
-  toDriver() {
-    console.log("To Driver");
-  }
-
   help(){
     let toast = this.toastCtrl.create({
       message: 'Help is on the way',

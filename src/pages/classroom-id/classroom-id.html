@@ -24,6 +24,11 @@
               Therapist
             </div>
           </div>
+          <div *ngIf="parentPage === 'driver'">
+            <div class="titleRoom">
+              Driver
+            </div>
+          </div>
       </div>
     </ion-col>
   </ion-row>
@@ -38,7 +43,7 @@
                   {{parentPage|parentReadable|firstUpper}}
                 </div>
               </div>
-              <div *ngIf="parentPage === 'kitchen' || parentPage === 'admin' || parentPage === 'therapist'">
+              <div *ngIf="parentPage === 'kitchen' || parentPage === 'admin' || parentPage === 'therapist' || parentPage === 'driver'">
                 <div class="titleRoom">
                   Login
                 </div>

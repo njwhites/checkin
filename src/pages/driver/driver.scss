@@ -1,0 +1,129 @@
+page-driver {
+  .scroll-content {
+    background: transparent;
+  }
+
+  .horizontal-align-center {
+    background: transparent;
+    align-items: center;
+    padding-top: 3%;
+  }
+  .fixedBackground {
+    background: url(../assets/logo/Dark_Background.jpg);
+    background-size: 100% 100%;
+    height: 100vh;
+  }
+  .vertical-align-content
+  {
+    //display: flex!important;
+    background: transparent;
+    align-content: center!important;
+  }
+  .scrollView {
+    background: transparent;
+    align-items: center;
+    height: 60vh;
+  }
+  .push-to-bottom {
+    background: transparent;
+    position: absolute;
+    bottom: 5vh;
+    width: 100%;
+  }
+  .buttonRow {
+    background: transparent;
+    align-self: center;
+    width: auto;
+  }
+  .titleRow {
+    background: transparent;
+    align-self: center;
+    width: auto;
+    padding-top: 3%;
+  }
+  .submit-button{
+    font-size: 150%;
+    width: auto;
+  }
+  .absentRow {
+    opacity: .5;
+  }
+  .titleRoom {
+    align-self: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-size: 200%;
+    color: white;
+  }
+  .emptyRow {
+    background: transparent;
+    padding-top: 25vh;
+    align-self: center;
+    width: auto;
+  }
+  .emptyItem {
+    background: transparent;
+    align-self: center;
+    text-align: center;
+  }
+  .emptyIcon {
+    background: transparent;
+    width: 75px;
+    height: 75px;
+    color: gray;
+    font-size: 900%
+  }
+  .emptyText {
+    background: transparent;
+    align-self: center;
+    text-align: center;
+    color: gray;
+    font-size: 200%;
+  }
+  //iPad landscape
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .scrollView{
+      height: 65vh;
+    }
+    .push-to-bottom{
+      bottom: 3vh;
+    }
+  }
+
+  //iPad portrait or iPad pro portrait
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .scrollView{
+      height: 72vh;
+    }
+
+    .desktopEdit {
+      display: none;
+    }
+
+    .notDesktop {
+      display: block;
+    }
+  }
+
+  //computer and iPad pro Landscape
+  @media (min-width: 1025px) {
+    .desktopEdit {
+      display: block;
+    }
+
+    .notDesktop {
+      display: none;
+    }
+  }
+
+  //phone
+  @media (max-width: 767px) {
+    .desktopEdit {
+      display: none;
+    }
+
+    .notDesktop {
+      display: block;
+    }
+  }
+}

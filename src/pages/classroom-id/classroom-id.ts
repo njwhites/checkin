@@ -47,9 +47,9 @@ export class ClassroomIdPage {
       } else {
         //I split up inputs so we can eventually look to see if each userId is authorized for the transaction
         //user.role can be used to identify permissions
-        if(user.role === 'admin' && this.parentPage !== 'therapist' && this.parentPage !== 'therapy'){
+        if(user.role === 'admin' && this.parentPage !== 'therapist' && this.parentPage !== 'therapy' && this.parentPage !== 'driver'){
           this.notify.emit({id: id});
-        } else if(user.role !== 'driver' && this.parentPage !== 'therapy' && this.parentPage !== 'therapist' && this.parentPage !== 'admin'){
+        } else if(user.role !== 'driver' && this.parentPage !== 'therapy' && this.parentPage !== 'therapist' && this.parentPage !== 'admin' && this.parentPage !== 'driver'){
           this.notify.emit({id: id});
         }else if(user.role === 'therapist' && this.parentPage === 'therapist') {
           this.notify.emit({id: id});
@@ -58,6 +58,8 @@ export class ClassroomIdPage {
         } else if(user.role === 'driver' && this.parentPage === 'signout') {
           this.notify.emit({id: id});
         } else if(user.role === 'driver' && this.parentPage === 'checkin') {
+          this.notify.emit({id: id});
+        }else if(user.role === 'driver' && this.parentPage === 'driver') {
           this.notify.emit({id: id});
         } else {
           this.notify.emit({id: -1});
