@@ -49,7 +49,7 @@
                               </button>
                             </div>
                             <div [hidden]="!editDesktop">
-                              <button ion-button color="danger" (click)="removeStudent(thisStudent)" style="box-shadow: 0 0 0 0; padding: 10px 10px 10px 10px;">
+                              <button ion-button color="danger" class="editDelete" (click)="removeStudent(thisStudent)">
                                 <ion-icon name="trash"></ion-icon>
                               </button>
                             </div>
@@ -92,18 +92,18 @@
                             </button>
                           </div>
                           <div [hidden]="!editDesktop">
-                            <button ion-button color="danger" (click)="removeStudent(thisStudent)" style="box-shadow: 0 0 0 0; padding: 10px 10px 10px 10px;">
+                            <button ion-button color="danger" class="editDelete" (click)="removeStudent(thisStudent)">
                               <ion-icon name="trash"></ion-icon>
                             </button>
                           </div>
                         </ion-col>
                         <ion-col width-50 (click)="studentTapped(this.studentList.get(thisStudent)._id)">
-                          <div style="padding-top: 10px;">
+                          <div style="padding-top: 10px;  color: #a6a6a6;">
                             {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
                           </div>
                         </ion-col>
                         <ion-col width-30 (click)="studentTapped(this.studentList.get(thisStudent)._id)">
-                          <div style="padding-top: 8px; float: right;">
+                          <div style="padding-top: 8px; float: right;  color: #a6a6a6;">
                             <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
                           </div>
                         </ion-col>

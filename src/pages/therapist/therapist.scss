@@ -46,7 +46,7 @@ page-therapist {
     width: auto;
   }
   .absentRow {
-    opacity: .5;
+    opacity: 1;
   }
   .titleRoom {
     align-self: center;
@@ -113,6 +113,12 @@ page-therapist {
 
     .notDesktop {
       display: none;
+    }
+
+    .editDelete {
+      box-shadow: 0 0 0 0;
+      padding: 10px 10px 10px 10px;
+      opacity: 1.0!important;
     }
   }
 
