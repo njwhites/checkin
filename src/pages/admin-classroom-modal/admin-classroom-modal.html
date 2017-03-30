@@ -66,7 +66,7 @@
           Add Aide To Class
         </button>
       </ion-item>
-      
+
     </ion-list>
 
     <ion-list>
@@ -122,7 +122,11 @@
         Teacher:
       </ion-list-header>
       <ion-item>
-        <ion-input type="text" formControlName="teacher"></ion-input>
+        <ion-select formControlName="teacher">
+          <ion-option *ngFor="let teacher of this.userService.data|mapValues|userRoleFilter:this.userService.ROLES[2]" value="{{teacher.key}}">
+            {{teacher.val.fName}} {{teacher.val.lName}}
+          </ion-option>
+        </ion-select>
       </ion-item>
     </ion-list>
   </form>

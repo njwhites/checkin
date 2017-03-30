@@ -254,14 +254,34 @@ export class ClassRoomProvider {
 //function to delete a classroom from the db
 //requires the classroom document
   deleteClassRoom(classroom: ClassRoomModel){
-    //setting the doc._deleted field to true is the same as deleting it as far as couch and pouch are concerned
+    //get the students left in the classroom so that we can make sure they get moved to the unallocated roomNumber
+    //an array of IDs
+    let leftoverStudents = classroom.students;
+
+    //setting the doc._deleted field to true is the same as deleting it as far as couch and pouch are concerned with minor differences in leftover data
     this.db.upsert(classroom._id, ((doc)=>{
       doc._deleted = true;
       return doc;
-    }));
+    })).catch((err)=>{
+      console.log(err);
+    });
+
+    //update the unallocated classroom in the db
+    this.db.get('-1').then((unallocated)=>{
+      this.db.upsert(unallocated._id, (doc: ClassRoomModel)=>{
+        doc.students = doc.students.concat(leftoverStudents);
+        console.log(doc);
+        return doc;
+      })
+    })
 
     //make sure the dataobject is immediately up to date on the deleted classroom
     this.data.delete(classroom._id);
+
+    //update the unallocated classroom immediately as well
+    this.data.get('-1').students = this.data.get('-1').students.concat(leftoverStudents);
+
+    console.log(this.data.get('-1'));
 
   }
 
