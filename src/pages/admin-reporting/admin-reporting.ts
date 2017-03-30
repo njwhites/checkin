@@ -13,10 +13,7 @@ import {ClassroomWeek, BillingWeekModel, BillingDay, StudentBillingWeek} from '.
   templateUrl: 'admin-reporting.html'
 })
 export class AdminReportingPage {
-  rooms = [{number: 101, on: false},
-           {number: 102, on: false},
-           {number: 103, on: false},
-           {number: 104, on: false}];
+  rooms = [];
   studentBillingDayTotals : Map<String, BillingDay>;
   map: Map<Number, ClassroomWeek>;
   roomBillingWeekTotals: Map<String,any>;
@@ -89,7 +86,9 @@ export class AdminReportingPage {
       this.interval = undefined;
     }
 
-
+    this.classroomService.data.forEach((value, key) => {
+      this.rooms.push({number: Number(key), on: false});
+    })
     this.setMap(date);
 
     //Checking every 1/4 second to see if all results are back
