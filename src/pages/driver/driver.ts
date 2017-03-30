@@ -13,6 +13,7 @@ export class DriverPage {
   id: any;
   driverStudents: Array<string>;
   studentList: any;
+  user: any;
 
   constructor(public studentService: StudentProvider,
               public navCtrl: NavController,
@@ -21,13 +22,14 @@ export class DriverPage {
               public userService: UserProvider) {
       this.id = navParams.data;
       this.studentList = this.studentService.data;
+      this.user = this.userService.data.get(String(this.id));
+      this.driverStudents = this.user.visible_students;
   }
 
   ionViewDidLoad() {
-    console.log(this.studentService.data);
   }
   getDriverName(_id: String) {
-    return this.userService.data.get(String(_id)).fName + " " + this.userService.data.get(String(_id)).lName;
+    return this.user.fName + " " + this.user.lName;
   }
 
 }

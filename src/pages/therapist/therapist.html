@@ -40,12 +40,10 @@
               <ion-card class="cardElement" *ngIf="this.studentList.get(thisStudent).location !== this.checkinService.CHECKED_OUT">
                   <ion-item-sliding>
                     <ion-item style="padding-left: 5px">
-                      <ion-grid style="margin-top: -13px; margin-bottom: -16px;">
-                        <ion-row>
-                          <ion-col width-10>
+                          <div item-left>
                             <div [hidden]="editDesktop">
-                              <button ion-button style="background-color: #FFFFFF; box-shadow: 0 0 0 0; padding: 10px 10px 10px 10px;">
-                                <ion-icon name="walk" item-left style="color: #000000; font-size: 150%"></ion-icon>
+                              <button ion-button  class="editDelete" style="background-color: #FFFFFF; box-shadow: 0 0 0 0;">
+                                <ion-icon name="walk" style="color: #000000; font-size: 150%"></ion-icon>
                               </button>
                             </div>
                             <div [hidden]="!editDesktop">
@@ -53,19 +51,13 @@
                                 <ion-icon name="trash"></ion-icon>
                               </button>
                             </div>
-                          </ion-col>
-                          <ion-col width-50 (click)="studentTapped(this.studentList.get(thisStudent)._id)">
-                            <div style="padding-top: 10px;">
+                          </div>
+                          <div (click)="studentTapped(this.studentList.get(thisStudent)._id)">
                               {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
-                            </div>
-                          </ion-col>
-                          <ion-col width-30 (click)="studentTapped(this.studentList.get(thisStudent)._id)">
-                            <div style="padding-top: 8px; float: right;">
-                              <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
-                            </div>
-                          </ion-col>
-                        </ion-row>
-                      </ion-grid>
+                          </div>
+                          <div item-right (click)="studentTapped(this.studentList.get(thisStudent)._id)">
+                            <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
+                          </div>
                     </ion-item>
                     <ion-item-options>
                       <button ion-button color="danger" (click)="removeStudent(thisStudent)">
@@ -82,13 +74,11 @@
             <div *ngFor="let thisStudent of therapistStudents">
               <ion-card class="cardElement" *ngIf="this.studentList.get(thisStudent).location === this.checkinService.CHECKED_OUT">
                 <ion-item-sliding>
-                  <ion-item style="padding-left: 5px" class="absentRow">
-                    <ion-grid style="margin-top: -13px; margin-bottom: -16px;">
-                      <ion-row>
-                        <ion-col width-10>
+                  <ion-item style="padding-left: 5px">
+                        <div item-left>
                           <div [hidden]="editDesktop">
-                            <button ion-button style="background-color: #FFFFFF; box-shadow: 0 0 0 0; padding: 10px 10px 10px 10px;">
-                              <ion-icon name="walk" item-left style="color: #000000; font-size: 150%"></ion-icon>
+                            <button ion-button  class="editDelete" style="background-color: #FFFFFF; box-shadow: 0 0 0 0;">
+                              <ion-icon name="walk" style="color: #000000; font-size: 150%"></ion-icon>
                             </button>
                           </div>
                           <div [hidden]="!editDesktop">
@@ -96,19 +86,13 @@
                               <ion-icon name="trash"></ion-icon>
                             </button>
                           </div>
-                        </ion-col>
-                        <ion-col width-50 (click)="studentTapped(this.studentList.get(thisStudent)._id)">
-                          <div style="padding-top: 10px;  color: #a6a6a6;">
+                        </div>
+                        <div (click)="studentTapped(this.studentList.get(thisStudent)._id)" style="color: #a6a6a6">
                             {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
-                          </div>
-                        </ion-col>
-                        <ion-col width-30 (click)="studentTapped(this.studentList.get(thisStudent)._id)">
-                          <div style="padding-top: 8px; float: right;  color: #a6a6a6;">
-                            <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
-                          </div>
-                        </ion-col>
-                      </ion-row>
-                    </ion-grid>
+                        </div>
+                        <div item-right (click)="studentTapped(this.studentList.get(thisStudent)._id)"  style="color: #a6a6a6">
+                          <page-student-info-button [thisStudentLocation]="this.studentList.get(thisStudent).location"></page-student-info-button>
+                        </div>
                   </ion-item>
                   <ion-item-options>
                     <button ion-button color="danger" (click)="removeStudent(thisStudent)">

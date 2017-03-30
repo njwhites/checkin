@@ -80,6 +80,12 @@ page-therapist {
     color: gray;
     font-size: 200%;
   }
+  .buttonLeft {
+    width:10px;
+    padding-right: 10px;
+  }
+
+
   //iPad landscape
   @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     .scrollView{
