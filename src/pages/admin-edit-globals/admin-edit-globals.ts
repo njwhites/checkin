@@ -14,7 +14,8 @@ export class AdminEditGlobalsPage {
 
   constructor(public navCtrl: NavController,
               public constantsService: ConstantsProvider,
-              public formBuilder: FormBuilder) {
+              public formBuilder: FormBuilder,
+              public toastController: ToastController) {
     this.rate = 0;
     this.globalsForm = formBuilder.group({
       rate: [this.rate, Validators.compose([
@@ -37,7 +38,13 @@ export class AdminEditGlobalsPage {
   updateGlobals(){
     if(this.globalsForm.controls['rate'].value !== this.rate){
       this.constantsService.setRate(this.globalsForm.controls['rate'].value).then((result)=>{
-        this.constantsService.returnRate().then((value)=>{
+        this.constantsService.returnRate().then((value: any)=>{
+          this.toastController.create({
+            message: `Billing rate has been updated to $${value.rate}/hour.`,
+            duration: 3000,
+            position: "bottom"
+          }).present();
+          this.navCtrl.pop();
           console.log('\trate from getRate:\t'+value);
         }).catch((err)=>{
           console.log(err);
