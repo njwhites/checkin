@@ -45,7 +45,7 @@
           {{loadingText}}
         </ion-item>
         <ion-list *ngIf="displayInfo">
-          <ion-card *ngFor="let room of this.map | mapValues" (click)="toggleRoom(room.key)" class="paddedCard">
+          <ion-card *ngFor="let room of this.map | mapValues | filterBillableRooms" (click)="toggleRoom(room.key)" class="paddedCard">
             <ion-card-header style="background-color:rgba(0, 0, 0, 0.13)">
               <ion-row>
                 <ion-col width-20>

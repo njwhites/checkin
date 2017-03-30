@@ -53,6 +53,7 @@ import {StudentFilterPipe} from "../pipes/student-filter";
 import {UserRoleFilterPipe} from "../pipes/user-role-filter";
 import {ParentReadablePipe} from "../pipes/parent-readable";
 import {FilterParentsPipe} from "../pipes/filter-parents";
+import {FilterBillablePipe} from "../pipes/filter-billable-rooms";
 import {KitchenPipe} from "../pipes/kitchen-map";
 import {TherapistAddPage} from "../pages/therapist-add/therapist-add";
 import {TherapistStudentDetailsPage} from "../pages/therapist-student-details/therapist-student-details";
@@ -96,6 +97,7 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     ParentReadablePipe,
     KitchenPipe,
     FilterParentsPipe,
+    FilterBillablePipe,
     AdminReportingPage,
     AdminReportingDetailsPage,
     AdminStudentTabPage,
