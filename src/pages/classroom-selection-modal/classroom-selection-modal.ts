@@ -1,29 +1,33 @@
 import {Component} from '@angular/core';
 import {NavController, ViewController, NavParams} from 'ionic-angular';
-import {CheckinProvider} from '../../providers/checkin-provider';
+import {ClassRoomProvider} from "../../providers/class-room-provider";
+import {StudentProvider} from "../../providers/student-provider";
+import {UserProvider} from "../../providers/user-provider";
+import {ClassroomPage} from "../classroom/classroom";
 
 @Component({
   selector: 'page-classroom-selection-modal',
   templateUrl: 'classroom-selection-modal.html'
 })
 export class ClassroomSelectionModalPage {
-  nap_subtract: number;
-  student: String;
-  userID: String;
+  classroomPage = ClassroomPage;
 
-  constructor(public navCtrl: NavController, private viewCtrl: ViewController, public navParams: NavParams, public checkinService: CheckinProvider) {
-    this.student = this.navParams.get('student');
-    this.userID = this.navParams.get('userID');
-    this.nap_subtract = 0;
-    console.log(this.student);
-    console.log(this.userID);
+  constructor(public navCtrl: NavController, private viewCtrl: ViewController, public navParams: NavParams, public classRoomService: ClassRoomProvider, public userService: UserProvider, public studentService: StudentProvider,) {
+
   }
 
-  submit() {
-    console.log(this.nap_subtract);
-    this.checkinService.nurseCheckin(this.student.toString(), this.userID.toString(), this.nap_subtract);
-    let data = { 'returnValue': true };
-    this.viewCtrl.dismiss(data);
+  submit(id) {
+    if(id){
+      this.classRoomService.selectedClassroom = id;
+      this.userService.getAllUsers().then(output =>{
+        this.studentService.getStudentsByGroup(this.classRoomService.data.get(id).students).then(result =>{
+          this.navCtrl.push(this.classroomPage, {roomNumber: this.classRoomService.data.get(id).roomNumber});
+          this.viewCtrl.dismiss();
+        });
+      });
+    } else{
+      console.log("Error");
+    }
   }
 
   }

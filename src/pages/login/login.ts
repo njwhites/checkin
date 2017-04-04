@@ -57,44 +57,8 @@ export class LoginPage {
     // });
   }
 
-  onSelectClassroom(id) {
-
-    //******************************************************************
-    //testing to see if class room selection works
-    //******************************************************************
-    if(id){
-      this.classRoomService.selectedClassroom = id;
-      this.userService.getAllUsers().then(output =>{
-        this.studentService.getStudentsByGroup(this.classRoomService.data.get(id).students).then(result =>{
-          this.navCtrl.push(this.classroomPage, {roomNumber: this.classRoomService.data.get(id).roomNumber});
-        });
-      });
-    } else{
-      let toast = this.toastCtrl.create({
-        message: "Please select a room",
-        position: "bottom",
-        duration: 3000
-      })
-      toast.present();
-    }
-
-    //******************************************************************
-    //end classroom selection testing
-    //******************************************************************
-  }
-
   toLogin(userRole) {
     this.navCtrl.push(UserLoginPage, {parentPage: userRole});
-  }
-
-  help(){
-    let toast = this.toastCtrl.create({
-      message: 'Help is on the way',
-      duration: 1500,
-      position: 'bottom'
-    });
-
-    toast.present(toast);
   }
 
   selectClassroom(){

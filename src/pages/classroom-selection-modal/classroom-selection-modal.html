@@ -1,30 +1,18 @@
-<div class="modal-wrapper-height-shrink">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>
-        Check In Confirmation
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content scrollbar-y="false" overflow-scroll="false">
-    <div>
-      <ion-list-header>
-        Did This Overlap Nap Time?
-        <ion-badge item-right>{{nap_subtract}}</ion-badge>
-      </ion-list-header>
-      <ion-item style="padding-left: 0px">
-        <ion-range min="0" max="60" step="15" pin="true" snaps="true" [(ngModel)]="nap_subtract">
-          <ion-label range-left class="small-text">0</ion-label>
-          <ion-label range-right>60</ion-label>
-        </ion-range>
-      </ion-item>
+<ion-header>
+  <ion-toolbar>
+    <ion-title text-center>
+      Select A Classroom
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list inset class="fill">
+    <div *ngFor="let room of this.classRoomService.data | mapValues">
+      <ion-card (click)="submit(this.classRoomService.data.get(room.key).roomNumber)">
+        <ion-item>
+          Room {{this.classRoomService.data.get(room.key).roomNumber}}
+        </ion-item>
+      </ion-card>
     </div>
-    <ion-footer style="padding-top: 5px;">
-      <div style="padding-left: 2px; padding-right: 2px">
-        <button ion-button block (click)='submit()'>
-          Submit
-        </button>
-      </div>
-    </ion-footer>
-  </ion-content>
-</div>
+  </ion-list>
+</ion-content>
