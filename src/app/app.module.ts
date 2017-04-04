@@ -5,6 +5,8 @@ import {InitialPage} from "../pages/initial/initial";
 import {StudentDetailsPage} from "../pages/student-details/student-details";
 import {LoginPage} from "../pages/login/login";
 import {ListPage} from "../pages/list/list";
+import {TherapistTabsPage} from "../pages/therapist-tabs/therapist-tabs";
+import {TherapistLogPage} from "../pages/therapist-log/therapist-log";
 import {NapPage} from "../pages/nap/nap";
 import {DriverPage} from "../pages/driver/driver";
 import {ClassroomPage} from "../pages/classroom/classroom";
@@ -80,6 +82,8 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     SigninPage,
     KitchenPage,
     DriverPage,
+    TherapistTabsPage,
+    TherapistLogPage,
     TherapistPage,
     HomeButtonPage,
     AdminPage,
@@ -139,6 +143,8 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     SignoutPage,
     SigninPage,
     KitchenPage,
+    TherapistTabsPage,
+    TherapistLogPage,
     TherapistPage,
     AdminPage,
     AdminReportingPage,

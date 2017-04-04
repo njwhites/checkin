@@ -22,12 +22,12 @@ page-therapist {
   .scrollView {
     background: transparent;
     align-items: center;
-    height: 60vh;
+    height: 53vh;
   }
   .push-to-bottom {
     background: transparent;
     position: absolute;
-    bottom: 5vh;
+    bottom: 10vh;
     width: 100%;
   }
   .buttonRow {
@@ -92,7 +92,7 @@ page-therapist {
       height: 65vh;
     }
     .push-to-bottom{
-      bottom: 3vh;
+      bottom: 8vh;
     }
   }
 
@@ -108,6 +108,9 @@ page-therapist {
 
     .notDesktop {
       display: block;
+    }
+    .push-to-bottom{
+      bottom: 8vh;
     }
   }
 
