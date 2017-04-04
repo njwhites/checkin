@@ -1,18 +1,41 @@
-<!--
-  Generated template for the TherapistLog page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>therapist-log</ion-title>
+    <ion-title>{{getTherapistName(this.id)}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content class="fixedBackground">
+  <ion-content inset class="therapyList" class="scrollView">
+    <div *ngFor="let transaction of this.transactions">
+      <ion-card *ngIf="transaction.length !== -1">
+        <ion-card-content>
+          <ion-icon name="briefcase" item-left></ion-icon>
+          {{getUserName(transaction.by_id)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} for {{transaction.length}} mins.
+        </ion-card-content>
+      </ion-card>
+      <ion-card *ngIf="transaction.length === -1">
+        <ion-card-content>
+          <ion-icon name="briefcase" item-left></ion-icon>
+          {{getUserName(transaction.by_id)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} and has not yet been checked back in.
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf="this.transactions.length === 0"class="vertical-align-content">
+      <ion-grid>
+        <ion-row class="emptyRow">
+          <ion-col>
+            <ion-item class="emptyItem">
+              <ion-icon class="emptyIcon" name="archive"></ion-icon>
+            </ion-item>
+            <ion-item class="emptyText">
+              {{getTherapistName(this.id)}} has not given therapy today.
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
 </ion-content>
