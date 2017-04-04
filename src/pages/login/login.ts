@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {NavController, NavParams, ToastController, LoadingController, AlertController} from "ionic-angular";
+import {NavController, NavParams, ToastController, LoadingController, AlertController, ModalController} from "ionic-angular";
 import {ClassroomPage} from "../classroom/classroom";
 import {KitchenPage} from "../kitchen/kitchen";
 import {TherapistPage} from "../therapist/therapist";
@@ -12,6 +12,7 @@ import {ConstantsProvider} from "../../providers/constants-provider";
 import {LoggingProvider} from "../../providers/logging-provider";
 import {ClassRoomModel} from "../../models/db-models";
 import {UserLoginPage} from "../user-login/user-login";
+import {ClassroomSelectionModalPage} from "../classroom-selection-modal/classroom-selection-modal";
 
 @Component({
   selector: 'page-login',
@@ -29,7 +30,7 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public loadingcontroller: LoadingController,
               public classRoomService: ClassRoomProvider, public studentService: StudentProvider, public userService: UserProvider,
-              public checkinService: CheckinProvider, public alertController: AlertController, constantsService: ConstantsProvider,
+              public checkinService: CheckinProvider, public alertController: AlertController, constantsService: ConstantsProvider, public modalCtrl: ModalController
               ) {
     this.room = navParams.get('room');
     //try to estabilish an initial connection to db's
@@ -97,35 +98,11 @@ export class LoginPage {
   }
 
   selectClassroom(){
-    let alert = this.alertController.create({
-      title: 'Select a Classroom'
+    let modal = this.modalCtrl.create(ClassroomSelectionModalPage);
+    modal.onDidDismiss(data => {
+      //this.navCtrl.pop();
     });
-    this.classRoomService.data.forEach((value, index, map)=>{
-
-      //pick one of the below input or button
-      if(Number(index) >=0){
-        alert.addInput({
-              type: 'radio',
-              label: 'Room ' + value.roomNumber,
-              value: ''+value.roomNumber
-        });
-      }
-    });
-    alert.addButton({
-      text: "Cancel",
-      role: "cancel",
-      handler: ()=>{
-
-      }
-    })
-    alert.addButton({
-      text: "Okay",
-      handler: (data)=>{
-        console.log(data);
-        this.onSelectClassroom(data);
-      }
-    })
-    alert.present();
+    modal.present(modal);
   }
 
 
