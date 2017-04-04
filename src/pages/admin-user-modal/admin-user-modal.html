@@ -133,6 +133,12 @@
           <ion-card-content *ngIf="this.userForm.controls['password'].hasError('required')">
             Password is required.
           </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['password'].hasError('lengthLessEight')">
+            Password must be 8 or more characters.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['password'].hasError('pattern')">
+            Password must have atleast one lowercase, one uppercase, and one digit.
+          </ion-card-content>
           <ion-card-content *ngIf="this.userForm.controls['confirmPassword'].hasError('required')">
             Confirm Password is required.
           </ion-card-content>
@@ -156,6 +162,7 @@
 
       <button ion-button block type="submit" [disabled]="!this.userForm.valid" (click)="updateUser()">{{buttonText}}</button>
       <button ion-button block color="danger" *ngIf="this.user._id >= 0" (click)="deleteUser()">Delete User</button>
+      <button (click)="logForm()">Log form</button>
     </form>
   </ion-list>
 </ion-content>
