@@ -162,7 +162,6 @@
 
       <button ion-button block type="submit" [disabled]="!this.userForm.valid" (click)="updateUser()">{{buttonText}}</button>
       <button ion-button block color="danger" *ngIf="this.user._id >= 0" (click)="deleteUser()">Delete User</button>
-      <button (click)="logForm()">Log form</button>
     </form>
   </ion-list>
 </ion-content>
