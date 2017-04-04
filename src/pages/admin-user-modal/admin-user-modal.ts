@@ -400,8 +400,4 @@ export class AdminUserModalPage {
     this.userService.removeVisibleStudent(this.user, SID);
     this.user.visible_students.splice(this.user.visible_students.indexOf(SID),1);
   }
-
-  logForm(){
-    console.log(this.userForm);
-  }
 }
