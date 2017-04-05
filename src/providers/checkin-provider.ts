@@ -223,7 +223,7 @@ export class CheckinProvider {
           }
         }),
         nap_subtract: me.nap_subtract,
-        nap: me.nap,
+        nap: (Number(me.nap) === -1 ? 60 : me.nap),
         therapies: me.therapies
     }
     //console.log(i);
