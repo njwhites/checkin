@@ -8,7 +8,7 @@ export class FilterParentsPipe {
 
     transform(value: any, args?: any[]): Object[] {
         const user = this.userService.data.get(String(args));
-        if(user.role === this.userService.ROLES[4]){
+        if(user.role === this.userService.ROLES[4] || user.role === this.userService.ROLES[6]){
           const visibleStudents = this.userService.data.get(String(args)).visible_students;
           // //this is the case where if they don't need a filter
           // if(visibleStudents === undefined){
