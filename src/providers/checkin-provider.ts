@@ -305,73 +305,73 @@ export class CheckinProvider {
 
   }
 
-  //Push nap value for this student, very similar to updateStudent
-  setNap(student_id: string, minutes:string){
+  // //Push nap value for this student, very similar to updateStudent
+  // setNap(student_id: string, minutes:string){
 
-    return new Promise(resolve => {
-      this.getTodaysTransaction(null).then((doc: TransactionModel) => {
-        this.getStudent(student_id, doc).then((me: TransactionStudentModel) => {
-          let others = doc.students.filter(student => {
-            return student.id + "" !== me.id + "";
-          })
-          let i = {
-              id: me.id,
-              events: me.events.map(event => {
-                return {
-                  type: event.type,
-                  time: event.time,
-                  time_readable: event.time_readable,
-                  by_id: event.by_id
-                }
-              }),
-              nap: Number(minutes),
-              therapies: me.therapies
-          }
-          function delta(doc) {
-            doc.students = [...others, i];
-            //console.log(doc.students);
-            return doc;
-          }
-          this.db.upsert(doc._id, delta).then(() => {
-            //Success!
-            //console.log(`Successfully updated student with id:${me.id}`);
-            resolve(true);
+  //   return new Promise(resolve => {
+  //     this.getTodaysTransaction(null).then((doc: TransactionModel) => {
+  //       this.getStudent(student_id, doc).then((me: TransactionStudentModel) => {
+  //         let others = doc.students.filter(student => {
+  //           return student.id + "" !== me.id + "";
+  //         })
+  //         let i = {
+  //             id: me.id,
+  //             events: me.events.map(event => {
+  //               return {
+  //                 type: event.type,
+  //                 time: event.time,
+  //                 time_readable: event.time_readable,
+  //                 by_id: event.by_id
+  //               }
+  //             }),
+  //             nap: Number(minutes),
+  //             therapies: me.therapies
+  //         }
+  //         function delta(doc) {
+  //           doc.students = [...others, i];
+  //           //console.log(doc.students);
+  //           return doc;
+  //         }
+  //         this.db.upsert(doc._id, delta).then(() => {
+  //           //Success!
+  //           //console.log(`Successfully updated student with id:${me.id}`);
+  //           resolve(true);
 
-          }).catch(err => {
-            console.log(err);
-          })
-        })
-      })
-    });
-  }
+  //         }).catch(err => {
+  //           console.log(err);
+  //         })
+  //       })
+  //     })
+  //   });
+  // }
 
-  //naps
-  //recieves key value pairs student_id: minutes napped
-  setNaps(map: Map<string, string>){
-    //breaks binding from before... before splicing in helper method
-    let array = Array.from(map);
-    return this.setNapsHelper(array);
-  }
+  // //naps
+  // //recieves key value pairs student_id: minutes napped
+  // setNaps(map: Map<string, string>){
+  //   //breaks binding from before... before splicing in helper method
+  //   let array = Array.from(map);
+  //   return this.setNapsHelper(array);
+  // }
 
-  //Recursive helper
-  setNapsHelper(array: Array<Array<string>>){
+  // //Recursive helper
+  // setNapsHelper(array: Array<Array<string>>){
 
-    //Base case
-    if(array.length <= 0){
-      return Promise.resolve(true);
-    }
+  //   //Base case
+  //   if(array.length <= 0){
+  //     return Promise.resolve(true);
+  //   }
 
-    var s = array.splice(0,1)[0];
-    this.setNap(s[0], s[1]).then(result => {
-      if(result){
-        return this.setNapsHelper(array);
-      }else{
-        return Promise.reject(false).then(result => {
-          console.log("Naps resolved false for some reason");
-        });
-      }
-    })
-  }
+  //   var s = array.splice(0,1)[0];
+  //   this.setNap(s[0], s[1]).then(result => {
+  //     if(result){
+  //       return this.setNapsHelper(array);
+  //     }else{
+  //       return Promise.reject(false).then(result => {
+  //         console.log("Naps resolved false for some reason");
+  //       });
+  //     }
+  //   })
+  // }
 
   //Pass date as d.m.yyyy or null for today
   //.getTransactionsById("4", null).then(result => {
@@ -380,14 +380,31 @@ export class CheckinProvider {
   //})`
   getTransactionsById(studentId: string, date: any){
     return new Promise((resolve, reject) => {
-      this.getTodaysTransaction(date).then(result => {
-         this.getStudent(studentId, result).then((student: TransactionStudentModel) => {
-            resolve(student.events);
-         })
-      }).catch(err => {
-        console.log(err);
-        reject(err);
-      })
+      this.getStudentDocument(studentId).then((student: TransactionStudent) => {
+        if(date === null){
+          let today = new Date();
+          var dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+
+          let filter = student.days.filter((el) => {
+            return el.date === dateString;
+          });
+
+          if(filter.length > 0){
+            var todayDoc = filter[0];
+            resolve(todayDoc.events);
+          }else{
+            resolve([]);
+          }
+        }
+      });
+      // this.getTodaysTransaction(date).then(result => {
+      //    this.getStudent(studentId, result).then((student: TransactionStudentModel) => {
+      //       resolve(student.events);
+      //    })
+      // }).catch(err => {
+      //   console.log(err);
+      //   reject(err);
+      // })
     })
   }
 
@@ -409,23 +426,33 @@ export class CheckinProvider {
     })
   }
 
-  checkLimbo(id: string, doc: TransactionModel){
+  //Changed
+  checkLimbo(id: string, doc?: TransactionModel){
     return new Promise((resolve, reject) => {
-      this.getStudent(id, doc).then((student: TransactionStudentModel) => {
+      this.getStudentDocument(id).then((student:TransactionStudent) => {
+
+        let today = new Date();
+        let dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+
         var isInLimbo = true;
-        student.events.forEach((event: TransactionEvent) => {
-          if(event.type === this.CHECK_IN){
-            isInLimbo = false;
-          }
+        var todaysDate = student.days.filter(el => {
+          return el.date === dateString;
         });
+        if(todaysDate.length > 0){
+          todaysDate[0].events.forEach(el => {
+            if(el.type === this.CHECK_IN){
+              isInLimbo = false;
+            }
+          })
+        }
         resolve(isInLimbo);
       }).catch(err => {
-        //TODO
         console.log(err);
-      });
+      })
     })
   }
 
+  //Changed
   getStudentDocument(id: string){
     return new Promise(resolve => {
       this.db.get(id).then((doc) => {
@@ -450,6 +477,7 @@ export class CheckinProvider {
     });
   }
 
+  //Changed
   addEventToStudent(student: TransactionStudent, by_id: string, event: string, nap_subtract? : number){
     return new Promise(resolve => {
       let today = new Date();
@@ -487,6 +515,7 @@ export class CheckinProvider {
   }
 
   //Uses performEvent to check in student and update student location in students table
+  //Changed
   checkinStudent(id: string, by_id: string){
     // return new Promise(resolve => {
     //   this.getTodaysTransaction(null).then((result: TransactionModel) => {
@@ -544,45 +573,47 @@ export class CheckinProvider {
     })
   }
 
+  //NO CHANGE
   isInTherapyLimbo(id: string) {
     return this.studentService.data.get(id).location.includes(this.CHECKED_OUT_THERAPY);
-
   }
 
   //checkout of school
   checkoutStudent(id: string, by_id: string){
     return new Promise(resolve => {
-      this.getTodaysTransaction(null).then((result: TransactionModel) => {
-        this.checkLimbo(id, result).then((isInLimbo) =>{
-          if(!isInLimbo){
-              if(this.isInTherapyLimbo(id)){
-                this.therapistCheckin(id, by_id).then((therapy : TransactionTherapy) => {
-                  let length = (new Date().getTime() - Number(therapy.start_time))/(1000*60);
-                  this.therapistCheckinFollowUp(id, by_id, therapy.start_time +"", length, 0).then(() => {
-                    this.performEvent(id, result, by_id, this.CHECK_OUT).then(result => {
-                      this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
-                        this.loggingService.writeLog(`Student with id:${id} was checked out`);
-                        resolve(true);
-                      });
+      this.checkLimbo(id).then((isInLimbo) => {
+        if(!isInLimbo){
+          if(this.isInTherapyLimbo(id)){
+            this.therapistCheckin(id, by_id).then((therapy : TransactionTherapy) => {
+              let length = (new Date().getTime() - Number(therapy.start_time))/(1000*60);
+              this.therapistCheckinFollowUp(id, by_id, therapy.start_time +"", length, 0).then(() => {
+                this.getStudentDocument(id).then((student:TransactionStudent) => {
+                  this.addEventToStudent(student, by_id, this.CHECK_OUT).then(() => {
+                    this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
+                      this.loggingService.writeLog(`Student with id:${id} was checked out`);
+                      resolve(true);
                     });
                   });
-                })
-              }else{
-                this.performEvent(id, result, by_id, this.CHECK_OUT).then(result => {
-                  this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
-                    this.loggingService.writeLog(`Student with id:${id} was checked out`);
-                    resolve(true);
-                  });
                 });
-              }
+              });
+            })
           }else{
-            this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() => {
-              this.loggingService.writeLog(`Student with id:${id} was checked out`);
-              resolve(true);
-            });
+            this.getStudentDocument(id).then((student:TransactionStudent) => {
+              this.addEventToStudent(student, by_id, this.CHECK_OUT).then(() => {
+                this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() =>{
+                  this.loggingService.writeLog(`Student with id:${id} was checked out`);
+                  resolve(true);
+                });
+              });
+            })
           }
-        })
-      });
+        }else{
+          this.studentService.updateStudentLocation(id, this.CHECKED_OUT).then(() => {
+            this.loggingService.writeLog(`Student with id:${id} was checked out`);
+            resolve(true);
+          });
+        }
+      })
     });
   }
 
@@ -595,6 +626,7 @@ export class CheckinProvider {
     return this.checkoutStudentHelper(s_ids, by_id);
   }
 
+  //NO Change
   checkoutStudentHelper(ids, by_id){
     if(ids.length <= 0){
       return Promise.resolve(true).then(result => {
@@ -639,17 +671,29 @@ export class CheckinProvider {
   }
 
   nurseCheckin(id: string, by_id: string, nap_subtract?: number){
-    this.getTodaysTransaction(null).then(result => {
-      this.performEvent(id, result, by_id, this.NURSE_IN, nap_subtract).then(() => {
-        this.loggingService.writeLog(`Student with id:${id} was checked into the classroom by id: ${by_id}`);
-        this.studentService.updateStudentLocation(id, this.CHECKED_IN);
-      })
+    return new Promise(resolve => {
+      this.getStudentDocument(id).then((student: TransactionStudent) => {
+        this.addEventToStudent(student, by_id, this.NURSE_IN, nap_subtract).then(() => {
+            this.studentService.updateStudentLocation(id, this.CHECKED_IN).then(() => {
+              this.loggingService.writeLog(`Student with id:${id} was checked in`);
+              resolve(true);
+            });
+        });
+      });
     });
+
+    // this.getTodaysTransaction(null).then(result => {
+    //   this.performEvent(id, result, by_id, this.NURSE_IN, nap_subtract).then(() => {
+    //     this.loggingService.writeLog(`Student with id:${id} was checked into the classroom by id: ${by_id}`);
+    //     this.studentService.updateStudentLocation(id, this.CHECKED_IN);
+    //   })
+    // });
   }
 
   //Checkout a student to therapy, adds a therapy start as well
+  //Changed
   therapistCheckout(id: string, by_id: string, therapy_type: string){
-    this.getTodaysTransaction(null).then(result => {
+    this.getStudentDocument(id).then((student:TransactionStudent) => {
       let event_type = "";
       let location = ""
       switch(therapy_type){
@@ -668,67 +712,137 @@ export class CheckinProvider {
         default:
           event_type = this.THERAPY_OUT;
           location = this.CHECKED_OUT_THERAPY;
-
       }
-      this.performEvent(id, result, by_id, event_type).then(response => {
-        this.addTherapyStart(id, by_id, Date.now(), result).then(() => {
+      this.addEventToStudent(student, by_id, event_type).then(() => {
+        this.addTherapyStart(id, by_id, Date.now()).then(() => {
           this.loggingService.writeLog(`Student with id:${id} was checked out by therapist with id: ${by_id}`);
           this.studentService.updateStudentLocation(id, location);
         });
-      });
+      })
+    // })
+    // this.getTodaysTransaction(null).then(result => {
+    //   let event_type = "";
+    //   let location = ""
+    //   switch(therapy_type){
+    //     case 'OT':
+    //       event_type = this.THERAPY_OUT_OT;
+    //       location = this.CHECKED_OUT_THERAPY_OT;
+    //       break;
+    //     case 'PT':
+    //       event_type = this.THERAPY_OUT_PT;
+    //       location = this.CHECKED_OUT_THERAPY_PT;
+    //       break;
+    //     case 'SLP':
+    //       event_type = this.THERAPY_OUT_SLP;
+    //       location = this.CHECKED_OUT_THERAPY_SLP;
+    //       break;
+    //     default:
+    //       event_type = this.THERAPY_OUT;
+    //       location = this.CHECKED_OUT_THERAPY;
+
+    //   }
+    //   this.performEvent(id, result, by_id, event_type).then(response => {
+    //     this.addTherapyStart(id, by_id, Date.now(), result).then(() => {
+    //       this.loggingService.writeLog(`Student with id:${id} was checked out by therapist with id: ${by_id}`);
+    //       this.studentService.updateStudentLocation(id, location);
+    //     });
+    //   });
     });
   }
 
   //This creates an event-esque item for a therapy session that has -1 as a length to know it is incomplete
-  addTherapyStart(id, by_id: string, date: number, doc: any){
-    return new Promise((resolve, reject) => {
-      this.getStudent(id, doc).then((student: TransactionStudentModel) => {
-        //take the student and do something?
+  addTherapyStart(id, by_id: string, date: number, doc?: any){
+    return new Promise(resolve => {
+      this.getStudentDocument(id).then((student: TransactionStudent) => {
         var t = new TransactionTherapy();
         t.by_id = by_id;
         t.start_time = date + "";
         t.length = -1;
-        student.therapies.push(t);
-        this.getTodaysTransaction(doc._id).then(result => {
-          this.updateStudent(student, result).then(updateResult => {
-            resolve(true);
-          }).catch(err => {
-            console.log(err);
-            reject(false);
-          });
-        }).catch(err => {
-            console.log(err);
-            reject(false);
-           });
-      }).catch(err => {
-        console.log(err);
-        reject(false);
-      });
+
+
+        let today = new Date();
+        var dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+
+        let filter = student.days.filter((el) => {
+          return el.date === dateString;
+        });
+
+        if(filter.length > 0){
+          var todayDoc = filter[0];
+          todayDoc.therapies.push(t);
+        }
+
+        this.db.upsert(student.id, (doc) => {
+          return student;
+        }).then(() => {
+          resolve(student);
+        });
+      })
     })
+
+    // return new Promise((resolve, reject) => {
+    //   this.getStudent(id, doc).then((student: TransactionStudentModel) => {
+    //     //take the student and do something?
+    //     var t = new TransactionTherapy();
+    //     t.by_id = by_id;
+    //     t.start_time = date + "";
+    //     t.length = -1;
+    //     student.therapies.push(t);
+    //     this.getTodaysTransaction(doc._id).then(result => {
+    //       this.updateStudent(student, result).then(updateResult => {
+    //         resolve(true);
+    //       }).catch(err => {
+    //         console.log(err);
+    //         reject(false);
+    //       });
+    //     }).catch(err => {
+    //         console.log(err);
+    //         reject(false);
+    //        });
+    //   }).catch(err => {
+    //     console.log(err);
+    //     reject(false);
+    //   });
+    // })
 
   }
 
   //Checks a student back in, requires follow up method afterwards to be complete
   //Returns the incomplete therapy to be shown to the screen (dbmodels.TransactionTherapy)
   therapistCheckin(id: string, by_id: string){
-    return new Promise((resolve, reject) => {
-      this.getTodaysTransaction(null).then(result => {
-        this.getIncompleteTherapy(id, result).then((therapy: TransactionTherapy) => {
+    return new Promise((resolve) => {
+      this.getStudentDocument(id).then((student: TransactionStudent) => {
+        this.getCurrentTherapy(student).then((therapy: TransactionTherapy) => {
           this.loggingService.writeLog(`Student with id:${id} was checked into the classroom from therapy`);
           resolve(therapy);
-        })
-      }).catch(err => {
-        console.log(err);
-        reject(false);
+        });
       });
     })
+    // return new Promise((resolve, reject) => {
+    //   this.getTodaysTransaction(null).then(result => {
+    //     this.getIncompleteTherapy(id, result).then((therapy: TransactionTherapy) => {
+    //       this.loggingService.writeLog(`Student with id:${id} was checked into the classroom from therapy`);
+    //       resolve(therapy);
+    //     })
+    //   }).catch(err => {
+    //     console.log(err);
+    //     reject(false);
+    //   });
+    // })
   }
 
-  //Gets the item that is length -1, theoretically there should never be more than 1
-  getIncompleteTherapy(id: string, doc: any){
+  getCurrentTherapy(student: TransactionStudent){
     return new Promise((resolve, reject) => {
-      this.getStudent(id, doc).then((student: TransactionStudentModel) => {
-        let incompletes = student.therapies.filter(therapy => {
+      let today = new Date();
+      var dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+
+      let filter = student.days.filter((el) => {
+        return el.date === dateString;
+      });
+
+      if(filter.length > 0){
+        var todayDoc = filter[0];
+        let incompletes = todayDoc.therapies.filter(therapy => {
           return therapy.length === -1;
         });
         if(incompletes.length <= 0){
@@ -736,81 +850,150 @@ export class CheckinProvider {
         }else{
           resolve(incompletes[0]);
         }
-      }).catch(err => {
-          reject(false);
-        });
+      }
+
+      
     })
   }
 
-  //Keeo stub same for Nate
-  getAllTherapies(id:string){
+  // //Gets the item that is length -1, theoretically there should never be more than 1
+  // getIncompleteTherapy(id: string, doc: any){
+  //   return new Promise((resolve, reject) => {
+  //     this.getStudent(id, doc).then((student: TransactionStudentModel) => {
+  //       let incompletes = student.therapies.filter(therapy => {
+  //         return therapy.length === -1;
+  //       });
+  //       if(incompletes.length <= 0){
+  //         reject(false);
+  //       }else{
+  //         resolve(incompletes[0]);
+  //       }
+  //     }).catch(err => {
+  //         reject(false);
+  //       });
+  //   })
+  // }
+
+  //Keeo stub same for Nate //therapistStudentDetails
+  getAllTherapies(id:string, date?: any){
     return new Promise((resolve, reject) => {
-      this.getTodaysTransaction(null).then(doc => {
-        this.getStudent(id, doc).then((student: TransactionStudentModel) => {
-          resolve(student.therapies);
-        })
-      }).catch(err => {
-        reject(false);
+      this.getStudentDocument(id).then((student: TransactionStudent) => {
+        if(!date){
+          let today = new Date();
+          var dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+
+          let filter = student.days.filter((el) => {
+            return el.date === dateString;
+          });
+
+          if(filter.length > 0){
+            var todayDoc = filter[0];
+            resolve(todayDoc.therapies);
+          }else{
+            resolve([]);
+          }
+        }
       })
+      // this.getTodaysTransaction(null).then(doc => {
+      //   this.getStudent(id, doc).then((student: TransactionStudentModel) => {
+      //     resolve(student.therapies);
+      //   })
+      // }).catch(err => {
+      //   reject(false);
+      // })
     })
   }
 
   //on follow up write the therapy length in
   therapistCheckinFollowUp(student_id: string, by_id: string, start_time: string, length: Number, nap_subtract: Number){
-    return new Promise(resolve => {
-      this.getTodaysTransaction(null).then((doc: TransactionModel) => {
-        this.getStudent(student_id, doc).then((me: TransactionStudentModel) => {
+    return new Promise((resolve, reject) => {
+      this.getStudentDocument(student_id).then((student : TransactionStudent) => {
+        this.addEventToStudent(student, by_id, this.THERAPY_IN).then(() => {
+          this.studentService.updateStudentLocation(student_id, this.CHECKED_IN);
 
-          this.performEvent(student_id, doc, by_id, this.THERAPY_IN).then(val => {
-            this.studentService.updateStudentLocation(student_id, this.CHECKED_IN);
+          let today = new Date();
+          var dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
 
-
-            let others = doc.students.filter(student => {
-              return student.id + "" !== me.id + "";
-            });
-            let t_model = new TransactionTherapy();
-            t_model.start_time = start_time;
-            t_model.length = length;
-            t_model.nap_subtract = nap_subtract;
-            t_model.by_id = by_id;
-            let otherTherapies = me.therapies.filter(therapy => {
-              return therapy.length !== -1;
-            })
-            let i = {
-                id: me.id,
-                events: me.events.map(event => {
-                  return {
-                    type: event.type,
-                    time: event.time,
-                    time_readable: event.time_readable,
-                    by_id: event.by_id
-                  }
-                }),
-                nap: me.nap,
-                therapies: [...otherTherapies, {start_time: t_model.start_time, length: t_model.length,
-                  by_id: t_model.by_id, nap_subtract: t_model.nap_subtract}]
-            }
-            function delta(doc) {
-              doc.students = [...others, i];
-              //console.log(doc.students);
-              return doc;
-            }
-
-            this.db.upsert(doc._id, delta).then(() => {
-              //Success!
-              //console.log(`Successfully updated student with id:${me.id}`);
-
-              this.loggingService.writeLog(`Student with id:${student_id} was checked in by therapist with id: ${by_id}`);
-              resolve(true);
-
-            }).catch(err => {
-              console.log(err);
-            })
+          let filter = student.days.filter((el) => {
+            return el.date === dateString;
           });
 
+          if(filter.length > 0){
+            var todayDoc = filter[0];
+            let incompletes = todayDoc.therapies.filter(therapy => {
+              return therapy.length === -1;
+            });
+            if(incompletes.length <= 0){
+              reject('false');
+            }else{
+              var inc = incompletes[0];
+              inc.length = length;
+              inc.nap_subtract = nap_subtract;
+              inc.start_time = start_time;
+              this.db.upsert(student_id, (doc) => {
+                return student;
+              }).then(() => {
+                resolve(true);
+              });
+            }
+          }
         })
-      })
-    });
+      });
+    })
+    // return new Promise(resolve => {
+    //   this.getTodaysTransaction(null).then((doc: TransactionModel) => {
+    //     this.getStudent(student_id, doc).then((me: TransactionStudentModel) => {
+
+    //       this.performEvent(student_id, doc, by_id, this.THERAPY_IN).then(val => {
+    //         this.studentService.updateStudentLocation(student_id, this.CHECKED_IN);
+
+
+    //         let others = doc.students.filter(student => {
+    //           return student.id + "" !== me.id + "";
+    //         });
+    //         let t_model = new TransactionTherapy();
+    //         t_model.start_time = start_time;
+    //         t_model.length = length;
+    //         t_model.nap_subtract = nap_subtract;
+    //         t_model.by_id = by_id;
+    //         let otherTherapies = me.therapies.filter(therapy => {
+    //           return therapy.length !== -1;
+    //         })
+    //         let i = {
+    //             id: me.id,
+    //             events: me.events.map(event => {
+    //               return {
+    //                 type: event.type,
+    //                 time: event.time,
+    //                 time_readable: event.time_readable,
+    //                 by_id: event.by_id
+    //               }
+    //             }),
+    //             nap: me.nap,
+    //             therapies: [...otherTherapies, {start_time: t_model.start_time, length: t_model.length,
+    //               by_id: t_model.by_id, nap_subtract: t_model.nap_subtract}]
+    //         }
+    //         function delta(doc) {
+    //           doc.students = [...others, i];
+    //           //console.log(doc.students);
+    //           return doc;
+    //         }
+
+    //         this.db.upsert(doc._id, delta).then(() => {
+    //           //Success!
+    //           //console.log(`Successfully updated student with id:${me.id}`);
+
+    //           this.loggingService.writeLog(`Student with id:${student_id} was checked in by therapist with id: ${by_id}`);
+    //           resolve(true);
+
+    //         }).catch(err => {
+    //           console.log(err);
+    //         })
+    //       });
+
+    //     })
+    //   })
+    // });
   }
 
   //returns billable hours for the day, = now/checkout time - checkin time - total therapy time
