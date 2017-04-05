@@ -17,9 +17,15 @@
 <ion-content class="fixedBackground" *ngIf="!this.isAddNewClassroom && this.classroomService.data.get(this.classroom._id)!=undefined">
   <ion-card>
     <div *ngIf="this.classroom._id >= 0">
-      <h3>
-        Room {{this.classroom.roomNumber}}
-      </h3>
+      <ion-grid>
+        <ion-row>
+          <ion-col width-10 offset-50>
+            <h3>
+              Room {{this.classroom.roomNumber}}
+            </h3>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
 
       <form [formGroup]="classroomForm" (ngSubmit)="updateClassroom()">
