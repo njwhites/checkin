@@ -11,7 +11,7 @@ import { LoggingProvider } from './logging-provider';
 import { UtilityProvider } from './utility-provider';
 
 import { TransactionModel, TransactionStudentModel, TransactionEvent, TransactionTherapy,
-      BillingDay, BillingWeekModel, StudentBillingWeek, ClassroomWeek} from '../models/db-models';
+      BillingDay, BillingWeekModel, StudentBillingWeek, ClassroomWeek, TransactionStudent, TransactionDay} from '../models/db-models';
 
 import PouchDB from 'pouchdb';
 
@@ -208,27 +208,46 @@ export class CheckinProvider {
   //Takes the student model and pushes/replaces the info in the db with the model's data
   updateStudent(me: TransactionStudentModel, doc){
 
-    let others = doc.students.filter(student => {
-      return student.id + "" !== me.id + "";
-    });
-    //copying info
-    let i = {
-        id: me.id,
-        events: me.events.map(event => {
-          return {
-            type: event.type,
-            time: event.time,
-            time_readable: event.time_readable,
-            by_id: event.by_id
-          }
-        }),
-        nap_subtract: me.nap_subtract,
-        nap: me.nap,
-        therapies: me.therapies
-    }
+    // let others = doc.students.filter(student => {
+    //   return student.id + "" !== me.id + "";
+    // });
+    // //copying info
+    // let i = {
+    //     id: me.id,
+    //     events: me.events.map(event => {
+    //       return {
+    //         type: event.type,
+    //         time: event.time,
+    //         time_readable: event.time_readable,
+    //         by_id: event.by_id
+    //       }
+    //     }),
+    //     nap_subtract: me.nap_subtract,
+    //     nap: me.nap,
+    //     therapies: me.therapies
+    // }
     //console.log(i);
     function delta(doc) {
-      doc.students = [...others, i];
+      // doc.students = [...others, i];
+      doc.students.forEach((student)=> {
+        if(student.id + "" === me.id + ""){
+          //need to update
+
+          student.events = me.events.map(event => {
+            return {
+              type: event.type,
+              time: event.time,
+              time_readable: event.time_readable,
+              by_id: event.by_id
+            }
+          });
+
+          student.nap_subtract = me.nap_subtract;
+          student.nap = me.nap;
+          student.therapies = me.therapies;
+
+        }
+      })
       //console.log(doc.students);
       return doc;
     }
@@ -358,7 +377,7 @@ export class CheckinProvider {
   //.getTransactionsById("4", null).then(result => {
     //if(result === false) -> this means it didnt work
     //else -> result is equal to an array of TransactionEvents
-  //})
+  //})`
   getTransactionsById(studentId: string, date: any){
     return new Promise((resolve, reject) => {
       this.getTodaysTransaction(date).then(result => {
@@ -407,23 +426,96 @@ export class CheckinProvider {
     })
   }
 
+  getStudentDocument(id: string){
+    return new Promise(resolve => {
+      this.db.get(id).then((doc) => {
+        //put it in a model, including map for day -> data
+        console.log("Not lazy loaded");
+        resolve(doc);
+      }).catch(err => {
+        this.db.upsert(id, (doc) => {
+          let output = new TransactionStudent();
+          output.id = id;
+          return output;
+        }).then(() => {
+          this.db.get(id).then((document) => {
+            console.log("Lazy loaded");
+            resolve(document);
+          }).catch((err) => {
+            console.log(err);
+          });
+        });
+        //look at chris's code, do da lazy load
+      });
+    });
+  }
+
+  addEventToStudent(student: TransactionStudent, by_id: string, event: string, nap_subtract? : number){
+    return new Promise(resolve => {
+      let today = new Date();
+      let dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+      let filter = student.days.filter((el) => {
+        return el.date === dateString;
+      });
+      var todayDoc;
+      if(filter.length <= 0){
+        todayDoc = new TransactionDay();
+        todayDoc.date = dateString;
+        student.days.push(todayDoc);
+      }else{
+        todayDoc = filter[0];
+      }
+
+      let time = new Date();
+      let dateReadable = this.createReadableTime(Date.now());
+      let tEvent = new TransactionEvent();
+      tEvent.type = event;
+      tEvent.time = time.getTime() +"";
+      tEvent.time_readable = dateReadable;
+      tEvent.by_id = by_id;
+      todayDoc.events.push(tEvent);
+      if(nap_subtract){
+        todayDoc.nap_subtract += nap_subtract;
+      }
+      console.log(student);
+      this.db.upsert(student.id, (doc) => {
+        return student;
+      }).then(() => {
+        resolve(student);
+      });
+    });
+  }
+
   //Uses performEvent to check in student and update student location in students table
   checkinStudent(id: string, by_id: string){
-    return new Promise(resolve => {
-      this.getTodaysTransaction(null).then((result: TransactionModel) => {
-        this.performEvent(id, result, by_id, this.CHECK_IN).then(result => {
+    // return new Promise(resolve => {
+    //   this.getTodaysTransaction(null).then((result: TransactionModel) => {
+    //     this.performEvent(id, result, by_id, this.CHECK_IN).then(result => {
+    //       this.studentService.updateStudentLocation(id, this.CHECKED_IN).then(() => {
+    //         this.loggingService.writeLog(`Student with id:${id} was checked in`);
+    //         resolve(true);
+    //       });
+    //     });
+
+    //   })
+    // });
+
+    return new Promise(resolve => { 
+      this.getStudentDocument(id).then((student: TransactionStudent) => {
+        this.addEventToStudent(student, by_id, this.CHECK_IN).then(() => {
           this.studentService.updateStudentLocation(id, this.CHECKED_IN).then(() => {
             this.loggingService.writeLog(`Student with id:${id} was checked in`);
             resolve(true);
-          });
+          });          
         });
-
-      })
+      });
     });
+
 
   }
 
   //Promise that resolves as true or false
+  //NO CHANGE
   checkinStudents(ids: Array<string>, by_id: string){
 
     //creates local copy
@@ -434,6 +526,7 @@ export class CheckinProvider {
   }
 
   //Similar to nap
+  //NO CHANGE
   checkinStudentHelper(ids, by_id){
     if(ids.length <= 0){
       return Promise.resolve(true);
@@ -523,12 +616,26 @@ export class CheckinProvider {
 
   //i/o nurse
   nurseCheckout(id: string, by_id: string){
-    this.getTodaysTransaction(null).then(result => {
-      this.performEvent(id, result, by_id, this.NURSE_OUT).then(() => {
-        this.loggingService.writeLog(`Student with id:${id} was checked out of the classroom by id: ${by_id}`);
-        this.studentService.updateStudentLocation(id, this.CHECKED_OUT_NURSE);
+    // this.getTodaysTransaction(null).then(result => {
+    //   this.performEvent(id, result, by_id, this.NURSE_OUT).then(() => {
+    //     this.loggingService.writeLog(`Student with id:${id} was checked out of the classroom by id: ${by_id}`);
+    //     this.studentService.updateStudentLocation(id, this.CHECKED_OUT_NURSE);
+    //   });
+    // });
+
+
+    return new Promise(resolve => {
+      this.getStudentDocument(id).then((student: TransactionStudent) => {
+        this.addEventToStudent(student, by_id, this.NURSE_OUT).then(() => {
+            this.studentService.updateStudentLocation(id, this.CHECKED_OUT_NURSE).then(() => {
+              this.loggingService.writeLog(`Student with id:${id} was checked in`);
+              resolve(true);
+            });
+        });
       });
     });
+
+
   }
 
   nurseCheckin(id: string, by_id: string, nap_subtract?: number){
@@ -635,6 +742,7 @@ export class CheckinProvider {
     })
   }
 
+  //Keeo stub same for Nate
   getAllTherapies(id:string){
     return new Promise((resolve, reject) => {
       this.getTodaysTransaction(null).then(doc => {

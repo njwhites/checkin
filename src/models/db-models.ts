@@ -98,6 +98,32 @@ export class TransactionStudentModel{
   }
 }
 
+export class TransactionStudent{
+  public id: String;
+  public days: Array<TransactionDay>;
+
+  constructor(){
+    this.id = "";
+    this.days = new Array<TransactionDay>();
+  }
+}
+
+export class TransactionDay{
+  public date: String;
+  public events: Array<TransactionEvent>;
+  public nap: String;
+  public nap_subtract: number;
+  public therapies: Array<TransactionTherapy>;
+
+  constructor(){
+    this.date = "";
+    this.events = [];
+    this.nap_subtract = 0;
+    this.nap = "";
+    this.therapies = [];
+  }
+}
+
 export class TransactionTherapy{
   public start_time: String;
   public length: Number;
