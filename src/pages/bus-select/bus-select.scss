@@ -1,0 +1,76 @@
+page-bus-select {
+
+    .scroll-content {
+      background: transparent;
+    }
+
+    .vertical-align-content
+    {
+      //display: flex!important;
+      align-content: center!important;
+    }
+
+    .buttonRow {
+      padding-top: 5%;
+      padding-bottom: 5%;
+      align-self: center;
+      width: 40%;
+      height: 10%
+    }
+
+    .busList {
+      background: transparent;
+      padding-top: 5%;
+    }
+
+    .fixedBackground {
+      background: url(../assets/logo/Dark_Background.jpg);
+      background-size: 100% 100%;
+      height: 100vh;
+    }
+
+    .emptyRow {
+      background: transparent;
+      padding-top: 25vh;
+      align-self: center;
+      width: 80%;
+    }
+
+    .emptyItem {
+      background: transparent;
+      align-self: center;
+      text-align: center;
+    }
+
+    .emptyIcon {
+      background: transparent;
+      width: 75px;
+      height: 75px;
+      color: white;
+      font-size: 900%
+    }
+
+    .emptyText {
+      background: transparent;
+      align-self: center;
+      text-align: center;
+      color: white;
+      font-size: 200%;
+    }
+    .scrollView {
+      position: absolute;
+      top: 10vh;
+      align-items: center;
+      height: 75%;
+      max-height: 63vh;
+      background: transparent;
+    }
+    .submit-button{
+      font-size: 150%;
+    }
+    .push-to-bottom {
+      position: absolute;
+      bottom: 5vh;
+      width: 100%;
+    }
+}
