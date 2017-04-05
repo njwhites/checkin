@@ -17,7 +17,7 @@ export class UserProvider {
   data: Map<String, UserModel>;
   db: any;
   remote: String;
-  public ROLES = ["admin","therapist","teacher","nurse","driver","aide"];
+  public ROLES = ["admin","therapist","teacher","nurse","driver","aide","bus"];
   public THERAPY_TYPES = ["OT","PT","SLP"];
 
 
@@ -87,6 +87,23 @@ export class UserProvider {
         reject(error);
       });
     });
+  }
+
+  getBussesToData(){
+    return new Promise((resolve, reject)=>{
+      this.db.allDocs({include_docs: true, startkey:'0', endkey:'9\uffff'}).then(result =>{
+        this.data = new Map<String, UserModel>();
+        result.rows.map(row=>{
+          if(row.doc.role === this.ROLES[6]){
+            this.data.set(row.doc._id, (row.doc));
+          }
+        });
+        resolve(this.data);
+      }).catch(error =>{
+        console.log(error);
+        reject(error);
+      })
+    })
   }
 
   getUserByID(id: String){

@@ -126,15 +126,37 @@ export class AdminUserModalPage {
           }
         ])
       ],
-      password: ['', (control: FormControl)=>{
-        if(Number(this.user._id) >= 0){
+      password: ['', Validators.compose([
+        (control: FormControl)=>{
+          if(Number(this.user._id) >= 0){
+            return null;
+          }
+          if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
+            return (control.value === "") ? {required: true} : null;
+          }
+          return null;
+        },
+        (control: FormControl)=>{
+          if(Number(this.user._id) >= 0){
+            return null;
+          }
+          if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
+            return ((control.value || '').length < 8) ? {lengthLessEight: true} : null;
+          }
+          return null;
+        },
+        (control: FormControl)=>{
+          if(Number(this.user._id) >= 0){
+            return null;
+          }
+          if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
+            let result = control.value.match(RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).+$'));
+            console.log(result);
+            return (result === null) ? {pattern: true} : null;
+          }
           return null;
         }
-        if(this.userForm.controls['role'].value === this.userService.ROLES[0]){
-          return (control.value === "") ? {required: true} : null;
-        }
-        return null;
-      }],
+      ])],
       confirmPassword: ['', (control: FormControl)=>{
         if(Number(this.user._id) >= 0){
           return null;
@@ -378,5 +400,4 @@ export class AdminUserModalPage {
     this.userService.removeVisibleStudent(this.user, SID);
     this.user.visible_students.splice(this.user.visible_students.indexOf(SID),1);
   }
-
 }

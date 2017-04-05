@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, ToastController} from 'ionic-angular';
 import {KitchenPage} from "../kitchen/kitchen";
-import {TherapistPage} from "../therapist/therapist";
+import {TherapistTabsPage} from "../therapist-tabs/therapist-tabs";
 import {AdminPage} from "../admin/admin";
 import {DriverPage} from "../driver/driver"
 import {StudentProvider} from "../../providers/student-provider";
@@ -15,7 +15,7 @@ import {AuthProvider} from "../../providers/auth-provider";
 export class UserLoginPage {
   parentPage: string;
   kitchenPage = KitchenPage;
-  therapistPage = TherapistPage;
+  therapistTabsPage = TherapistTabsPage;
   adminPage = AdminPage;
   driverPage = DriverPage;
 
@@ -47,7 +47,7 @@ export class UserLoginPage {
       } else if(this.parentPage === 'therapist') {
         this.studentService.getStudents().then(()=>{
           this.userService.getAllUsers().then(()=>{
-            this.navCtrl.push(this.therapistPage, idCheck);
+            this.navCtrl.push(this.therapistTabsPage, idCheck);
           });
         });
       } else if(this.parentPage === 'admin') {

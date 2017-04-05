@@ -5,6 +5,8 @@ import {InitialPage} from "../pages/initial/initial";
 import {StudentDetailsPage} from "../pages/student-details/student-details";
 import {LoginPage} from "../pages/login/login";
 import {ListPage} from "../pages/list/list";
+import {TherapistTabsPage} from "../pages/therapist-tabs/therapist-tabs";
+import {TherapistLogPage} from "../pages/therapist-log/therapist-log";
 import {NapPage} from "../pages/nap/nap";
 import {DriverPage} from "../pages/driver/driver";
 import {ClassroomPage} from "../pages/classroom/classroom";
@@ -60,6 +62,7 @@ import {TherapistStudentDetailsPage} from "../pages/therapist-student-details/th
 import {TherapistCheckinConfirmModalPage} from "../pages/therapist-checkin-confirm-modal/therapist-checkin-confirm-modal";
 import {UserLoginPage} from "../pages/user-login/user-login";
 import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-modal/generic-checkin-confirm-modal";
+import {ClassroomSelectionModalPage} from "../pages/classroom-selection-modal/classroom-selection-modal";
 
 @NgModule({
   declarations: [
@@ -80,6 +83,8 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     SigninPage,
     KitchenPage,
     DriverPage,
+    TherapistTabsPage,
+    TherapistLogPage,
     TherapistPage,
     HomeButtonPage,
     AdminPage,
@@ -114,7 +119,8 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     TherapistStudentDetailsPage,
     TherapistCheckinConfirmModalPage,
     UserLoginPage,
-    GenericCheckinConfirmModalPage
+    GenericCheckinConfirmModalPage,
+    ClassroomSelectionModalPage
 
   ],
   imports: [
@@ -139,6 +145,8 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     SignoutPage,
     SigninPage,
     KitchenPage,
+    TherapistTabsPage,
+    TherapistLogPage,
     TherapistPage,
     AdminPage,
     AdminReportingPage,
@@ -162,7 +170,8 @@ import {GenericCheckinConfirmModalPage} from "../pages/generic-checkin-confirm-m
     TherapistStudentDetailsPage,
     TherapistCheckinConfirmModalPage,
     UserLoginPage,
-    GenericCheckinConfirmModalPage
+    GenericCheckinConfirmModalPage,
+    ClassroomSelectionModalPage
 
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, StudentProvider, UserProvider, ClassRoomProvider, CheckinProvider, UtilityProvider, AuthProvider, ConstantsProvider, LoggingProvider]

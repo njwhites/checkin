@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title text-center>
+      Select A Classroom
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list inset class="fill">
+    <div *ngFor="let room of this.classRoomService.data | mapValues">
+      <ion-card (click)="submit(this.classRoomService.data.get(room.key).roomNumber)">
+        <ion-item>
+          Room {{this.classRoomService.data.get(room.key).roomNumber}}
+        </ion-item>
+      </ion-card>
+    </div>
+  </ion-list>
+</ion-content>

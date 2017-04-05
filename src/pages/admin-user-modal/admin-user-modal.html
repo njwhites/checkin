@@ -1,161 +1,174 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title center-text>User Details</ion-title>
-    <page-home-button end></page-home-button>
+    <ion-grid>
+      <ion-row>
+        <ion-col width-50>
+          <ion-title center-text>User Details</ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-  <ion-list>
-    <ion-list-header *ngIf="this.user._id >=0">
-      <ion-label>ID:</ion-label>
-      <ion-input type="text" value="{{this.user._id}}" disabled="true"></ion-input>
-    </ion-list-header>
-
-
-    <form [formGroup]="userForm" >
-      <ion-list-header *ngIf="this.user._id < 0">
+<ion-content class="fixedBackground">
+  <ion-card>
+    <ion-list>
+      <ion-list-header *ngIf="this.user._id >=0">
         <ion-label>ID:</ion-label>
-        <ion-input type="text" formControlName="ID" value="{{this.user._id}}"></ion-input>
+        <ion-input type="text" value="{{this.user._id}}" disabled="true"></ion-input>
       </ion-list-header>
 
-      <ion-item>
-        <ion-label>First Name</ion-label>
-        <ion-input type="text" formControlName="fName" value="{{this.userService.data.get(this.user._id).fName}}"></ion-input>
-      </ion-item>
 
-      <ion-item>
-        <ion-label>Last Name</ion-label>
-        <ion-input type="text" formControlName="lName" value="{{this.userService.data.get(this.user._id).lName}}"></ion-input>
-      </ion-item>
+      <form [formGroup]="userForm" >
+        <ion-list-header *ngIf="this.user._id < 0">
+          <ion-label>ID:</ion-label>
+          <ion-input type="text" formControlName="ID" value="{{this.user._id}}"></ion-input>
+        </ion-list-header>
 
-      <ion-item>
-        <ion-label>Role:</ion-label>
-        <ion-select formControlName="role">
-            <ion-option *ngFor="let role of this.userService.ROLES" value="{{role}}">{{role | firstUpper}}</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item *ngIf="this.userForm.value.role ===  this.userService.ROLES[1]">
-        <ion-label>Therapist Type:</ion-label>
-        <ion-select formControlName="therapistType">
-            <ion-option *ngFor="let type of this.userService.THERAPY_TYPES" value="{{type}}">{{type}}</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <!-- if the user is a "driver" show their list of approved Students-->
-      <ion-item *ngIf="this.userForm.value.role === this.userService.ROLES[4]">
-        <ion-list>
-          <ion-list-header>
-            Approved Students For Pickup:
-          </ion-list-header>
-          <ion-item-sliding *ngFor="let SID of this.user.visible_students">
-            <ion-item>
-              {{this.studentService.data.get(SID).fName}} {{this.studentService.data.get(SID).lName}}
-            </ion-item>
-            <ion-item-options>
-              <button ion-button color="danger" (click)="removeApprovedStudent(SID)">
-                <ion-icon name="trash"></ion-icon>
-              </button>
-            </ion-item-options>
-          </ion-item-sliding>
-          <ion-item>
-            <button ion-button block (click)="addApprovedStudent()">
-              <ion-icon name="add"></ion-icon>
-            </button>
-          </ion-item>
-        </ion-list>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Phone Number:</ion-label>
-        <ion-input type="tel" formControlName="phoneNumber" value="{{this.userService.data.get(this.user._id).phone}}"></ion-input>
-      </ion-item>
-
-      <div *ngIf="this.userForm.value.role === this.userService.ROLES[0]">
         <ion-item>
-          <ion-label>Email:</ion-label>
-          <ion-input type="email" formControlName="email" value="{{this.userService.data.get(this.user._id).email}}"></ion-input>
+          <ion-label>First Name</ion-label>
+          <ion-input type="text" formControlName="fName" value="{{this.userService.data.get(this.user._id).fName}}"></ion-input>
         </ion-item>
-        <div *ngIf="this.user._id < 0">
-          <ion-item>
-            <ion-label>Password:</ion-label>
-            <ion-input type="password" formControlName="password" value=""></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Confirm Password:</ion-label>
-            <ion-input type="password" formControlName="confirmPassword" value=""></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Security Question:</ion-label>
-            <ion-input type="text" formControlName="question" value=""></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Security Answer:</ion-label>
-            <ion-input type="text" formControlName="answer" value=""></ion-input>
-          </ion-item>
-        </div>
-      </div>
 
-      <ion-card [hidden]="this.userForm.valid">
-        <ion-card-header>Invalid input</ion-card-header>
-        <ion-card-content *ngIf="this.userForm.controls['ID'].hasError('required')">
-          ID is required.
-        </ion-card-content>
-        <ion-card-content *ngIf="this.userForm.controls['ID'].hasError('collision')">
-          ID is already taken.
-        </ion-card-content>
-        <ion-card-content *ngIf="this.userForm.controls['ID'].hasError('notPositiveNumber')">
-          ID needs to be a positive number.
-        </ion-card-content>
-        <ion-card-content *ngIf="this.userForm.controls['fName'].hasError('required')">
-          First name is required.
-        </ion-card-content>
-        <ion-card-content *ngIf="this.userForm.controls['lName'].hasError('required')">
-          Last name is required.
-        </ion-card-content>
-        <ion-card-content *ngIf="this.userForm.controls['role'].hasError('required')">
-          Role is required.
-        </ion-card-content>
-        <div *ngIf="this.userForm.controls['role'].value === this.userService.ROLES[0]">
-          <ion-card-content *ngIf="this.userForm.controls['email'].hasError('required')">
-            Email is required.
-          </ion-card-content>
-          <ion-card-content *ngIf="this.userForm.controls['email'].hasError('pattern')">
-            Email must be a valid email.
-          </ion-card-content>
-          <ion-card-content *ngIf="this.userForm.controls['email'].hasError('emailTaken')">
-            Email already taken.
-          </ion-card-content>
-          <ion-card-content *ngIf="this.userForm.controls['password'].hasError('required')">
-            Password is required.
-          </ion-card-content>
-          <ion-card-content *ngIf="this.userForm.controls['confirmPassword'].hasError('required')">
-            Confirm Password is required.
-          </ion-card-content>
-          <ion-card-content *ngIf="this.userForm.hasError('notMatching')">
-            Password and Confirm password are not equal.
-          </ion-card-content>
-          <ion-card-content *ngIf="this.userForm.controls['question'].hasError('required')">
-            Question is required.
-          </ion-card-content>
-          <ion-card-content *ngIf="this.userForm.controls['question'].hasError('fortyCharacters')">
-            Question should be less than 40 characters.
-          </ion-card-content>
-          <ion-card-content *ngIf="this.userForm.hasError('matching')">
-            Question should not be your password.
-          </ion-card-content>
-          <ion-card-content *ngIf="this.userForm.controls['answer'].hasError('required')">
-            Answer is required.
-          </ion-card-content>
-        </div>
-      </ion-card>
+        <ion-item>
+          <ion-label>Last Name</ion-label>
+          <ion-input type="text" formControlName="lName" value="{{this.userService.data.get(this.user._id).lName}}"></ion-input>
+        </ion-item>
 
-      <button ion-button block type="submit" [disabled]="!this.userForm.valid" (click)="updateUser()">{{buttonText}}</button>
-      <button ion-button block color="danger" *ngIf="this.user._id >= 0" (click)="deleteUser()">Delete User</button>
-    </form>
-  </ion-list>
+        <ion-item>
+          <ion-label>Role:</ion-label>
+          <ion-select formControlName="role">
+            <ion-option *ngFor="let role of this.userService.ROLES" value="{{role}}">{{role | firstUpper}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="this.userForm.value.role ===  this.userService.ROLES[1]">
+          <ion-label>Therapist Type:</ion-label>
+          <ion-select formControlName="therapistType">
+            <ion-option *ngFor="let type of this.userService.THERAPY_TYPES" value="{{type}}">{{type}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- if the user is a "driver" show their list of approved Students-->
+        <ion-item *ngIf="this.userForm.value.role === this.userService.ROLES[4]">
+          <ion-list>
+            <ion-list-header>
+              Approved Students For Pickup:
+            </ion-list-header>
+            <ion-item-sliding *ngFor="let SID of this.user.visible_students">
+              <ion-item>
+                {{this.studentService.data.get(SID).fName}} {{this.studentService.data.get(SID).lName}}
+              </ion-item>
+              <ion-item-options>
+                <button ion-button color="danger" (click)="removeApprovedStudent(SID)">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
+            <ion-item>
+              <button ion-button block (click)="addApprovedStudent()">
+                <ion-icon name="add"></ion-icon>
+              </button>
+            </ion-item>
+          </ion-list>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Phone Number:</ion-label>
+          <ion-input type="tel" formControlName="phoneNumber" value="{{this.userService.data.get(this.user._id).phone}}"></ion-input>
+        </ion-item>
+
+        <div *ngIf="this.userForm.value.role === this.userService.ROLES[0]">
+          <ion-item>
+            <ion-label>Email:</ion-label>
+            <ion-input type="email" formControlName="email" value="{{this.userService.data.get(this.user._id).email}}"></ion-input>
+          </ion-item>
+          <div *ngIf="this.user._id < 0">
+            <ion-item>
+              <ion-label>Password:</ion-label>
+              <ion-input type="password" formControlName="password" value=""></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Confirm Password:</ion-label>
+              <ion-input type="password" formControlName="confirmPassword" value=""></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Security Question:</ion-label>
+              <ion-input type="text" formControlName="question" value=""></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Security Answer:</ion-label>
+              <ion-input type="text" formControlName="answer" value=""></ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <ion-card [hidden]="this.userForm.valid">
+          <ion-card-header>Invalid input</ion-card-header>
+          <ion-card-content *ngIf="this.userForm.controls['ID'].hasError('required')">
+            ID is required.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['ID'].hasError('collision')">
+            ID is already taken.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['ID'].hasError('notPositiveNumber')">
+            ID needs to be a positive number.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['fName'].hasError('required')">
+            First name is required.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['lName'].hasError('required')">
+            Last name is required.
+          </ion-card-content>
+          <ion-card-content *ngIf="this.userForm.controls['role'].hasError('required')">
+            Role is required.
+          </ion-card-content>
+          <div *ngIf="this.userForm.controls['role'].value === this.userService.ROLES[0]">
+            <ion-card-content *ngIf="this.userForm.controls['email'].hasError('required')">
+              Email is required.
+            </ion-card-content>
+            <ion-card-content *ngIf="this.userForm.controls['email'].hasError('pattern')">
+              Email must be a valid email.
+            </ion-card-content>
+            <ion-card-content *ngIf="this.userForm.controls['email'].hasError('emailTaken')">
+              Email already taken.
+            </ion-card-content>
+            <ion-card-content *ngIf="this.userForm.controls['password'].hasError('required')">
+              Password is required.
+            </ion-card-content>
+            <ion-card-content *ngIf="this.userForm.controls['password'].hasError('lengthLessEight')">
+              Password must be 8 or more characters.
+            </ion-card-content>
+            <ion-card-content *ngIf="this.userForm.controls['password'].hasError('pattern')">
+              Password must have atleast one lowercase, one uppercase, and one digit.
+            </ion-card-content>
+            <ion-card-content *ngIf="this.userForm.controls['confirmPassword'].hasError('required')">
+              Confirm Password is required.
+            </ion-card-content>
+            <ion-card-content *ngIf="this.userForm.hasError('notMatching')">
+              Password and Confirm password are not equal.
+            </ion-card-content>
+            <ion-card-content *ngIf="this.userForm.controls['question'].hasError('required')">
+              Question is required.
+            </ion-card-content>
+            <ion-card-content *ngIf="this.userForm.controls['question'].hasError('fortyCharacters')">
+              Question should be less than 40 characters.
+            </ion-card-content>
+            <ion-card-content *ngIf="this.userForm.hasError('matching')">
+              Question should not be your password.
+            </ion-card-content>
+            <ion-card-content *ngIf="this.userForm.controls['answer'].hasError('required')">
+              Answer is required.
+            </ion-card-content>
+          </div>
+        </ion-card>
+
+        <button ion-button block type="submit" [disabled]="!this.userForm.valid" (click)="updateUser()">{{buttonText}}</button>
+        <button ion-button block color="danger" *ngIf="this.user._id >= 0" (click)="deleteUser()">Delete User</button>
+      </form>
+    </ion-list>
+  </ion-card>
 </ion-content>

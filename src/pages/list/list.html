@@ -22,7 +22,7 @@
         <div *ngFor="let student of this.studentService.data | mapValues | filterParents:this.userID" class="scrollableInside">
           <div *ngIf="this.studentService.data.get(student.key).location !== checkinService.CHECKED_OUT  && this.classroomService.data.get(this.roomNumber).students.includes((student.key))">
             <ion-card>
-              <ion-item  (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
+              <ion-item (click)="studentTapped($event, this.studentService.data.get(student.key)._id)">
                 <ion-icon name="walk" item-left></ion-icon>
                 {{this.studentService.data.get(student.key).fName}} {{this.studentService.data.get(student.key).lName}}
                 <div item-right>
