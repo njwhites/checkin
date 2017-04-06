@@ -10,45 +10,49 @@
 <ion-content class="bgc">
 	<ion-grid>
     <ion-row>
-      <ion-col width-33>
-        <ion-card>
-          <table class="table table-striped table-bordered table-condensed">
-            <thead>
-            <tr>
-              <th>Room Number</th>
-              <th>Non-Dietary</th>
-              <th>Dietary</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let class of this.classroomService.data | kitchenPipe">
-              <td>{{class.roomNum}}</td>
-              <td>{{class.presentCount - class.dietCount}}</td>
-              <td>{{class.dietCount}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </ion-card>
+      <ion-col width-75>
+        <!--Below is the original table layout-->
+
+
+        <!--<ion-card>-->
+          <!--<table class="table table-striped table-bordered table-condensed">-->
+            <!--<thead>-->
+            <!--<tr>-->
+              <!--<th>Room Number</th>-->
+              <!--<th>Non-Dietary</th>-->
+              <!--<th>Dietary</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr *ngFor="let class of this.classroomService.data | kitchenPipe">-->
+              <!--<td>{{class.roomNum}}</td>-->
+              <!--<td>{{class.presentCount - class.dietCount}}</td>-->
+              <!--<td>{{class.dietCount}}</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+          <!--</table>-->
+        <!--</ion-card>-->
+
+
+        
+        <div class="card-container">
+          <ion-card class="flex-element" *ngFor="let class of this.classroomService.data | kitchenPipe"  (click)="cardTapped(class.roomNum, class.presentCount)">
+            <ion-grid class="cardGrid">
+              <ion-row class="roomNumber">
+                <ion-col>
+                  {{class.roomNum}}
+                </ion-col>
+              </ion-row>
+              <ion-row class="roomCount">
+                <ion-col>
+                  {{class.presentCount}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+        </div>
       </ion-col>
-      <ion-col width-33>
-        <ion-card>
-          <table class="table table-bordered table-condensed">
-            <thead>
-            <tr>
-              <th>Room Number</th>
-              <th>Name</th>
-            </tr>
-            </thead>
-            <tbody *ngFor="let class of this.classroomService.data | kitchenPipe">
-                <tr *ngFor="let student of class.dietIds">
-                  <td>{{class.roomNum}}</td>
-                  <td>{{getName(student)}}</td>
-                </tr>
-            </tbody>
-          </table>
-        </ion-card>
-      </ion-col>
-      <ion-col width-33>
+      <ion-col width-25>
         <ion-card>
           <table class="table table-bordered table-condensed">
             <thead>
