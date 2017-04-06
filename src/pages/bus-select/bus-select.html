@@ -9,14 +9,23 @@
 
 <ion-content class="fixedBackground">
   <ion-content inset class="busList" class="scrollView">
-    <div *ngFor="let bus of this.busses | mapValues">
-      <ion-card (click)="selectBus(this.userService.data.get(bus.key)._id)">
-        <ion-card-content>
-          <ion-icon name="bus" item-left></ion-icon>
-          {{this.userService.data.get(bus.key).fName}}
-        </ion-card-content>
-      </ion-card>
-    </div>
+    <ion-grid class="busGrid">
+        <div *ngFor="let bus of this.busses | mapValues">
+          <ion-row class=busRow>
+            <ion-col class="busCard">
+              <ion-card (click)="selectBus(this.userService.data.get(bus.key)._id)">
+                <ion-card-content>
+                  <ion-item>
+                    <ion-icon name="bus" item-left></ion-icon>
+                    <span> {{this.userService.data.get(bus.key).fName | firstUpper}}</span>
+                    <ion-icon item-right name="arrow-forward"></ion-icon>
+                  </ion-item>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </div>
+    </ion-grid>
     <div *ngIf="this.busses.length === 0"class="vertical-align-content">
       <ion-grid>
         <ion-row class="emptyRow">
