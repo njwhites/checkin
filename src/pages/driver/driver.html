@@ -21,9 +21,10 @@
         <ion-row>
           <ion-col>
             <div *ngFor="let thisStudent of driverStudents">
-              <ion-card class="cardElement" *ngIf="this.studentList.get(thisStudent).location !== this.checkinService.CHECKED_OUT">
+              <ion-card class="cardElement" *ngIf="this.studentList.get(thisStudent).location !== this.checkinService.CHECKED_OUT" (click)="seeNotes(thisStudent)">
                 <ion-item>
-                  <ion-icon name="walk" item-left></ion-icon>
+                  <ion-icon *ngIf="(this.studentList.get(thisStudent).note || '').length === 0" name="walk" item-left></ion-icon>
+                  <ion-icon *ngIf="(this.studentList.get(thisStudent).note || '').length !== 0" name="flag" color="danger" item-left></ion-icon>
                   <div>
                     {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
                   </div>
@@ -38,9 +39,10 @@
         <ion-row>
           <ion-col>
             <div *ngFor="let thisStudent of driverStudents">
-              <ion-card class="cardElement" *ngIf="this.studentList.get(thisStudent).location === this.checkinService.CHECKED_OUT">
+              <ion-card class="cardElement" *ngIf="this.studentList.get(thisStudent).location === this.checkinService.CHECKED_OUT" (click)="seeNotes(thisStudent)">
                 <ion-item class="absentRow">
-                  <ion-icon name="walk" item-left></ion-icon>
+                  <ion-icon *ngIf="(this.studentList.get(thisStudent).note || '').length === 0" name="walk" item-left></ion-icon>
+                  <ion-icon *ngIf="(this.studentList.get(thisStudent).note || '').length !== 0" name="flag" color="danger" item-left></ion-icon>
                   <div>
                     {{this.studentList.get(thisStudent).fName}} {{this.studentList.get(thisStudent).lName}}
                   </div>
