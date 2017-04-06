@@ -123,187 +123,187 @@ export class CheckinProvider {
     }
   }
 
-  getTodaysTransaction(dateString: string){
-    //if not supplied, set to today. format is d.m.y i.e. (27.1.2017)
-    if(dateString === null){
-      let today = new Date();
-      dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
-    }
+  // getTodaysTransaction(dateString: string){
+  //   //if not supplied, set to today. format is d.m.y i.e. (27.1.2017)
+  //   if(dateString === null){
+  //     let today = new Date();
+  //     dateString = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+  //   }
 
-  	return new Promise((resolve) => {
-  		this.db.allDocs({include_docs: true}).then(result => {
-        //console.log(result);
-        //get today's object, if it does not exist, create it
-  	    let trans = result.rows.filter((row) => {
-  	    	return row.doc.date === dateString;
-  	    });
+  // 	return new Promise((resolve) => {
+  // 		this.db.allDocs({include_docs: true}).then(result => {
+  //       //console.log(result);
+  //       //get today's object, if it does not exist, create it
+  // 	    let trans = result.rows.filter((row) => {
+  // 	    	return row.doc.date === dateString;
+  // 	    });
 
-        //Day already exists in the db
-  	    if(trans.length > 0){
-          let transaction = new TransactionModel();
-          transaction._id = trans[0].doc._id;
-          transaction._rev = trans[0].doc._rev;
-          transaction.date = trans[0].doc.date;
-          transaction.students = trans[0].doc.students;
-  	    	resolve(transaction);
-  	    }else{
-          //Day did not exist, creates and puts it
-          this.db.upsert(dateString, (doc) => {
-            return {
-              _id: dateString,
-              date: dateString,
-              students: []
-            }
-          }).then(response => {
-            //unsure how to do this without recursion. basically since it has been added to the db,
-            //it will on recursion go into the other part of the if/else
-            this.loggingService.writeLog("Successfully added transaction table for day: " + dateString);
-            resolve(this.getTodaysTransaction(dateString));
-          }).catch(function (err) {
-            console.log(err);
-          });
-  	    }
-     	}).catch(err =>{
-        	console.log(err)
-    	});
-  	})
-  }
+  //       //Day already exists in the db
+  // 	    if(trans.length > 0){
+  //         let transaction = new TransactionModel();
+  //         transaction._id = trans[0].doc._id;
+  //         transaction._rev = trans[0].doc._rev;
+  //         transaction.date = trans[0].doc.date;
+  //         transaction.students = trans[0].doc.students;
+  // 	    	resolve(transaction);
+  // 	    }else{
+  //         //Day did not exist, creates and puts it
+  //         this.db.upsert(dateString, (doc) => {
+  //           return {
+  //             _id: dateString,
+  //             date: dateString,
+  //             students: []
+  //           }
+  //         }).then(response => {
+  //           //unsure how to do this without recursion. basically since it has been added to the db,
+  //           //it will on recursion go into the other part of the if/else
+  //           this.loggingService.writeLog("Successfully added transaction table for day: " + dateString);
+  //           resolve(this.getTodaysTransaction(dateString));
+  //         }).catch(function (err) {
+  //           console.log(err);
+  //         });
+  // 	    }
+  //    	}).catch(err =>{
+  //       	console.log(err)
+  //   	});
+  // 	})
+  // }
 
 
-  getStudent(id: string, doc: any){
-    function addStudent(doc){
-      doc.students = [...doc.students, {id:id, events: [], nap: -1, therapies: []}];
-      return doc;
-    }
-    //if the student searched for doesnt already exist
-    return new Promise(resolve => {
-      let me = doc.students.filter(student => {
-        return student.id + "" === id + "";
-      });
-      if(me.length < 1){
-        this.db.upsert(doc._id, addStudent).then(response => {
-          //similar recursion to in getTodaysTransaction
-          return this.getTodaysTransaction(doc._id);
-          //return this.getStudent(id, doc);
-        }).then(result => {
-          resolve(this.getStudent(id, result));
-        }).catch(err => {
-          console.log(err);
-        });
-      }else{
-        //Resolves with the student's info from the db
-        let student = new TransactionStudentModel();
-        student.id = me[0].id;
-        student.events = me[0].events;
-        student.nap = me[0].nap;
-        student.therapies = me[0].therapies;
-        if(me[0].nap_subtract){
-          student.nap_subtract = me[0].nap_subtract;
-        }
-        this.loggingService.writeLog(`Successfully created student ${student.id} in transaction database`);
-        resolve(student);
-      }
-    })
-  }
-  //Takes the student model and pushes/replaces the info in the db with the model's data
-  updateStudent(me: TransactionStudentModel, doc){
+  // getStudent(id: string, doc: any){
+  //   function addStudent(doc){
+  //     doc.students = [...doc.students, {id:id, events: [], nap: -1, therapies: []}];
+  //     return doc;
+  //   }
+  //   //if the student searched for doesnt already exist
+  //   return new Promise(resolve => {
+  //     let me = doc.students.filter(student => {
+  //       return student.id + "" === id + "";
+  //     });
+  //     if(me.length < 1){
+  //       this.db.upsert(doc._id, addStudent).then(response => {
+  //         //similar recursion to in getTodaysTransaction
+  //         return this.getTodaysTransaction(doc._id);
+  //         //return this.getStudent(id, doc);
+  //       }).then(result => {
+  //         resolve(this.getStudent(id, result));
+  //       }).catch(err => {
+  //         console.log(err);
+  //       });
+  //     }else{
+  //       //Resolves with the student's info from the db
+  //       let student = new TransactionStudentModel();
+  //       student.id = me[0].id;
+  //       student.events = me[0].events;
+  //       student.nap = me[0].nap;
+  //       student.therapies = me[0].therapies;
+  //       if(me[0].nap_subtract){
+  //         student.nap_subtract = me[0].nap_subtract;
+  //       }
+  //       this.loggingService.writeLog(`Successfully created student ${student.id} in transaction database`);
+  //       resolve(student);
+  //     }
+  //   })
+  // }
+  // //Takes the student model and pushes/replaces the info in the db with the model's data
+  // updateStudent(me: TransactionStudentModel, doc){
 
-    // let others = doc.students.filter(student => {
-    //   return student.id + "" !== me.id + "";
-    // });
-    // //copying info
-    // let i = {
-    //     id: me.id,
-    //     events: me.events.map(event => {
-    //       return {
-    //         type: event.type,
-    //         time: event.time,
-    //         time_readable: event.time_readable,
-    //         by_id: event.by_id
-    //       }
-    //     }),
-    //     nap_subtract: me.nap_subtract,
-    //     nap: me.nap,
-    //     therapies: me.therapies
-    // }
-    //console.log(i);
-    function delta(doc) {
-      // doc.students = [...others, i];
-      doc.students.forEach((student)=> {
-        if(student.id + "" === me.id + ""){
-          //need to update
+  //   // let others = doc.students.filter(student => {
+  //   //   return student.id + "" !== me.id + "";
+  //   // });
+  //   // //copying info
+  //   // let i = {
+  //   //     id: me.id,
+  //   //     events: me.events.map(event => {
+  //   //       return {
+  //   //         type: event.type,
+  //   //         time: event.time,
+  //   //         time_readable: event.time_readable,
+  //   //         by_id: event.by_id
+  //   //       }
+  //   //     }),
+  //   //     nap_subtract: me.nap_subtract,
+  //   //     nap: me.nap,
+  //   //     therapies: me.therapies
+  //   // }
+  //   //console.log(i);
+  //   function delta(doc) {
+  //     // doc.students = [...others, i];
+  //     doc.students.forEach((student)=> {
+  //       if(student.id + "" === me.id + ""){
+  //         //need to update
 
-          student.events = me.events.map(event => {
-            return {
-              type: event.type,
-              time: event.time,
-              time_readable: event.time_readable,
-              by_id: event.by_id
-            }
-          });
+  //         student.events = me.events.map(event => {
+  //           return {
+  //             type: event.type,
+  //             time: event.time,
+  //             time_readable: event.time_readable,
+  //             by_id: event.by_id
+  //           }
+  //         });
 
-          student.nap_subtract = me.nap_subtract;
-          student.nap = me.nap;
-          student.therapies = me.therapies;
+  //         student.nap_subtract = me.nap_subtract;
+  //         student.nap = me.nap;
+  //         student.therapies = me.therapies;
 
-        }
-      })
-      //console.log(doc.students);
-      return doc;
-    }
-    return new Promise(resolve => {
-      this.db.upsert(doc._id, delta).then(() => {
-        //Success!
-        resolve(true);
+  //       }
+  //     })
+  //     //console.log(doc.students);
+  //     return doc;
+  //   }
+  //   return new Promise(resolve => {
+  //     this.db.upsert(doc._id, delta).then(() => {
+  //       //Success!
+  //       resolve(true);
 
-      }).catch(err => {
-        console.log(err);
-      })
-    });
+  //     }).catch(err => {
+  //       console.log(err);
+  //     })
+  //   });
 
-  }
+  // }
 
-  //Event is the constants from the top
-  performEvent(id: string, doc: any, by_id: string, event: string, nap_subtract? : number){
+  // //Event is the constants from the top
+  // performEvent(id: string, doc: any, by_id: string, event: string, nap_subtract? : number){
 
-    //If the student has not interacted yet with checkin today
-    return new Promise((resolve, reject) => {
-      let time = new Date();
-      let dateReadable = this.createReadableTime(Date.now());
-      this.getStudent(id, doc).then((student: TransactionStudentModel) => {
-        //take the student and do something?
+  //   //If the student has not interacted yet with checkin today
+  //   return new Promise((resolve, reject) => {
+  //     let time = new Date();
+  //     let dateReadable = this.createReadableTime(Date.now());
+  //     this.getStudent(id, doc).then((student: TransactionStudentModel) => {
+  //       //take the student and do something?
 
-        let tEvent = new TransactionEvent();
-        tEvent.type = event;
-        tEvent.time = time.getTime() +"";
-        tEvent.time_readable = dateReadable;
-        tEvent.by_id = by_id;
-        student.events.push(tEvent);
-        if(nap_subtract){
-          console.log(student.nap_subtract);
-          student.nap_subtract += nap_subtract;
-          console.log(student.nap_subtract);
-        }
+  //       let tEvent = new TransactionEvent();
+  //       tEvent.type = event;
+  //       tEvent.time = time.getTime() +"";
+  //       tEvent.time_readable = dateReadable;
+  //       tEvent.by_id = by_id;
+  //       student.events.push(tEvent);
+  //       if(nap_subtract){
+  //         console.log(student.nap_subtract);
+  //         student.nap_subtract += nap_subtract;
+  //         console.log(student.nap_subtract);
+  //       }
 
-        //Get updated today's transaction incase _rev has changed, then push tEvent in
-        this.getTodaysTransaction(doc._id).then(result => {
-          this.updateStudent(student, result).then(updateResult => {
-            resolve(true);
-          }).catch(err => {
-            console.log(err);
-            reject(false);
-          });
-        }).catch(err => {
-            console.log(err);
-            reject(false);
-           });
-      }).catch(err => {
-        console.log(err);
-        reject(false);
-      });
-    })
+  //       //Get updated today's transaction incase _rev has changed, then push tEvent in
+  //       this.getTodaysTransaction(doc._id).then(result => {
+  //         this.updateStudent(student, result).then(updateResult => {
+  //           resolve(true);
+  //         }).catch(err => {
+  //           console.log(err);
+  //           reject(false);
+  //         });
+  //       }).catch(err => {
+  //           console.log(err);
+  //           reject(false);
+  //          });
+  //     }).catch(err => {
+  //       console.log(err);
+  //       reject(false);
+  //     });
+  //   })
 
-  }
+  // }
 
   // //Push nap value for this student, very similar to updateStudent
   // setNap(student_id: string, minutes:string){
@@ -408,23 +408,23 @@ export class CheckinProvider {
     })
   }
 
-  //Used with normalize
-  clearTransactionsForDate(date:any){
-    return new Promise((resolve, reject) => {
-      this.getTodaysTransaction(date).then((result: any) => {
-        this.db.upsert(result._id, (doc) => {
-          //Nukes all events for the day
-          doc.students = [];
-          return doc;
-        }).then(result => {
-          resolve(true);
-        })
-      }).catch(err => {
-        console.log(err);
-        reject(err);
-      })
-    })
-  }
+  // //Used with normalize
+  // clearTransactionsForDate(date:any){
+  //   return new Promise((resolve, reject) => {
+  //     this.getTodaysTransaction(date).then((result: any) => {
+  //       this.db.upsert(result._id, (doc) => {
+  //         //Nukes all events for the day
+  //         doc.students = [];
+  //         return doc;
+  //       }).then(result => {
+  //         resolve(true);
+  //       })
+  //     }).catch(err => {
+  //       console.log(err);
+  //       reject(err);
+  //     })
+  //   })
+  // }
 
   //Changed
   checkLimbo(id: string, doc?: TransactionModel){
@@ -999,17 +999,22 @@ export class CheckinProvider {
   //returns billable hours for the day, = now/checkout time - checkin time - total therapy time
   getBillableHours(student_id: string, date: string){
     return new Promise((resolve, reject) => {
-      this.getTodaysTransaction(date).then(doc => {
-        this.getStudent(student_id, doc).then((student: TransactionStudentModel) => {
+      this.getStudentDocument(student_id).then((student: TransactionStudent) => {
+        let filter = student.days.filter((el) => {
+          return el.date === date;
+        });
+
+        if(filter.length > 0){
+          var todayDoc = filter[0];
           let totalTherapyTime = 0;
-          student.therapies.forEach(t => {
+          todayDoc.therapies.forEach(t => {
             if(t.length > 0 ){
               totalTherapyTime += t.length.valueOf();
             }
           });
           let checkInTime = 0;
           let checkOutTime = 0;
-          student.events.forEach((event:TransactionEvent) => {
+          todayDoc.events.forEach((event:TransactionEvent) => {
             if(checkInTime === 0 && event.type === this.CHECK_IN){
               checkInTime = Number(event.time);
             }else if(checkOutTime === 0 && event.type === this.CHECK_OUT){
@@ -1027,8 +1032,11 @@ export class CheckinProvider {
             let v = checkOutTime - checkInTime - (totalTherapyTime * 1000 * 60);
             resolve((v / (1000 * 60 * 60)));
           }
-        })
-      })
+        }
+        else{
+          resolve(0);
+        }
+      });
     })
   }
 
@@ -1073,20 +1081,16 @@ export class CheckinProvider {
   }
 
   getClassroomBilling(room_number: String, callback){
-    this.billingdb.allDocs({include_docs: true}).then(result => {
+    this.billingdb.get(room_number).then(trans => {
 
-        //get today's object, if it does not exist, create it
-        //console.log(result);
-        let trans = result.rows.filter((row) => {
-          return row.doc._id === room_number;
-        });
+        
         //console.log(trans);
         //Day already exists in the db
-        if(trans.length > 0){
-          console.log(trans[0]);
+        if(trans){
+          console.log(trans);
           let room = new ClassroomWeek();
-          room.room_number = trans[0].doc.room_number;
-          room.weeks = trans[0].doc.billingWeeks;
+          room.room_number = trans.room_number;
+          room.weeks = trans.billingWeeks;
           //console.log(room);
           //console.log("resolving from getClassroomBilling")
           callback(room);
@@ -1254,18 +1258,22 @@ export class CheckinProvider {
     return new Promise((resolve, reject) => {
       const day = new BillingDay();
       const dateString = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
-      this.getTodaysTransaction(dateString).then(doc => {
-        this.getStudent(s_id, doc).then((student:TransactionStudentModel) => {
+      this.getStudentDocument(s_id).then((student: TransactionStudent) => {
+        let filter = student.days.filter((el) => {
+          return el.date === dateString;
+        });
 
+        if(filter.length > 0){
+          var todayDoc = filter[0];
           //If student nap is set for the day
-          if(!isNaN(Number(student.nap)) && Number(student.nap) >= 0){
-            day.nap_hours = Number(student.nap).valueOf() / 60;
+          if(!isNaN(Number(todayDoc.nap)) && Number(todayDoc.nap) >= 0){
+            day.nap_hours = Number(todayDoc.nap).valueOf() / 60;
           }else{
             day.nap_hours = 0;
           }
 
           //event info
-          student.events.forEach((event:TransactionEvent) => {
+          todayDoc.events.forEach((event:TransactionEvent) => {
             if(day.start_time < 0 && event.type === this.CHECK_IN){
               day.start_time = Number(event.time);
             }
@@ -1290,8 +1298,8 @@ export class CheckinProvider {
 
           //therapy info
           var totalTherapy = 0;
-          if(student.therapies){
-            student.therapies.forEach((therapy:TransactionTherapy) => {
+          if(todayDoc.therapies){
+            todayDoc.therapies.forEach((therapy:TransactionTherapy) => {
               var type = this.userService.data.get(therapy.by_id).therapy_type;
               //console.log("Therapy type: " + type);
               var therapyLength = therapy.length.valueOf() / 60;
@@ -1333,8 +1341,89 @@ export class CheckinProvider {
           day.billingWarning = day.billable_hours < 5;
 
           resolve(day);
-        })
-      })
+        }
+      });
+      // this.getTodaysTransaction(dateString).then(doc => {
+      //   this.getStudent(s_id, doc).then((student:TransactionStudentModel) => {
+
+      //     // //If student nap is set for the day
+      //     // if(!isNaN(Number(student.nap)) && Number(student.nap) >= 0){
+      //     //   day.nap_hours = Number(student.nap).valueOf() / 60;
+      //     // }else{
+      //     //   day.nap_hours = 0;
+      //     // }
+
+      //     // //event info
+      //     // student.events.forEach((event:TransactionEvent) => {
+      //     //   if(day.start_time < 0 && event.type === this.CHECK_IN){
+      //     //     day.start_time = Number(event.time);
+      //     //   }
+      //     //   if(day.end_time < 0 && event.type === this.CHECK_OUT){
+      //     //     day.end_time = Number(event.time);
+      //     //   }
+      //     // });
+
+      //     // //if not checked out for the day, but checked in, the checkout time for billing is set to 3:00PM
+      //     // if(day.end_time < 0 && day.start_time > 0){
+      //     //   var d = new Date(date.getTime());
+      //     //   d.setHours(15,0,0,0);
+      //     //   day.end_time = d.getTime();
+      //     // }
+
+      //     // //if both are set, start doing total calculations
+      //     // if(day.start_time >= 0 && day.end_time >= 0){
+      //     //   day.gross_hours = (day.end_time - day.start_time) / (1000 * 60 * 60);
+      //     // }
+
+      //     // day.attendanceWarning = day.gross_hours < 7;
+
+      //     // //therapy info
+      //     // var totalTherapy = 0;
+      //     // if(student.therapies){
+      //     //   student.therapies.forEach((therapy:TransactionTherapy) => {
+      //     //     var type = this.userService.data.get(therapy.by_id).therapy_type;
+      //     //     //console.log("Therapy type: " + type);
+      //     //     var therapyLength = therapy.length.valueOf() / 60;
+      //     //     if(type === 'PT'){
+      //     //       day.PT_therapy_hours += therapyLength;
+      //     //       totalTherapy += therapyLength;
+      //     //     }else if(type === 'OT'){
+      //     //       day.OT_therapy_hours += therapyLength;
+      //     //       totalTherapy += therapyLength;
+      //     //     }else{
+      //     //       day.SP_therapy_hours += therapyLength;
+      //     //       totalTherapy += therapyLength;
+      //     //     }
+
+      //     //     if(therapy.nap_subtract){
+      //     //       day.nap_hours -= therapy.nap_subtract.valueOf() / 60;
+      //     //     }
+
+
+      //     //   })
+
+      //     //   day.therapyWarning = totalTherapy > 1
+
+      //     // }
+      //     // //net hours = gross - nap - therapy
+      //     // if(day.gross_hours > 0){
+      //     //   day.net_hours = day.gross_hours - day.nap_hours - totalTherapy;
+      //     // }else{
+      //     //   day.net_hours = -1;
+      //     // }
+
+      //     // //billable = min(net, 5).truncate
+      //     // if(day.net_hours > 0){
+      //     //   day.billable_hours = Math.floor(Math.min(day.net_hours, 5));
+      //     // }else{
+      //     //   day.billable_hours = -1;
+      //     // }
+
+      //     // day.billingWarning = day.billable_hours < 5;
+
+      //     // resolve(day);
+      //   })
+      // })
 
     })
 
