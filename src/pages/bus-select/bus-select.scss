@@ -4,23 +4,28 @@ page-bus-select {
       background: transparent;
     }
 
-    .vertical-align-content
-    {
+    .vertical-align-content {
       //display: flex!important;
       align-content: center!important;
-    }
-
-    .buttonRow {
-      padding-top: 5%;
-      padding-bottom: 5%;
-      align-self: center;
-      width: 40%;
-      height: 10%
     }
 
     .busList {
       background: transparent;
       padding-top: 5%;
+    }
+
+    .busGrid{
+      align-items: center;
+    }
+
+    .busRow {
+      align-self: center;
+      align-items: center;
+      width: 50vh;
+    }
+
+    .busCard {
+      align-self: center;
     }
 
     .fixedBackground {
@@ -61,16 +66,8 @@ page-bus-select {
       position: absolute;
       top: 10vh;
       align-items: center;
-      height: 75%;
-      max-height: 63vh;
+      height: 95%;
       background: transparent;
     }
-    .submit-button{
-      font-size: 150%;
-    }
-    .push-to-bottom {
-      position: absolute;
-      bottom: 5vh;
-      width: 100%;
-    }
+
 }
