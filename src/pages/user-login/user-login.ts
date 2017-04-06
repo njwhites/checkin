@@ -3,7 +3,7 @@ import {NavController, NavParams, ToastController} from 'ionic-angular';
 import {KitchenPage} from "../kitchen/kitchen";
 import {TherapistTabsPage} from "../therapist-tabs/therapist-tabs";
 import {AdminPage} from "../admin/admin";
-import {DriverPage} from "../driver/driver"
+import {BusSelectPage} from "../bus-select/bus-select"
 import {StudentProvider} from "../../providers/student-provider";
 import {UserProvider} from "../../providers/user-provider";
 import {AuthProvider} from "../../providers/auth-provider";
@@ -17,7 +17,7 @@ export class UserLoginPage {
   kitchenPage = KitchenPage;
   therapistTabsPage = TherapistTabsPage;
   adminPage = AdminPage;
-  driverPage = DriverPage;
+  BusSelectPage = BusSelectPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public authService:AuthProvider, public studentService: StudentProvider, public userService: UserProvider, public toastCtrl: ToastController) {
     this.parentPage = this.navParams.get('parentPage');
@@ -42,7 +42,7 @@ export class UserLoginPage {
         });
       } else if(this.parentPage === 'driver') {
         this.studentService.getStudentsByGroup(this.userService.data.get(String(idCheck)).visible_students).then(result =>{
-            this.navCtrl.push(this.driverPage, idCheck);
+            this.navCtrl.push(this.BusSelectPage, idCheck);
           });
       } else if(this.parentPage === 'therapist') {
         this.studentService.getStudents().then(()=>{

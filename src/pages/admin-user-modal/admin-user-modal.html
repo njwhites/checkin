@@ -53,7 +53,7 @@
         </ion-item>
 
         <!-- if the user is a "driver" show their list of approved Students-->
-        <ion-item *ngIf="this.userForm.value.role === this.userService.ROLES[4]">
+        <ion-item *ngIf="this.userForm.value.role === this.userService.ROLES[4] || this.userForm.value.role === this.userService.ROLES[6]">
           <ion-list>
             <ion-list-header>
               Approved Students For Pickup:

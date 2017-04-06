@@ -1,0 +1,35 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Bus Selection</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="fixedBackground">
+  <ion-content inset class="busList" class="scrollView">
+    <div *ngFor="let bus of this.busses | mapValues">
+      <ion-card (click)="selectBus(this.userService.data.get(bus.key)._id)">
+        <ion-card-content>
+          <ion-icon name="bus" item-left></ion-icon>
+          {{this.userService.data.get(bus.key).fName}}
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf="this.busses.length === 0"class="vertical-align-content">
+      <ion-grid>
+        <ion-row class="emptyRow">
+          <ion-col>
+            <ion-item class="emptyItem">
+              <ion-icon class="emptyIcon" name="archive"></ion-icon>
+            </ion-item>
+            <ion-item class="emptyText">
+              No Busses Available
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
+</ion-content>

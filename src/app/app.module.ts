@@ -7,6 +7,7 @@ import {LoginPage} from "../pages/login/login";
 import {ListPage} from "../pages/list/list";
 import {TherapistTabsPage} from "../pages/therapist-tabs/therapist-tabs";
 import {TherapistLogPage} from "../pages/therapist-log/therapist-log";
+import {BusSelectPage} from "../pages/bus-select/bus-select";
 import {NapPage} from "../pages/nap/nap";
 import {DriverPage} from "../pages/driver/driver";
 import {ClassroomPage} from "../pages/classroom/classroom";
@@ -83,6 +84,7 @@ import {ClassroomSelectionModalPage} from "../pages/classroom-selection-modal/cl
     SigninPage,
     KitchenPage,
     DriverPage,
+    BusSelectPage,
     TherapistTabsPage,
     TherapistLogPage,
     TherapistPage,
@@ -135,6 +137,7 @@ import {ClassroomSelectionModalPage} from "../pages/classroom-selection-modal/cl
     ListPage,
     NapPage,
     DriverPage,
+    BusSelectPage,
     ClassroomPage,
     PresentStudentsPage,
     StudentInfoButtonPage,

@@ -79,6 +79,16 @@
                 </ion-item>
               </ion-card>
             </ion-list>
+
+            <ion-list inset *ngSwitchCase="this.userService.ROLES[6]">
+              <ion-card *ngFor="let user of this.userService.data | impureMapValues | userRoleFilter:this.userService.ROLES[6]" (click)="userClicked(user.key)">
+                <ion-item>
+                  {{this.userService.data.get(user.key).fName}} {{this.userService.data.get(user.key).lName}}
+                  <ion-icon name="arrow-forward" item-right></ion-icon>
+                </ion-item>
+              </ion-card>
+            </ion-list>
+            
           </div>
         </ion-col>
       </ion-row>
