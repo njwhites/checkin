@@ -12,7 +12,7 @@ export class ConstantsProvider {
 
     let credentials = utilityService.returnCredentialObject();
     if(credentials && credentials.username){
-      this.db = new PouchDB('http://104.197.130.97:5984/constants', {
+      this.db = new PouchDB('http://35.184.21.232:5984/constants', {
         ajax: {
 
         },

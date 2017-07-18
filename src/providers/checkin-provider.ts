@@ -60,11 +60,11 @@ export class CheckinProvider {
       PouchDB.plugin(require('pouchdb-upsert'));
 
       // this.billingRemote = 'https://christrogers:christrogers@christrogers.cloudant.com/billing';
-      this.billingRemote = 'http://'+credentials.username+':'+credentials.password+'@104.197.130.97:5984/billing';
+      this.billingRemote = 'http://'+credentials.username+':'+credentials.password+'@35.184.21.232:5984/billing';
       // this.billingRemote = 'http://localhost:5984/billing';
 
       // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/transactions';
-      this.remote = 'http://'+credentials.username+':'+credentials.password+'@104.197.130.97:5984/transactions';
+      this.remote = 'http://'+credentials.username+':'+credentials.password+'@35.184.21.232:5984/transactions';
       // this.remote = 'http://localhost:5984/transactions';
       let options = {
         live: true,
@@ -529,13 +529,13 @@ export class CheckinProvider {
     //   })
     // });
 
-    return new Promise(resolve => { 
+    return new Promise(resolve => {
       this.getStudentDocument(id).then((student: TransactionStudent) => {
         this.addEventToStudent(student, by_id, this.CHECK_IN).then(() => {
           this.studentService.updateStudentLocation(id, this.CHECKED_IN).then(() => {
             this.loggingService.writeLog(`Student with id:${id} was checked in`);
             resolve(true);
-          });          
+          });
         });
       });
     });
@@ -852,7 +852,7 @@ export class CheckinProvider {
         }
       }
 
-      
+
     })
   }
 
@@ -1083,7 +1083,7 @@ export class CheckinProvider {
   getClassroomBilling(room_number: String, callback){
     this.billingdb.get(room_number).then(trans => {
 
-        
+
         //console.log(trans);
         //Day already exists in the db
         if(trans){
