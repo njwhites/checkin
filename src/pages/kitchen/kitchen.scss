@@ -18,26 +18,52 @@ page-kitchen {
 
 	.flex-element{
 		width:15%;
-	    background-color: #efce28;
-	    margin:12px;
-	    width: 15%;
-
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
+    background-color: #efce28;
+    margin:12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:25%;
 	}
 
 	.roomDummy{
 		margin-top: 100%;
 	}
 
-	.roomText{
-		font-weight: boldest;
-		font-size: 100%;
+	.roomNumber{
+		font-weight: bold;
+		font-size: 300%;
+    text-align: center;
 	}
 
-	.card-element{
-	    background-color: #efce28;
+  .roomCount{
+    text-align: center;
+    font-weight: bold;
+		font-size: 250%;
+  }
+
+  .roomNumberKey{
+		font-weight: bold;
+		font-size: 250%;
+    text-align: center;
 	}
+
+  .roomCountKey{
+    text-align: center;
+    font-weight: bold;
+		font-size: 200%;
+  }
+
+  .cardGridKey{
+    margin-top: -20%;
+  }
+
+	.card-element{
+	  background-color: #efce28;
+	}
+
+  .full-content{
+    height:100%;
+  }
 
 }

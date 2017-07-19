@@ -8,8 +8,8 @@
 
 
 <ion-content class="bgc">
-	<ion-grid>
-    <ion-row>
+	<ion-grid class="full-content">
+    <ion-row class="full-content">
       <ion-col width-75>
         <!--Below is the original table layout-->
 
@@ -34,7 +34,7 @@
         <!--</ion-card>-->
 
 
-        
+
         <div class="card-container">
           <ion-card class="flex-element" *ngFor="let class of this.classroomService.data | kitchenPipe"  (click)="cardTapped(class.roomNum, class.presentCount)">
             <ion-grid class="cardGrid">
@@ -46,6 +46,25 @@
               <ion-row class="roomCount">
                 <ion-col>
                   {{class.presentCount}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+          <ion-card class="flex-element">
+            <ion-grid class="cardGridKey">
+              <ion-row class="roomKey">
+                <ion-col>
+                  Key
+                </ion-col>
+              </ion-row>
+              <ion-row class="roomNumberKey">
+                <ion-col>
+                  Room
+                </ion-col>
+              </ion-row>
+              <ion-row class="roomCountKey">
+                <ion-col>
+                  Count
                 </ion-col>
               </ion-row>
             </ion-grid>
