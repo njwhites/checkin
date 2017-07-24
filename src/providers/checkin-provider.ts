@@ -11,7 +11,7 @@ import { LoggingProvider } from './logging-provider';
 import { UtilityProvider } from './utility-provider';
 
 import { TransactionModel, TransactionStudentModel, TransactionEvent, TransactionTherapy,
-      BillingDay, BillingWeekModel, StudentBillingWeek, ClassroomWeek, TransactionStudent, TransactionDay} from '../models/db-models';
+      BillingDay, BillingWeekModel, StudentBillingWeek, ClassroomWeek, TransactionStudent, TransactionDay, ClassRoomModel} from '../models/db-models';
 
 import PouchDB from 'pouchdb';
 
@@ -1042,6 +1042,7 @@ export class CheckinProvider {
 
   //Helper function for creating a readable time
   createReadableTime(time_millis: number){
+    time_millis = time_millis * 1;
     let time = new Date(time_millis);
 
     let mins: string;
@@ -1078,6 +1079,33 @@ export class CheckinProvider {
     date.setMinutes(minutes);
     console.log(date.getTime());
     return date.getTime();
+  }
+
+  getTherapyHistory(id: string, date?: any){
+    return new Promise((resolve, reject) => {
+      let totalTransactions = new Array<any>();
+      this.classroomService.data.forEach((value: ClassRoomModel, key: string, map: Map<String, ClassRoomModel>) => {
+        for(let student of value.students){
+          this.getStudentDocument(student.toString()).then((transactions: TransactionStudent) => {
+              for(let days of transactions.days){
+                for(let therapy of days.therapies){
+                  if(therapy.by_id === id){
+                    var element = {
+                      by_id: therapy.by_id,
+                      student: student,
+                      start_time: therapy.start_time,
+                      length: therapy.length,
+                      nap_subtract: therapy.nap_subtract
+                    }
+                    totalTransactions.push(element)
+                  }
+                }
+              }
+          })
+        }
+      });
+      resolve(totalTransactions);
+    })
   }
 
   getClassroomBilling(room_number: String, callback){

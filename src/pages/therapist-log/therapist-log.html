@@ -13,13 +13,13 @@
       <ion-card *ngIf="transaction.length !== -1">
         <ion-card-content>
           <ion-icon name="briefcase" item-left></ion-icon>
-          {{getUserName(transaction.by_id)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} for {{transaction.length}} mins.
+          {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time+0)}} for {{transaction.length}} mins.
         </ion-card-content>
       </ion-card>
       <ion-card *ngIf="transaction.length === -1">
         <ion-card-content>
           <ion-icon name="briefcase" item-left></ion-icon>
-          {{getUserName(transaction.by_id)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} and has not yet been checked back in.
+          {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time+0)}} and has not yet been checked back in.
         </ion-card-content>
       </ion-card>
     </div>

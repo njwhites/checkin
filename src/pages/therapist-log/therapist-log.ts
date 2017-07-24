@@ -15,6 +15,7 @@ import {StudentModel} from "../../models/db-models"
 export class TherapistLogPage {
   id: Number;
   transactions: Array<any> = new Array<any>();
+  studentTransactions: Array<any> = new Array<any>();
   fav_ids: any;
   studentList: any;
   location: string;
@@ -25,16 +26,10 @@ export class TherapistLogPage {
               public studentService: StudentProvider,
               public userService: UserProvider) {
     this.id = navParams.data;
-    this.fav_ids = this.userService.data.get(String(this.id)).therapy_fav_ids;
-    this.studentService.getStudents().then(()=> {
-      this.studentList = this.studentService.data;
-    }).catch((err) => {
-      console.log(err);
+    this.checkinService.getTherapyHistory(this.id.toString()).then((result: Array<TransactionTherapy>) => {
+        console.log(result)
+        this.transactions = result;
     });
-    console.log(this.studentList)
-    for(let student in this.studentList){
-      console.log("Student: " + student)
-    }
   }
 
   ionViewDidLoad() {
@@ -42,6 +37,12 @@ export class TherapistLogPage {
 
   getTherapistName(_id: String) {
     return this.userService.data.get(String(_id)).fName + " " + this.userService.data.get(String(_id)).lName;
+  }
+
+  getUserName(id: string, studentId: string){
+    let me = this.userService.data.get(id);
+    let student = this.studentService.data.get(studentId);
+    return me.therapy_type + " with " + student.fName + " " + student.lName;
   }
 
 }
