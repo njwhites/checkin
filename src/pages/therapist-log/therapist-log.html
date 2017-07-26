@@ -9,21 +9,112 @@
 
 <ion-content class="fixedBackground">
   <ion-content inset class="therapyList" class="scrollView">
-    <div *ngFor="let transaction of this.transactions">
-      <ion-card *ngIf="transaction.length !== -1">
-        <ion-card-content>
-          <ion-icon name="briefcase" item-left></ion-icon>
-          {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time+0)}} for {{transaction.length}} mins.
-        </ion-card-content>
-      </ion-card>
-      <ion-card *ngIf="transaction.length === -1">
-        <ion-card-content>
-          <ion-icon name="briefcase" item-left></ion-icon>
-          {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time+0)}} and has not yet been checked back in.
-        </ion-card-content>
-      </ion-card>
-    </div>
-    <div *ngIf="this.transactions.length === 0"class="vertical-align-content">
+    <ion-card>
+      <ion-card-header>
+        Monday
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let transaction of this.transactions.Monday">
+          <div *ngIf="transaction.length !== -1">
+            <div>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} for {{transaction.length}} mins.
+            </div>
+          </div>
+          <div *ngIf="transaction.length === -1">
+            <div>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} and has not yet been checked back in.
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        Tuesday
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let transaction of this.transactions.Tuesday">
+          <div *ngIf="transaction.length !== -1">
+            <div>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} for {{transaction.length}} mins.
+            </div>
+          </div>
+          <div *ngIf="transaction.length === -1">
+            <div>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} and has not yet been checked back in.
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        Wednesday
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let transaction of this.transactions.Wednesday">
+          <div *ngIf="transaction.length !== -1">
+            <div>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} for {{transaction.length}} mins.
+            </div>
+          </div>
+          <div *ngIf="transaction.length === -1">
+            <div>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} and has not yet been checked back in.
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        Thursday
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let transaction of this.transactions.Thursday">
+          <div *ngIf="transaction.length !== -1">
+            <div>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} for {{transaction.length}} mins.
+            </div>
+          </div>
+          <div *ngIf="transaction.length === -1">
+            <div>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} and has not yet been checked back in.
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        Friday
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let transaction of this.transactions.Friday">
+          <div *ngIf="transaction.length !== -1">
+            <div>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} for {{transaction.length}} mins.
+            </div>
+          </div>
+          <div *ngIf="transaction.length === -1">
+            <div>
+              <ion-icon name="briefcase" item-left></ion-icon>
+              {{getUserName(transaction.by_id, transaction.student)}} at {{this.checkinService.createReadableTime(transaction.start_time)}} and has not yet been checked back in.
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <!-- <div *ngIf="this.transactions.length === 0"class="vertical-align-content">
       <ion-grid>
         <ion-row class="emptyRow">
           <ion-col>
@@ -36,6 +127,6 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-    </div>
+    </div> -->
   </ion-content>
 </ion-content>

@@ -1044,7 +1044,6 @@ export class CheckinProvider {
   createReadableTime(time_millis: number){
     time_millis = time_millis * 1;
     let time = new Date(time_millis);
-
     let mins: string;
     let am_pm = "AM";
     let hours = String(time.getHours());
@@ -1081,15 +1080,23 @@ export class CheckinProvider {
     return date.getTime();
   }
 
-  getTherapyHistory(id: string, date?: any){
+  getTherapyHistory(id: string){
+    let currentWeek = this.getWeekNumber(new Date());
     return new Promise((resolve, reject) => {
-      let totalTransactions = new Array<any>();
+      let totalTransactions = {
+          Monday: [],
+          Tuesday: [],
+          Wednesday:[],
+          Thursday: [],
+          Friday: [],
+          Weekend: [],
+      }
       this.classroomService.data.forEach((value: ClassRoomModel, key: string, map: Map<String, ClassRoomModel>) => {
         for(let student of value.students){
           this.getStudentDocument(student.toString()).then((transactions: TransactionStudent) => {
               for(let days of transactions.days){
                 for(let therapy of days.therapies){
-                  if(therapy.by_id === id){
+                  if(therapy.by_id === id && this.getWeekNumber(therapy.start_time) === currentWeek){
                     var element = {
                       by_id: therapy.by_id,
                       student: student,
@@ -1097,15 +1104,49 @@ export class CheckinProvider {
                       length: therapy.length,
                       nap_subtract: therapy.nap_subtract
                     }
-                    totalTransactions.push(element)
+                    let therapyDate = new Date(+therapy.start_time);
+                    switch (therapyDate.getDay()){
+                      case 1:
+                        totalTransactions.Monday.push(element)
+                        break;
+                      case 2:
+                        totalTransactions.Tuesday.push(element)
+                        break;
+                      case 3:
+                        totalTransactions.Wednesday.push(element)
+                        break;
+                      case 4:
+                        totalTransactions.Thursday.push(element)
+                        break;
+                      case 5:
+                        totalTransactions.Friday.push(element)
+                        break;
+                      default : totalTransactions.Weekend.push(element)
+                    }
                   }
                 }
               }
           })
         }
+        console.log(totalTransactions);
       });
       resolve(totalTransactions);
     })
+  }
+
+  getWeekNumber(d) {
+    // Copy date so don't modify original
+    d = new Date(+d);
+    d.setHours(0,0,0,0);
+    // Set to nearest Thursday: current date + 4 - current day number
+    // Make Sunday's day number 7
+    d.setDate(d.getDate() + 4 - (d.getDay()||7));
+    // Get first day of year
+    var yearStart = new Date(d.getFullYear(),0,1);
+    // Calculate full weeks to nearest Thursday
+    var weekNo = Math.ceil(( ( (d.getTime() - yearStart.getTime()) / 86400000) + 1)/7);
+    // Return array of year and week number
+    return weekNo;
   }
 
   getClassroomBilling(room_number: String, callback){
