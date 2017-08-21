@@ -36,7 +36,7 @@
 
 
         <div class="card-container">
-          <ion-card class="flex-element" *ngFor="let class of this.classroomService.data | kitchenPipe"  (click)="cardTapped(class.roomNum, class.presentCount)">
+          <ion-card class="flex-element" *ngFor="let class of this.classroomService.data | kitchenPipe">
             <ion-grid class="cardGrid">
               <ion-row class="roomNumber">
                 <ion-col>
@@ -54,7 +54,7 @@
             <ion-grid class="cardGridKey">
               <ion-row class="roomKey">
                 <ion-col>
-                  Key
+                  Legend
                 </ion-col>
               </ion-row>
               <ion-row class="roomNumberKey">
