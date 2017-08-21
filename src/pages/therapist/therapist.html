@@ -4,15 +4,18 @@
     <ion-title class="notDesktop">Therapist</ion-title>
     <ion-grid class="desktopEdit">
       <ion-row>
-        <ion-col width-50>
-          <ion-title>Therapist</ion-title>
-        </ion-col>
-        <ion-col width-50>
-          <ion-buttons end>
+        <ion-col width-33>
+          <ion-buttons>
             <button ion-button icon-only (click)="edit()">
-              edit
+              Edit
             </button>
           </ion-buttons>
+        </ion-col>
+        <ion-col width-33>
+          <ion-title class="title">Therapist</ion-title>
+        </ion-col>
+        <ion-col width-33>
+          <page-home-button></page-home-button>
         </ion-col>
       </ion-row>
     </ion-grid>

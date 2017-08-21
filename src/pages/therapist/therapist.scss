@@ -85,6 +85,9 @@ page-therapist {
     width:10px;
     padding-right: 10px;
   }
+  .title{
+    text-align: center;
+  }
 
 
   //iPad landscape
@@ -104,11 +107,11 @@ page-therapist {
     }
 
     .desktopEdit {
-      display: none;
+      display: block;
     }
 
     .notDesktop {
-      display: block;
+      display: none;
     }
     .push-to-bottom{
       bottom: 8vh;
@@ -118,11 +121,11 @@ page-therapist {
   //computer and iPad pro Landscape
   @media (min-width: 1025px) {
     .desktopEdit {
-      display: block;
+      display: none;
     }
 
     .notDesktop {
-      display: none;
+      display: block;
     }
 
     .editDelete {
