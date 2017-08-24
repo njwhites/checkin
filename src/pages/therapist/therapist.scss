@@ -98,6 +98,13 @@ page-therapist {
     .push-to-bottom{
       bottom: 8vh;
     }
+    .desktopEdit {
+      display: none;
+    }
+
+    .notDesktop {
+      display: block;
+    }
   }
 
   //iPad portrait or iPad pro portrait
@@ -107,11 +114,11 @@ page-therapist {
     }
 
     .desktopEdit {
-      display: block;
+      display: none;
     }
 
     .notDesktop {
-      display: none;
+      display: block;
     }
     .push-to-bottom{
       bottom: 8vh;
@@ -121,11 +128,11 @@ page-therapist {
   //computer and iPad pro Landscape
   @media (min-width: 1025px) {
     .desktopEdit {
-      display: none;
+      display: block;
     }
 
     .notDesktop {
-      display: block;
+      display: none;
     }
 
     .editDelete {

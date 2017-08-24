@@ -4,6 +4,7 @@ import {StudentProvider} from '../../providers/student-provider';
 import {CheckinProvider} from '../../providers/checkin-provider';
 import {UserProvider} from '../../providers/user-provider';
 import {TherapistAddPage} from '../therapist-add/therapist-add';
+import {TherapistLogPage} from "../therapist-log/therapist-log";
 import {TherapistStudentDetailsPage} from '../therapist-student-details/therapist-student-details'
 
 @Component({
@@ -36,6 +37,10 @@ export class TherapistPage {
       favStudents: this.therapistStudents,
       therapistID: this.id
     });
+  }
+
+  history() {
+    this.navCtrl.push(TherapistLogPage, this.id);
   }
 
   studentTapped(student) {

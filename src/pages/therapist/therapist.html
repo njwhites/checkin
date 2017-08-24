@@ -1,7 +1,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title class="notDesktop">Therapist</ion-title>
+    <ion-grid class="notDesktop">
+      <ion-row>
+        <ion-col width-50>
+          <ion-title class="title">Therapist</ion-title>
+        </ion-col>
+        <ion-col width-50>
+          <page-home-button></page-home-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
     <ion-grid class="desktopEdit">
       <ion-row>
         <ion-col width-33>
@@ -115,6 +124,9 @@
       <ion-col>
         <button ion-button block outline color="light" class="submit-button" (click)="add()"> + Add Favorite</button>
       </ion-col>
+      <ion-col>
+        <button ion-button block outline color="light" class="submit-button" (click)="history()"> Week History</button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </div>
@@ -137,6 +149,14 @@
     <ion-row class="buttonRow">
       <ion-col>
         <button ion-button block outline color="light" class="submit-button" (click)="add()"> + Add Favorite</button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="buttonRow">
+      <ion-col>
+        <button ion-button block outline color="light" class="submit-button" (click)="add()"> + Add Favorite</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block outline color="light" class="submit-button" (click)="history()"> Week History</button>
       </ion-col>
     </ion-row>
   </ion-grid>
