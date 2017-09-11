@@ -35,7 +35,7 @@ export class AuthProvider {
     //pouchdb interface for a remote couchdb, no syncing involved, ?only uses http to directly get from the remote db?
     let credentials = utilityService.returnCredentialObject();
     if(credentials && credentials.username){
-      this.hashdb = new PouchDB('http://35.184.21.232:5984/authentication', {
+      this.hashdb = new PouchDB('http://104.197.232.119:5984/authentication', {
         ajax: {
 
         },

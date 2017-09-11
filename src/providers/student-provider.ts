@@ -23,7 +23,7 @@ export class StudentProvider {
 
       // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/students';
       // this.remote = 'http://localhost:5984/students';
-      this.remote = 'http://'+credentials.username+':'+credentials.password+'@35.184.21.232:5984/students';
+      this.remote = 'http://'+credentials.username+':'+credentials.password+'@104.197.232.119:5984/students';
 
       let options = {
         live: true,

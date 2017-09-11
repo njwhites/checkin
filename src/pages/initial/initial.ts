@@ -47,7 +47,7 @@ export class InitialPage {
     this.credentials.username = this.credentialsForm.controls['username'].value;
     this.credentials.password = this.credentialsForm.controls['password'].value;
     let thisThis = this;
-    this.db = new PouchDB('http://104.197.130.97:5984/_users',{
+    this.db = new PouchDB('http://104.197.232.119:5984/_users',{
       ajax: {
 
       },
