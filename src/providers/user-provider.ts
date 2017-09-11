@@ -30,7 +30,7 @@ export class UserProvider {
     if(credentials && credentials.username){
 
       // this.remote = 'https://christrogers:christrogers@christrogers.cloudant.com/users';
-      this.remote = 'http://'+credentials.username+':'+credentials.password+'@35.184.21.232:5984/users';
+      this.remote = 'http://'+credentials.username+':'+credentials.password+'@104.197.232.119:5984/users';
 
       // this.remote = 'http://localhost:5984/users';
       let options = {
