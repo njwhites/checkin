@@ -250,7 +250,7 @@ export class AdminReportingPage {
           completeCount++;
         });
       });
-      var done : NodeJS.Timer;
+      var done : number;
 
       var timeout = setTimeout(() => {
         clearInterval(done);

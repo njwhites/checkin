@@ -566,9 +566,7 @@ export class CheckinProvider {
       if(result){
         return this.checkinStudentHelper(ids, by_id);
       }else{
-        return Promise.reject(false).then(result => {
-          console.log("Check in resolved false for some reason");
-        });
+        return Promise.reject(false);
       }
     })
   }
