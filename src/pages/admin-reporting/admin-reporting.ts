@@ -250,7 +250,7 @@ export class AdminReportingPage {
           completeCount++;
         });
       });
-      var done : number;
+      var done : any;
 
       var timeout = setTimeout(() => {
         clearInterval(done);
@@ -260,7 +260,7 @@ export class AdminReportingPage {
       }, 8000);
 
       //check every 1/4 second if all are done
-      var done = setInterval(() => {
+      done = setInterval(() => {
         if( completeCount === this.rooms.length)
         {
           clearInterval(done);
